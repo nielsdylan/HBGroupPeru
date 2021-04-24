@@ -17,4 +17,10 @@ class LoginController extends Controller
         # code...
         return view('backend.login');
     }
+    public function session(Request $request)
+    {
+        $data = $request->input();
+        $request->session()->put('user', $data['username']);
+        return $request;
+    }
 }

@@ -27,6 +27,7 @@
 	<div class="wrapper wrapper-login">
         <form action="" method="post" data-login="session-start">
             <div class="container container-login animated fadeIn">
+                <input type="hidden" name="token" value="{{ csrf_token() }}">
                 <h3 class="text-center">Login</h3>
                 <div class="login-form">
                     <div class="form-group form-floating-label">
@@ -107,7 +108,17 @@
         $(document).on('submit','[data-login="session-start"]',function (e) {
             e.preventDefault();
             var data = $(this).serialize();
-            console.log(data);
+            $.ajax({
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('[name="token"]').val()},
+                url: url+'session',
+                dataType: 'json',
+                data: data,
+            }).done(function (response) {
+                console.log(response);
+            }).fail(function () {
+                // alert("Error");
+            });
 
         });
     </script>

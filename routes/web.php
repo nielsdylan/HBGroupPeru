@@ -32,6 +32,7 @@ Route::get('contacto',  [HomeController::class, 'contact'   ] )->name('contact')
 
 #backend -private
 Route::get('hbgroupp_web',  [LoginController::class, 'loginHbgroup'     ] );
+Route::post('session',      [LoginController::class, 'session'     ] );
 Route::get('dashboard',     [DashboardController::class, 'dashboard'    ] )->name('dashboard');
 Route::get('lista-usuario', [UsersController::class, 'index'            ] )->name('list_user');
 Route::get('configuracion', [SettingController::class, 'setting'        ] )->name('setting');
