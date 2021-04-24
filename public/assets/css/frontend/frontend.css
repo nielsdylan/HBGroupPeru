@@ -1,0 +1,328 @@
+body {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: visible;
+    background-color: #ffffff;
+}
+/* apartado de servisios */
+#services{
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+.card-height{
+    height: 390px;
+}
+.card-height .card-body p{
+    margin-bottom: 5px;
+}
+.button-services{
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    font-size: 23px !important;
+    border-color:#9d9d9d;
+    border: 1.5px solid;
+}
+/* apartado de presentacion */
+#presentation{
+    padding-top: 70px;
+    padding-bottom: 120px;
+    background-color: #537bae;
+}
+.text-font p{
+    font-size: 1.5rem;
+}
+.border-card{
+    border: transparent !important;
+}
+.card-profile{
+    background-color: #537bae;
+}
+.profile-circle{
+    background-image:url('../../../uploads/public/helard.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+
+    border: 0px solid rgb(0 59 157);
+    border-radius: 107px;
+    padding-left: 196px;
+    padding-bottom: 170px;
+
+}
+.profile-circle-mobile{
+    background-image:url('../../../uploads/public/helard.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+
+    border: 0px solid rgb(0 59 157);
+    border-radius: 107px;
+    padding-bottom: 80px;
+    padding-left: 105px;
+}
+/* apartado de empresas */
+#business{
+    padding-top: 70px;
+    padding-bottom: 120px;
+}
+.us{
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    padding-left: 75px !important;
+    padding-right: 75px !important;
+    font-size: 22px !important;
+    border-color: #9d9d9d !important;
+    background-color: transparent !important;
+    color: #fff !important;
+    border: 1.5px solid #fff;
+}
+.us:hover{
+    background-color: #9d9d9d !important;
+    color: #000 !important;
+}
+/* apartado para soluciones */
+#solution{
+    align-items: center;
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)
+        ),url('../../../uploads/public/solution.jpg');
+    background-size: cover;
+    height: 320px;
+    /* background-attachment: fixed; */
+    background-repeat: no-repeat;
+    background-position: left;
+
+    /* padding-top: 70px;
+    padding-bottom: 120px; */
+}
+#footer{
+    background-color: #2cabe2 !important;
+}
+.btn-whatsapp-link {
+    position: fixed;
+    bottom: 14vh;
+    right: 21px;
+    background: #25d366;
+    width: 65px;
+    height: 65px;
+    color: rgb(255, 255, 255)!important;
+    z-index: 10;
+    transition: .3s background ease-in-out;
+    border-radius: 50%;
+    font-size: 34px;
+    text-align: center;
+    padding-top: 6px;
+    box-shadow: -1px 2px 3px #929292;
+}
+.btn.btn-back-top {
+    position: fixed;
+    right: 30px;
+    bottom: 40px;
+    background: #000;
+    font-size: 22px;
+    color: #ffffff;
+    height: 45px;
+    padding-top: 5px;
+    width: 45px;
+    z-index: 99;
+}
+.text-footer{
+    color: #000;
+}
+.pre-footer {
+    padding-top: 25px;
+    border-bottom: 1px solid #d6d6d6;
+}
+/* vista de servicios */
+#offerts{
+    padding-top: 70px;
+    padding-bottom: 120px;
+    background-color: #537bae;
+    color: #ffffff;
+}
+.card-color{
+    background-color: #537bae;
+}
+#card-services .row .col-md-12 h5{
+    color: hsla(0,0%,100%,.7)
+}
+#card-services .row .col-md-6 .card{
+    height: 194px;
+    border-color: #537bae;
+    margin-bottom: 35px;
+}
+#card-services .row .col-md-6 .card .card-body .row .col-md-8{
+    height: 140px;
+    overflow-y: auto;
+}
+#card-services .row .col-md-6 .card .card-body .row .col-md-8::-webkit-scrollbar {
+    background-color: #c1c1c1;
+    height: 4px;
+    width: 3px;
+    border-radius: 2px;
+}
+#card-services .row .col-md-6 .card .card-body .row .col-md-8::-webkit-scrollbar-thumb {
+    background-color: #297ded69;
+    border-radius: 5px;
+}
+#card-services .row .col-md-6 .card .card-body .row .col-md-8 p{
+    color: hsla(0,0%,100%,.8);
+}
+#contact{
+    align-items: center;
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)
+        ),
+      url('../../../uploads/public/fond-contac.jpg');
+    background-size: cover;
+    background-position: bottom;
+    height: 613px;
+}
+.list-unstyled-contac{
+    padding-left: 0;
+    list-style: none;
+}
+.list-unstyled-contac li{
+    padding-bottom: 25px;
+}
+.list-unstyled-contac li a{
+    color: #fff;
+}
+#us{
+    align-items: center;
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)
+        ),
+      url('../../../uploads/public/fond-us.jpg');
+    background-size: cover;
+
+    background-repeat: no-repeat;
+
+    /* height: 616px; */
+    background-attachment: fixed;
+    color: #ffffff;
+
+    padding-bottom: 100px;
+}
+.img-hb-groupp-peru{
+    background-image: url('../../../uploads/public/jefe_hb.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 410px;
+    width: 426px;
+    border: 1px solid;
+    border-radius: 7px;
+}
+.top-nav{
+    background-color: #2cabe2;
+}
+a{
+    text-decoration: none !important;
+}
+.bg-light.navbar-fondo{
+    background-color: #2cabe2  !important;
+}
+.color-list li a, .color-list li ul li span, .color-list li ul li span i, .color-list li ul li a, .color-list li ul li a i{
+    color: #fff;
+}
+.bg-light.bg-dark{
+    background-color: #2cabe2  !important;
+}
+.text-font-size{
+    font-size: 20px;
+}
+.owl-dots {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.owl-dot {
+    height: 15px;
+    width: 45px;
+    border-radius: 25px;
+    cursor: pointer;
+    outline: none;
+    border: 2px solid #fff !important;
+    background: #fff !important;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+}
+.owl-dot:hover, .owl-dot.active {
+    background: #222 !important;
+}
+#sliders{
+    padding-top: 70px;
+    padding-bottom: 70px;
+    background-color: #ececec;
+}
+.img-content{
+    /* padding-bottom: 310px; */
+}
+.img-content-two{
+    /* padding-bottom: 310px; */
+}
+.card-slider{
+    background-color: #ececec;
+}
+.card-box:hover{
+    box-shadow: 0px 6px 21px rgb(180 180 180);
+}
+.color-list li a:hover, .color-list li a i:hover,.color-list li a,.color-list li a i{
+    transition: all 0.3s ease !important;
+}
+.img-logo{
+    background-image: url('../../../uploads/public/logo_snc.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    padding-left: 50px;
+    padding-bottom: 50px;
+    border-radius: 25px;
+    transform: translate3d(8px, -10px, 10px);
+    position: absolute;
+}
+.img-hb-groupp-peru-mobile{
+    background-image: url('../../../uploads/public/jefe_hb.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 268px;
+    width: 279px;
+    border: 1px solid;
+    border-radius: 7px;
+}
+.img-us{
+    border-radius: 15px;
+    width: 100%;
+}
+.img-footer{
+    background-color: #fff;
+    border-radius: 76px;
+}
+#menu_navbar{
+    box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 62%) !important;
+    z-index: 50;
+    padding: 0px;
+}
+#menu_navbar .container #navbarNav ul li.active a{
+    border-bottom: 2px solid #ffffff;
+}
+#menu_navbar .container #navbarNav ul li a:hover{
+    border-bottom: 2px solid #ffffff;
+}
+#menu_navbar .container #navbarNav ul li a{
+    padding: 20px 0px 20px !important;
+    margin: 0px 30px;
+}
