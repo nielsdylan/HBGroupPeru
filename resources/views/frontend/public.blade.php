@@ -20,6 +20,7 @@
     @include('frontend.layouts.public.footer')
 
     {{-- scrip --}}
+    <script type="text/javascript"> var url="{{url('').'/'}}"; </script>
     @include('frontend.layouts.public.js')
 </body>
 </html>

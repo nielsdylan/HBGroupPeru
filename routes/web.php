@@ -35,4 +35,4 @@ Route::get('hbgroupp_web',  [LoginController::class, 'loginHbgroup'     ] );
 Route::get('dashboard',     [DashboardController::class, 'dashboard'    ] )->name('dashboard');
 Route::get('lista-usuario', [UsersController::class, 'index'            ] )->name('list_user');
 Route::get('configuracion', [SettingController::class, 'setting'        ] )->name('setting');
-Route::get('grupos', [GroupController::class, 'index'                   ] )->name('group');
+Route::get('grupos',        [GroupController::class, 'index'                   ] )->name('group');
