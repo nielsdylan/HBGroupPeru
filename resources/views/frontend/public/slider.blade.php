@@ -40,7 +40,7 @@
 </div>
  --}}
 
-<div id="slider" class="carousel slide" data-ride="carousel">
+<div id="slider" class="carousel slide carousel-fade" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
             <div class="img-fluid d-none d-md-block d-xl-block"  style="

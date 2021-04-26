@@ -11,7 +11,7 @@
 
 <!-- CSS Files -->
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" rel="stylesheet">
+{{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" rel="stylesheet"> --}}
 
 {{-- my css --}}
 
@@ -34,5 +34,5 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A==" crossorigin="anonymous" />
 
 {{-- --- --}}
-<link href="{{asset('assets/js/plugin/fontawesome-5/css/all.css')}}"  rel="stylesheet">
+{{-- <link href="{{asset('assets/js/plugin/fontawesome-5/css/all.css')}}"  rel="stylesheet"> --}}
 

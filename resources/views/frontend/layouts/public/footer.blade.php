@@ -1,4 +1,4 @@
-<a href="https://wa.me/+51992933603?text=Mi consulta es..." target="_blank" class="btn-whatsapp-link"><i class="fab fa-whatsapp"></i></a>
+<a href="https://wa.me/+51992933603?text=Mi consulta es..." target="_blank" id="whatsapp-floot" class="btn-whatsapp-link"><i class="fab fa-whatsapp"></i></a>
 <a href="#" id="back-to-top" class="btn btn-lg btn-back-top"><i class="fa fa-angle-up"></i></a>
 <section id="footer">
     <div class="pre-footer">
@@ -86,3 +86,29 @@
         </div>
 
 </section>
+<script>
+    //  window.onscroll = function() {
+    //     var scroll = window.scrollY;
+
+
+
+
+        // var pre_footer = $('#footer .pre-footer').offset().top;
+        // if ((scroll+700)>=pre_footer) {
+        //     $('#footer .pre-footer').addClass('animated fadeInUp');
+
+        //     // console.log(left_services);
+        // }
+        // var footer_copy = $('#footer .footer-copy').offset().top;
+
+        // console.log(scroll);
+        // if ((scroll+800)>=footer_copy) {
+        //     $('#footer .footer-copy').addClass('animated fadeInUp');
+        //     console.log(footer_copy);
+
+        // }
+        // $('#back-to-top').addClass('pt-2');
+        // $('#whatsapp-floot').addClass('pt-2');
+        // $('#whatsapp-floot i').addClass('pt-1');
+    // };
+</script>

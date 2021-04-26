@@ -220,3 +220,27 @@
     </section>
 
 @endsection
+<script>
+    window.onscroll = function() {
+        var scroll = window.scrollY;
+
+
+        var pre_footer = $('#footer .pre-footer').offset().top;
+        if ((scroll+700)>=pre_footer) {
+            $('#footer .pre-footer').addClass('animated fadeInUp');
+
+        }
+        var footer_copy = $('#footer .footer-copy').offset().top;
+
+        console.log(scroll);
+        if ((scroll+800)>=footer_copy) {
+            $('#footer .footer-copy').addClass('animated fadeInUp');
+            console.log(footer_copy);
+
+        }
+        $('#back-to-top').addClass('pt-2');
+        $('#whatsapp-floot').addClass('pt-2');
+        $('#whatsapp-floot i').addClass('pt-1');
+    };
+
+</script>

@@ -416,6 +416,9 @@ h5{
 p{
     font-family: 'FiraSans-Book';
 }
-#services .container .services-title, #services .container .row.services-title .col-md-4 {
+#services .container .services-title, .services-card, .services-button, #solution, #business, #footer .pre-footer, #footer .footer-copy {
     opacity: 0;
 }
+/* .fancybox-wrap.fancybox-desktop.fancybox-type-image.fancybox-opened{
+    top: 180px !important;
+} */

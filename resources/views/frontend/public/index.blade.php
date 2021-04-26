@@ -10,9 +10,9 @@
                     <h3>Conoce más sobre nuestros servicios</h3>
                 </div>
             </div>
-            <div class="row pt-5 services-card">
+            <div class="row pt-5 ">
                 <div class="col-md-4 pb-3">
-                    <div class="card card-height border-card card-box">
+                    <div class="card card-height border-card card-box services-card">
 
                         <div class="pt-3"  style="
                             background: url('{{asset('uploads/public/trainings.png')}}');
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 pb-3">
-                    <div class="card card-height border-card card-box">
+                    <div class="card card-height border-card card-box services-card">
                         <div style="
                             background: url('{{asset('uploads/public/training.png')}}');
                             background-size: contain;
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 pb-3">
-                    <div class="card card-height border-card card-box">
+                    <div class="card card-height border-card card-box services-card">
                         <div style="
                             background: url('{{asset('uploads/public/advice.png')}}');
                             background-size: contain;
@@ -120,76 +120,76 @@
                     <div class="carousel-thumbs mt-5">
                         <div class="owl-carousel-second">
                         <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/AAQ.jpg')}}">
+                                {{-- <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/AAQ.jpg')}}"> --}}
                                     <div style="background: url('{{asset('uploads/public/AAQ.jpg')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
+                                {{-- </a> --}}
                             </div>
                             <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/southern.png')}}">
+                                {{-- <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/southern.png')}}"> --}}
                                     <div style="background: url('{{asset('uploads/public/southern.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
+                                {{-- </a> --}}
                             </div>
                             <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/antapaccay.png')}}">
+                                {{-- <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/antapaccay.png')}}"> --}}
                                     <div style="background: url('{{asset('uploads/public/antapaccay.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
+                                {{-- </a> --}}
                             </div>
                             <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/servosa.png')}}">
+                                {{-- <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/servosa.png')}}"> --}}
                                     <div style="background: url('{{asset('uploads/public/servosa.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
+                                {{-- </a> --}}
                             </div>
                             <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/engie.png')}}">
+                                {{-- <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/engie.png')}}"> --}}
                                     <div style="background: url('{{asset('uploads/public/engie.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
+                                {{-- </a> --}}
                             </div>
 
                             <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/tisur.png')}}">
+                                {{-- <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/tisur.png')}}"> --}}
                                     <div style="background: url('{{asset('uploads/public/tisur.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
+                                {{-- </a> --}}
                             </div>
                             <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/tramarsa.png')}}">
+                                {{-- <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/tramarsa.png')}}"> --}}
                                     <div style="background: url('{{asset('uploads/public/tramarsa.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
+                                {{-- </a> --}}
                             </div>
                             <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/consorcio.png')}}">
+                                {{-- <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/consorcio.png')}}"> --}}
                                     <div style="background: url('{{asset('uploads/public/consorcio.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
+                                {{-- </a> --}}
                             </div>
                             <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/securitas.png')}}">
+                                {{-- <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/securitas.png')}}"> --}}
                                     <div style="background: url('{{asset('uploads/public/securitas.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
+                                {{-- </a> --}}
                             </div>
                             <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/seguroc.png')}}">
+                                {{-- <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/seguroc.png')}}"> --}}
                                     <div style="background: url('{{asset('uploads/public/seguroc.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
+                                {{-- </a> --}}
                             </div>
                             <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/CSI.png')}}">
+                                {{-- <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/CSI.png')}}"> --}}
                                     <div style="background: url('{{asset('uploads/public/CSI.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
+                                {{-- </a> --}}
                             </div>
 
                             <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/als.png')}}">
+                                {{-- <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/als.png')}}"> --}}
                                     <div style="background: url('{{asset('uploads/public/als.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
+                                {{-- </a> --}}
                             </div>
                             <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/consultoria.png')}}">
+                                {{-- <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/consultoria.png')}}"> --}}
                                     <div style="background: url('{{asset('uploads/public/consultoria.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
+                                {{-- </a> --}}
                             </div>
                             <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/sgs.png')}}">
+                                {{-- <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/sgs.png')}}"> --}}
                                     <div style="background: url('{{asset('uploads/public/sgs.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
+                                {{-- </a> --}}
                             </div>
                         </div>
                         <a href="#" data-carousel="prev" class="owl-prev izquierda_ficha owl-carousel-product-left">
@@ -216,30 +216,67 @@
     window.onscroll = function() {
         var scroll = window.scrollY;
 
-        var services_title = $('.row.services-title').offset();
-        var left_services = services_title.left;
+        var services_title = $('.row.services-title').offset().left;
+        // var left_services = services_title.left;
 
-        if (scroll>=(left_services/2)) {
-            $('.row.services-title').addClass('animated fadeInUp');
+        if (scroll>=(services_title/2)) {
+            $('.services-title').addClass('animated fadeInUp');
             // console.log(left_services);
         }
 
-        var card_services = $('.services-card').offset();
-        var left_card = card_services.left;
-        if (scroll>=(left_card)) {
-            // console.log(left_card);
-            $('.services-card').addClass('animated fadeInUp');
+        var card_services = $('.services-card');
+        var car_1 = $(card_services[0]).offset().top;
+        var car_2 = $(card_services[1]).offset().top;
+        var car_3 = $(card_services[2]).offset().top;
+
+        // var card_services = $('.services-card').offset().top;
+        if ((scroll+300)>=car_1) {
+            $(card_services[0]).addClass('animated fadeInUp');
+            // console.log(left_services);
+        }
+        if ((scroll+300)>=car_2) {
+            $(card_services[1]).addClass('animated fadeInUp');
+            // console.log(left_services);
+        }
+        if ((scroll+300)>=car_2) {
+            $(card_services[2]).addClass('animated fadeInUp');
+            // console.log(left_services);
         }
 
-        var button_service = $('.services-button').offset();
-        var left_button = button_service.left;
-        var toop_button = button_service.top;
-        if (scroll>=(toop_button)) {
-            console.log(left_card);
-            console.log(scroll);
-            $('.services-card').addClass('animated fadeInUp');
+        var service_button = $('.services-button').offset().top;
+        if ((scroll+500)>=service_button) {
+            $('.services-button').addClass('animated fadeInUp');
+            // console.log(left_services);
         }
 
+        var solution = $('#solution').offset().top;
+        if ((scroll+300)>=service_button) {
+            $('#solution').addClass('animated fadeInUp');
+
+            // console.log(left_services);
+        }
+        var business =  $('#business').offset().top;
+        if ((scroll+300)>=business) {
+            $('#business').addClass('animated fadeInUp');
+
+            // console.log(left_services);
+        }
+        var pre_footer = $('#footer .pre-footer').offset().top;
+        if ((scroll+700)>=pre_footer) {
+            $('#footer .pre-footer').addClass('animated fadeInUp');
+
+        }
+        var footer_copy = $('#footer .footer-copy').offset().top;
+
+        console.log(scroll);
+        if ((scroll+800)>=footer_copy) {
+            $('#footer .footer-copy').addClass('animated fadeInUp');
+            console.log(footer_copy);
+
+        }
+        $('#back-to-top').addClass('pt-2');
+        $('#whatsapp-floot').addClass('pt-2');
+        $('#whatsapp-floot i').addClass('pt-1');
     };
 
 
