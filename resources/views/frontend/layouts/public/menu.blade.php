@@ -31,15 +31,16 @@
 
 
 
-<nav id="menu_navbar" class="navbar navbar-expand-lg navbar-light bg-light text-white bg-dark pt-3 pb-3">
+<nav id="menu_navbar" class="navbar navbar-expand-lg navbar-light bg-light text-white bg-dark">
     <div class="container">
         <a class="navbar-brand d-none d-sm-none d-lg-block d-md-block text-white pt-2 pb-2" href="{{ url('/inicio') }}">
-            <span class="img-logo"></span><span class="pl-5 ml-3"> HB GROUP PERÚ</span>
-            {{-- <img src="{{asset('uploads/public/logo_new.jpg')}}" height="50"> HB GROUP PERÚ --}}
+            {{-- <span class="img-logo"></span><span class="pl-5 ml-3"> HB GROUP PERÚ</span> --}}
+            <img src="{{asset('uploads/public/logo_snc.png')}}" class="img-footer"height="50"> HB GROUP PERÚ
         </a>
 
-        <a class="navbar-brand d-block d-sm-block d-lg-none d-md-none text-white pb-5 pt-3" href="{{ url('/inicio') }}">
-            <span class="img-logo"></span>
+        <a class="navbar-brand d-block d-sm-block d-lg-none d-md-none text-white mr-0 ml-3" href="{{ url('/inicio') }}">
+            {{-- <span class="img-logo"></span> --}}
+            <img src="{{asset('uploads/public/logo_snc.png')}}" class="img-footer"height="50">
             {{-- <img src="{{asset('uploads/public/logo_snc.png')}}" height="50"> --}}
         </a>
         <button class="navbar-toggler mr-4 " type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

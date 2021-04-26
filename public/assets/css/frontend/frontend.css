@@ -1,3 +1,48 @@
+/*  Roboto   */
+@font-face{
+    font-family:"Roboto-Regular" ;
+    src: url("../../fonts/roboto/Roboto-Regular.ttf");
+}
+@font-face{
+    font-family:"Roboto-Bold" ;
+    src: url("../../fonts/roboto/Roboto-Bold.ttf");
+}
+@font-face{
+    font-family:"RobotoCondensed-Regular" ;
+    src: url("../../fonts/roboto-condensed/RobotoCondensed-Regular.ttf");
+}
+@font-face{
+    font-family:"RobotoCondensed-Bold" ;
+    /* src: url("../fonts/roboto-condensed/RobotoCondensed-Bold.ttf"); */
+    src: url("../../fonts/roboto-condensed/RobotoCondensed-Bold.ttf");
+}
+@font-face{
+    font-family: "RobotoCondensed-Light";
+    src: url("../../fonts/roboto-condensed/RobotoCondensed-Light.ttf");
+}
+/*----------------------------------------------------------*/
+/*  fira sans   */
+@font-face{
+    font-family:"FiraSans-Bold" ;
+    src: url("../../fonts/fira-sans/FiraSans-Bold.otf");
+}
+@font-face{
+    font-family:"FiraSans-BookItalic" ;
+    src: url("../../fonts/fira-sans/FiraSans-BookItalic.otf");
+}
+@font-face{
+    font-family:"FiraSans-Book" ;
+    src: url("../../fonts/fira-sans/FiraSans-Book.otf");
+}
+@font-face{
+    font-family:"FiraSans-ExtraBold" ;
+    src: url("../../fonts/fira-sans/FiraSans-ExtraBold.otf");
+}
+@font-face{
+    font-family: "FiraSans-Regular";
+    src: url("../../fonts/fira-sans/FiraSans-Regular.otf");
+}
+/*----------------------------------------------------------*/
 body {
     position: relative;
     overflow-x: hidden;
@@ -21,8 +66,11 @@ body {
     padding-left: 30px !important;
     padding-right: 30px !important;
     font-size: 23px !important;
-    border-color:#9d9d9d;
-    border: 1.5px solid;
+    border: 2px solid #9d9d9d !important;
+    font-family: 'Roboto-Regular';
+    color: #393939;
+    box-shadow: 0 0.25rem 0 rgb(0 0 0 / 15%);
+    background-color: transparent;
 }
 /* apartado de presentacion */
 #presentation{
@@ -75,10 +123,10 @@ body {
     padding-left: 75px !important;
     padding-right: 75px !important;
     font-size: 22px !important;
-    border-color: #9d9d9d !important;
+    /* border-color: #9d9d9d !important; */
     background-color: transparent !important;
     color: #fff !important;
-    border: 1.5px solid #fff;
+    border: 2px solid #9d9d9d !important;
 }
 .us:hover{
     background-color: #9d9d9d !important;
@@ -243,7 +291,7 @@ a{
     font-size: 20px;
 }
 .owl-dots {
-    text-align: center;
+    text-align: center !important;
     margin-bottom: 20px;
 }
 
@@ -325,4 +373,49 @@ a{
 #menu_navbar .container #navbarNav ul li a{
     padding: 20px 0px 20px !important;
     margin: 0px 30px;
+    font-family: 'Roboto-Regular';
+}
+.carousel-thumbs{
+    position:relative;
+}
+.owl-prev.izquierda_ficha{
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    z-index: 10;
+    color: #151515;
+    width: 20px;
+    height: 20px;
+}
+.owl-next.derecha_ficha {
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    z-index: 10;
+    color: #151515;
+    width: 20px;
+    height: 20px;
+    right: 0;
+}
+.ficha_carousel_img{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.ficha_carousel_img:hover{
+    box-shadow: 0px 2px 6px rgb(180 180 180);
+}
+h1{
+    font-family: 'Roboto-Regular' !important;
+}
+h3{
+    font-family: 'FiraSans-Regular' !important;
+}
+h5{
+    font-family: 'FiraSans-Regular';
+}
+p{
+    font-family: 'FiraSans-Book';
+}
+#services .container .services-title, #services .container .row.services-title .col-md-4 {
+    opacity: 0;
 }
