@@ -9,9 +9,9 @@
                     <h>Servicios que ofrecemos</h5>
                 </div>
             </div>
-            <div class="row animated fadeInUp">
+            <div class="row">
                 <div class="col-md-6">
-                    <div class="card border-card mt-5 mb-5">
+                    <div class="card border-card mt-5 mb-5 animated fadeInUp">
                         <div class="card-body card-color">
                             <div class="row">
                                 <div class="col-md-4 text-center">
@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="card border-card  mt-5 mb-5">
+                    <div class="card border-card  mt-5 mb-5 animated fadeInUp">
                         <div class="card-body card-color">
                             <div class="row">
                                 <div class="col-md-4 text-center">
@@ -50,11 +50,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            {{-- </div> --}}
 
-            <div class="row animated fadeInUp">
+            {{-- <div class="row"> --}}
                 <div class="col-md-6">
-                    <div class="card border-card  mt-5 mb-5">
+                    <div class="card border-card  mt-5 mb-5 services-view-card">
                         <div class="card-body card-color">
                             <div class="row">
                                 <div class="col-md-4 text-center">
@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="card border-card  mt-5 mb-5">
+                    <div class="card border-card  mt-5 mb-5 services-view-card">
                         <div class="card-body card-color">
                             <div class="row">
                                 <div class="col-md-4 text-center">
@@ -93,12 +93,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            {{-- </div> --}}
 
 
-            <div class="row">
+            {{-- <div class="row"> --}}
                 <div class="col-md-6">
-                    <div class="card border-card  mt-5 mb-5">
+                    <div class="card border-card  mt-5 mb-5 services-view-card">
                         <div class="card-body card-color">
                             <div class="row">
                                 <div class="col-md-4 text-center">
@@ -119,7 +119,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="card border-card  mt-5 mb-5">
+                    <div class="card border-card  mt-5 mb-5 services-view-card">
                         <div class="card-body card-color">
                             <div class="row">
                                 <div class="col-md-4 text-center">
@@ -137,11 +137,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            {{-- </div> --}}
 
-            <div class="row">
+            {{-- <div class="row"> --}}
                 <div class="col-md-6">
-                    <div class="card border-card  mt-5 mb-5">
+                    <div class="card border-card  mt-5 mb-5 services-view-card">
                         <div class="card-body card-color">
                             <div class="row">
                                 <div class="col-md-4 text-center">
@@ -162,7 +162,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="card border-card  mt-5 mb-5">
+                    <div class="card border-card  mt-5 mb-5 services-view-card">
                         <div class="card-body card-color">
                             <div class="row">
                                 <div class="col-md-4 text-center">
@@ -183,5 +183,33 @@
             </div>
         </div>
     </section>
+    <script>
+        window.onscroll = function() {
+            var scroll = window.scrollY;
+
+            var services_view_card = $('.services-view-card');
+            console.log(services_view_card);
+            $.each(services_view_card, function (index, element) {
+                if ((scroll+500)>=($(element).offset().top)) {
+                    $(element).addClass('animated fadeInUp');
+
+                }
+            });
+            var pre_footer = $('#footer .pre-footer').offset().top;
+            if ((scroll+700)>=pre_footer) {
+                $('#footer .pre-footer').addClass('animated fadeInUp');
+
+            }
+            var footer_copy = $('#footer .footer-copy').offset().top;
+            console.log(scroll);
+            console.log(footer_copy);
+            if ((scroll+700)>=footer_copy) {
+                $('#footer .footer-copy').addClass('animated fadeInUp');
+
+            }
+        };
+    </script>
 
 @endsection
+
+

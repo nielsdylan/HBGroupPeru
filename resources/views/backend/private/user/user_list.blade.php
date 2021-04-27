@@ -28,7 +28,14 @@
             <div class="col-md-12">
                 <div class="card animated fadeInUp">
                     <div class="card-header">
-                        <h4 class="card-title">Usuarios</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="card-title">Usuarios</h4>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a href="{{ route('user_add') }}" class="btn btn-primary btn-round"><i class="fas fa-plus"></i> Nuevo usuario</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

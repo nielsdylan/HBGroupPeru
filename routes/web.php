@@ -34,6 +34,10 @@ Route::get('contacto',  [HomeController::class, 'contact'   ] )->name('contact')
 Route::get('hbgroupp_web',  [LoginController::class, 'loginHbgroup'     ] );
 Route::post('session',      [LoginController::class, 'session'     ] );
 Route::get('dashboard',     [DashboardController::class, 'dashboard'    ] )->name('dashboard');
-Route::get('lista-usuario', [UsersController::class, 'index'            ] )->name('list_user');
+// usuarios
+Route::get('lista-usuario',     [UsersController::class, 'index'            ] )->name('list_user');
+Route::get('nuevo-usuario',     [UsersController::class, 'userNew'            ] )->name('user_add');
+Route::get('editar-usuario',    [UsersController::class, 'userEdit'            ] )->name('user_edit');
+//
 Route::get('configuracion', [SettingController::class, 'setting'        ] )->name('setting');
 Route::get('grupos',        [GroupController::class, 'index'                   ] )->name('group');

@@ -15,4 +15,12 @@ class UsersController extends Controller
         // return response()->json($users);
         return view('backend.private.user.user_list', compact('users'));
     }
+    public function userNew()
+    {
+        return view('backend.private.user.user_add');
+    }
+    public function userEdit()
+    {
+        return view('backend.private.user.user_edit');
+    }
 }

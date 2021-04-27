@@ -47,14 +47,17 @@ function owlCarousel() {
         responsive: {
             0:{
                 items:1,
-                nav:false
+                nav:false,
+                dots: true,
             },
             600:{
                 items:2,
-                nav:false
+                nav:false,
+                dots: true,
             },
             1000:{
                 items:2,
+                dots: false,
                 nav:false
             },
         }
@@ -62,12 +65,12 @@ function owlCarousel() {
 
     $('a.owl-carousel-img-left').click(function(event){
         event.preventDefault();
-        owl.trigger('prev.owl.carousel-galery', [300]);
+        owl.trigger('prev.owl.carousel', [00]);
     })
 
     $("a.owl-carousel-img-right").click(function(event){
         event.preventDefault();
-        owl.trigger('next.owl.carousel-galery', [300]);
+        owl.trigger('next.owl.carousel', [300]);
     });
 
 

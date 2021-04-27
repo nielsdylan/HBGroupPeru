@@ -135,11 +135,7 @@ body {
 /* apartado para soluciones */
 #solution{
     align-items: center;
-    background-image:
-        linear-gradient(
-            rgba(0, 0, 0, 0.5),
-            rgba(0, 0, 0, 0.5)
-        ),url('../../../uploads/public/solution.jpg');
+    background-image:url('../../../uploads/public/solution.jpg');
     background-size: cover;
     height: 320px;
     /* background-attachment: fixed; */
@@ -150,7 +146,7 @@ body {
     padding-bottom: 120px; */
 }
 #footer{
-    background-color: #2cabe2 !important;
+    background-color: #2d318f  !important;
 }
 .btn-whatsapp-link {
     position: fixed;
@@ -273,19 +269,19 @@ body {
     border-radius: 7px;
 }
 .top-nav{
-    background-color: #2cabe2;
+    background-color: #46a2ad ;
 }
 a{
     text-decoration: none !important;
 }
 .bg-light.navbar-fondo{
-    background-color: #2cabe2  !important;
+    background-color: #2d318f   !important;
 }
 .color-list li a, .color-list li ul li span, .color-list li ul li span i, .color-list li ul li a, .color-list li ul li a i{
     color: #fff;
 }
 .bg-light.bg-dark{
-    background-color: #2cabe2  !important;
+    background-color: #2d318f   !important;
 }
 .text-font-size{
     font-size: 20px;
@@ -416,8 +412,57 @@ h5{
 p{
     font-family: 'FiraSans-Book';
 }
-#services .container .services-title, .services-card, .services-button, #solution, #business, #footer .pre-footer, #footer .footer-copy {
+
+#services .container .services-title, .services-card, .services-button, #solution, #business, #footer .pre-footer, #footer .footer-copy, .vision-us, .profile-ordenador, .profile-mobile, .img-carousel-us, .services-view-card {
     opacity: 0;
+}
+.map{
+    width: 700px;
+    height: 350px;
+}
+@media (max-width: 1024px) {
+    .map{
+        width: 600px !important;
+        height: 350px !important;
+    }
+}
+@media (max-width: 770px) {
+    .map{
+        width: 450px !important;
+        height: 350px !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .map{
+        width: 330px !important;
+        height: 350px !important;
+    }
+}
+@media (max-width: 425px) {
+    .map{
+        width: 375px !important;
+        height: 350px !important;
+    }
+}
+
+@media (max-width: 375px) {
+    .map{
+        width: 322px !important;
+        height: 350px !important;
+    }
+}
+@media (max-width: 320px) {
+    .map{
+        width: 267px !important;
+        height: 350px !important;
+    }
+}
+@media (max-width: 280px) {
+    .map{
+        width: 250px !important;
+        height: 350px !important;
+    }
 }
 /* .fancybox-wrap.fancybox-desktop.fancybox-type-image.fancybox-opened{
     top: 180px !important;
