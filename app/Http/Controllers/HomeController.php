@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     //
-    // public function __invoke()
-    // {
-    //     return view('frontend.public');
-    // }
-    public function index()
+    public function __invoke()
     {
         return view('frontend.public.index');
     }
+    // public function index()
+    // {
+    //     return view('frontend.public.index');
+    // }
     public function us()
     {
         return view('frontend.public.us');

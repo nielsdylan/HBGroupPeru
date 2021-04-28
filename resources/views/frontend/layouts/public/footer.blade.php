@@ -19,7 +19,7 @@
                     <h6 class="text-white ">SITIO</h6>
                     <ul class="list-unstyled color-list">
                         <li>
-                            <a href="{{ url('/inicio') }}" class="text-footer"><i class="fa fa-angle-right"></i> INICIO</a>
+                            <a href="{{ url('/') }}" class="text-footer"><i class="fa fa-angle-right"></i> INICIO</a>
                         </li>
                         <li>
                             <a href="{{ url('/nosotros') }}" class="text-footer"><i class="fa fa-angle-right"></i> NOSOTROS</a>

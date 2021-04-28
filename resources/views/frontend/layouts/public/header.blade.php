@@ -10,7 +10,7 @@
 <!-- ANALYTICS -->
 
 <?php if (!empty($configuracion['og_title'])): ?>
-<meta property="og:url"                content="{{ url('/inicio') }}" />
+<meta property="og:url"                content="{{ url('/') }}" />
 <meta property="og:type"               content="article" />
 <meta property="og:title"              content="HB Group Perú" />
 <meta property="og:description"        content="" />

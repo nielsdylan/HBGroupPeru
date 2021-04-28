@@ -23,9 +23,9 @@ use App\Http\Controllers\UsersController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-// Route::get('/',    HomeController::class );
+Route::get('/',    HomeController::class )->name('index');
 #frontend - public
-Route::get('inicio',    [HomeController::class, 'index'     ] )->name('index');
+// Route::get('inicio',    [HomeController::class, 'index'     ] )->name('index');
 Route::get('nosotros',  [HomeController::class, 'us'        ] )->name('us');
 Route::get('servicios', [HomeController::class, 'services'  ] )->name('services');
 Route::get('contacto',  [HomeController::class, 'contact'   ] )->name('contact');
