@@ -11,7 +11,7 @@
 	<script>
 		WebFont.load({
 			google: {"families":["Open+Sans:300,400,600,700"]},
-			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"], urls: ['../assets/css/fonts.css']},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"], urls: ["{{asset('assets/css/fonts.css')}}"]},
 			active: function() {
 				sessionStorage.fonts = true;
 			}
@@ -22,13 +22,21 @@
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/css/azzara.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/demo.css')}}">
 </head>
 <body class="login">
 	<div class="wrapper wrapper-login">
         <form action="" method="post" data-login="session-start">
             <div class="container container-login animated fadeIn">
                 <input type="hidden" name="token" value="{{ csrf_token() }}">
+                <div class="form-group text-center">
+
+                </div>
+                <div class="form-group text-center">
+                    <img src="{{asset('uploads/public/logo_snc.png')}}" width="125">
+                </div>
                 <h3 class="text-center">Login</h3>
+                <h2 class="text-center">HB Group Perú</h2>
                 <div class="login-form">
                     <div class="form-group form-floating-label">
                         <input id="username" name="username" type="text" class="form-control input-border-bottom" required>
@@ -103,6 +111,14 @@
 	<script src="{{asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
 	<script src="{{asset('assets/js/core/popper.min.js')}}"></script>
 	<script src="{{asset('assets/js/core/bootstrap.min.js')}}"></script>
+    <script src="{{asset('assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')}}"></script>
+    <!-- Bootstrap Notify -->
+    <script src="{{asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
+
+
+    <!-- Bootstrap Toggle -->
+    <script src="{{asset('assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js')}}"></script>
+    <!-- jQuery Scrollbar -->
 	<script src="{{asset('assets/js/ready.js')}}"></script>
     <script>
         $(document).on('submit','[data-login="session-start"]',function (e) {
@@ -115,7 +131,40 @@
                 dataType: 'json',
                 data: data,
             }).done(function (response) {
-                console.log(response);
+                if (response.status == 200) {
+                    location.href = url + 'dashboard';
+                }else{
+                    var placementFrom = 'top';
+                    var placementAlign = 'center';
+                    var state = 'danger';
+                    var style = 'withicon';
+                    var content = {};
+
+                    content.message = 'Ingrese correctamente los datos para la session para HB Group Perú';
+                    content.title = 'Session';
+                    // if (style == "withicon") {
+                    //     content.icon = 'fas fa-times';
+                    // } else {
+                    //     content.icon = 'none';
+                    // }
+                    content.icon = 'fas fa-times';
+                    content.url = url+'hbgroupp_web';
+                    content.target = '_blank';
+
+                    $.notify(content,{
+                        type: state,
+                        placement: {
+                            from: placementFrom,
+                            align: placementAlign
+                        },
+                        time: 1000,
+                        delay: 0,
+                    });
+
+                    setTimeout(function(){
+                        $('[data-notify="dismiss"]').click();
+                    }, 3000);
+                }
             }).fail(function () {
                 // alert("Error");
             });

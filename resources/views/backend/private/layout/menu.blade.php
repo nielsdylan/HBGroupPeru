@@ -1,5 +1,5 @@
 <div class="main-header" data-background-color="purple">
-    <nav class="navbar navbar-expand-lg bg-secondary">
+    <nav class="navbar navbar-expand-lg bg-primary">
         <a class="navbar-brand" href="#">HBGROUPP</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -11,7 +11,7 @@
                 </li>
                 <li class="nav-item ">
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Administrador
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -23,7 +23,7 @@
                 </li>
                 <li class="nav-item">
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Landing
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -35,6 +35,12 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav">
+                <li class="nav-item text-right">
+                    <a href="{{route('logout.logout')}}" class="nav-link "> Logout</a>
                 </li>
             </ul>
         </div>
