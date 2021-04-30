@@ -41,7 +41,7 @@
                             </div>
                         </li>
                         <li>
-                            <img src="{{ asset('uploads/public/icon/mobile-icon.png') }}" width="20"> &nbsp;(+51) 932 777 533
+                            <img src="{{ asset('uploads/public/icon/mobile-icon.png') }}" width="20"> &nbsp;932777533
                         </li>
                         <li>
                             <img src="{{ asset('uploads/public/icon/phone-icon.png') }}" width="20"> &nbsp;(+51) 53 474 805

@@ -1,7 +1,10 @@
 @extends('frontend.public')
 @section('title','inicio')
 @section('content')
-    @include('frontend.public.slider')
+
+    @if ($sliders)
+        @include('frontend.public.slider')
+    @endif
     <section id="services">
         <div class="container">
             <div class="row services-title">

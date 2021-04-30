@@ -16,3 +16,4 @@
 <link rel="stylesheet" href="{{asset('assets/css/demo.css')}}">
 {{-- my css --}}
 <link rel="stylesheet" href="{{asset('assets/css/private.css')}}">
+<link rel="stylesheet" href="{{asset('assets/js/plugin/fancybox_backend/jquery.fancybox.min.css')}}">

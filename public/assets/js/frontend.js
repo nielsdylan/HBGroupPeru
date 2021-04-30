@@ -48,12 +48,12 @@ function owlCarousel() {
             0:{
                 items:1,
                 nav:false,
-                dots: true,
+                dots: false,
             },
             600:{
                 items:2,
                 nav:false,
-                dots: true,
+                dots: false,
             },
             1000:{
                 items:2,

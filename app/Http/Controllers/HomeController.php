@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -10,7 +11,10 @@ class HomeController extends Controller
     //
     public function __invoke()
     {
-        return view('frontend.public.index');
+        $sliders =  Slider::where('active', 1)
+                    ->take(3)
+                    ->get();
+        return view('frontend.public.index', compact('sliders'));
     }
     // public function index()
     // {

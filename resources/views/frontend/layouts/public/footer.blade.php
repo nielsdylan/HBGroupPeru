@@ -1,4 +1,4 @@
-<a href="https://wa.me/+51992933603?text=Mi consulta es..." target="_blank" id="whatsapp-floot" class="btn-whatsapp-link"><i class="fab fa-whatsapp"></i></a>
+<a href="https://wa.me/+51946877806?text=Mi consulta es..." target="_blank" id="whatsapp-floot" class="btn-whatsapp-link"><i class="fab fa-whatsapp"></i></a>
 <a href="#" id="back-to-top" class="btn btn-lg btn-back-top"><i class="fa fa-angle-up"></i></a>
 <section id="footer">
     <div class="pre-footer">
@@ -39,11 +39,11 @@
                     <ul class="list-unstyled color-list">
                         <li>
                             <ul class="list-unstyled">
-                                <li><span class="text-footer"><i class="fas fa-map-marker-alt text-footer"></i> direccion</span></li>
+                                <li><span class="text-footer"><i class="fas fa-map-marker-alt text-footer"></i> Nueva Victoria Mz 04 Lote 16, Ilo - Moqueguaa - Perú</span></li>
 
-                                <li><span class="text-footer"><i class="fab fa-whatsapp text-footer"></i> 123456</span></li>
+                                <li><span class="text-footer"><i class="fab fa-whatsapp text-footer"></i> (+51) 53 474805</span></li>
 
-                                <li><span class="text-footer"><i class="fa fa-phone text-footer"></i> 456789</span></li>
+                                <li><span class="text-footer"><i class="fa fa-phone text-footer"></i> 946877806</span></li>
 
                                 <li><span class="text-footer"><i class="fa fa-envelope text-footer"></i> info@hbgroup.pe</span></li>
 

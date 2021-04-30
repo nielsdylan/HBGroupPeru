@@ -19,6 +19,10 @@ class UsersController extends Controller
     {
         return view('backend.private.user.user_add');
     }
+    public function userAdd(Request $request)
+    {
+
+    }
     public function userEdit()
     {
         return view('backend.private.user.user_edit');
