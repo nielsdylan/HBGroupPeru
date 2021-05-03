@@ -63,7 +63,7 @@
                                                     <h4>Buen dia MBA Helard Bejarano</h4>
                                                     <p>El Sñr: {{ $data['last_name'] }}, {{ $data['name'] }} </p>
                                                     <p>Telefono: {{ $data['telephone'] }}</p>
-                                                    <p>correo{{ $data['email'] }}</p>
+                                                    <p>correo: {{ $data['email'] }}</p>
                                                     <p>Su consulta es:</p>
                                                     <p>{{ $data['message'] }}</p>
 

@@ -44,10 +44,11 @@ class HomeController extends Controller
             "message"=> $request->message,
             "email_from"=>$request->email,
             "view"=>"contact",
+            "subject"=>"Contactanos"
 
         );
         $mail = new ContactMailable($data);
-        Mail::to("niels_dylan@hotmail.com")->send($mail);
+        Mail::to("contabilidad@hbgroup.pe")->send($mail);
 
         //para el cliente
         $data = array(
@@ -56,8 +57,9 @@ class HomeController extends Controller
             "email"=> $request->email,
             "telephone"=> $request->telephone,
             "message"=> $request->message,
-            "email_from"=>"niels_dylan@hotmail.com",
+            "email_from"=>"contabilidad@hbgroup.pe",
             "view"=>"client",
+            "subject"=>"HB Group Perú"
 
         );
         $mail = new ContactMailable($data);
