@@ -27,6 +27,7 @@
             <ul class="list-inline mb-0">
                 <a href="tel:992 933 603" class="list-inline-item text-white"><i class="fa fa-phone"></i> 946877806</a>
                 <a href="https://wa.me/992 933 603?text=" target="_blank" class="list-inline-item text-white"><i class="fab fa-whatsapp text-white"></i> 946877806</a>
+                <a href="https://site5.q10.com/login?ReturnUrl=%2F&aplentId=05554f9b-6439-4175-8443-321c9ebcf09d" target="_blank" class="list-inline-item icon text-white"><i class="fas fa-user-graduate text-white"></i> Aula virtual</a>
             </ul>
         </div>
     </div>

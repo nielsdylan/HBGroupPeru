@@ -230,6 +230,15 @@ body {
     background-position: bottom;
     height: 613px;
 }
+#contact-two{
+    background-image:
+      url('../../../uploads/public/bg-contact.jpg');
+    align-items: center;
+    background-color: #fff;
+    background-size: cover;
+    background-position: bottom;
+    color: #fff;
+}
 .list-unstyled-contac{
     padding-left: 0;
     list-style: none;
@@ -416,11 +425,11 @@ p{
 #services .container .services-title, .services-card, .services-button, #solution, #business, #footer .pre-footer, #footer .footer-copy, .vision-us, .profile-ordenador, .profile-mobile, .img-carousel-us, .services-view-card {
     opacity: 0;
 }
-.map{
+/* .map{
     width: 700px;
     height: 350px;
-}
-@media (max-width: 1024px) {
+} */
+/* @media (max-width: 1024px) {
     .map{
         width: 600px !important;
         height: 350px !important;
@@ -462,8 +471,29 @@ p{
     .map{
         width: 250px !important;
         height: 350px !important;
-    }
-}
+    } */
+/* } */
 /* .fancybox-wrap.fancybox-desktop.fancybox-type-image.fancybox-opened{
     top: 180px !important;
 } */
+.fab.fa-facebook{
+    color: #ffffff !important;
+}
+.fab.fa-linkedin{
+    color: #ffffff !important;
+}
+.fas.fa-map-marker-alt.contact {
+    color: #fff !important;
+}
+.email-contact{
+    color: #000;
+}
+.email-contact:hover{
+    color: #000;
+}
+#form-contact .form-control{
+    border-color: #495057;
+}
+#form-contact .form-control:focus{
+    box-shadow: 0 0 0 0rem rgb(104 136 195);
+}

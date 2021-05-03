@@ -32,6 +32,7 @@ Route::get('/',    HomeController::class )->name('index');
 Route::get('nosotros',  [HomeController::class, 'us'        ] )->name('us');
 Route::get('servicios', [HomeController::class, 'services'  ] )->name('services');
 Route::get('contacto',  [HomeController::class, 'contact'   ] )->name('contact');
+Route::post('send/email',  [HomeController::class, 'sendEmail'   ] )->name('send.email');
 
 
 
