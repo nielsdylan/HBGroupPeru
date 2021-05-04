@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Configuration;
+use DateTime;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -17,7 +18,17 @@ class SettingController extends Controller
     }
     public function save(Request $request)
     {
-        Configuration::where('active', 1)->update(['active' => 0]);
+        $fecha = new DateTime();
+        $fecha->format('U = Y-m-d H:i:s');
+        Configuration::where('active', 1)
+        ->update([
+            'active' => 0,
+            'deleted_at'=>$fecha,
+            'update_by'=>session('user')['user_id'],
+            'delete_by'=>session('user')['user_id']
+
+
+        ]);
 
         $configuration = new Configuration();
         $configuration->title       = $request->title;
@@ -30,6 +41,7 @@ class SettingController extends Controller
         $configuration->facebook    = $request->facebook;
         $configuration->linkedin    = $request->linkedin;
         $configuration->schedule    = $request->schedule;
+        $configuration->create_by    = session('user')['user_id'];
         $configuration->save();
         return redirect()->route('setting');
     }

@@ -14,22 +14,19 @@ class HomeController extends Controller
     //
     public function __invoke()
     {
-        $sliders =  Slider::where('active', 1)
-                    ->take(3)
-                    ->get();
-        return view('frontend.public.index', compact('sliders'));
+        $sliders =  Slider::where('active', 1)->take(3)->get();
+        $configurations = Configuration::where('active', 1)->first();
+        return view('frontend.public.index', compact('sliders', 'configurations'));
     }
-    // public function index()
-    // {
-    //     return view('frontend.public.index');
-    // }
     public function us()
     {
-        return view('frontend.public.us');
+        $configurations = Configuration::where('active', 1)->first();
+        return view('frontend.public.us',compact('configurations'));
     }
     public function services()
     {
-        return view('frontend.public.services');
+        $configurations = Configuration::where('active', 1)->first();
+        return view('frontend.public.services',compact('configurations'));
     }
     public function contact(){
         $configurations = Configuration::where('active', 1)->first();

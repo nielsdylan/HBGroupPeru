@@ -1,4 +1,4 @@
-<a href="https://wa.me/+51946877806?text=Mi consulta es..." target="_blank" id="whatsapp-floot" class="btn-whatsapp-link"><i class="fab fa-whatsapp"></i></a>
+@if ($configurations->whatsapp)<a href="https://wa.me/+51{{ $configurations->whatsapp}}?text=Mi consulta es..." target="_blank" id="whatsapp-floot" class="btn-whatsapp-link"><i class="fab fa-whatsapp"></i></a>@endif
 <a href="#" id="back-to-top" class="btn btn-lg btn-back-top"><i class="fa fa-angle-up"></i></a>
 <section id="footer">
     <div class="pre-footer">
@@ -39,27 +39,41 @@
                     <ul class="list-unstyled color-list">
                         <li>
                             <ul class="list-unstyled">
-                                <li><span class="text-footer"><i class="fas fa-map-marker-alt text-footer"></i> Nueva Victoria Mz 04 Lote 16, Ilo - Moqueguaa - Perú</span></li>
+                                @if ($configurations->direction)
+                                    <li><span class="text-footer"><i class="fas fa-map-marker-alt text-footer"></i> {{$configurations->direction}}</span></li>
+                                @endif
+                                @if ($configurations->whatsapp)
+                                    <li><span class="text-footer"><i class="fab fa-whatsapp text-footer"></i> {{$configurations->whatsapp}}</span></li>
+                                @endif
+                                @if ($configurations->telephone)
+                                    <li><span class="text-footer"><i class="fa fa-phone text-footer"></i> {{$configurations->telephone}}</span></li>
+                                @endif
+                                @if ($configurations->telephone)
+                                    <li><span class="text-footer"><i class="fa fa-envelope text-footer"></i> {{$configurations->email}}</span></li>
+                                @endif
 
-                                <li><span class="text-footer"><i class="fab fa-whatsapp text-footer"></i> (+51) 53 474805</span></li>
-
-                                <li><span class="text-footer"><i class="fa fa-phone text-footer"></i> 946877806</span></li>
-
-                                <li><span class="text-footer"><i class="fa fa-envelope text-footer"></i> info@hbgroup.pe</span></li>
-
-                                <li><a class="facebook text-footer" href="https://www.facebook.com/HBgroup.pe" target="_blank"><i class="fab fa-facebook-f"></i> HBGroupp</a></li>
                             </ul>
                         </li>
                     </ul>
-                    <div id="redes" class="d-none">
+                    <div id="redes" >
                         <ul class="list-inline ml-5 d-none d-sm-none d-lg-block d-md-block">
                             <li class="list-inline-item">
-                                <a class="facebook" href="https://www.facebook.com/HBgroup.pe" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                @if ($configurations->facebook)
+                                <a class="facebook pr-3 text-white" href="{{$configurations->facebook}}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                @endif
+                                @if ($configurations->linkedin)
+                                <a class="text-white" href="{{$configurations->linkedin}}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                @endif
                             </li>
                         </ul>
                         <ul class="list-inline text-center d-block d-sm-block d-lg-none d-md-none">
                             <li class="list-inline-item">
-                                <a class="facebook" href="https://www.facebook.com/HBgroup.pe" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                @if ($configurations->facebook)
+                                <a class="facebook pr-3 text-white" href="{{$configurations->facebook}}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                @endif
+                                @if ($configurations->linkedin)
+                                <a href="{{$configurations->linkedin}}" class="text-white" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                @endif
                             </li>
 
                         </ul>
@@ -69,46 +83,20 @@
         </div>
     </div>
 
-        <div class="footer-copy">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-12 copyright_text wow fadeInUp animated">
-                        <div class="d-none d-lg-block text-white">
-                            <center><span>&copy; {{ date("Y") }} HBGroupp - Todos los derechos reservados. </center>
-                        </div>
-                        <div class="d-block d-lg-none text-white">
-                            <center><span>&copy; {{ date("Y") }}  HBGroupp - Todos los derechos reservados.</span></center>
-                        </div>
+    <div class="footer-copy">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-12 copyright_text wow fadeInUp animated">
+                    <div class="d-none d-lg-block text-white">
+                        <center><span>&copy; {{ date("Y") }} HBGroupp - Todos los derechos reservados. </center>
+                    </div>
+                    <div class="d-block d-lg-none text-white">
+                        <center><span>&copy; {{ date("Y") }}  HBGroupp - Todos los derechos reservados.</span></center>
                     </div>
                 </div>
             </div>
-
         </div>
 
+    </div>
+
 </section>
-<script>
-    //  window.onscroll = function() {
-    //     var scroll = window.scrollY;
-
-
-
-
-        // var pre_footer = $('#footer .pre-footer').offset().top;
-        // if ((scroll+700)>=pre_footer) {
-        //     $('#footer .pre-footer').addClass('animated fadeInUp');
-
-        //     // console.log(left_services);
-        // }
-        // var footer_copy = $('#footer .footer-copy').offset().top;
-
-        // console.log(scroll);
-        // if ((scroll+800)>=footer_copy) {
-        //     $('#footer .footer-copy').addClass('animated fadeInUp');
-        //     console.log(footer_copy);
-
-        // }
-        // $('#back-to-top').addClass('pt-2');
-        // $('#whatsapp-floot').addClass('pt-2');
-        // $('#whatsapp-floot i').addClass('pt-1');
-    // };
-</script>
