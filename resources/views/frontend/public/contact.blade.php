@@ -14,37 +14,53 @@
 
                 <div class="col-md-5 animated fadeInUp">
                     <p>&nbsp;</p>
-                    <h4>Correo de contacto</h4>
-                    <ul class="list-unstyled-contac">
-                        <li>
-                            <a href="mailto:info@hbgroup.pe?Subject=Consulta%20de%20su%20servicio&body=Con%20urgencia" class="email-contact"><i class="far fa-envelope"></i> &nbsp;info@hbgroup.pe</a>
-                        </li>
+                    @if ($configurations->email)
+                        <h4>Correo de contacto</h4>
+                        <ul class="list-unstyled-contac">
+                            <li>
+                                <a href="mailto:{{$configurations->email}}?Subject=Consulta%20de%20su%20servicio&body=Con%20urgencia" class="email-contact"><i class="far fa-envelope"></i> &nbsp;{{$configurations->email}}</a>
+                            </li>
 
-                    </ul>
-                    <h4>Números de contacto</h4>
-                    <ul class="list-unstyled">
-                        <li>
-                            <i class="fa fa-mobile-alt"></i> &nbsp;&nbsp;(+51) 932 777 533
-                        </li>
-                        <li>
-                            <i class="fa fa-phone"></i> &nbsp;(+51) 53 474 805
-                        </li>
+                        </ul>
+                    @endif
+                    @if ($configurations->telephone || $configurations->mobile)
+                        <h4>Números de contacto</h4>
+                        <ul class="list-unstyled">
+                            @if ($configurations->mobile)
+                            <li>
+                                <i class="fa fa-mobile-alt"></i> &nbsp;&nbsp;{{$configurations->mobile}}
+                            </li>
+                            @endif
+                            @if ($configurations->telephone)
+                            <li>
+                                <i class="fa fa-phone"></i> &nbsp;{{$configurations->telephone}}
+                            </li>
+                            @endif
 
-                    </ul>
+                        </ul>
+                    @endif
+                    @if ($configurations->facebook || $configurations->linkedin)
                     <h4>Síguenos</h4>
                     <ul class="list-unstyled">
-                        <a href="https://www.facebook.com/HBgroup.pe" target="_blank"><i class="fab fa-facebook pr-2 pl-2"></i>
+                        @if ($configurations->facebook)
+                        <a href="{{$configurations->facebook}}" target="_blank"><i class="fab fa-facebook pr-2 pl-2"></i>
                         </a>
-                        <a href="https://www.linkedin.com/company/hbgroupperu/about/" target="_blank"><i class="fab fa-linkedin pr-2"></i></a>
+                        @endif
+                        @if ($configurations->linkedin)
+                        <a href="{{$configurations->linkedin}}" target="_blank"><i class="fab fa-linkedin pr-2"></i></a>
+                        @endif
 
                     </ul>
+                    @endif
+                    @if ($configurations->direction)
                     <h4>Ubícanos</h4>
                     <ul class="list-unstyled">
                         <li>
-                            <i class="fas fa-map-marker-alt contact"></i><span> &nbsp;Nueva Victoria Mz 04 Lote 16 Ilo, Moquegua, Perú 18601</span>
+                            <i class="fas fa-map-marker-alt contact"></i><span> &nbsp;{{$configurations->direction}}</span>
                         </li>
 
                     </ul>
+                    @endif
                 </div>
                 <div class="col-md-7">
                     <p>&nbsp;</p>

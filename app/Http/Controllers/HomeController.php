@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ContactMailable;
+use App\Models\Configuration;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -31,11 +32,13 @@ class HomeController extends Controller
         return view('frontend.public.services');
     }
     public function contact(){
-        return view('frontend.public.contact');
+        $configurations = Configuration::where('active', 1)->first();
+        return view('frontend.public.contact', compact('configurations'));
     }
     public function sendEmail(Request $request)
     {
         //para la empresa
+        $configurations = Configuration::where('active', 1)->first();
         $data = array(
             "name"=> $request->name,
             "last_name"=> $request->last_name,
@@ -48,7 +51,7 @@ class HomeController extends Controller
 
         );
         $mail = new ContactMailable($data);
-        Mail::to("contabilidad@hbgroup.pe")->send($mail);
+        Mail::to($configurations->sender)->send($mail);
 
         //para el cliente
         $data = array(
@@ -57,7 +60,7 @@ class HomeController extends Controller
             "email"=> $request->email,
             "telephone"=> $request->telephone,
             "message"=> $request->message,
-            "email_from"=>"contabilidad@hbgroup.pe",
+            "email_from"=>$configurations->sender,
             "view"=>"client",
             "subject"=>"HB Group Perú"
 

@@ -55,6 +55,7 @@ Route::group(['middleware'=>'isLogged'],function(){
     Route::post('user/edit',[UsersController::class, 'userEdit'] )->name('user_edit');
     //
     Route::get('configuracion',[SettingController::class, 'setting'] )->name('setting');
+    Route::post('configuracion',[SettingController::class, 'save'] )->name('setting.save');
     Route::get('grupos',[GroupController::class, 'index'])->name('group');
 
     //landing
