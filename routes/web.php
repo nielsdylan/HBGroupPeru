@@ -52,7 +52,7 @@ Route::group(['middleware'=>'isLogged'],function(){
     Route::post('user/create',[UsersController::class, 'userAdd'] )->name('user.add');
     Route::get('editar-usuario',[UsersController::class, 'userEdit'] )->name('user_edit');
     Route::post('user/edit',[UsersController::class, 'userEdit'] )->name('user_edit');
-    //
+
     Route::get('configuracion',[SettingController::class, 'setting'] )->name('setting');
     Route::post('configuracion',[SettingController::class, 'save'] )->name('setting.save');
 

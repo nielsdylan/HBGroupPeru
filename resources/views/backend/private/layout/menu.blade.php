@@ -29,7 +29,6 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="{{route('slider.index')}}">Sliders</a>
                             <a class="dropdown-item" href="{{route('business.index')}}">Empresas</a>
-                            <a class="dropdown-item" href="{{route('list_user')}}">Usuario</a>
                         </div>
                     </div>
                 </li>

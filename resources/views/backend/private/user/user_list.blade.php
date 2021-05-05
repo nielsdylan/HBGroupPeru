@@ -39,7 +39,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="add-row" class="display table table-striped table-hover" >
+                            <table id="add-row" class="display table table-striped table-hover text-center" >
                                 <thead>
                                     <tr>
                                         <th>USUARIO</th>
@@ -51,7 +51,7 @@
                                 <tbody>
                                     @foreach ($users as $item)
                                     <tr>
-                                        <td>{{$item->username}}</td>
+                                        <td>{{$item->name}}</td>
                                         <td>{{$item->email}}</td>
                                         <td>{{$item->active}}</td>
                                         <td>

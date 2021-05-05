@@ -39,8 +39,7 @@
                                 <h4 class="card-title">Nuevo usuario</h4>
                             </div>
                             <div class="col-md-6 text-right">
-                                <button class="btn btn-primary btn-round"><i class="fa fa-save"></i> Guardar</button>
-                                <a href="{{route('list_user')}}" class="btn btn-danger btn-round"><i class="fas fa-arrow-circle-left"></i> Volver</a>
+
                             </div>
                         </div>
 
@@ -51,8 +50,36 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="group">Grupos</label>
+                                        <select id="group" class="form-control" name="group">
+                                            <option>Seleccione...</option>
+                                            @if ($groups)
+                                              @foreach ($groups as $key=>$item )
+                                                    <option>{{$item->name}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="email">Email</label>
                                         <input id="email" class="form-control" type="email" name="email">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="document_type">Grupos</label>
+                                        <select id="document_type" class="form-control" name="document_type">
+                                            <option>Seleccione...</option>
+                                            @if ($document_types)
+                                                @foreach ($document_types as $key=>$item )
+                                                    <option>{{$item->name}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -89,6 +116,12 @@
                                         <label for="password_double">Repita su contraseña</label>
                                         <input id="password_double" class="form-control" type="password" name="password_double">
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button type="submit" class="btn btn-primary btn-round"><i class="fa fa-save"></i> Guardar</button>
+                                    <a href="{{route('list_user')}}" class="btn btn-danger btn-round"><i class="fas fa-arrow-circle-left"></i> Volver</a>
                                 </div>
                             </div>
                         </form>
