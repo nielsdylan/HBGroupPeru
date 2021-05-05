@@ -10,6 +10,8 @@
     {{-- favicon --}}
 </head>
 <body>
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    <script type="text/javascript"> var url="{{url('').'/'}}"; </script>
     {{-- header --}}
     @include('backend.private.layout.menu')
     {{-- nav --}}

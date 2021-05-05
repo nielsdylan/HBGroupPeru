@@ -1,5 +1,5 @@
 @extends('backend.private')
-@section('title','Grupos')
+@section('title','Usuario')
 @section('content')
 <div class="content">
     <div class="page-inner">
@@ -14,13 +14,13 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('group.index')}}">Administrador</a>
+                    <a href="{{route('business.index')}}">Landing</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('group.index')}}">Grupos</a>
+                    <a href="{{route('business.index')}}">Lista de slider</a>
                 </li>
             </ul>
         </div>
@@ -30,10 +30,10 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-6">
-                                <h4 class="card-title">Grupos</h4>
+                                <h4 class="card-title">Sliders</h4>
                             </div>
                             <div class="col-md-6 text-right">
-                                <a href="{{route('group.new')}}" class="btn btn-primary btn-round"><i class="fas fa-plus"></i> Nuevo grupo</a>
+                                <a href="{{route('business.new')}}" class="btn btn-primary btn-round"><i class="fas fa-plus"></i> Nueva empresa</a>
                             </div>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>NOMBRE</th>
-                                        <th>DESCRIPCIÓN</th>
+                                        <th>IMAGEN</th>
                                         <th style="width: 10%">Action</th>
                                     </tr>
                                 </thead>
@@ -54,13 +54,19 @@
                                         <tr>
                                             <td>{{ ($key+1) }}</td>
                                             <td>{{$item->name}}</td>
-                                            <td>{{$item->description}}</td>
+
+                                            <td>
+                                                @if ($item->image)
+                                                <a href="{{asset('uploads/business/'.$item->image)}}" class="fancybox btn btn-primary"><i class="fas fa-camera"></i></a>
+                                                @endif
+
+                                            </td>
                                             <td>
                                                 <div class="form-button-action">
-                                                    <a href="{{ route('group.edit', $item->group_id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar {{$item->name}}">
+                                                    <a href="{{ route('business.edit', $item->business_id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar {{$item->name}}">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete" data-delete="{{$item->group_id}}"data-original-title="Eliminar {{$item->name}}">
+                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete" data-delete="{{$item->business_id}}"data-original-title="Eliminar {{$item->name}}">
                                                         <i class="fa fa-times"></i>
                                                     </button>
                                                 </div>
@@ -102,7 +108,7 @@
             $.ajax({
                 method: 'POST',
                 headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
-                url: url+'grupos/eliminar',
+                url: url+'empresas/eliminar',
                 dataType: 'json',
                 data: data,
             }).done(function (response) {

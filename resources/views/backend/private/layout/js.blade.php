@@ -1,6 +1,6 @@
 <!--   Core JS Files   -->
-<script src="{{asset('assets/js/core/jquery.3.2.1.min.js')}}"></script>
-<script src="{{asset('assets/js/core/popper.min.js')}}"></script>
+
+{{-- <script src="{{asset('assets/js/core/popper.min.js')}}"></script> --}}
 <script src="{{asset('assets/js/core/bootstrap.min.js')}}"></script>
 
 <!-- jQuery UI -->
@@ -39,7 +39,7 @@
 {{-- <script src="{{asset('assets/js/plugin/gmaps/gmaps.js')}}"></script> --}}
 
 <!-- Sweet Alert -->
-<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
+{{-- <script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script> --}}
 
 <!-- Azzara JS -->
 <script src="{{asset('assets/js/ready.min.js')}}"></script>

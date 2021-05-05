@@ -35,6 +35,7 @@ class SliderController extends Controller
 
         $slider->name = $request->name;
         $slider->image = $name;
+        $slider->created_by = session('user')['user_id'];
         $slider->save();
         return redirect()->route('slider.index');
     }

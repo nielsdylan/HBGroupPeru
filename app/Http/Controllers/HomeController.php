@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ContactMailable;
+use App\Models\Business;
 use App\Models\Configuration;
 use App\Models\Slider;
 use Illuminate\Http\Request;
@@ -16,7 +17,8 @@ class HomeController extends Controller
     {
         $sliders =  Slider::where('active', 1)->take(3)->get();
         $configurations = Configuration::where('active', 1)->first();
-        return view('frontend.public.index', compact('sliders', 'configurations'));
+        $business = Business::where('active', 1)->get();
+        return view('frontend.public.index', compact('sliders', 'configurations', 'business'));
     }
     public function us()
     {

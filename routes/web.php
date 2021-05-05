@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GroupController;
 use Illuminate\Support\Facades\Route;
@@ -45,23 +46,34 @@ Route::get('logout',  [LoginController::class, 'logout'] )->name('logout.logout'
 
 Route::group(['middleware'=>'isLogged'],function(){
     Route::get('dashboard',[DashboardController::class, 'dashboard'] )->name('dashboard');
-    // usuarios
+    // administrador
     Route::get('lista-usuario',[UsersController::class, 'index'] )->name('list_user');
-    //nuevo usuario
     Route::get('nuevo-usuario',[UsersController::class, 'userNew'] )->name('user_add');
     Route::post('user/create',[UsersController::class, 'userAdd'] )->name('user.add');
-    //editar usuario
     Route::get('editar-usuario',[UsersController::class, 'userEdit'] )->name('user_edit');
     Route::post('user/edit',[UsersController::class, 'userEdit'] )->name('user_edit');
     //
     Route::get('configuracion',[SettingController::class, 'setting'] )->name('setting');
     Route::post('configuracion',[SettingController::class, 'save'] )->name('setting.save');
-    Route::get('grupos',[GroupController::class, 'index'])->name('group');
+
+    Route::get('grupos',[GroupController::class, 'index'])->name('group.index');
+    Route::get('grupos/nuevo',[GroupController::class, 'new'])->name('group.new');
+    Route::post('grupos/nuevo',[GroupController::class, 'add'])->name('group.add');
+    Route::get('grupos/editar/{group_id}',[GroupController::class, 'edit'])->name('group.edit');
+    Route::put('grupos/editar/{group}',[GroupController::class, 'update'])->name('group.update');
+    Route::post('grupos/eliminar',[GroupController::class, 'delete'])->name('group.delete');
 
     //landing
     Route::get('slider/lista',[SliderController::class, 'index'] )->name('slider.index');
     Route::get('slider/editar/{slider_id?}', [SliderController::class, 'edit'] )->name('slider.edit');
     Route::put('slider/editar/{slider}', [SliderController::class, 'update'] )->name('slider.update');
+
+    Route::get('empresas',[BusinessController::class, 'index'] )->name('business.index');
+    Route::get('empresas/nueva',[BusinessController::class, 'new'] )->name('business.new');
+    Route::post('empresas/nueva',[BusinessController::class, 'add'] )->name('business.add');
+    Route::get('empresas/edit/{business_id}',[BusinessController::class, 'edit'] )->name('business.edit');
+    Route::put('empresas/edit/{business}', [BusinessController::class, 'update'] )->name('business.update');
+    Route::post('empresas/eliminar', [BusinessController::class, 'delete'] )->name('business.delete');
 });
 
 Route::group(['middleware'=>'AlreadyLoggedIn'],function(){

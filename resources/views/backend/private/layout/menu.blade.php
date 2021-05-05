@@ -16,7 +16,7 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="{{route('setting')}}">Configuración</a>
-                            <a class="dropdown-item" href="{{ route('group')}}">Grupos</a>
+                            <a class="dropdown-item" href="{{ route('group.index')}}">Grupos</a>
                             <a class="dropdown-item" href="{{route('list_user')}}">Usuario</a>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="{{route('slider.index')}}">Sliders</a>
-                            <a class="dropdown-item" href="{{route('group')}}">Empresas</a>
+                            <a class="dropdown-item" href="{{route('business.index')}}">Empresas</a>
                             <a class="dropdown-item" href="{{route('list_user')}}">Usuario</a>
                         </div>
                     </div>

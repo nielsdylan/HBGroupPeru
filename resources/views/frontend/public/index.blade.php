@@ -122,78 +122,13 @@
                 <div class="col-md-12">
                     <div class="carousel-thumbs mt-5">
                         <div class="owl-carousel-second">
-                        <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/AAQ.jpg')}}">
-                                    <div style="background: url('{{asset('uploads/public/AAQ.jpg')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
-                            </div>
-                            <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/southern.png')}}">
-                                    <div style="background: url('{{asset('uploads/public/southern.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
-                            </div>
-                            <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/antapaccay.png')}}">
-                                    <div style="background: url('{{asset('uploads/public/antapaccay.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
-                            </div>
-                            <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/servosa.png')}}">
-                                    <div style="background: url('{{asset('uploads/public/servosa.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
-                            </div>
-                            <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/engie.png')}}">
-                                    <div style="background: url('{{asset('uploads/public/engie.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
-                            </div>
-
-                            <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/tisur.png')}}">
-                                    <div style="background: url('{{asset('uploads/public/tisur.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
-                            </div>
-                            <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/tramarsa.png')}}">
-                                    <div style="background: url('{{asset('uploads/public/tramarsa.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
-                            </div>
-                            <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/consorcio.png')}}">
-                                    <div style="background: url('{{asset('uploads/public/consorcio.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
-                            </div>
-                            <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/securitas.png')}}">
-                                    <div style="background: url('{{asset('uploads/public/securitas.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
-                            </div>
-                            <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/seguroc.png')}}">
-                                    <div style="background: url('{{asset('uploads/public/seguroc.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
-                            </div>
-                            <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/CSI.png')}}">
-                                    <div style="background: url('{{asset('uploads/public/CSI.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
-                            </div>
-
-                            <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/als.png')}}">
-                                    <div style="background: url('{{asset('uploads/public/als.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
-                            </div>
-                            <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/consultoria.png')}}">
-                                    <div style="background: url('{{asset('uploads/public/consultoria.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
-                            </div>
-                            <div class="ficha_carousel_img" align="center">
-                                <a  class="fancybox" rel="galeria1" href="{{asset('uploads/public/sgs.png')}}">
-                                    <div style="background: url('{{asset('uploads/public/sgs.png')}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
-                                </a>
-                            </div>
+                            @foreach ($business as $key=> $item )
+                                <div class="ficha_carousel_img" align="center">
+                                    <a  class="fancybox" rel="galeria1" href="{{asset('uploads/business/'.$item->image)}}">
+                                        <div style="background: url('{{asset('uploads/business/'.$item->image)}}');background-size: contain;background-position: center;background-repeat: no-repeat;height: 80px;max-width:  170px;"></div>
+                                    </a>
+                                </div>
+                            @endforeach
                         </div>
                         <a href="#" data-carousel="prev" class="owl-prev izquierda_ficha owl-carousel-product-left">
                         <i class="fa fa-angle-left" style="font-size: 14px; margin-left: 7px;"></i>
@@ -206,11 +141,6 @@
             </div>
 
         </div>
-
-
-
-
-
     </section>
     <script>
 
