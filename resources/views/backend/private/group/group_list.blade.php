@@ -126,4 +126,5 @@
         });
     });
 </script>
-@endsection
+</div>
+</div>
