@@ -35,7 +35,7 @@
                 <div class="form-group text-center">
                     <img src="{{asset('uploads/public/logo_snc.png')}}" width="125">
                 </div>
-                <h3 class="text-center">Login</h3>
+                <h3 class="text-center">Iniciar sesión</h3>
                 <h2 class="text-center">HB Group Perú</h2>
                 <div class="login-form">
                     <div class="form-group form-floating-label">
