@@ -50,8 +50,9 @@ Route::group(['middleware'=>'isLogged'],function(){
     Route::get('lista-usuario',[UsersController::class, 'index'] )->name('list_user');
     Route::get('nuevo-usuario',[UsersController::class, 'userNew'] )->name('user_add');
     Route::post('user/create',[UsersController::class, 'userAdd'] )->name('user.add');
-    Route::get('editar-usuario',[UsersController::class, 'userEdit'] )->name('user_edit');
-    Route::post('user/edit',[UsersController::class, 'userEdit'] )->name('user_edit');
+    Route::get('user/edit/{user_id}',[UsersController::class, 'edit'] )->name('user.edit');
+    Route::put('user/edit/{user}',[UsersController::class, 'upload'] )->name('user.upload');
+    Route::post('user/eliminar',[UsersController::class, 'delete'] )->name('user.delete');
 
     Route::get('configuracion',[SettingController::class, 'setting'] )->name('setting');
     Route::post('configuracion',[SettingController::class, 'save'] )->name('setting.save');

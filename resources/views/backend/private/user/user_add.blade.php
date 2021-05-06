@@ -46,16 +46,17 @@
 
                     </div>
                     <div class="card-body">
-                        <form action="" method="post" id="form-user">
+                        <form action="{{route('user.add')}}" method="post" id="form-user">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="group">Grupos</label>
-                                        <select id="group" class="form-control" name="group">
-                                            <option>Seleccione...</option>
+                                        <select id="group" class="form-control" name="group_id" required>
+                                            <option value="">Seleccione...</option>
                                             @if ($groups)
                                               @foreach ($groups as $key=>$item )
-                                                    <option>{{$item->name}}</option>
+                                                    <option value="{{$item->group_id}}">{{$item->name}}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -64,19 +65,19 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input id="email" class="form-control" type="email" name="email">
+                                        <input id="email" class="form-control" type="email" name="email" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="document_type">Grupos</label>
-                                        <select id="document_type" class="form-control" name="document_type">
-                                            <option>Seleccione...</option>
+                                        <label for="document_type">Tipos de documentos</label>
+                                        <select id="document_type" class="form-control" name="document_type_id" required>
+                                            <option value="">Seleccione...</option>
                                             @if ($document_types)
                                                 @foreach ($document_types as $key=>$item )
-                                                    <option>{{$item->name}}</option>
+                                                    <option value="{{$item->document_type_id}}" >{{$item->name}}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -85,7 +86,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">DNI</label>
-                                        <input id="dni" class="form-control" type="number" name="dni">
+                                        <input id="dni" class="form-control" type="number" name="dni" required>
                                     </div>
                                 </div>
 
@@ -94,13 +95,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="last_name">Apellidos</label>
-                                        <input id="last_name" class="form-control" type="text" name="last_name">
+                                        <input id="last_name" class="form-control" type="text" name="last_name" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Nombre</label>
-                                        <input id="name" class="form-control" type="text" name="name">
+                                        <input id="name" class="form-control" type="text" name="name" required>
                                     </div>
                                 </div>
                             </div>
@@ -108,13 +109,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="password">Contraseña</label>
-                                        <input id="password" class="form-control" type="password" name="password">
+                                        <input id="password" class="form-control password" type="password" name="password" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="password_double">Repita su contraseña</label>
-                                        <input id="password_double" class="form-control" type="password" name="password_double">
+                                        <input id="password_double" class="form-control" type="password" name="password_double" disabled required>
                                     </div>
                                 </div>
                             </div>
@@ -133,4 +134,26 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).on('change keyup','.password',function () {
+        var password = $(this).val();
+        var password_double = $('[name="password_double"]').val();
+        if (password) {
+            $('[name="password_double"]').removeAttr('disabled');
+        }else{
+            $('[name="password_double"]').attr('disabled', '');
+        }
+    });
+    $(document).on('change','[name="password_double"]',function () {
+        var password_double = $(this).val();
+        var password = $('[name="password"]').val();
+        if (password == password_double) {
+            $('[name="password"]').removeAttr('disabled');
+        }else{
+            swal("Password", "Las contraseñas no son iguales", "error")
+            $(this).val('');
+        }
+    });
+
+</script>
 @endsection

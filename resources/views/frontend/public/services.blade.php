@@ -1,5 +1,5 @@
 @extends('frontend.public')
-@section('title','servicio')
+@section('title','HB Group Perú')
 @section('content')
     <section id="offerts">
         <div class="container" id="card-services">

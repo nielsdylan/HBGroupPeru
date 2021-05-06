@@ -42,24 +42,26 @@
                             <table id="add-row" class="display table table-striped table-hover text-center" >
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>USUARIO</th>
                                         <th>EMAIL</th>
-                                        <th>ACTIVE</th>
+                                        <th>FECHA</th>
                                         <th style="width: 10%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $item)
+                                    @foreach ($users as $key=> $item)
                                     <tr>
+                                        <td>{{($key+1)}}</td>
                                         <td>{{$item->name}}</td>
                                         <td>{{$item->email}}</td>
-                                        <td>{{$item->active}}</td>
+                                        <td>{{ date('d/m/Y', strtotime($item->created_at))}}</td>
                                         <td>
                                             <div class="form-button-action">
-                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                <a href="{{ route('user.edit', $item->id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar {{$item->name}}">
                                                     <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
+                                                </a>
+                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete" data-delete="{{$item->id}}"data-original-title="Eliminar {{$item->name}}">
                                                     <i class="fa fa-times"></i>
                                                 </button>
                                             </div>
@@ -77,4 +79,50 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).on('click','.delete',function (e) {
+        e.preventDefault();
+        var id = $(this).attr('data-delete');
+        data={
+            active:1,
+            id:id
+        };
+        swal({
+            title: "Eliminar",
+            text: "¿Esta seguro de eliminar este registro?",
+            type: "info",
+            cancelButtonClass: "btn-light",
+            confirmButtonText: "Si",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        }, function () {
+
+            $.ajax({
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: url+'user/eliminar',
+                dataType: 'json',
+                data: data,
+            }).done(function (response) {
+                if (response.success) {
+                    swal({
+                        title: "Éxito",
+                        text: "Se elimino con éxito",
+                        type: "success",
+                        showCancelButton: false,
+                        confirmButtonColor: '#78cbf2',
+                        confirmButtonText: 'Aceptar',
+                    },
+                    function(){
+                        location.reload();
+                    });
+                }
+
+            }).fail(function () {
+                // alert("Error");
+            });
+        });
+    });
+</script>
 @endsection

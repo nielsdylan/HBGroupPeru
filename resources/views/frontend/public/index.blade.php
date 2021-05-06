@@ -1,5 +1,5 @@
 @extends('frontend.public')
-@section('title','inicio')
+@section('title','HB Group Perú')
 @section('content')
 
     @if ($sliders)
