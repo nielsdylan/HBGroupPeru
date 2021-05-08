@@ -79,4 +79,15 @@ class UsersController extends Controller
             'status'=>200
         ]);
     }
+    public function search(Request $request)
+    {
+        $user = User::where('email',$request->email)->first();
+        $status = 404;
+        if ($user) {
+            $status = 200;
+        }
+        return response()->json([
+            'status'=> $status
+        ]);
+    }
 }
