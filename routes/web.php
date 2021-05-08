@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UsersController;
@@ -80,4 +81,6 @@ Route::group(['middleware'=>'isLogged'],function(){
 Route::group(['middleware'=>'AlreadyLoggedIn'],function(){
     Route::get('hbgroupp_web',  [LoginController::class, 'loginHbgroup'] );
 });
+
+Route::get('perfil', [ProfileController::class, 'index'] )->name('profile.index');
 

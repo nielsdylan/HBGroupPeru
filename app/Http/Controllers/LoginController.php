@@ -25,6 +25,7 @@ class LoginController extends Controller
 
         $user = User::where('email', $request->username)
                 ->where('password', sha1($request->password))
+                ->where('group_id', 1)
                 ->first();
         if ($user) {
             $json_user = array(
