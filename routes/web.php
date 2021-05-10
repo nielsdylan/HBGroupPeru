@@ -82,3 +82,4 @@ Route::group(['middleware'=>'AlreadyLoggedIn'],function(){
     Route::get('hbgroupp_web',  [LoginController::class, 'loginHbgroup'] );
 });
 
+Route::get('login',  [LoginController::class, 'login'] );
