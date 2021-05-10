@@ -56,14 +56,17 @@
                                             <td>{{$item->name}}</td>
                                             <td>{{$item->description}}</td>
                                             <td>
-                                                <div class="form-button-action">
-                                                    <a href="{{ route('group.edit', $item->group_id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar {{$item->name}}">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete" data-delete="{{$item->group_id}}"data-original-title="Eliminar {{$item->name}}">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </div>
+                                                @if ($item->group_id != 1)
+                                                    <div class="form-button-action">
+                                                        <a href="{{ route('group.edit', $item->group_id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar {{$item->name}}">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete" data-delete="{{$item->group_id}}"data-original-title="Eliminar {{$item->name}}">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                @endif
+
                                             </td>
                                         </tr>
                                         @endforeach
@@ -126,5 +129,4 @@
         });
     });
 </script>
-</div>
-</div>
+@endsection

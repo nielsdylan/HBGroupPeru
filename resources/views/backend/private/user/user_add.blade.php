@@ -46,7 +46,7 @@
 
                     </div>
                     <div class="card-body">
-                        <form action="{{route('user.add')}}" method="post" id="form-user">
+                        <form action="{{route('user.add')}}" method="post" id="form-user" autocomplete="off">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
@@ -65,7 +65,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input id="email" class="form-control" type="email" name="email" required>
+                                        <input id="email" class="form-control email" type="email" name="email"  required>
                                     </div>
                                 </div>
                             </div>
@@ -153,6 +153,32 @@
             swal("Password", "Las contraseñas no son iguales", "error")
             $(this).val('');
         }
+    });
+    $(document).on('change','.email',function () {
+        var email = $(this).val(),
+            input_this = $(this);
+        data={
+            email:email
+        };
+        if (email) {
+            $.ajax({
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: url+'user/buscar',
+                dataType: 'json',
+                data: data,
+            }).done(function (response) {
+                if (response.status==200) {
+                    swal("Informativo", "El correo que ingreso ya esxiste", "warning");
+                    input_this.val('');
+                }
+
+            }).fail(function () {
+                console.log('error');
+            });
+        }
+
+
     });
 
 </script>

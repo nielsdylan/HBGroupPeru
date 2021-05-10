@@ -52,4 +52,8 @@ class LoginController extends Controller
             return redirect('hbgroupp_web');
         }
     }
+    public function login()
+    {
+        return view('frontend.login');
+    }
 }

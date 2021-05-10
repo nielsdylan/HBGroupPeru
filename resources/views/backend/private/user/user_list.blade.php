@@ -57,14 +57,17 @@
                                         <td>{{$item->email}}</td>
                                         <td>{{ date('d/m/Y', strtotime($item->created_at))}}</td>
                                         <td>
-                                            <div class="form-button-action">
-                                                <a href="{{ route('user.edit', $item->id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar {{$item->name}}">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete" data-delete="{{$item->id}}"data-original-title="Eliminar {{$item->name}}">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </div>
+                                            @if ($item->id != 1)
+                                                <div class="form-button-action">
+                                                    <a href="{{ route('user.edit', $item->id) }}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar {{$item->name}}">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete" data-delete="{{$item->id}}"data-original-title="Eliminar {{$item->name}}">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            @endif
+
                                         </td>
                                     </tr>
                                     @endforeach
