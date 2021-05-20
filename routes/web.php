@@ -81,7 +81,12 @@ Route::group(['middleware'=>'isLogged'],function(){
 
 Route::group(['middleware'=>'AlreadyLoggedIn'],function(){
     Route::get('hbgroupp_web',  [LoginController::class, 'loginHbgroup'] );
-});
-Route::get('login',  [LoginController::class, 'login'] );
-Route::get('perfil', [ProfileController::class, 'index'] )->name('profile.index');
+    Route::get('login',  [LoginController::class, 'login'] );
 
+});
+Route::post('login/session',  [LoginController::class, 'sessionStart'] );
+
+Route::middleware(['hbgroup'])->group(function(){
+    Route::resource('perfil', ProfileController::class );
+
+});

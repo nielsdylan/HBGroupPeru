@@ -17,6 +17,7 @@
 {{-- my css --}}
 <link rel="stylesheet" href="{{asset('assets/js/plugin/sweetAlert2/dist/sweetalert.css')}}">
 <link rel="stylesheet" href="{{asset('assets/js/plugin/fancybox_backend/jquery.fancybox.min.css')}}">
+<link rel="stylesheet" href="{{asset('assets/css/hbgroup.css')}}">
 <script src="{{asset('assets/js/core/jquery.3.2.1.min.js')}}"></script>
 <script src="{{asset('assets/js/core/popper.min.js')}}"></script>
 

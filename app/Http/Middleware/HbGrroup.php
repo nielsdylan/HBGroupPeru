@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class AlreadyLoggedIn
+class HbGrroup
 {
     /**
      * Handle an incoming request.
@@ -16,11 +16,8 @@ class AlreadyLoggedIn
      */
     public function handle(Request $request, Closure $next)
     {
-        if (session()->has('user') && (url('hbgroupp_web') == $request->url())) {
-            return back();
-        }
-        if (session()->has('hbgroup') && (url('login') == $request->url())) {
-            return back();
+        if (!session()->has('hbgroup')) {
+            return redirect('login');
         }
         return $next($request);
     }

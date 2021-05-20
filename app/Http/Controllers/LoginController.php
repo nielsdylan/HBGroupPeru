@@ -51,9 +51,46 @@ class LoginController extends Controller
             session()->pull('user');
             return redirect('hbgroupp_web');
         }
+        if (session()->has('hbgroup')) {
+            session()->pull('hbgroup');
+            return redirect('login');
+        }
     }
     public function login()
     {
         return view('frontend.login');
+    }
+    public function sessionStart(Request $request)
+    {
+        // $user = User::where('email', $request->username)
+        //         ->where('password', sha1($request->password))
+        //         ->first();
+                $user = User::where('email', $request->username)
+                ->where('password', sha1($request->password))
+                ->join("groups", "groups.group_id", "=", "users.group_id")
+                ->select("groups.name as group", "users.*")
+                ->first();
+        if ($user) {
+            $json_user = array(
+                'user_id'=>$user->id,
+                'email'=>$user->email,
+                'group_id'=>$user->group_id,
+                'group'=>$user->group,
+                'name'=>$user->name,
+                'last_name'=>$user->last_name,
+                'image'=>$user->image,
+            );
+            $request->session()->put('hbgroup',$json_user);
+            return response()->json([
+                'success'=>true,
+                'status'=>200,
+                'user'=>$user
+            ]);
+        }else{
+           return response()->json([
+                'success'=>false,
+                'status'=>400
+            ]);
+        }
     }
 }

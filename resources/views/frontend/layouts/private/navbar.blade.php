@@ -54,7 +54,7 @@
                             <div class="notif-center">
                                 <a href="#">
                                     <div class="notif-img">
-                                        <img src="../assets/img/jm_denis.jpg" alt="Img Profile">
+                                        <img src="{{asset('assets/img/jm_denis.jpg')}}" alt="Img Profile">
                                     </div>
                                     <div class="notif-content">
                                         <span class="subject">Jimmy Denis</span>
@@ -66,7 +66,7 @@
                                 </a>
                                 <a href="#">
                                     <div class="notif-img">
-                                        <img src="../assets/img/chadengle.jpg" alt="Img Profile">
+                                        <img src="{{asset('assets/img/chadengle.jpg')}}" alt="Img Profile">
                                     </div>
                                     <div class="notif-content">
                                         <span class="subject">Chad</span>
@@ -78,7 +78,7 @@
                                 </a>
                                 <a href="#">
                                     <div class="notif-img">
-                                        <img src="../assets/img/mlane.jpg" alt="Img Profile">
+                                        <img src="{{asset('assets/img/mlane.jpg')}}" alt="Img Profile">
                                     </div>
                                     <div class="notif-content">
                                         <span class="subject">Jhon Doe</span>
@@ -90,7 +90,7 @@
                                 </a>
                                 <a href="#">
                                     <div class="notif-img">
-                                        <img src="../assets/img/talha.jpg" alt="Img Profile">
+                                        <img src="{{asset('assets/img/talha.jpg')}}" alt="Img Profile">
                                     </div>
                                     <div class="notif-content">
                                         <span class="subject">Talha</span>
@@ -169,16 +169,28 @@
             <li class="nav-item dropdown hidden-caret">
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                     <div class="avatar-sm">
-                        <img src="../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                        @if (session('hbgroup')['image'])
+                            <img src="{{asset('assets/img/user/'.session('hbgroup')['image'])}}" alt="..." class="avatar-img rounded-circle">
+                        @else
+                           <img src="{{asset('assets/img/profile.jpg')}}" alt="..." class="avatar-img rounded-circle">
+                        @endif
+
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-user animated fadeIn">
                     <li>
                         <div class="user-box">
-                            <div class="avatar-lg"><img src="../assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
+                            <div class="avatar-lg">
+                                @if (session('hbgroup')['image'])
+                                    <img src="{{asset('assets/img/user/'.session('hbgroup')['image'])}}" alt="image profile" class="avatar-img rounded">
+                                @else
+                                  <img src="{{asset('assets/img/profile.jpg')}}" alt="image profile" class="avatar-img rounded">
+                                @endif
+
+                            </div>
                             <div class="u-text">
-                                <h4>Hizrian</h4>
-                                <p class="text-muted">hello@example.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+                                <h4>{{session('hbgroup')['name']}}</h4>
+                                <p class="text-muted text-points">{{session('hbgroup')['email']}}</p><a href="{{route('perfil.index')}}" class="btn btn-rounded btn-danger btn-sm">Ver perfil</a>
                             </div>
                         </div>
                     </li>
@@ -190,7 +202,7 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Account Setting</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Logout</a>
+                        <a class="dropdown-item" href="{{ route('logout.logout') }}">Logout</a>
                     </li>
                 </ul>
             </li>
@@ -198,3 +210,6 @@
         </ul>
     </div>
 </nav>
+<script>
+    console.log('{{session('hbgroup')['image']}}');
+</script>
