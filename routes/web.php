@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\CoursController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GroupController;
 use Illuminate\Support\Facades\Route;
@@ -8,8 +9,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SedeController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\TurnController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Routing\RouteGroup;
 
@@ -88,5 +91,8 @@ Route::post('login/session',  [LoginController::class, 'sessionStart'] );
 
 Route::middleware(['hbgroup'])->group(function(){
     Route::resource('perfil', ProfileController::class );
+    Route::resource('cursos', CoursController::class );
+    Route::resource('sede', SedeController::class );
+    Route::resource('turno', TurnController::class );
 
 });

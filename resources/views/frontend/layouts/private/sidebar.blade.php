@@ -33,14 +33,40 @@
                     <div class="collapse" id="cours">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="forms/forms.html">
+                                <a href="{{route('cursos.index')}}">
                                     <span class="sub-item">Lista de cursos</span>
                                 </a>
                             </li>
 
+
                         </ul>
                     </div>
                 </li>
+
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#sede-turn">
+                        <i class="far fa-building"></i>
+                        <p>Sedes y turnos</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="sede-turn">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{route('sede.index')}}">
+                                    <span class="sub-item">Sedes</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{route('turno.index')}}">
+                                    <span class="sub-item">Turnos</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                </li>
+
 
             </ul>
         </div>
