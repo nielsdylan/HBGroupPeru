@@ -52,7 +52,7 @@
                     <div class="collapse" id="sede-turn">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{route('sede-turno.index')}}">
+                                <a href="{{route('sede.index')}}">
                                     <span class="sub-item">Sedes y Turnos</span>
                                 </a>
                             </li>

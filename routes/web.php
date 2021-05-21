@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SedeController;
+use App\Http\Controllers\SedeTurnController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\TurnController;
@@ -94,5 +95,7 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::resource('cursos', CoursController::class );
     Route::resource('sede', SedeController::class );
     Route::resource('turno', TurnController::class );
+    Route::resource('sede-turno', SedeTurnController::class );
+
 
 });
