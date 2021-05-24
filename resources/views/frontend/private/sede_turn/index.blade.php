@@ -42,13 +42,14 @@
 
 
                     <div class="table-responsive">
-                        <table id="add-row" class="display table table-striped table-hover" >
+                        <table id="add-row" class="display table table-striped table-hover text-center" >
                             <thead>
                                 <tr>
                                     <th>N°</th>
                                     <th>Sede</th>
                                     <th>Turno</th>
                                     <th>Fecha</th>
+                                    <th>Activo</th>
                                     <th style="width: 10%">Action</th>
                                 </tr>
                             </thead>
@@ -59,6 +60,9 @@
                                         <td>{{$item->sede}}</td>
                                         <td>{{$item->turn}}</td>
                                         <td>{{date('d/m/Y', strtotime($item->created_at)) }}</td>
+                                        <td>
+                                            <input type="checkbox" {{ $item->enable ==1 ? 'checked' : '' }}  data-toggle="toggle" data-onstyle="success" data-style="btn-round" data-onstyle="success" data-offstyle="danger" data-id="{{$item->sede_turn_id}}" data-action="on-off" >
+                                        </td>
                                         <td>
                                             <div class="form-button-action">
                                                 <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar" data-id="{{$item->sede_turn_id}}" data-edit="modal">
@@ -159,6 +163,17 @@
         });
 
 
+    });
+    $( '[data-action="on-off"]' ).on( 'change', function() {
+        if( $(this).is(':checked') ){
+            // Hacer algo si el checkbox ha sido seleccionado
+            invoice = 1;
+            console.log("El checkbox con valor " + $(this).val() + " ha sido seleccionado");
+        } else {
+            // Hacer algo si el checkbox ha sido deseleccionado
+            invoice=0;
+            console.log("El checkbox con valor " + $(this).val() + " ha sido deseleccionado");
+        }
     });
 </script>
 <!-- Modal -->
