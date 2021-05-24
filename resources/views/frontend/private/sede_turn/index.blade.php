@@ -32,7 +32,7 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="card-title">Lista de sedes y turnos</h4>
-                        <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+                        <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addModal">
                             <i class="fa fa-plus"></i>
                             Nueva sede y y turno
                         </button>
@@ -61,10 +61,10 @@
                                         <td>{{date('d/m/Y', strtotime($item->created_at)) }}</td>
                                         <td>
                                             <div class="form-button-action">
-                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar" data-id="{{$item->sede_id}}" data-edit="modal">
+                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar" data-id="{{$item->sede_turn_id}}" data-edit="modal">
                                                     <i class="fa fa-edit"></i>
                                                 </button>
-                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Eliminar" data-id="{{$item->sede_id}}" data-destroy="destroy-sede" >
+                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Eliminar" data-id="{{$item->sede_turn_id}}" data-destroy="destroy-sede" >
                                                     <i class="fa fa-times"></i>
                                                 </button>
                                             </div>
@@ -85,7 +85,7 @@
         e.preventDefault();
         $('#edit-modal').modal('show');
         var data = $(this).attr('data-id'),
-            route = '{{ route('sede.edit', ['sede' => '+data+'] ) }}';
+            route = '{{ route('sede-turno.edit', ['sede_turno' => 'data'] ) }}';
             route = route.replace('data', data);
         $.ajax({
             method: 'GET',
@@ -100,8 +100,11 @@
         }).done(function (response) {
             if (response.status == 200) {
                 $('[data-form="sede-edit"]').removeClass('is-loading is-loading-lg');
-                $('#name_edit').val(response.sede.name);
-                $('[name="sede_id"]').val(response.sede.sede_id)
+                $('[data-form="sede-turn-edit"] [name="sede"] option[value="'+response.sede_turn.sede_id+'"]').attr("selected",'');
+                $('[data-form="sede-turn-edit"] [name="turn"] option[value="'+response.sede_turn.turn_id+'"]').attr("selected",true);
+                // $("#provincia option[value="+ valor +"]").attr("selected",true);
+
+                $('[name="sede_turn_id"]').val(response.sede_turn.sede_turn_id);
             }else{
             }
         }).fail(function () {
@@ -114,7 +117,7 @@
     $(document).on('click','[data-destroy="destroy-sede"]',function (e) {
         e.preventDefault();
         var id = $(this).attr('data-id'),
-            route = '{{ route('sede.destroy', ['sede' => 'id'] ) }}';
+            route = '{{ route('sede-turno.destroy', ['sede_turno' => 'id'] ) }}';
             route = route.replace('id', id);
         swal({
             title: "¿Está seguro de eliminar??",

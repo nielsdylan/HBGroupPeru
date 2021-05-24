@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class SedeTurn extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'sede_turn_id ';
+    protected $primaryKey = 'sede_turn_id';
 }

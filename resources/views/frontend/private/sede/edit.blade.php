@@ -6,20 +6,20 @@
                     <span class="fw-mediumbold">
                     Editar</span>
                     <span class="fw-light">
-                        Sede
+                        sede
                     </span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="POST"  data-form="sede-edit">
-
+            <form method="POST" action="{{route('sede.store')}}" data-form="sede-edit">
+                @csrf
                 <div class="modal-body">
+                    <input type="hidden" name="sede_id" id="">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group ">
-                                <input type="hidden" name="sede_id"  value="">
                                 <label for="name_edit">Sede</label>
                                 <input id="name_edit" name="name" type="text" class="form-control" placeholder="Sede..." required>
                             </div>

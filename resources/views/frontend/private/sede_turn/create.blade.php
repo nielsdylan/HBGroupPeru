@@ -1,41 +1,50 @@
-<div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header no-bd">
-                <h3 class="modal-title">
-                    <span class="fw-mediumbold">
-                    Seleccione</span>
-                    <span class="fw-light">
-                        sede y turno
-                    </span>
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="POST" action="{{route('sede.store')}}" data-form="sede-create">
-                @csrf
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title" id="exampleModalLabel">Sedes y Turnos</h2>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+            <form action="{{route('sede-turno.store')}}" method="POST" data-form="sede-turn-store">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group ">
-                                <label for="name">Sede</label>
-                                <input id="name" name="name" type="text" class="form-control" placeholder="Sede..." required>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="sede">SEDES: </label>
+                                <select id="sede" class="form-control" name="sede" required>
+                                    <option value="" >Seleccione...</option>
+                                    @foreach ($sedes as $key=>$item )
+                                        <option value="{{$item->sede_id}}" >{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="turn">TURNOS: </label>
+                                <select id="turn" class="form-control" name="turn" required>
+                                    <option value="" >Seleccione...</option>
+                                    @foreach ($turns as $key=>$item )
+                                        <option value="{{$item->turn_id}}" >{{$item->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
-
                 </div>
-                <div class="modal-footer no-bd">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <div class="modal-footer">
+
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
                 </div>
             </form>
-        </div>
-    </div>
+		</div>
+	</div>
 </div>
 <script>
-    $(document).on('submit','[data-form="sede-create"]',function (e) {
+    $(document).on('submit','[data-form="sede-turn-store"]',function (e) {
         e.preventDefault();
         var data = $(this).serialize(),
             route = $(this).attr('action');
@@ -55,7 +64,7 @@
                 data: data,
             }).done(function (response) {
                 if (response.status == 200) {
-                    $('#addRowModal').modal('hide');
+                    $('#addModal').modal('hide');
                     var placementFrom = 'top';
                     var placementAlign = 'right';
                     var state = 'success';
