@@ -99,3 +99,5 @@ Route::middleware(['hbgroup'])->group(function(){
 
 
 });
+// ruta de autenticacion
+Route::get('autenticacion',  [HomeController::class, 'autentication'   ] )->name('autentication');
