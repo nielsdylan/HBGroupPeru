@@ -83,3 +83,7 @@ Route::group(['middleware'=>'AlreadyLoggedIn'],function(){
 });
 
 Route::get('login',  [LoginController::class, 'login'] );
+
+
+// ruta de autenticacion
+Route::get('autenticacion',  [HomeController::class, 'autentication'   ] )->name('autentication');

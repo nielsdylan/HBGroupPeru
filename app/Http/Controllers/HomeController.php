@@ -69,4 +69,9 @@ class HomeController extends Controller
 
         return redirect()->route('contact')->with('info','Su mensaje a sido enviado con éxito');
     }
+    public function autentication()
+    {
+        $configurations = Configuration::where('active', 1)->first();
+        return view('frontend.public.autentication', compact('configurations'));
+    }
 }
