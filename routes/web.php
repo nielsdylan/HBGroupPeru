@@ -3,11 +3,13 @@
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\CoursController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExceltController;
 use App\Http\Controllers\GroupController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SedeController;
 use App\Http\Controllers\SedeTurnController;
@@ -96,6 +98,8 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::resource('sede', SedeController::class );
     Route::resource('turno', TurnController::class );
     Route::resource('sede-turno', SedeTurnController::class );
+    Route::resource('participantes', ParticipantController::class );
+    Route::post('participante/excel',[ExceltController::class, 'saveParticipant'] )->name('participant.excel');
 
 
 });

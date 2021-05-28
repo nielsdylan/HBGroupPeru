@@ -24,6 +24,7 @@
                 </div>
             </div>
             <ul class="nav">
+                @if (session('hbgroup')['group_id'] == 1 || session('hbgroup')['group_id'] == 5)
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#cours">
                         <i class="fas fa-server"></i>
@@ -34,15 +35,20 @@
                         <ul class="nav nav-collapse">
                             <li>
                                 <a href="{{route('cursos.index')}}">
-                                    <span class="sub-item">Lista de cursos</span>
+                                    <span class="sub-item">Cursos</span>
                                 </a>
                             </li>
-
-
+                            <li>
+                                <a href="{{route('participantes.index')}}">
+                                    <span class="sub-item">Participantes</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
+                @endif
 
+                @if (session('hbgroup')['group_id'] == 1)
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#sede-turn">
                         <i class="far fa-building"></i>
@@ -71,6 +77,7 @@
                         </ul>
                     </div>
                 </li>
+                @endif
 
 
             </ul>
