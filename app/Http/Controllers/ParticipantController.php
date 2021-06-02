@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Participant;
+use DateTime;
 use Illuminate\Http\Request;
 
 class ParticipantController extends Controller
@@ -15,7 +16,7 @@ class ParticipantController extends Controller
     }
     public function store(Request $request)
     {
-        $sede = new Sede();
+        $sede = new Participant();
         $sede->name = $request->name;
 
         $sede->create_by = session('hbgroup')['user_id'];
@@ -26,7 +27,7 @@ class ParticipantController extends Controller
             'status'=>200,
         ]);
     }
-    public function edit(Sede $sede)
+    public function edit(Participant $sede)
     {
         return response()->json([
             'success'=>true,
@@ -34,9 +35,9 @@ class ParticipantController extends Controller
             'sede'=>$sede
         ]);
     }
-    public function update(Request $request, Sede $sede)
+    public function update(Request $request, Participant $sede)
     {
-        Sede::where('active', 1)->where('sede_id', $sede->sede_id)
+        Participant::where('active', 1)->where('sede_id', $sede->sede_id)
         ->update([
             'name' => $request->name,
             'update_by'=>session('hbgroup')['user_id']
@@ -46,11 +47,11 @@ class ParticipantController extends Controller
             'status'=>200
         ]);
     }
-    public function destroy(Sede $sede)
+    public function destroy(Participant $sede)
     {
         $fecha = new DateTime();
         $fecha->format('U = Y-m-d H:i:s');
-        Sede::where('active', 1)->where('sede_id', $sede->sede_id)
+        Participant::where('active', 1)->where('sede_id', $sede->sede_id)
         ->update([
             'active' => 0,
             'deleted_at'=>$fecha,

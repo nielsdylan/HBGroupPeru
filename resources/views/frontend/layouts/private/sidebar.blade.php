@@ -28,7 +28,7 @@
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#cours">
                         <i class="fas fa-server"></i>
-                        <p>Cursos</p>
+                        <p>Académico</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="cours">
@@ -41,6 +41,16 @@
                             <li>
                                 <a href="{{route('participantes.index')}}">
                                     <span class="sub-item">Participantes</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{route('asignatura.index')}}">
+                                    <span class="sub-item">Asignatura</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{route('programa.index')}}">
+                                    <span class="sub-item">Programa</span>
                                 </a>
                             </li>
                         </ul>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AsignatureController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\CoursController;
 use App\Http\Controllers\DashboardController;
@@ -10,7 +11,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\PensumController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\SedeController;
 use App\Http\Controllers\SedeTurnController;
 use App\Http\Controllers\SettingController;
@@ -99,6 +102,11 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::resource('turno', TurnController::class );
     Route::resource('sede-turno', SedeTurnController::class );
     Route::resource('participantes', ParticipantController::class );
+
+    Route::resource('asignatura', AsignatureController::class );
+    Route::resource('programa', ProgramController::class );
+    Route::resource('pensum', PensumController::class );
+
     Route::post('participante/excel',[ExceltController::class, 'saveParticipant'] )->name('participant.excel');
 
 

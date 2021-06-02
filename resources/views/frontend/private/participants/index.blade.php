@@ -34,7 +34,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="participant">Agregar lista de los participantes:</label>
-                                    <input id="participant" class="form-control" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+                                    <input id="participant" class="form-control" type="file" name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +54,8 @@
 <script>
     $(document).on('submit','[data-form="save-excel"]',function (e) {
         e.preventDefault();
-        var data = $(this).serialize(),
+        var data = new FormData($(this)[0]),
+
             route = $(this).attr('action');
 
         $.ajax({
@@ -62,6 +63,8 @@
             headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
             url: route,
             dataType: 'json',
+            processData: false,
+            contentType: false,
             data: data,
         }).done(function (response) {
             if (response.status == 200) {
@@ -87,8 +90,8 @@
                 $.notify(content,{
                     type: state,
                     placement: {
-                        from: placementFrom,
-                        align: placementAlign
+                        from: 'top',
+                        align: 'center'
                     },
                     time: 1000,
                     delay: 0,
