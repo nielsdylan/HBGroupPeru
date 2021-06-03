@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
 {{-- <link rel="stylesheet" href="{{asset('assets/css/azzara.css')}}"> --}}
 <link rel="stylesheet" href="{{asset('assets/css/azzara.min.css')}}">
+<link href="{{asset('assets/styles.css')}}" rel="stylesheet" />
+<link href="{{asset('assets/prism.css')}}" rel="stylesheet" />
 
 <!-- CSS Just for demo purpose, don't include it in your project -->
 <link rel="stylesheet" href="{{asset('assets/css/demo.css')}}">
