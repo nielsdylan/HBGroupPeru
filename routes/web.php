@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\AsignatureController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\CoursController;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\PensumAsignatureController;
 use App\Http\Controllers\PensumController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
@@ -106,6 +108,8 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::resource('asignatura', AsignatureController::class );
     Route::resource('programa', ProgramController::class );
     Route::resource('pensum', PensumController::class );
+    Route::resource('pensum-asignatura', PensumAsignatureController::class );
+    Route::post('getpensum',[AjaxController::class, 'getPensumAsignatureShow'] )->name('pensum.asignature.show');
 
     Route::post('participante/excel',[ExceltController::class, 'saveParticipant'] )->name('participant.excel');
 

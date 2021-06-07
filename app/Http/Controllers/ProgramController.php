@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Asignature;
+use App\Models\Ciclo;
 use App\Models\Program;
 use DateTime;
 use Illuminate\Http\Request;
@@ -55,8 +57,9 @@ class ProgramController extends Controller
     }
     public function show(Program $programa)
     {
-
-        return view('frontend.private.programs.show', compact('programa'));
+        $asignature = Asignature::where('active',1)->where('status',1)->get();
+        $ciclo = Ciclo::where('active',1)->get();
+        return view('frontend.private.programs.show', compact('programa','asignature','ciclo'));
     }
     public function destroy(Program $programa)
     {

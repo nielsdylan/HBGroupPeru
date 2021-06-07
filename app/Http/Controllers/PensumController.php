@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Asignature;
+use App\Models\Ciclo;
 use App\Models\Pensum;
 use DateTime;
 use Illuminate\Http\Request;
@@ -56,7 +58,7 @@ class PensumController extends Controller
         return response()->json([
             'success' =>true,
             'status'  =>200,
-            'results' =>$results
+            'results' =>$results,
         ]);
     }
     public function destroy(Pensum $pensum)
