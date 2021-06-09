@@ -3,6 +3,7 @@
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\AsignatureController;
 use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CoursController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExceltController;
@@ -46,6 +47,7 @@ Route::get('nosotros',  [HomeController::class, 'us'        ] )->name('us');
 Route::get('servicios', [HomeController::class, 'services'  ] )->name('services');
 Route::get('contacto',  [HomeController::class, 'contact'   ] )->name('contact');
 Route::post('send/email',  [HomeController::class, 'sendEmail'   ] )->name('send.email');
+Route::get('calendario',  [HomeController::class, 'calendar'   ] )->name('calendar');
 
 
 
@@ -113,6 +115,7 @@ Route::middleware(['hbgroup'])->group(function(){
 
     Route::post('participante/excel',[ExceltController::class, 'saveParticipant'] )->name('participant.excel');
 
+    Route::resource('cliente', ClientController::class );
 
 });
 // ruta de autenticacion

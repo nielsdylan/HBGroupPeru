@@ -74,4 +74,8 @@ class HomeController extends Controller
         $configurations = Configuration::where('active', 1)->first();
         return view('frontend.public.autentication', compact('configurations'));
     }
+    public function calendar()
+    {
+        return view('frontend.public.calendar');
+    }
 }

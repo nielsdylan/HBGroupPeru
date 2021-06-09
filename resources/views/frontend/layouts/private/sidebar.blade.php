@@ -88,8 +88,23 @@
                     </div>
                 </li>
                 @endif
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#comercial">
+                        <i class="far fa-building"></i>
+                        <p>Comercial</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="comercial">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{route('cliente.index')}}">
+                                    <span class="sub-item">Clientes</span>
+                                </a>
+                            </li>
 
-
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
