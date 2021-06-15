@@ -99,3 +99,17 @@
         });
     });
 </script>
+
+<!-- /.container -->
+
+    <!-- jQuery Version 1.11.1 -->
+    {{-- <script src="{{asset('assets/calendar/js/jquery.js')}}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{asset('assets/calendar/js/bootstrap.min.js')}}"></script> --}}
+
+	<!-- FullCalendar -->
+	<script src="{{asset('assets/calendar/js/moment.min.js')}}"></script>
+	<script src="{{asset('assets/calendar/js/fullcalendar/fullcalendar.min.js')}}"></script>
+	<script src="{{asset('assets/calendar/js/fullcalendar/fullcalendar.js')}}"></script>
+	<script src="{{asset('assets/calendar/js/fullcalendar/locale/es.js')}}"></script>

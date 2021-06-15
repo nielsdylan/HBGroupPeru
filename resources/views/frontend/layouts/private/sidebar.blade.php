@@ -101,6 +101,11 @@
                                     <span class="sub-item">Clientes</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{route('calendario.index')}}">
+                                    <span class="sub-item">Calendario</span>
+                                </a>
+                            </li>
 
                         </ul>
                     </div>

@@ -25,4 +25,9 @@
 <script src="{{asset('assets/js/core/popper.min.js')}}"></script>
 
 <script src="{{asset('assets/js/plugin/sweetAlert2/dist/sweetalert.js')}}"></script>
+<!-- Bootstrap Core CSS -->
+    {{-- <link href="{{asset('assets/calendar/css/bootstrap.min.css')}}" rel="stylesheet"> --}}
+
+	<!-- FullCalendar -->
+	<link href="{{asset('assets/calendar/css/fullcalendar.css')}}" rel='stylesheet' />
 

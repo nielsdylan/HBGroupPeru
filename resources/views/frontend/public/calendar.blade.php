@@ -1,239 +1,287 @@
+
+
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Calendario</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{{asset('assets/calendar/css/bootstrap.min.css')}}" rel="stylesheet">
+
+	<!-- FullCalendar -->
+	<link href="{{asset('assets/calendar/css/fullcalendar.css')}}" rel='stylesheet' />
 
 
-<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+    <!-- Custom CSS -->
 
-<script>
+</head>
+
+<body>
+    <div class="container">
+                <h1>Curso programados</h1>
+                <div id="calendar" class="col-md-12">
+            </div>
+
+        <!-- /.row -->
+
+		<!-- Modal -->
+		<div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <form class="form-horizontal" method="POST" action="addEvent.php">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Agregar Evento</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="title" class="col-sm-2 control-label">Titulo</label>
+                            <div class="col-sm-10">
+                            <input type="text" name="title" class="form-control" id="title" placeholder="Titulo">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="color" class="col-sm-2 control-label">Color</label>
+                            <div class="col-sm-10">
+                            <select name="color" class="form-control" id="color">
+                                            <option value="">Seleccionar</option>
+                                <option style="color:#0071c5;" value="#0071c5">&#9724; Azul oscuro</option>
+                                <option style="color:#40E0D0;" value="#40E0D0">&#9724; Turquesa</option>
+                                <option style="color:#008000;" value="#008000">&#9724; Verde</option>
+                                <option style="color:#FFD700;" value="#FFD700">&#9724; Amarillo</option>
+                                <option style="color:#FF8C00;" value="#FF8C00">&#9724; Naranja</option>
+                                <option style="color:#FF0000;" value="#FF0000">&#9724; Rojo</option>
+                                <option style="color:#000;" value="#000">&#9724; Negro</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="start" class="col-sm-2 control-label">Fecha Inicial</label>
+                            <div class="col-sm-10">
+                            <input type="text" name="start" class="form-control" id="start" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="end" class="col-sm-2 control-label">Fecha Final</label>
+                            <div class="col-sm-10">
+                            <input type="text" name="end" class="form-control" id="end" readonly>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+		</div>
+
+
+
+		<!-- Modal -->
+		<div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			<form class="form-horizontal" method="POST" action="editEventTitle.php">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Modificar Evento</h4>
+			  </div>
+			  <div class="modal-body">
+
+				  <div class="form-group">
+					<label for="title" class="col-sm-2 control-label">Titulo</label>
+					<div class="col-sm-10">
+					  <input type="text" name="title" class="form-control" id="title" placeholder="Titulo">
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label for="color" class="col-sm-2 control-label">Color</label>
+					<div class="col-sm-10">
+					  <select name="color" class="form-control" id="color">
+						  <option value="">Seleccionar</option>
+						  <option style="color:#0071c5;" value="#0071c5">&#9724; Azul oscuro</option>
+						  <option style="color:#40E0D0;" value="#40E0D0">&#9724; Turquesa</option>
+						  <option style="color:#008000;" value="#008000">&#9724; Verde</option>
+						  <option style="color:#FFD700;" value="#FFD700">&#9724; Amarillo</option>
+						  <option style="color:#FF8C00;" value="#FF8C00">&#9724; Naranja</option>
+						  <option style="color:#FF0000;" value="#FF0000">&#9724; Rojo</option>
+						  <option style="color:#000;" value="#000">&#9724; Negro</option>
+
+						</select>
+					</div>
+				  </div>
+				    <div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+						  <div class="checkbox">
+							<label class="text-danger"><input type="checkbox"  name="delete"> Eliminar Evento</label>
+						  </div>
+						</div>
+					</div>
+
+				  <input type="hidden" name="id" class="form-control" id="id">
+
+
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+				<button type="submit" class="btn btn-primary">Guardar</button>
+			  </div>
+			</form>
+			</div>
+		  </div>
+		</div>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery Version 1.11.1 -->
+    <script src="{{asset('assets/calendar/js/jquery.js')}}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{asset('assets/calendar/js/bootstrap.min.js')}}"></script>
+
+	<!-- FullCalendar -->
+	<script src="{{asset('assets/calendar/js/moment.min.js')}}"></script>
+	<script src="{{asset('assets/calendar/js/fullcalendar/fullcalendar.min.js')}}"></script>
+	<script src="{{asset('assets/calendar/js/fullcalendar/fullcalendar.js')}}"></script>
+	<script src="{{asset('assets/calendar/js/fullcalendar/locale/es.js')}}"></script>
+
+
+	<script>
 
 	$(document).ready(function() {
-	    var date = new Date();
-		var d = date.getDate();
-		var m = date.getMonth();
-		var y = date.getFullYear();
 
-		/*  className colors
+        var date = new Date();
+        var yyyy = date.getFullYear().toString();
+        var mm = (date.getMonth()+1).toString().length == 1 ? "0"+(date.getMonth()+1).toString() : (date.getMonth()+1).toString();
+        var dd  = (date.getDate()).toString().length == 1 ? "0"+(date.getDate()).toString() : (date.getDate()).toString();
+        var route = '{{ route('get.events' ) }}';
+        var array_events = [];
 
-		className: default(transparent), important(red), chill(pink), success(green), info(blue)
+        $.ajax({
+            method: 'GET',
+            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+            url: route,
+            dataType: 'json',
+            data: {},
+        }).done(function (response) {
 
-		*/
+            $.each(response, function (index, element) {
+                // var start = (element.start).split(' '),
+                //     end = (element.end).split(' ');
+
+                if((element.start).split(' ')[1] == '00:00:00'){
+                    start = (element.start).split(' ')[0];
+                }else{
+                    start = element.start;
+                }
+                if((element.end).split(' ')[1] == '00:00:00'){
+                    end = (element.end).split(' ')[0];
+                }else{
+                    end = element.end;
+                }
+
+                a={
+                    id: element.id,
+                    title: element.title,
+                    start: start,
+                    end: end,
+                    color: element.color,
+                }
+                array_events.push(a);
+            });
+            $('#calendar').fullCalendar({
+                header: {
+                    language: 'es',
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay',
+
+                },
+                defaultDate: yyyy+"-"+mm+"-"+dd,
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                selectable: true,
+                selectHelper: true,
+                select: function(start, end) {
+
+                    $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
+                    $('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
+                    $('#ModalAdd').modal('show');
+                },
+                eventRender: function(event, element) {
+                    element.bind('dblclick', function() {
+                        $('#ModalEdit #id').val(event.id);
+                        $('#ModalEdit #title').val(event.title);
+                        $('#ModalEdit #color').val(event.color);
+                        $('#ModalEdit').modal('show');
+                    });
+                },
+                eventDrop: function(event, delta, revertFunc) { // si changement de position
+
+                    edit(event);
+
+                },
+                eventResize: function(event,dayDelta,minuteDelta,revertFunc) { // si changement de longueur
+
+                    edit(event);
+
+                },
+                events: array_events
+            });
+        }).fail(function () {
+            // alert("Error");
+        });
 
 
-		/* initialize the external events
-		-----------------------------------------------------------------*/
 
-		$('#external-events div.external-event').each(function() {
+		function edit(event){
+			start = event.start.format('YYYY-MM-DD HH:mm:ss');
+			if(event.end){
+				end = event.end.format('YYYY-MM-DD HH:mm:ss');
+			}else{
+				end = start;
+			}
 
-			// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-			// it doesn't need to have a start or end
-			var eventObject = {
-				title: $.trim($(this).text()) // use the element's text as the event title
-			};
+			id =  event.id;
 
-			// store the Event Object in the DOM element so we can get to it later
-			$(this).data('eventObject', eventObject);
+			Event = [];
+			Event[0] = id;
+			Event[1] = start;
+			Event[2] = end;
 
-			// make the event draggable using jQuery UI
-			$(this).draggable({
-				zIndex: 999,
-				revert: true,      // will cause the event to go back to its
-				revertDuration: 0  //  original position after the drag
+			$.ajax({
+			 url: 'editEventDate.php',
+			 type: "POST",
+			 data: {Event:Event},
+			 success: function(rep) {
+					if(rep == 'OK'){
+						alert('Evento se ha guardado correctamente');
+					}else{
+						alert('No se pudo guardar. Inténtalo de nuevo.');
+					}
+				}
 			});
-
-		});
-
-
-		/* initialize the calendar
-		-----------------------------------------------------------------*/
-
-		var calendar =  $('#calendar').fullCalendar({
-			header: {
-				left: 'title',
-				center: 'agendaDay,agendaWeek,month',
-				right: 'prev,next today'
-			},
-			editable: true,
-			firstDay: 1, //  1(Monday) this can be changed to 0(Sunday) for the USA system
-			selectable: true,
-			defaultView: 'month',
-
-			axisFormat: 'h:mm',
-			columnFormat: {
-                month: 'ddd',    // Mon
-                week: 'ddd d', // Mon 7
-                day: 'dddd M/d',  // Monday 9/7
-                agendaDay: 'dddd d'
-            },
-            titleFormat: {
-                month: 'MMMM yyyy', // September 2009
-                week: "MMMM yyyy", // September 2009
-                day: 'MMMM yyyy'                  // Tuesday, Sep 8, 2009
-            },
-			allDaySlot: false,
-			selectHelper: true,
-			select: function(start, end, allDay) {
-				var title = prompt('Event Title:');
-				if (title) {
-					calendar.fullCalendar('renderEvent',
-						{
-							title: title,
-							start: start,
-							end: end,
-							allDay: allDay
-						},
-						true // make the event "stick"
-					);
-				}
-				calendar.fullCalendar('unselect');
-			},
-			droppable: true, // this allows things to be dropped onto the calendar !!!
-			drop: function(date, allDay) { // this function is called when something is dropped
-
-				// retrieve the dropped element's stored Event Object
-				var originalEventObject = $(this).data('eventObject');
-
-				// we need to copy it, so that multiple events don't have a reference to the same object
-				var copiedEventObject = $.extend({}, originalEventObject);
-
-				// assign it the date that was reported
-				copiedEventObject.start = date;
-				copiedEventObject.allDay = allDay;
-
-				// render the event on the calendar
-				// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-				$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-
-				// is the "remove after drop" checkbox checked?
-				if ($('#drop-remove').is(':checked')) {
-					// if so, remove the element from the "Draggable Events" list
-					$(this).remove();
-				}
-
-			},
-
-			events: [
-				{
-					title: 'All Day Event',
-					start: new Date(y, m, 1)
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: new Date(y, m, d-3, 16, 0),
-					allDay: false,
-					className: 'info'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: new Date(y, m, d+4, 16, 0),
-					allDay: false,
-					className: 'info'
-				},
-				{
-					title: 'Meeting',
-					start: new Date(y, m, d, 10, 30),
-					allDay: false,
-					className: 'important'
-				},
-				{
-					title: 'Lunch',
-					start: new Date(y, m, d, 12, 0),
-					end: new Date(y, m, d, 14, 0),
-					allDay: false,
-					className: 'important'
-				},
-				{
-					title: 'Birthday Party',
-					start: new Date(y, m, d+1, 19, 0),
-					end: new Date(y, m, d+1, 22, 30),
-					allDay: false,
-				},
-				{
-					title: 'Click for Google',
-					start: new Date(y, m, 28),
-					end: new Date(y, m, 29),
-					url: 'https://ccp.cloudaccess.net/aff.php?aff=5188',
-					className: 'success'
-				}
-			],
-		});
-
+		}
 
 	});
 
-</script>
-<style>
+    </script>
 
-	body {
-	    margin-bottom: 40px;
-		margin-top: 40px;
-		text-align: center;
-		font-size: 14px;
-		font-family: 'Roboto', sans-serif;
-		background:url(http://www.digiphotohub.com/wp-content/uploads/2015/09/bigstock-Abstract-Blurred-Background-Of-92820527.jpg);
-		}
-
-	#wrap {
-		width: 1100px;
-		margin: 0 auto;
-		}
-
-	#external-events {
-		float: left;
-		width: 150px;
-		padding: 0 10px;
-		text-align: left;
-		}
-
-	#external-events h4 {
-		font-size: 16px;
-		margin-top: 0;
-		padding-top: 1em;
-		}
-
-	.external-event { /* try to mimick the look of a real event */
-		margin: 10px 0;
-		padding: 2px 4px;
-		background: #3366CC;
-		color: #fff;
-		font-size: .85em;
-		cursor: pointer;
-		}
-
-	#external-events p {
-		margin: 1.5em 0;
-		font-size: 11px;
-		color: #666;
-		}
-
-	#external-events p input {
-		margin: 0;
-		vertical-align: middle;
-		}
-
-	#calendar {
-/* 		float: right; */
-        margin: 0 auto;
-		width: 900px;
-		background-color: #FFFFFF;
-		  border-radius: 6px;
-        box-shadow: 0 1px 2px #C3C3C3;
-		-webkit-box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
--moz-box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
-box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
-		}
-
-</style>
-</head>
-<body>
-<div id='wrap'>
-
-<div id='calendar'></div>
-
-<div style='clear:both'></div>
-</div>
 </body>
+
 </html>

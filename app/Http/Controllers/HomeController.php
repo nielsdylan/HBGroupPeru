@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\ContactMailable;
 use App\Models\Business;
 use App\Models\Configuration;
+use App\Models\Event;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -76,6 +77,8 @@ class HomeController extends Controller
     }
     public function calendar()
     {
-        return view('frontend.public.calendar');
+        $configurations = Configuration::where('active', 1)->first();
+        $events =   Event::get();
+        return view('frontend.public.calendar', compact('configurations', 'events'));
     }
 }

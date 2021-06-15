@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\PensumAsignature;
 use Illuminate\Http\Request;
 
@@ -27,5 +28,9 @@ class AjaxController extends Controller
             ]);
         }
 
+    }
+    public function getEvents()
+    {
+        return $events =   Event::get();
     }
 }
