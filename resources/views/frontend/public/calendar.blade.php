@@ -14,146 +14,151 @@
     <title>Calendario</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="{{asset('assets/calendar/css/bootstrap.min.css')}}" rel="stylesheet">
-
+    {{-- <link href="{{asset('assets/calendar/css/bootstrap.min.css')}}" rel="stylesheet"> --}}
+    @include('frontend.layouts.public.css')
 	<!-- FullCalendar -->
 	<link href="{{asset('assets/calendar/css/fullcalendar.css')}}" rel='stylesheet' />
-
+    <link href="{{asset('assets/css/calendar.css')}}" rel='stylesheet' />
+    {{-- <link rel="stylesheet" href="{{asset('assets/css/frontend/animate.css')}}"> --}}
 
     <!-- Custom CSS -->
 
 </head>
 
 <body>
-    <div class="container">
-                <h1>Curso programados</h1>
-                <div id="calendar" class="col-md-12">
-            </div>
+    <section class="header">
+        <div class="top-nav">
+            <div class="container">
+                <div class="row">
+                    @if ($configurations->schedule)
+                        <div class="col-md-6 d-none d-md-block" align="left">
+                            <ul class="list-inline mb-0">
+                                    <a href="{{ url('/') }}" class="list-inline-item text-white"><i class="far fa-clock"></i> {{$configurations->schedule}}</a>
+                            </ul>
+                        </div>
+                    @endif
 
-        <!-- /.row -->
+                    <div class="col-md-6 d-none d-md-block" align="right">
+                        <ul class="list-inline mb-0">
+                            @if ($configurations->telephone)
+                            <a href="tel:+51 {{$configurations->telephone}}" class="list-inline-item text-white"><i class="fa fa-phone"></i> (+51) 53 474805</a>
+                            @endif
+                            @if ($configurations->whatsapp)
+                            <a href="https://wa.me/+51{{ $configurations->whatsapp}}?text=" target="_blank" class="list-inline-item text-white"><i class="fab fa-whatsapp text-white"></i> {{ $configurations->whatsapp}}</a>
+                            @endif
 
-		<!-- Modal -->
-		<div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                <form class="form-horizontal" method="POST" action="addEvent.php">
+                            {{-- <a href="https://www.facebook.com/HBgroup.pe" target="_blank" class="list-inline-item icon text-white"><i class="fab fa-facebook-f text-white"></i></a> --}}
 
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Agregar Evento</h4>
+                            <a href="https://site5.q10.com/login?ReturnUrl=%2F&aplentId=05554f9b-6439-4175-8443-321c9ebcf09d" target="_blank" class="list-inline-item icon text-white"><i class="fas fa-user-graduate text-white"></i> Aula virtual</a>
+
+                            {{-- <a href="{{route('autentication')}}" target="_blank" class="list-inline-item icon text-white"><i class="fas fa-user-graduate text-white"></i> Aula virtual</a> --}}
+
+                        </ul>
                     </div>
-                    <div class="modal-body">
-
-                        <div class="form-group">
-                            <label for="title" class="col-sm-2 control-label">Titulo</label>
-                            <div class="col-sm-10">
-                            <input type="text" name="title" class="form-control" id="title" placeholder="Titulo">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="color" class="col-sm-2 control-label">Color</label>
-                            <div class="col-sm-10">
-                            <select name="color" class="form-control" id="color">
-                                            <option value="">Seleccionar</option>
-                                <option style="color:#0071c5;" value="#0071c5">&#9724; Azul oscuro</option>
-                                <option style="color:#40E0D0;" value="#40E0D0">&#9724; Turquesa</option>
-                                <option style="color:#008000;" value="#008000">&#9724; Verde</option>
-                                <option style="color:#FFD700;" value="#FFD700">&#9724; Amarillo</option>
-                                <option style="color:#FF8C00;" value="#FF8C00">&#9724; Naranja</option>
-                                <option style="color:#FF0000;" value="#FF0000">&#9724; Rojo</option>
-                                <option style="color:#000;" value="#000">&#9724; Negro</option>
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="start" class="col-sm-2 control-label">Fecha Inicial</label>
-                            <div class="col-sm-10">
-                            <input type="text" name="start" class="form-control" id="start" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="end" class="col-sm-2 control-label">Fecha Final</label>
-                            <div class="col-sm-10">
-                            <input type="text" name="end" class="form-control" id="end" readonly>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
-                </form>
                 </div>
             </div>
-		</div>
+            <div class="col-md-12 d-block d-md-none pt-2" align="center">
+                @if ($configurations->schedule)
+                    <div class="col-md-12">
+                        <a href="{{ url('/') }}" class="list-inline-item text-white"><i class="far fa-clock"></i> {{$configurations->schedule}}</a>
+                    </div>
+                @endif
+                <ul class="list-inline mb-0">
+                    @if ($configurations->telephone)
+                    <a href="tel:992 933 603" class="list-inline-item text-white"><i class="fa fa-phone"></i> 946877806</a>
+                    @endif
+                    @if ($configurations->whatsapp)
+                    <a href="https://wa.me/992933603?text=" target="_blank" class="list-inline-item text-white"><i class="fab fa-whatsapp text-white"></i> 946877806</a>
+                    @endif
+                    <a href="https://site5.q10.com/login?ReturnUrl=%2F&aplentId=05554f9b-6439-4175-8443-321c9ebcf09d" target="_blank" class="list-inline-item icon text-white"><i class="fas fa-user-graduate text-white"></i> Aula virtual</a>
+                    {{-- <a href="{{route('autentication')}}" target="_blank" class="list-inline-item icon text-white"><i class="fas fa-user-graduate text-white"></i> Aula virtual</a> --}}
+                </ul>
+            </div>
+        </div>
+    </section>
 
+    <section id="calendar-cours">
 
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Curso programados</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="calendar" class="col-md-12 ">
+                    </div>
+                </div>
+            </div>
 
-		<!-- Modal -->
-		<div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-			<div class="modal-content">
-			<form class="form-horizontal" method="POST" action="editEventTitle.php">
-			  <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">Modificar Evento</h4>
-			  </div>
-			  <div class="modal-body">
+        </div>
+    </section>
 
-				  <div class="form-group">
-					<label for="title" class="col-sm-2 control-label">Titulo</label>
-					<div class="col-sm-10">
-					  <input type="text" name="title" class="form-control" id="title" placeholder="Titulo">
-					</div>
-				  </div>
-				  <div class="form-group">
-					<label for="color" class="col-sm-2 control-label">Color</label>
-					<div class="col-sm-10">
-					  <select name="color" class="form-control" id="color">
-						  <option value="">Seleccionar</option>
-						  <option style="color:#0071c5;" value="#0071c5">&#9724; Azul oscuro</option>
-						  <option style="color:#40E0D0;" value="#40E0D0">&#9724; Turquesa</option>
-						  <option style="color:#008000;" value="#008000">&#9724; Verde</option>
-						  <option style="color:#FFD700;" value="#FFD700">&#9724; Amarillo</option>
-						  <option style="color:#FF8C00;" value="#FF8C00">&#9724; Naranja</option>
-						  <option style="color:#FF0000;" value="#FF0000">&#9724; Rojo</option>
-						  <option style="color:#000;" value="#000">&#9724; Negro</option>
+        <div class="container">
+            <!-- Modal -->
+            <div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="" data-form="course-program-edit" method="POST">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Detalle del curso</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="asignature">Asignatura :</label>
+                                            <label id="asignature"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="course">Curso :</label>
+                                            <label id="course"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <i class="far fa-calendar-alt"></i>
+                                            <label id="date_start"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <i class="far fa-clock"></i>
+                                            <label id="hour_start"></label> - <label id="hour_end"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                        <input type="hidden" name="id" id="id">
+                                        </div>
+                                    </div>
+                                </div>
 
-						</select>
-					</div>
-				  </div>
-				    <div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-						  <div class="checkbox">
-							<label class="text-danger"><input type="checkbox"  name="delete"> Eliminar Evento</label>
-						  </div>
-						</div>
-					</div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                            </div>
+                        </form>
 
-				  <input type="hidden" name="id" class="form-control" id="id">
+                    </div>
+                </div>
+            </div>
 
+        </div>
 
-			  </div>
-			  <div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-				<button type="submit" class="btn btn-primary">Guardar</button>
-			  </div>
-			</form>
-			</div>
-		  </div>
-		</div>
-
-    </div>
-    <!-- /.container -->
-
-    <!-- jQuery Version 1.11.1 -->
-    <script src="{{asset('assets/calendar/js/jquery.js')}}"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{{asset('assets/calendar/js/bootstrap.min.js')}}"></script>
-
+    @include('frontend.layouts.public.js')
 	<!-- FullCalendar -->
 	<script src="{{asset('assets/calendar/js/moment.min.js')}}"></script>
 	<script src="{{asset('assets/calendar/js/fullcalendar/fullcalendar.min.js')}}"></script>
@@ -163,123 +168,185 @@
 
 	<script>
 
-	$(document).ready(function() {
+        $(document).ready(function() {
 
-        var date = new Date();
-        var yyyy = date.getFullYear().toString();
-        var mm = (date.getMonth()+1).toString().length == 1 ? "0"+(date.getMonth()+1).toString() : (date.getMonth()+1).toString();
-        var dd  = (date.getDate()).toString().length == 1 ? "0"+(date.getDate()).toString() : (date.getDate()).toString();
-        var route = '{{ route('get.events' ) }}';
-        var array_events = [];
+            var date = new Date();
+            var yyyy = date.getFullYear().toString();
+            var mm = (date.getMonth()+1).toString().length == 1 ? "0"+(date.getMonth()+1).toString() : (date.getMonth()+1).toString();
+            var dd  = (date.getDate()).toString().length == 1 ? "0"+(date.getDate()).toString() : (date.getDate()).toString();
+            var route = '{{ route('get.events' ) }}';
+            var array_events = [];
 
-        $.ajax({
-            method: 'GET',
-            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
-            url: route,
-            dataType: 'json',
-            data: {},
-        }).done(function (response) {
+            setTimeout(function(){
+                // $('#calendar').addClass('animated lightSpeedIn');
+            }, 1000);
 
-            $.each(response, function (index, element) {
-                // var start = (element.start).split(' '),
-                //     end = (element.end).split(' ');
+            $.ajax({
+                method: 'GET',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: route,
+                dataType: 'json',
+                data: {},
+            }).done(function (response) {
 
-                if((element.start).split(' ')[1] == '00:00:00'){
-                    start = (element.start).split(' ')[0];
-                }else{
-                    start = element.start;
-                }
-                if((element.end).split(' ')[1] == '00:00:00'){
-                    end = (element.end).split(' ')[0];
-                }else{
-                    end = element.end;
-                }
+                $.each(response, function (index, element) {
 
-                a={
-                    id: element.id,
-                    title: element.title,
-                    start: start,
-                    end: end,
-                    color: element.color,
-                }
-                array_events.push(a);
+                    if (element.date_start) {
+                        a={
+                            id: element.id,
+                            title: element.course+', '+element.asignature,
+                            start: element.date_start,
+                            end: element.date_start,
+                            color: '#40E0D0',
+                        }
+                        array_events.push(a);
+                    }
+
+                });
+                $('#calendar').fullCalendar({
+                    header: {
+                        language: 'es',
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,basicWeek,basicDay',
+
+                    },
+                    defaultDate: yyyy+"-"+mm+"-"+dd,
+                    editable: true,
+                    eventLimit: true, // allow "more" link when too many events
+                    selectable: true,
+                    selectHelper: true,
+                    select: function(start, end) {
+
+                        $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
+                        $('#ModalAdd #date_start').val(moment(start).format('DD-MM-YYYY'));
+
+                        $('#ModalAdd #date_hidden').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
+                        $('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
+                        $('#ModalAdd').modal('show');
+                    },
+                    eventRender: function(event, element) {
+                        element.bind('dblclick', function() {
+
+                            var id_event = event.id,
+                                route   = '{{ route('events', ['event' => '+id_event+'] ) }}',
+                                route   = route.replace('id_event', id_event);
+                            $.ajax({
+                                method: 'GET',
+                                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                                url: route,
+                                dataType: 'json',
+                                data: {},
+                            }).done(function (response) {
+                                if (response.status == 200) {
+
+                                    $('#ModalEdit #id').val(response.result.id);
+                                    $('#ModalEdit #asignature').text(response.result.asignature);
+                                    $('#ModalEdit #course').text(response.result.course);
+                                    $('#ModalEdit #hour_end').text(response.result.hour_end);
+                                    $('#ModalEdit #hour_start').text(response.result.hour_start);
+                                    $('#ModalEdit #date_start').text((response.result.date_start).split('-').reverse().join('-'));
+                                    $('#ModalEdit #date_hidden').val(response.result.date_start);
+
+                                    $('#ModalEdit').modal('show');
+                                }
+                            }).fail(function () {
+                                // alert("Error");
+                            });
+
+
+                        });
+                    },
+                    eventDrop: function(event, delta, revertFunc) { // si changement de position
+
+                        edit(event);
+
+                    },
+                    eventResize: function(event,dayDelta,minuteDelta,revertFunc) { // si changement de longueur
+
+                        edit(event);
+
+                    },
+                    events: array_events
+                });
+            }).fail(function () {
+                // alert("Error");
             });
-            $('#calendar').fullCalendar({
-                header: {
-                    language: 'es',
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,basicWeek,basicDay',
 
-                },
-                defaultDate: yyyy+"-"+mm+"-"+dd,
-                editable: true,
-                eventLimit: true, // allow "more" link when too many events
-                selectable: true,
-                selectHelper: true,
-                select: function(start, end) {
 
-                    $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
-                    $('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
-                    $('#ModalAdd').modal('show');
-                },
-                eventRender: function(event, element) {
-                    element.bind('dblclick', function() {
-                        $('#ModalEdit #id').val(event.id);
-                        $('#ModalEdit #title').val(event.title);
-                        $('#ModalEdit #color').val(event.color);
-                        $('#ModalEdit').modal('show');
-                    });
-                },
-                eventDrop: function(event, delta, revertFunc) { // si changement de position
 
-                    edit(event);
+            function edit(event){
+                start = event.start.format('YYYY-MM-DD HH:mm:ss');
+                if(event.end){
+                    end = event.end.format('YYYY-MM-DD HH:mm:ss');
+                }else{
+                    end = start;
+                }
 
-                },
-                eventResize: function(event,dayDelta,minuteDelta,revertFunc) { // si changement de longueur
+                id =  event.id;
 
-                    edit(event);
+                Event = [];
+                Event[0] = id;
+                Event[1] = start;
+                Event[2] = end;
 
-                },
-                events: array_events
-            });
-        }).fail(function () {
-            // alert("Error");
+                $.ajax({
+                 url: 'editEventDate.php',
+                 type: "POST",
+                 data: {Event:Event},
+                 success: function(rep) {
+                        if(rep == 'OK'){
+                            alert('Evento se ha guardado correctamente');
+                        }else{
+                            alert('No se pudo guardar. Inténtalo de nuevo.');
+                        }
+                    }
+                });
+            }
+
         });
+        $(document).on('submit','[data-form="course-program"]',function (e) {
+            e.preventDefault();
+            var data = $(this).serialize(),
+                route = $(this).attr('action');
 
+            $.ajax({
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: route,
+                dataType: 'json',
+                data: data,
+            }).done(function (response) {
+                if (response.status == 200) {
+                    location.reload();
+                }
+            }).fail(function () {
+                // alert("Error");
+            });
 
+        });
+        $(document).on('submit','[data-form="course-program-edit"]',function (e) {
+            e.preventDefault();
+            var id_event    = $(this).find('#id').val(),
+                data        = $(this).serialize(),
+                route       = '{{ route('calendario.update', ['calendario' => '+id_event+'] ) }}';
+                route       = route.replace('id_event', id_event);
 
-		function edit(event){
-			start = event.start.format('YYYY-MM-DD HH:mm:ss');
-			if(event.end){
-				end = event.end.format('YYYY-MM-DD HH:mm:ss');
-			}else{
-				end = start;
-			}
+            $.ajax({
+                method: 'PUT',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: route,
+                dataType: 'json',
+                data: data,
+            }).done(function (response) {
+                if (response.status == 200) {
+                    location.reload();
+                }
+            }).fail(function () {
+                // alert("Error");
+            });
 
-			id =  event.id;
-
-			Event = [];
-			Event[0] = id;
-			Event[1] = start;
-			Event[2] = end;
-
-			$.ajax({
-			 url: 'editEventDate.php',
-			 type: "POST",
-			 data: {Event:Event},
-			 success: function(rep) {
-					if(rep == 'OK'){
-						alert('Evento se ha guardado correctamente');
-					}else{
-						alert('No se pudo guardar. Inténtalo de nuevo.');
-					}
-				}
-			});
-		}
-
-	});
-
+        });
     </script>
 
 </body>

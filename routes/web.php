@@ -50,6 +50,7 @@ Route::get('contacto',  [HomeController::class, 'contact'   ] )->name('contact')
 Route::post('send/email',  [HomeController::class, 'sendEmail'   ] )->name('send.email');
 Route::get('cursos-programados',  [HomeController::class, 'calendar'   ] )->name('calendar');
 Route::get('getEvents',  [AjaxController::class, 'getEvents'   ] )->name('get.events');
+Route::get('event/{event}',  [AjaxController::class, 'event'   ] )->name('events');
 
 
 #backend -private
@@ -118,7 +119,7 @@ Route::middleware(['hbgroup'])->group(function(){
 
     Route::resource('cliente', ClientController::class );
     Route::resource('calendario', CalendarController::class );
-
+    Route::post('calendario-date',[AjaxController::class, 'updateDate'] )->name('date.update');
 });
 // ruta de autenticacion
 Route::get('autenticacion',  [HomeController::class, 'autentication'   ] )->name('autentication');

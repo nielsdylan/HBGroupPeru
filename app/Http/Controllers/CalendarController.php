@@ -44,17 +44,17 @@ class CalendarController extends Controller
             'result'=>$calendario
         ]);
     }
-    public function update(Request $request, Event $client)
+    public function update(Request $request, Event $calendario)
     {
 
-        Event::where('active', 1)->where('client_id', $request->id )
+        Event::where('active', 1)->where('id', $request->id )
         ->update([
-            'business' => $request->business,
-            'email' => $request->email,
-            'cell' => $request->cell,
-            'telephone' => $request->telephone,
-            'whatsapp' => $request->whatsapp,
-            'address' => $request->address,
+            'asignature' => $request->asignature,
+            'course' => $request->course,
+            'hour_start' => $request->hour_start,
+            'hour_end' => $request->hour_end,
+            'date_start' => $request->date_hidden,
+            'active' => $request->active==0 ? $request->active : 1,
             'update_by'=>session('hbgroup')['user_id']
         ]);
         return response()->json([
@@ -62,13 +62,13 @@ class CalendarController extends Controller
             'status'=>200
         ]);
     }
-    public function show($pensum)
+    public function show($calendario)
     {
-        $results = Event::where('active',1)->where('program_id',$pensum)->get();
+        $response = Event::where('active',1)->where('id',$calendario)->first();
         return response()->json([
             'success' =>true,
             'status'  =>200,
-            'results' =>$results,
+            'results' =>$calendario,
         ]);
     }
     public function destroy(Event $pensum)

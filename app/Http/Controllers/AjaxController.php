@@ -31,6 +31,28 @@ class AjaxController extends Controller
     }
     public function getEvents()
     {
-        return $events =   Event::get();
+        return $events =   Event::where('active',1)->get();
+    }
+    public function event(Event $event)
+    {
+        # code...
+        return response()->json([
+            'success'=>true,
+            'status'=>200,
+            'result'=>$event
+        ]);
+    }
+    public function updateDate(Request $request)
+    {
+        # code...
+        Event::where('active', 1)->where('id', $request->id )
+        ->update([
+            'date_start'=>$request->start,
+            'update_by'=>session('hbgroup')['user_id']
+        ]);
+        return response()->json([
+            'success' =>true,
+            'status'  =>200,
+        ]);
     }
 }

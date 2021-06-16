@@ -90,7 +90,7 @@
                 @endif
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#comercial">
-                        <i class="far fa-building"></i>
+                        <i class="fas fa-store-alt"></i>
                         <p>Comercial</p>
                         <span class="caret"></span>
                     </a>
