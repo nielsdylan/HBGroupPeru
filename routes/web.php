@@ -48,7 +48,7 @@ Route::get('nosotros',  [HomeController::class, 'us'        ] )->name('us');
 Route::get('servicios', [HomeController::class, 'services'  ] )->name('services');
 Route::get('contacto',  [HomeController::class, 'contact'   ] )->name('contact');
 Route::post('send/email',  [HomeController::class, 'sendEmail'   ] )->name('send.email');
-Route::get('cursos-programados',  [HomeController::class, 'calendar'   ] )->name('calendar');
+Route::get('cursos-programados',  [HomeController::class, 'calendar'   ] )->name('calendar.program');
 Route::get('getEvents',  [AjaxController::class, 'getEvents'   ] )->name('get.events');
 Route::get('event/{event}',  [AjaxController::class, 'event'   ] )->name('events');
 

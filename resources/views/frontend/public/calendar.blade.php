@@ -9,9 +9,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Niels Q.P.">
+    <meta name="keywords" content="HB Group Perú">
 
-    <title>Calendario</title>
+    <!-- ANALYTICS -->
+
+    <!-- ANALYTICS -->
+
+    <?php if (!empty($configuracion['og_title'])): ?>
+    <meta property="og:url"                content="{{ url('/') }}" />
+    <meta property="og:type"               content="article" />
+    <meta property="og:title"              content="HB Group Perú" />
+    <meta property="og:description"        content="" />
+    <meta property="og:image"              content="{{asset('uploads/public/logo_marco.png')}}" />
+    <?php endif ?>
+    <link rel="icon" href="{{asset('uploads/public/logo_snc.png')}}" type="image/x-icon">
+    <title>HB Group Perú</title>
 
     <!-- Bootstrap Core CSS -->
     {{-- <link href="{{asset('assets/calendar/css/bootstrap.min.css')}}" rel="stylesheet"> --}}
@@ -33,7 +46,7 @@
                     @if ($configurations->schedule)
                         <div class="col-md-6 d-none d-md-block" align="left">
                             <ul class="list-inline mb-0">
-                                    <a href="{{ url('/') }}" class="list-inline-item text-white"><i class="far fa-clock"></i> {{$configurations->schedule}}</a>
+                                <a href="{{ url('/') }}" class="list-inline-item text-white"><i class="far fa-clock"></i> {{$configurations->schedule}}</a>
                             </ul>
                         </div>
                     @endif
@@ -51,7 +64,7 @@
 
                             <a href="https://site5.q10.com/login?ReturnUrl=%2F&aplentId=05554f9b-6439-4175-8443-321c9ebcf09d" target="_blank" class="list-inline-item icon text-white"><i class="fas fa-user-graduate text-white"></i> Aula virtual</a>
 
-                            {{-- <a href="{{route('autentication')}}" target="_blank" class="list-inline-item icon text-white"><i class="fas fa-user-graduate text-white"></i> Aula virtual</a> --}}
+                            <a href="{{route('index')}}" target="_blank" class="list-inline-item icon text-white"><i class="fas fa-globe-americas text-white"></i> HB GROUP PERÚ</a>
 
                         </ul>
                     </div>
@@ -71,7 +84,7 @@
                     <a href="https://wa.me/992933603?text=" target="_blank" class="list-inline-item text-white"><i class="fab fa-whatsapp text-white"></i> 946877806</a>
                     @endif
                     <a href="https://site5.q10.com/login?ReturnUrl=%2F&aplentId=05554f9b-6439-4175-8443-321c9ebcf09d" target="_blank" class="list-inline-item icon text-white"><i class="fas fa-user-graduate text-white"></i> Aula virtual</a>
-                    {{-- <a href="{{route('autentication')}}" target="_blank" class="list-inline-item icon text-white"><i class="fas fa-user-graduate text-white"></i> Aula virtual</a> --}}
+                    <a href="{{route('index')}}" target="_blank" class="list-inline-item icon text-white"><i class="fas fa-globe-americas text-white"></i> HB GROUP PERÚ</a>
                 </ul>
             </div>
         </div>
@@ -80,18 +93,21 @@
     <section id="calendar-cours">
 
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>Curso programados</h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="calendar" class="col-md-12 ">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Curso programados</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="calendar" class="col-md-12 ">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -145,7 +161,14 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p>
+                                            Para mas información contactarse al número <a href="tel:+51 932 777 533" class="email-contact"> 932 777 533</a> o al correo de
+                                            <a href="mailto:{{$configurations->email}}?Subject=Inscripción%20del%20curso%20&body=Con%20urgencia" class="email-contact"> &nbsp;{{$configurations->email}}</a>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
@@ -165,7 +188,108 @@
 	<script src="{{asset('assets/calendar/js/fullcalendar/fullcalendar.js')}}"></script>
 	<script src="{{asset('assets/calendar/js/fullcalendar/locale/es.js')}}"></script>
 
+    @if ($configurations->whatsapp)<a href="https://wa.me/+51{{ $configurations->whatsapp}}?text=Mi consulta es..." target="_blank" id="whatsapp-floot" class="btn-whatsapp-link"><i class="fab fa-whatsapp"></i></a>@endif
+    <a href="#" id="back-to-top" class="btn btn-lg btn-back-top"><i class="fa fa-angle-up"></i></a>
+    <section id="footeer">
+        <div class="pre-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img src="{{asset('uploads/public/logo_snc.png')}}" width="140" class="img-footer">
+                            </div>
+                            <div class="col-md-12 pt-3 text-center">
+                                <h3> <strong>HB Group Perú</strong></h3>
+                            </div>
+                        </div>
 
+                    </div>
+                    <div class="col-md-4 ">
+                        <h6 class="text-white ">SITIO</h6>
+                        <ul class="list-unstyled color-list">
+                            <li>
+                                <a href="{{ url('/') }}" class="text-footer"><i class="fa fa-angle-right"></i> INICIO</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/nosotros') }}" class="text-footer"><i class="fa fa-angle-right"></i> NOSOTROS</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url('/servicios') }}" class="text-footer"><i class="fa fa-angle-right"></i> SERVICIOS</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url('/contacto') }}" class="text-footer"><i class="fa fa-angle-right"></i> Contacto</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="text-white">CONTACTO</h6>
+                        <ul class="list-unstyled color-list">
+                            <li>
+                                <ul class="list-unstyled">
+                                    @if ($configurations->direction)
+                                        <li><span class="text-footer"><i class="fas fa-map-marker-alt text-footer"></i> {{$configurations->direction}}</span></li>
+                                    @endif
+                                    @if ($configurations->whatsapp)
+                                        <li><span class="text-footer"><i class="fab fa-whatsapp text-footer"></i> {{$configurations->whatsapp}}</span></li>
+                                    @endif
+                                    @if ($configurations->telephone)
+                                        <li><span class="text-footer"><i class="fa fa-phone text-footer"></i> {{$configurations->telephone}}</span></li>
+                                    @endif
+                                    @if ($configurations->telephone)
+                                        <li><span class="text-footer"><i class="fa fa-envelope text-footer"></i> {{$configurations->email}}</span></li>
+                                    @endif
+
+                                </ul>
+                            </li>
+                        </ul>
+                        <div id="redes" >
+                            <ul class="list-inline ml-5 d-none d-sm-none d-lg-block d-md-block">
+                                <li class="list-inline-item">
+                                    @if ($configurations->facebook)
+                                    <a class="facebook pr-3 text-white" href="{{$configurations->facebook}}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                    @endif
+                                    @if ($configurations->linkedin)
+                                    <a class="text-white" href="{{$configurations->linkedin}}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                    @endif
+                                </li>
+                            </ul>
+                            <ul class="list-inline text-center d-block d-sm-block d-lg-none d-md-none">
+                                <li class="list-inline-item">
+                                    @if ($configurations->facebook)
+                                    <a class="facebook pr-3 text-white" href="{{$configurations->facebook}}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                    @endif
+                                    @if ($configurations->linkedin)
+                                    <a href="{{$configurations->linkedin}}" class="text-white" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                    @endif
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-copy">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-12 copyright_text wow fadeInUp animated">
+                        <div class="d-none d-lg-block text-white">
+                            <center><span>&copy; {{ date("Y") }} HBGroupp - Todos los derechos reservados. </center>
+                        </div>
+                        <div class="d-block d-lg-none text-white">
+                            <center><span>&copy; {{ date("Y") }}  HBGroupp - Todos los derechos reservados.</span></center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
 	<script>
 
         $(document).ready(function() {
