@@ -43,7 +43,7 @@
                         <table id="add-row" class="display table table-striped table-hover" >
                             <thead>
                                 <tr>
-                                    <td>CÓDIGO</td>
+                                    <td>#</td>
                                     <td>NOMBRE</td>
                                     <td>ABREVIACIÓN</td>
                                     <td>ESTADO</td>
@@ -55,10 +55,16 @@
                                 @if ($results)
                                     @foreach ($results as $key=>$item)
                                         <tr>
-                                            <td>{{$item->code}}</td>
+                                            <td>{{$item->asignature_id}}</td>
                                             <td>{{$item->name}}</td>
                                             <td>{{$item->abbreviation}}</td>
-                                            <td>{{$item->status}}</td>
+                                            <td>
+                                                @if ($item->status==1)
+                                                    Activo
+                                                @else
+                                                    Desactivo
+                                                @endif
+                                            </td>
                                             <td>{{$item->created_at}}</td>
                                             <td>
                                                 <div class="form-button-action">
@@ -82,6 +88,24 @@
     </div>
 </div>
 <script>
+    var status =0;
+</script>
+@include('frontend.private.asignatures.create')
+@include('frontend.private.asignatures.edit')
+<script>
+
+    $('[data-status="check"]').on('change', function() {
+
+        if( $(this).is(':checked') ){
+            // Hacer algo si el checkbox ha sido seleccionado
+            status = 1;
+            console.log(status);
+        } else {
+            // Hacer algo si el checkbox ha sido deseleccionado
+            status = 0;
+            console.log(status);
+        }
+    });
     $(document).on('click','[data-edit="modal"]',function () {
         $('#edit-modal').modal('show');
         var id = $(this).attr('data-id'),
@@ -97,9 +121,16 @@
         }).done(function (response) {
             if (response.status == 200) {
                 $('[data-form="edit"] [name="id"]').val(response.result.asignature_id);
-                $('[data-form="edit"] [name="code"]').val(response.result.code);
                 $('[data-form="edit"] [name="name"]').val(response.result.name);
                 $('[data-form="edit"] [name="abbreviation"]').val(response.result.abbreviation);
+                if (response.result.status == 1) {
+                    $('[data-form="edit"] input[data-status="check"]').parents('div.btn-danger').click();
+                    $('[data-form="edit"] input[data-status="check"]').attr('checked','');
+                }else{
+                    $('[data-form="edit"] input[data-status="check"]').parents('div.btn-success').click();
+                    $('[data-form="edit"] input[data-status="check"]').removeAttr('checked');
+                }
+
             }else{
                 var placementFrom = 'top';
                 var placementAlign = 'center';
@@ -180,6 +211,5 @@
         });
     });
 </script>
-@include('frontend.private.asignatures.create')
-@include('frontend.private.asignatures.edit')
+
 @endsection

@@ -18,16 +18,16 @@
 
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
                             <div class="form-group ">
-                                <input type="hidden" name="id" value="">
-                                <label for="code_edit">Código</label>
-                                <input id="code_edit" name="code" type="text" class="form-control" placeholder="Código..." required>
+                                <label for="abbreviation_edit">Abreviación</label>
+                                <input id="abbreviation_edit" name="abbreviation" type="text" class="form-control" placeholder="Abreviación..." required>
+                                <input type="hidden" name="id">
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
                             <div class="form-group ">
                                 <label for="name_edit">Nombre</label>
                                 <input id="name_edit" name="name" type="text" class="form-control" placeholder="Nombre..." required>
@@ -35,14 +35,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group ">
-                                <label for="abbreviation_edit">Abreviación</label>
-                                <input id="abbreviation_edit" name="abbreviation" type="text" class="form-control" placeholder="Abreviación..." required>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="status">Estado : </label>
+                                <input type="checkbox" data-toggle="toggle" data-on="ON" data-off="OFF" data-onstyle="success" data-offstyle="danger" data-status="check">
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer no-bd">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
@@ -59,6 +58,8 @@
             id      = $('[data-form="edit"] [name="id"]').val(),
             route   = '{{ route('asignatura.update', ['asignatura' => '+id+'] ) }}';
             route   = route.replace('id', id);
+
+            data = data+'&status='+status;
         $.ajax({
             method: 'PUT',
             headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},

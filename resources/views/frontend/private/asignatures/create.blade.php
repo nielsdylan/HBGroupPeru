@@ -19,8 +19,8 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group ">
-                                <label for="code">Código</label>
-                                <input id="code" name="code" type="text" class="form-control" placeholder="Código..." required>
+                                <label for="abbreviation">Abreviación</label>
+                                <input id="abbreviation" name="abbreviation" type="text" class="form-control" placeholder="Abreviación..." required>
                             </div>
                         </div>
                     </div>
@@ -32,15 +32,15 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group ">
-                                <label for="abbreviation">Abreviación</label>
-                                <input id="abbreviation" name="abbreviation" type="text" class="form-control" placeholder="Abreviación..." required>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="status">Estado : </label>
+                                <input data-status="check" type="checkbox" data-toggle="toggle" data-on="ON" data-off="OFF" data-onstyle="success" data-offstyle="danger" name="status" value="1">
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer no-bd">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
@@ -56,6 +56,7 @@
         var data = $(this).serialize(),
             route = $(this).attr('action');
 
+        data = data+'&status='+status;
         $.ajax({
             method: 'POST',
             headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},

@@ -17,10 +17,9 @@ class AsignatureController extends Controller
     public function store(Request $request)
     {
         $asignature = new Asignature();
-        $asignature->code = $request->code;
         $asignature->name = $request->name;
         $asignature->abbreviation = $request->abbreviation;
-        $asignature->status = 1;
+        $asignature->status = $request->status;
 
         $asignature->create_by = session('hbgroup')['user_id'];
         $asignature->save();
@@ -40,10 +39,11 @@ class AsignatureController extends Controller
     }
     public function update(Request $request, Asignature $asignatura)
     {
+        // return $request;
         Asignature::where('active', 1)->where('asignature_id', $asignatura->asignature_id)
         ->update([
-            'code' => $request->code,
             'name' => $request->name,
+            'status' => $request->status,
             'abbreviation' => $request->abbreviation,
             'update_by'=>session('hbgroup')['user_id']
         ]);
@@ -67,5 +67,22 @@ class AsignatureController extends Controller
             'success'=>true,
             'status'=>200
         ]);
+    }
+    public function getAsignature()
+    {
+        $results = Asignature::where('active',1)->where('status',1)->get();
+        if ($results) {
+            return response()->json([
+                'success'=>true,
+                'status'=>200,
+                'results'=>$results
+            ]);
+        }else{
+            return response()->json([
+                'success'=>false,
+                'status'=>404
+            ]);
+        }
+
     }
 }

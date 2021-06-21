@@ -48,11 +48,11 @@
                                     <span class="sub-item">Asignatura</span>
                                 </a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="{{route('programa.index')}}">
                                     <span class="sub-item">Programa</span>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>

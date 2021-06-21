@@ -104,16 +104,18 @@ Route::post('login/session',  [LoginController::class, 'sessionStart'] );
 Route::middleware(['hbgroup'])->group(function(){
     Route::resource('perfil', ProfileController::class );
     Route::resource('cursos', CoursController::class );
+    Route::get('getCourses',[CoursController::class, 'getCourses'] )->name('get.courses');
     Route::resource('sede', SedeController::class );
     Route::resource('turno', TurnController::class );
     Route::resource('sede-turno', SedeTurnController::class );
     Route::resource('participantes', ParticipantController::class );
 
     Route::resource('asignatura', AsignatureController::class );
-    Route::resource('programa', ProgramController::class );
-    Route::resource('pensum', PensumController::class );
-    Route::resource('pensum-asignatura', PensumAsignatureController::class );
-    Route::post('getpensum',[AjaxController::class, 'getPensumAsignatureShow'] )->name('pensum.asignature.show');
+    Route::get('getAsignature',[AsignatureController::class, 'getAsignature'] )->name('get.asignature');
+    // Route::resource('programa', ProgramController::class );
+    // Route::resource('pensum', PensumController::class );
+    // Route::resource('pensum-asignatura', PensumAsignatureController::class );
+    // Route::post('getpensum',[AjaxController::class, 'getPensumAsignatureShow'] )->name('pensum.asignature.show');
 
     Route::post('participante/excel',[ExceltController::class, 'saveParticipant'] )->name('participant.excel');
 
