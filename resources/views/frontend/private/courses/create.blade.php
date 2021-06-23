@@ -40,7 +40,7 @@
                 $('[data-form="form"] .modal-footer button[type="submit"]').addClass('is-loading')
             },
         }).done(function (response) {
-            $('[data-form="form"] .modal-footer button[type="submit"]').removeClass('is-loading')
+            $('[data-form="form"] .modal-footer button[type="submit"]').removeClass('is-loading');
             if (response.status == 200) {
                 $('#addRowModal').modal('hide');
                 var placementFrom = 'top';
@@ -64,10 +64,10 @@
                     time: 1000,
                     delay: 2,
                 });
-
                 setTimeout(function(){
                     location.reload();
                 }, 3000);
+
             }else{
                 var placementFrom = 'top';
                 var placementAlign = 'center';
@@ -102,6 +102,7 @@
             }
         }).fail(function () {
             // alert("Error");
+            $('[data-form="form"] .modal-footer button[type="submit"]').removeClass('is-loading')
         });
 
     });
