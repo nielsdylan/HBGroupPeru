@@ -160,6 +160,7 @@
             '</div>'+
         '';
         $('[data-form="form"] .modal-body').html(html);
+        getAsignature();
     });
 
 

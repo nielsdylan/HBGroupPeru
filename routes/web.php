@@ -118,6 +118,8 @@ Route::middleware(['hbgroup'])->group(function(){
     // Route::post('getpensum',[AjaxController::class, 'getPensumAsignatureShow'] )->name('pensum.asignature.show');
 
     Route::post('participante/excel',[ExceltController::class, 'saveParticipant'] )->name('participant.excel');
+    Route::get('model-excel',[ExceltController::class, 'modelExel'] )->name('export.model.excel');
+    Route::get('participant-export/excel',[ExceltController::class, 'exportParticipant'] )->name('participant.excel.export');
 
     Route::resource('cliente', ClientController::class );
     Route::resource('calendario', CalendarController::class );

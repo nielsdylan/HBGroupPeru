@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CoursParticipant;
 use App\Models\Participant;
 use DateTime;
 use Illuminate\Http\Request;
@@ -11,7 +12,13 @@ class ParticipantController extends Controller
     //
     public function index()
     {
-        $participants = Participant::where('active',1)->get();
+        $participants = CoursParticipant::where('cours_participants.active',1)
+            ->where('businesses.active',1)
+            ->where('participants.active',1)
+            ->join("businesses", "businesses.business_id", "=", "cours_participants.business_id")
+            ->join("participants", "participants.participant_id", "=", "cours_participants.participant_id")
+            ->select("businesses.name as name_business", "participants.*")
+            ->get();
         return view('frontend.private.participants.index', compact('participants'));
     }
     public function store(Request $request)
