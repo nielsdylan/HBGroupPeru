@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ParticipantImport;
+use App\Models\Asignature;
+use App\Models\Business;
 use App\Models\CoursParticipant;
 use App\Models\Participant;
 use DateTime;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ParticipantController extends Controller
 {
@@ -19,15 +23,22 @@ class ParticipantController extends Controller
             ->join("participants", "participants.participant_id", "=", "cours_participants.participant_id")
             ->select("businesses.name as name_business", "participants.*")
             ->get();
-        return view('frontend.private.participants.index', compact('participants'));
+        $asignatures =  Asignature::where('active',1)->get();
+        $business = Business::where('active',1)->get();
+        return view('frontend.private.participants.index', compact('participants', 'asignatures', 'business'));
     }
     public function store(Request $request)
     {
-        $sede = new Participant();
-        $sede->name = $request->name;
+        $json = array(
+            'business_id'=>$request->business,
+            'asignature_id'=>$request->asignature,
+        );
+        // return $request;
+        $request->session()->put('participant',$json);
+        $file = $request->file('file');
+        Excel::import(new ParticipantImport, $file);
 
-        $sede->create_by = session('hbgroup')['user_id'];
-        $sede->save();
+
 
         return response()->json([
             'success'=>true,

@@ -8,7 +8,6 @@
         <th style="text-align:center; font-weight: 700;"> EMAIL </th>
         <th style="text-align:center; font-weight: 700;"> CELULAR </th>
         <th style="text-align:center; font-weight: 700;"> SEXO </th>
-        <th style="text-align:center; font-weight: 700;"> EMPRESA </th>
     </tr>
     </thead>
     <tbody>

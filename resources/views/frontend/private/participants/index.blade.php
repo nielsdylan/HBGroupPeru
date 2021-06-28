@@ -23,19 +23,21 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="d-flex align-items-center">
-                        <h4 class="card-title">Participantes</h4>
-                        <a class="btn btn-light ml-auto" data-toggle="tooltip" data-original-title="Exportar la lista de los participantes" href="{{route('participant.excel.export')}}"><i class="fas fa-file-excel"></i></a>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="card-title">Participantes</h4>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Exportar la lista de los participantes" href="{{route('participant.excel.export')}}"><i class="fas fa-file-excel fon-z"></i></a>
 
-                        <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('export.model.excel')}}"><i class="fas fa-file-import"></i></a>
+                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('export.model.excel')}}"><i class="fas fa-file-import fon-z"></i></a>
 
-                        <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fa-file-upload"></i></a>
-                        <button class="btn btn-primary btn-round" >
-                            <i class="fa fa-plus"></i>
-                            Nuevo participante
-                        </button>
-
-
+                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fa-file-upload fon-z"></i></a>
+                            <button class="btn btn-primary btn-round" >
+                                <i class="fa fa-plus"></i>
+                                Nuevo participante
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -97,7 +99,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('participant.excel')}}" method="post" enctype="multipart/form-data" data-form="save-excel">
+            <form action="{{route('participantes.store')}}" method="post" enctype="multipart/form-data" data-form="save-excel">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
@@ -106,6 +108,9 @@
                                 <label for="business">Empresa</label>
                                 <select id="business" class="form-control" name="business" required>
                                     <option value="">Seleccione...</option>
+                                    @foreach ($business as $item)
+                                        <option value="{{$item->business_id}}">{{$item->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -116,11 +121,14 @@
                                 <label for="asignature">Asignatura</label>
                                 <select id="asignature" class="form-control" name="asignature" required>
                                     <option value="">Seleccione...</option>
+                                    @foreach ($asignatures as $item)
+                                        <option value="{{$item->asignature_id}}">{{$item->name}} ({{$item->abbreviation}})</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="course">Curso</label>
@@ -129,7 +137,7 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -167,8 +175,38 @@
             processData: false,
             contentType: false,
             data: data,
+            beforeSend: function()
+            {
+                $('[data-form="save-excel"] .modal-footer button[type="submit"]').addClass('is-loading')
+            },
         }).done(function (response) {
+            $('[data-form="save-excel"] .modal-footer button[type="submit"]').removeClass('is-loading');
             if (response.status == 200) {
+                $('#import-excel-participant').modal('hide');
+                var placementFrom = 'top';
+                var placementAlign = 'right';
+                var state = 'success';
+                var style = 'withicon';
+                var content = {};
+
+                content.message = 'Se guardo con Éxito';
+                content.title = 'Guardar';
+                content.icon = 'fas fa-check';
+                content.url = url+'login';
+                content.target = '_blank';
+
+                $.notify(content,{
+                    type: state,
+                    placement: {
+                        from: placementFrom,
+                        align: placementAlign
+                    },
+                    time: 1000,
+                    delay: 2,
+                });
+                setTimeout(function(){
+                    location.reload();
+                }, 3000);
                 console.log(response);
             }else{
                 var placementFrom = 'top';

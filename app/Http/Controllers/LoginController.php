@@ -65,7 +65,7 @@ class LoginController extends Controller
         // $user = User::where('email', $request->username)
         //         ->where('password', sha1($request->password))
         //         ->first();
-                $user = User::where('email', $request->username)
+                $user = User::where('email', $request->username)->orWhere('dni','=',$request->username)
                 ->where('password', sha1($request->password))
                 ->join("groups", "groups.group_id", "=", "users.group_id")
                 ->select("groups.name as group", "users.*")
