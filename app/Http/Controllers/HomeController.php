@@ -10,6 +10,7 @@ use App\Models\Event;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use PDF;
 
 class HomeController extends Controller
 {
@@ -80,5 +81,36 @@ class HomeController extends Controller
         $configurations = Configuration::where('active', 1)->first();
         $events =   Event::get();
         return view('frontend.public.calendar', compact('configurations', 'events'));
+    }
+    public function certificateView()
+    {
+        $configurations = Configuration::where('active', 1)->first();
+        return view('frontend.public.certificate', compact('configurations'));
+    }
+    public function certificadoPDF()
+    {
+        // para obtner la imagen y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_logo = storage_path('uploads/public/logo_snc.png');
+        $img_logo = str_replace('storage','public',$img_logo);
+        $img_logo = file_get_contents($img_logo);
+        $img_logo = base64_encode($img_logo);
+        // -----
+
+        $json = array(
+            'name'=>'Niels Dylan',
+            'last_name'=>'Quispe Peralta',
+            'document'=>'74250891',
+            'description'=>'Supervivencia en el mar y rescate de hombre al agua',
+            'date'=>'Realizado el 21 de Mayo del 2021, con una duración Cuatro (04) horas efectivas.',
+            'firm'=>'Helard Bejarano Otazu Gerente General HB GROUP PERU S.R.L.',
+            'cell'=>'932 777 533',
+            'telephone'=>'053 474 805',
+            'email'=>'info@hbgroup.pe',
+            'web'=>'www.hbgroup.pe',
+            'name_business'=>'HB GROUP PERU S.R.L',
+            'number'=>'2021-0051'
+        );
+        $pdf = PDF::loadView('pdf.certificado', compact('json', 'img_logo'));
+        return $pdf->download('certificado.pdf');
     }
 }

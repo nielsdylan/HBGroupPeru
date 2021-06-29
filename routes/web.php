@@ -51,6 +51,9 @@ Route::post('send/email',  [HomeController::class, 'sendEmail'   ] )->name('send
 Route::get('cursos-programados',  [HomeController::class, 'calendar'   ] )->name('calendar.program');
 Route::get('getEvents',  [AjaxController::class, 'getEvents'   ] )->name('get.events');
 Route::get('event/{event}',  [AjaxController::class, 'event'   ] )->name('events');
+Route::get('certificados',  [HomeController::class, 'certificateView'        ] )->name('certificate.view');
+// prueba de pdf
+Route::get('certificadoPDF',  [HomeController::class, 'certificadoPDF'        ] )->name('certificado.pdf');
 
 
 #backend -private

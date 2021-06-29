@@ -139,6 +139,15 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12 text-center mt-5">
+                    <a href="{{route('certificate.view')}}" class="btn view-button">
+						Descarga tu certificado aquí
+					</a>
+                    <br>
+
+                </div>
+            </div>
 
         </div>
     </section>

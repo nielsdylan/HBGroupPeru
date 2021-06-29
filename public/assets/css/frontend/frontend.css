@@ -421,8 +421,8 @@ h5{
 p{
     font-family: 'FiraSans-Book';
 }
-
-#services .container .services-title, .services-card, .services-button, #solution, #business, #footer .pre-footer, #footer .footer-copy, .vision-us, .profile-ordenador, .profile-mobile, .img-carousel-us, .services-view-card {
+/* #footer .pre-footer, #footer */
+#services .container .services-title, .services-card, .services-button, #solution, #business,  .footer-copy, .vision-us, .profile-ordenador, .profile-mobile, .img-carousel-us, .services-view-card {
     opacity: 0;
 }
 /* .map{
@@ -496,4 +496,26 @@ p{
 }
 #form-contact .form-control:focus{
     box-shadow: 0 0 0 0rem rgb(104 136 195);
+}
+
+@keyframes resplandorAnimation {
+    0%,100%{
+      box-shadow: 0px 0px 20px;
+    }
+    50%{
+    box-shadow: 0px 0px 0px;
+
+    }
+
+}
+.view-button{
+    border: 1px solid black;
+    padding: 20px 20px;
+    box-shadow: 0px 0px 20px;
+    animation: infinite resplandorAnimation 2s;
+}
+#certificate-section{
+    padding-top: 70px;
+    padding-bottom: 70px;
+    background-color: #eeeeee
 }
