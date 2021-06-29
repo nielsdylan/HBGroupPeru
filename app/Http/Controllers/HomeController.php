@@ -90,19 +90,45 @@ class HomeController extends Controller
     public function certificadoPDF()
     {
         // para obtner la imagen y convertirlo en base 64 y poder pintarlo en el pdf
-        $img_logo = storage_path('uploads/public/logo_snc.png');
+        $img_logo = storage_path('assets/img/logo_snc.png');
         $img_logo = str_replace('storage','public',$img_logo);
         $img_logo = file_get_contents($img_logo);
         $img_logo = base64_encode($img_logo);
         // -----
-
+        // para obtner la imagen - liston y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_liston = storage_path('assets/img/liston-sf-hb.png');
+        $img_liston = str_replace('storage','public',$img_liston);
+        $img_liston = file_get_contents($img_liston);
+        $img_liston = base64_encode($img_liston);
+        // -----
+        // para obtner la imagen - firma y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_firma = storage_path('assets/img/firma-hb.png');
+        $img_firma = str_replace('storage','public',$img_firma);
+        $img_firma = file_get_contents($img_firma);
+        $img_firma = base64_encode($img_firma);
+        // -----
+        // para obtner la imagen - sello y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_sello = storage_path('assets/img/sello-hb.png');
+        $img_sello = str_replace('storage','public',$img_sello);
+        $img_sello = file_get_contents($img_sello);
+        $img_sello = base64_encode($img_sello);
+        // -----
+        // para obtner la imagen - fondo y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_fondo = storage_path('assets/img/fondo-hb.png');
+        $img_fondo = str_replace('storage','public',$img_fondo);
+        $img_fondo = file_get_contents($img_fondo);
+        $img_fondo = base64_encode($img_fondo);
+        // -----
         $json = array(
             'name'=>'Niels Dylan',
             'last_name'=>'Quispe Peralta',
             'document'=>'74250891',
             'description'=>'Supervivencia en el mar y rescate de hombre al agua',
-            'date'=>'Realizado el 21 de Mayo del 2021, con una duración Cuatro (04) horas efectivas.',
-            'firm'=>'Helard Bejarano Otazu Gerente General HB GROUP PERU S.R.L.',
+            'date_1'=>'Realizado el 21 de Mayo del 2021,',
+            'date_2'=>'con una duración Cuatro (04) horas efectivas.',
+            'name_firm'=>'Helard Bejarano Otazu',
+            'cargo_firm'=>'Gerente General',
+            'business_firm'=>'HB GROUP PERU S.R.L.',
             'cell'=>'932 777 533',
             'telephone'=>'053 474 805',
             'email'=>'info@hbgroup.pe',
@@ -110,7 +136,60 @@ class HomeController extends Controller
             'name_business'=>'HB GROUP PERU S.R.L',
             'number'=>'2021-0051'
         );
-        $pdf = PDF::loadView('pdf.certificado', compact('json', 'img_logo'));
+        $pdf = PDF::loadView('pdf.certificado', compact('json','img_logo','img_liston','img_firma','img_sello','img_fondo'));
         return $pdf->download('certificado.pdf');
+    }
+    public function viewPDF()
+    {
+        // para obtner la imagen - logo y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_logo = storage_path('assets/img/logo_snc.png');
+        $img_logo = str_replace('storage','public',$img_logo);
+        $img_logo = file_get_contents($img_logo);
+        $img_logo = base64_encode($img_logo);
+        // -----
+
+        // para obtner la imagen - liston y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_liston = storage_path('assets/img/liston-sf-hb.png');
+        $img_liston = str_replace('storage','public',$img_liston);
+        $img_liston = file_get_contents($img_liston);
+        $img_liston = base64_encode($img_liston);
+        // -----
+        // para obtner la imagen - firma y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_firma = storage_path('assets/img/firma-hb.png');
+        $img_firma = str_replace('storage','public',$img_firma);
+        $img_firma = file_get_contents($img_firma);
+        $img_firma = base64_encode($img_firma);
+        // -----
+        // para obtner la imagen - firma y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_sello = storage_path('assets/img/sello-hb.png');
+        $img_sello = str_replace('storage','public',$img_sello);
+        $img_sello = file_get_contents($img_sello);
+        $img_sello = base64_encode($img_sello);
+        // -----
+        // para obtner la imagen - fondo y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_fondo = storage_path('assets/img/fondo-hb.png');
+        $img_fondo = str_replace('storage','public',$img_fondo);
+        $img_fondo = file_get_contents($img_fondo);
+        $img_fondo = base64_encode($img_fondo);
+        // -----
+        $json = array(
+            'name'=>'Niels Dylan',
+            'last_name'=>'Quispe Peralta',
+            'document'=>'74250891',
+            'description'=>'Supervivencia en el mar y rescate de hombre al agua',
+            'date_1'=>'Realizado el 21 de Mayo del 2021,',
+            'date_2'=>'con una duración Cuatro (04) horas efectivas.',
+            'name_firm'=>'Helard Bejarano Otazu',
+            'cargo_firm'=>'Gerente General',
+            'business_firm'=>'HB GROUP PERU S.R.L.',
+
+            'cell'=>'932 777 533',
+            'telephone'=>'053 474 805',
+            'email'=>'info@hbgroup.pe',
+            'web'=>'www.hbgroup.pe',
+            'name_business'=>'HB GROUP PERU S.R.L',
+            'number'=>'2021-0051'
+        );
+        return view('pdf.certificado', compact('json', 'img_logo', 'img_liston','img_firma','img_sello','img_fondo'));
     }
 }

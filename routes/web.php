@@ -55,6 +55,8 @@ Route::get('certificados',  [HomeController::class, 'certificateView'        ] )
 // prueba de pdf
 Route::get('certificadoPDF',  [HomeController::class, 'certificadoPDF'        ] )->name('certificado.pdf');
 
+Route::get('pdf',  [HomeController::class, 'viewPDF'        ] )->name('view.pdf');
+
 
 #backend -private
 //session
