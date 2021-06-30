@@ -119,6 +119,12 @@ class HomeController extends Controller
         $img_fondo = file_get_contents($img_fondo);
         $img_fondo = base64_encode($img_fondo);
         // -----
+        // para obtner la imagen - fondo y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_sello_whitw = storage_path('assets/img/sello-fondo-hb.png');
+        $img_sello_whitw = str_replace('storage','public',$img_sello_whitw);
+        $img_sello_whitw = file_get_contents($img_sello_whitw);
+        $img_sello_whitw = base64_encode($img_sello_whitw);
+        // -----
         $json = array(
             'name'=>'Niels Dylan',
             'last_name'=>'Quispe Peralta',
@@ -136,7 +142,7 @@ class HomeController extends Controller
             'name_business'=>'HB GROUP PERU S.R.L',
             'number'=>'2021-0051'
         );
-        $pdf = PDF::loadView('pdf.certificado', compact('json','img_logo','img_liston','img_firma','img_sello','img_fondo'));
+        $pdf = PDF::loadView('pdf.certificado', compact('json','img_logo','img_liston','img_firma','img_sello','img_fondo','img_sello_whitw'));
         return $pdf->download('certificado.pdf');
     }
     public function viewPDF()
@@ -172,6 +178,12 @@ class HomeController extends Controller
         $img_fondo = file_get_contents($img_fondo);
         $img_fondo = base64_encode($img_fondo);
         // -----
+        // para obtner la imagen - fondo y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_sello_whitw = storage_path('assets/img/sello-fondo-hb.png');
+        $img_sello_whitw = str_replace('storage','public',$img_sello_whitw);
+        $img_sello_whitw = file_get_contents($img_sello_whitw);
+        $img_sello_whitw = base64_encode($img_sello_whitw);
+        // -----
         $json = array(
             'name'=>'Niels Dylan',
             'last_name'=>'Quispe Peralta',
@@ -190,6 +202,6 @@ class HomeController extends Controller
             'name_business'=>'HB GROUP PERU S.R.L',
             'number'=>'2021-0051'
         );
-        return view('pdf.certificado', compact('json', 'img_logo', 'img_liston','img_firma','img_sello','img_fondo'));
+        return view('pdf.certificado', compact('json', 'img_logo', 'img_liston','img_firma','img_sello','img_fondo','img_sello_whitw'));
     }
 }

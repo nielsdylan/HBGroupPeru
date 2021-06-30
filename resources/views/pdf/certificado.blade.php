@@ -6,7 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+{{-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne&display=swap" rel="stylesheet"> --}}
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Syne&display=swap');
+    body{
+        font-family: 'Syne', sans-serif;
+    }
     .container{
         width: 100%;
         padding-right: 15px;
@@ -107,6 +114,13 @@
         right: 140px;
         top: 607px;
     }
+    .sello-white{
+        position: absolute;
+        top: 680px;
+        left: 65px;
+        border-radius: 100px;
+        opacity: 0.8;
+    }
     #img-pdf{
         align-items: center;
         background-image:url('data:image;base64,{{$img_fondo}}');
@@ -127,13 +141,15 @@
             <div class="text-center"><h1 class="margin-0 text-blue">{{$json['last_name'].' '.$json['name']}}</h1></div>
             <div class="text-center"><h2 class="margin-0">DNI N° {{$json['document']}}</h2></div>
             <div class="text-center"><h3>Por haber aprobado satisfactoriamente el curso:</h3></div>
-            <div class="text-center"><h1 class="text-blue">{{$json['description']}}</h1></div>
+            <div class="text-center"><h1 class="text-blue">"{{$json['description']}}"</h1></div>
             <div class="text-center"><h3 class="margin-0">{{$json['date_1']}}</h3></div>
             <div class="text-center"><h3 class="margin-0">{{$json['date_2']}}</h3></div>
 
             {{-- firma --}}
 
             <div class="text-center padding-top-firma">
+                <span class="sello-white"></span>
+                <img src="data:image;base64,{{$img_sello_whitw}}" width="200" class="sello-white">
                 <img src="data:image;base64,{{$img_firma}}" width="200" class="firma">
                 <img src="data:image;base64,{{$img_sello}}" width="150" class="sello">
                 <hr size="1" width="150" class="border-solid">
@@ -157,7 +173,7 @@
 
             {{-- footer del pdf  --}}
             <div class="text-center border-footer">
-                <span>{{$json['name_business']}}</span> | <span>{{$json['telephone']}}</span>
+                <span>{{$json['name_business']}}</span> | <span>{{$json['telephone']}}</span> |
                 <span>{{$json['cell']}}</span> | <span>{{$json['email']}}</span> | <span>{{$json['web']}}</span>
             </div>
             {{-- --- --}}
