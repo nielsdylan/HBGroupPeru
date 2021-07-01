@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Mail\ContactMailable;
 use App\Models\Business;
+use App\Models\Certificado;
 use App\Models\Configuration;
 use App\Models\Event;
+use App\Models\Participant;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -84,8 +86,40 @@ class HomeController extends Controller
     }
     public function certificateView()
     {
+        $certificado='';
+        if (!empty($_GET['page']) ) {
+
+            $certificado = Certificado::where('certificados.active',1)
+                ->where('certificados.participant_id',session('list_certificado')['id'])
+                ->where('participants.active',1)
+                ->join("participants", "participants.participant_id", "=", "certificados.participant_id")
+                ->select("participants.*", "certificados.description_cours", "certificados.date", "certificados.certificado_id")
+                ->paginate(2);
+        }
+
         $configurations = Configuration::where('active', 1)->first();
-        return view('frontend.public.certificate', compact('configurations'));
+        return view('frontend.public.certificate', compact('configurations','certificado'));
+    }
+    public function certificateList(Request $request)
+    {
+        $configurations = Configuration::where('active', 1)->first();
+        $participant = Participant::where('dni',$request->dni)
+            ->where('active',1)
+            ->first();
+        $json_user = array(
+            'id'=>$participant->participant_id,
+            'dni'=>$request->dni,
+        );
+
+        $request->session()->put('list_certificado',$json_user);
+
+        $certificado = Certificado::where('certificados.active',1)
+            ->where('certificados.participant_id', session('list_certificado')['id'])
+            ->where('participants.active',1)
+            ->join("participants", "participants.participant_id", "=", "certificados.participant_id")
+            ->select("participants.*", "certificados.description_cours", "certificados.date", "certificados.certificado_id")
+            ->paginate(2);
+        return view('frontend.public.certificate', compact('configurations','certificado'));
     }
     public function certificadoPDF()
     {

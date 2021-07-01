@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CertificadoExport;
 use App\Exports\ModelExport;
 use App\Exports\ParticipantsExport;
 use App\Imports\ParticipantImport;
@@ -31,5 +32,9 @@ class ExceltController extends Controller
     public function modelExel()
     {
         return Excel::download(new ModelExport, 'Modelo-excel.xlsx');
+    }
+    public function certificadoModelExel()
+    {
+        return Excel::download(new CertificadoExport, 'Certificado-Modelo-Excel.xlsx');
     }
 }

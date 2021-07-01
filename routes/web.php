@@ -4,6 +4,7 @@ use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\AsignatureController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\CertificadoController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CoursController;
 use App\Http\Controllers\DashboardController;
@@ -51,7 +52,8 @@ Route::post('send/email',  [HomeController::class, 'sendEmail'   ] )->name('send
 Route::get('cursos-programados',  [HomeController::class, 'calendar'   ] )->name('calendar.program');
 Route::get('getEvents',  [AjaxController::class, 'getEvents'   ] )->name('get.events');
 Route::get('event/{event}',  [AjaxController::class, 'event'   ] )->name('events');
-Route::get('certificados',  [HomeController::class, 'certificateView'        ] )->name('certificate.view');
+Route::get('certificados-list',  [HomeController::class, 'certificateView'        ] )->name('certificate.view');
+Route::post('certificados-list',  [HomeController::class, 'certificateList'        ] )->name('certificate.list');
 // prueba de pdf
 Route::get('certificadoPDF',  [HomeController::class, 'certificadoPDF'        ] )->name('certificado.pdf');
 
@@ -129,6 +131,10 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::resource('cliente', ClientController::class );
     Route::resource('calendario', CalendarController::class );
     Route::post('calendario-date',[AjaxController::class, 'updateDate'] )->name('date.update');
+    // certificados
+    Route::resource('certificado', CertificadoController::class );
+    Route::get('certificado-model-excel',[ExceltController::class, 'certificadoModelExel'] )->name('certificado.export.model.excel');
+
 });
 // ruta de autenticacion
 Route::get('autenticacion',  [HomeController::class, 'autentication'   ] )->name('autentication');

@@ -17,7 +17,8 @@
                 <div class="col-md-6 offset-3">
                     <div class="card">
                         <div class="card-body">
-                            <form action="" method="POST" data-form="certificado">
+                            <form action="{{route('certificate.list')}}" method="POST">
+                                @csrf
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -39,14 +40,31 @@
                     <a href="{{route('certificado.pdf')}}">pdf</a>
                 </div>
             </div>
+            @if ($certificado)
+            <div class="row">
+                <div class="col-md-6 offset-3">
+                    <table class="table">
+
+                        <tbody>
+                            @foreach ($certificado as $certi)
+                                <tr>
+                                    <td>{{ $certi->last_name }}</td>
+                                    <td>{{ $certi->name }}</td>
+                                    <td>{{ $certi->date }}</td>
+                                </tr>
+
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 offset-3">
+                    {{ $certificado->links() }}
+                </div>
+            </div>
+            @endif
+
         </div>
     </section>
-    <script>
-        $(document).on('submit','[data-form="certificado"]',function (e) {
-            e.preventDefault();
-            var data = $(this).serialize();
-            console.log(data);
-
-        });
-    </script>
 @endsection
