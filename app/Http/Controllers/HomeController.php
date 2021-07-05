@@ -87,6 +87,7 @@ class HomeController extends Controller
     public function certificateView()
     {
         $certificado='';
+        $message='';
         if (!empty($_GET['page']) ) {
 
             $certificado = Certificado::where('certificados.active',1)
@@ -94,35 +95,58 @@ class HomeController extends Controller
                 ->where('participants.active',1)
                 ->join("participants", "participants.participant_id", "=", "certificados.participant_id")
                 ->select("participants.*", "certificados.description_cours", "certificados.date", "certificados.certificado_id")
-                ->paginate(2);
+                ->paginate(5);
         }
 
         $configurations = Configuration::where('active', 1)->first();
-        return view('frontend.public.certificate', compact('configurations','certificado'));
+
+        return view('frontend.public.certificate', compact('configurations','certificado','message'));
     }
     public function certificateList(Request $request)
     {
+
+        $certificado='';
+        $message='';
         $configurations = Configuration::where('active', 1)->first();
         $participant = Participant::where('dni',$request->dni)
             ->where('active',1)
             ->first();
-        $json_user = array(
-            'id'=>$participant->participant_id,
-            'dni'=>$request->dni,
-        );
+        if ($participant) {
 
-        $request->session()->put('list_certificado',$json_user);
+            $json_user = array(
+                'id'=>$participant->participant_id,
+                'dni'=>$request->dni,
+            );
+            $request->session()->put('list_certificado',$json_user);
+            $certificado = Certificado::where('certificados.active',1)
+                ->where('certificados.participant_id', session('list_certificado')['id'])
+                ->where('participants.active',1)
+                ->join("participants", "participants.participant_id", "=", "certificados.participant_id")
+                ->select("participants.*", "certificados.description_cours", "certificados.date", "certificados.certificado_id")
+                ->paginate(5);
 
-        $certificado = Certificado::where('certificados.active',1)
-            ->where('certificados.participant_id', session('list_certificado')['id'])
-            ->where('participants.active',1)
-            ->join("participants", "participants.participant_id", "=", "certificados.participant_id")
-            ->select("participants.*", "certificados.description_cours", "certificados.date", "certificados.certificado_id")
-            ->paginate(2);
-        return view('frontend.public.certificate', compact('configurations','certificado'));
+            if (count($certificado)==0) {
+                $message='No cuenta con certificado';
+            }
+            return view('frontend.public.certificate', compact('configurations','certificado','message'));
+        }
+        return view('frontend.public.certificate', compact('configurations','certificado','message'));
+        // return redirect()->route('contact')->with('info','Su mensaje a sido enviado con éxito');
     }
-    public function certificadoPDF()
+    public function certificadoPDF($number)
     {
+        // $participant = Participant::where('dni', $number)->where('active',1)->first();
+        $certificado = Certificado::where('certificado_id',$number)->where('active',1)->first();
+        // return $certificado;
+        $participant = Participant::where('participant_id', $certificado->participant_id)->where('active',1)->first();
+        setlocale(LC_TIME, "spanish");
+        $fecha = $certificado->date;
+        $fecha = str_replace("/", "-", $fecha);
+        $newDate = date("d-m-Y", strtotime($fecha));
+        $mesDesc = strftime("%d de %B del %Y", strtotime($newDate));
+        $year = strftime("%Y", strtotime($newDate));
+
+        // return $mesDesc;
         // para obtner la imagen y convertirlo en base 64 y poder pintarlo en el pdf
         $img_logo = storage_path('assets/img/logo_snc.png');
         $img_logo = str_replace('storage','public',$img_logo);
@@ -159,12 +183,30 @@ class HomeController extends Controller
         $img_sello_whitw = file_get_contents($img_sello_whitw);
         $img_sello_whitw = base64_encode($img_sello_whitw);
         // -----
+        // para obtner la imagen - telephone y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_telephone = storage_path('assets/img/telephone-cetificado.png');
+        $img_telephone = str_replace('storage','public',$img_telephone);
+        $img_telephone = file_get_contents($img_telephone);
+        $img_telephone = base64_encode($img_telephone);
+        // -----
+        // para obtner la imagen - telephone y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_message = storage_path('assets/img/message-certificado.png');
+        $img_message = str_replace('storage','public',$img_message);
+        $img_message = file_get_contents($img_message);
+        $img_message = base64_encode($img_message);
+        // -----
+        // para obtner la imagen - telephone y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_web = storage_path('assets/img/web-certificado.png');
+        $img_web = str_replace('storage','public',$img_web);
+        $img_web = file_get_contents($img_web);
+        $img_web = base64_encode($img_web);
+        // -----
         $json = array(
-            'name'=>'Niels Dylan',
-            'last_name'=>'Quispe Peralta',
-            'document'=>'74250891',
-            'description'=>'Supervivencia en el mar y rescate de hombre al agua',
-            'date_1'=>'Realizado el 21 de Mayo del 2021,',
+            'name'=>$participant->name,
+            'last_name'=>$participant->last_name,
+            'document'=>$participant->dni,
+            'description'=>$certificado->description_cours,
+            'date_1'=>'Realizado el '.$mesDesc.',',
             'date_2'=>'con una duración Cuatro (04) horas efectivas.',
             'name_firm'=>'Helard Bejarano Otazu',
             'cargo_firm'=>'Gerente General',
@@ -174,9 +216,9 @@ class HomeController extends Controller
             'email'=>'info@hbgroup.pe',
             'web'=>'www.hbgroup.pe',
             'name_business'=>'HB GROUP PERU S.R.L',
-            'number'=>'2021-0051'
+            'number'=>''.$year.' - 00'.$certificado->certificado_id
         );
-        $pdf = PDF::loadView('pdf.certificado', compact('json','img_logo','img_liston','img_firma','img_sello','img_fondo','img_sello_whitw'));
+        $pdf = PDF::loadView('pdf.certificado', compact('json','img_logo','img_liston','img_firma','img_sello','img_fondo','img_sello_whitw','img_telephone','img_message','img_web'));
         return $pdf->download('certificado.pdf');
     }
     public function viewPDF()
@@ -218,11 +260,29 @@ class HomeController extends Controller
         $img_sello_whitw = file_get_contents($img_sello_whitw);
         $img_sello_whitw = base64_encode($img_sello_whitw);
         // -----
+        // para obtner la imagen - telephone y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_telephone = storage_path('assets/img/telephone-cetificado.png');
+        $img_telephone = str_replace('storage','public',$img_telephone);
+        $img_telephone = file_get_contents($img_telephone);
+        $img_telephone = base64_encode($img_telephone);
+        // -----
+        // para obtner la imagen - telephone y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_message = storage_path('assets/img/message-certificado.png');
+        $img_message = str_replace('storage','public',$img_message);
+        $img_message = file_get_contents($img_message);
+        $img_message = base64_encode($img_message);
+        // -----
+        // para obtner la imagen - telephone y convertirlo en base 64 y poder pintarlo en el pdf
+        $img_web = storage_path('assets/img/web-certificado.png');
+        $img_web = str_replace('storage','public',$img_web);
+        $img_web = file_get_contents($img_web);
+        $img_web = base64_encode($img_web);
+        // -----
         $json = array(
             'name'=>'Niels Dylan',
             'last_name'=>'Quispe Peralta',
             'document'=>'74250891',
-            'description'=>'Supervivencia en el mar y rescate de hombre al agua',
+            'description'=>'Control de Energías Peligrosas (Bloqueo y Etiquetado / Consignación de Equipos)',
             'date_1'=>'Realizado el 21 de Mayo del 2021,',
             'date_2'=>'con una duración Cuatro (04) horas efectivas.',
             'name_firm'=>'Helard Bejarano Otazu',
@@ -236,6 +296,6 @@ class HomeController extends Controller
             'name_business'=>'HB GROUP PERU S.R.L',
             'number'=>'2021-0051'
         );
-        return view('pdf.certificado', compact('json', 'img_logo', 'img_liston','img_firma','img_sello','img_fondo','img_sello_whitw'));
+        return view('pdf.certificado', compact('json', 'img_logo', 'img_liston','img_firma','img_sello','img_fondo','img_sello_whitw','img_telephone','img_message','img_web'));
     }
 }

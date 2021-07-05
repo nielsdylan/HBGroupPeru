@@ -55,7 +55,7 @@ Route::get('event/{event}',  [AjaxController::class, 'event'   ] )->name('events
 Route::get('certificados-list',  [HomeController::class, 'certificateView'        ] )->name('certificate.view');
 Route::post('certificados-list',  [HomeController::class, 'certificateList'        ] )->name('certificate.list');
 // prueba de pdf
-Route::get('certificadoPDF',  [HomeController::class, 'certificadoPDF'        ] )->name('certificado.pdf');
+Route::get('certificadoPDF/{number}',  [HomeController::class, 'certificadoPDF'        ] )->name('certificado.pdf');
 
 Route::get('pdf',  [HomeController::class, 'viewPDF'        ] )->name('view.pdf');
 

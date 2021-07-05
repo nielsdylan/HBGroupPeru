@@ -77,11 +77,13 @@
         border-bottom: 1.5px solid;
         border-left: 1.5px solid;
         border-color: #909cb2;
-        padding-right: 30px;
-        padding-left: 30px;
+        padding-right: 20px;
+        padding-left: 20px;
+        /* padding: 10px */
     }
     .border-solid{
         border: 1px solid;
+        margin-top: 0px;
     }
     .liston-hb{
         width: 55%;
@@ -99,25 +101,30 @@
         padding-top: 7px;
     }
     .padding-top-firma{
-        padding-top: 135px;
+        /* padding-top: 135px; */
     }
     .padding-bottom-firma{
         padding-bottom: 100px;
     }
     .firma{
-        position: absolute;
+        /* position: absolute;
         right: 250px;
-        top: 652px;
+        top: 630px; */
     }
     .sello{
-        position: absolute;
+        /* position: absolute;
         right: 140px;
-        top: 607px;
+        top: 607px; */
+    }
+    .float-text{
+        /* position: absolute;
+        right: 250px;
+        top: 630px; */
     }
     .sello-white{
-        position: absolute;
-        top: 680px;
-        left: 65px;
+        /* position: absolute;
+        top: 750px;
+        left: 65px; */
         border-radius: 100px;
         opacity: 0.8;
     }
@@ -127,54 +134,81 @@
         background-size: cover;
         /* background-repeat: no-repeat; */
     }
+    .font-size-12{
+        font-size: 12px !important,
+    }
+    .padding-white{
+        padding-bottom: 55px;
+    }
+    .td-img-sello-whited{
+        padding-right: 110px;
+        padding-top: 90px;
+    }
+
 </style>
 <body>
     <div class="container">
         <div id="img-pdf" class="border-pdf">
-            <div class="text-right margin-top-10"><span class="border-number margin-right-20" >N°: {{$json['number']}}</span></div>
+            <div class="text-right margin-top-10"><span class="border-number margin-right-20">N°: {{$json['number']}}</span></div>
             <div class="text-center"><img src="data:image;base64,{{$img_logo}}" width="100"></div>
             <div class="text-center"><h3 class="margin-0">HB GROUP PERU</h3></div>
             <div class="liston-backgroun">
                 <h1 class="text-white text-center padding-top-liston margin-bottom-0">CERTIFICADO</h1>
             </div>
             <div class="text-center"><h3 class="margin-top-0">OTORGADO A:</h3></div>
-            <div class="text-center"><h1 class="margin-0 text-blue">{{$json['last_name'].' '.$json['name']}}</h1></div>
+            <div class="text-center"><h2 class="margin-0 text-blue">{{$json['last_name'].' '.$json['name']}}</h2></div>
             <div class="text-center"><h2 class="margin-0">DNI N° {{$json['document']}}</h2></div>
             <div class="text-center"><h3>Por haber aprobado satisfactoriamente el curso:</h3></div>
-            <div class="text-center"><h1 class="text-blue">"{{$json['description']}}"</h1></div>
+            <div class="text-center"><h2 class="text-blue">"{{$json['description']}}"</h2></div>
             <div class="text-center"><h3 class="margin-0">{{$json['date_1']}}</h3></div>
             <div class="text-center"><h3 class="margin-0">{{$json['date_2']}}</h3></div>
 
+
+
             {{-- firma --}}
 
-            <div class="text-center padding-top-firma">
+            {{-- <div class="text-center padding-top-firma">
                 <span class="sello-white"></span>
-                <img src="data:image;base64,{{$img_sello_whitw}}" width="200" class="sello-white">
+                <img src="data:image;base64,{{$img_sello_whitw}}" width="150" class="sello-white">
                 <img src="data:image;base64,{{$img_firma}}" width="200" class="firma">
                 <img src="data:image;base64,{{$img_sello}}" width="150" class="sello">
                 <hr size="1" width="150" class="border-solid">
-            </div>
-            <div class="text-center">
-                {{-- <h4 class="margin-0"> --}}
+            </div> --}}
+
+            {{-- <div class="float-text">
+                <div class="text-center font-size-12">
                     {{$json['name_firm']}}
-                {{-- </h4> --}}
-            </div>
-            <div class="text-center">
-                {{-- <h4 class="margin-0"> --}}
+                </div>
+                <div class="text-center font-size-12">
                     {{$json['cargo_firm']}}
-                {{-- </h4> --}}
-            </div>
-            <div class="text-center padding-bottom-firma">
-                {{-- <h4 class="margin-0"> --}}
+                </div>
+                <div class="text-center  font-size-12">
                     {{$json['business_firm']}}
-                {{-- </h4> --}}
+                </div>
+            </div> --}}
+
+            <div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="td-img-sello-whited"><img src="data:image;base64,{{$img_sello_whitw}}" width="150" class="sello-white"></td>
+                            <td class="text-center font-size-12">
+                                <img src="data:image;base64,{{$img_firma}}" width="200" class="firma">
+                                <hr size="1" width="100" class="border-solid">
+                                <div>{{$json['name_firm']}}</div>
+                                <div>{{$json['cargo_firm']}}</div>
+                                <div>{{$json['business_firm']}}</div>
+                            </td>
+                            <td ><img src="data:image;base64,{{$img_sello}}" width="150" class="sello"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             {{-- ---- --}}
-
             {{-- footer del pdf  --}}
-            <div class="text-center border-footer">
-                <span>{{$json['name_business']}}</span> | <span>{{$json['telephone']}}</span> |
-                <span>{{$json['cell']}}</span> | <span>{{$json['email']}}</span> | <span>{{$json['web']}}</span>
+            <div class="text-center border-footer" style="font-size: 14px;">
+                <span>{{$json['name_business']}}</span> | <img src="data:image;base64,{{$img_telephone}}" width="15" class="firma"><span> {{$json['telephone']}}</span> |
+                <span>{{$json['cell']}}</span> | <img src="data:image;base64,{{$img_message}}" width="15" class="firma"> <span>{{$json['email']}}</span> | <img src="data:image;base64,{{$img_web}}" width="15" class="firma"> <span>{{$json['web']}}</span>
             </div>
             {{-- --- --}}
         </div>
