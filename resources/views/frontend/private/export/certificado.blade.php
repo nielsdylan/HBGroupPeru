@@ -8,6 +8,7 @@
         <th style="text-align:center; font-weight: 700;"> NOMBRES </th>
         <th style="text-align:center; font-weight: 700;"> DETALLE DEL CURSO </th>
         <th style="text-align:center; font-weight: 700;"> FECHA </th>
+        <th style="text-align:center; font-weight: 700;"> HORAS </th>
     </tr>
     </thead>
     <tbody>

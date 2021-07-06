@@ -44,6 +44,7 @@ class CertificadoImport implements ToCollection
                 $certificado = new Certificado();
                 $certificado->description_cours  = $value[4];
                 $certificado->date  = date('Y-m-d', $fecha);
+                $certificado->hour  = $value[5];
                 $certificado->participant_id  = $participant->participant_id;
                 $certificado->create_by  = session('hbgroup')['user_id'];
                 $certificado->save();

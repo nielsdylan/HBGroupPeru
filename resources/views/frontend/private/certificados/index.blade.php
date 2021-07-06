@@ -250,6 +250,50 @@
         });
 
     });
+    $(document).on('click','[data-delete="modal"]',function () {
+        var id = $(this).attr('data-id'),
+            route = '{{ route('certificado.destroy', ['certificado' => 'id'] ) }}';
+            route = route.replace('id', id);
+        swal({
+            title: "¿Está seguro de eliminar??",
+            text: "Se eliminara su registro.",
+            type: "info",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        }, function () {
+            $.ajax({
+                method: 'DELETE',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: route,
+                dataType: 'json',
+                data: {},
+                beforeSend: function()
+                {
+                },
+            }).done(function (response) {
+                if (response.status == 200) {
+
+                    swal({
+                        title: " ",
+                        text: "Se elimino con éxito",
+                        type: "success",
+                        showCancelButton: false,
+                        confirmButtonColor: '#78cbf2',
+                        confirmButtonText: 'Aceptar',
+                        },
+                        function(){
+                            location.reload();
+                    });
+                }else{
+                    swal("Informativo", "Ocurrio un error", "warning")
+                }
+            }).fail(function () {
+                // alert("Error");
+            });
+        });
+
+    });
 </script>
 
 @endsection

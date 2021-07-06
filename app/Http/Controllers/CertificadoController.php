@@ -40,4 +40,17 @@ class CertificadoController extends Controller
             'status'=>200,
         ]);
     }
+    public function destroy(Certificado $certificado)
+    {
+        Certificado::where('active', 1)->where('certificado_id', $certificado->certificado_id)
+        ->update([
+            'active' => 0,
+            'deleted_at'=>date('Y-m-d H:i:s'),
+            'delete_by'=>session('hbgroup')['user_id']
+        ]);
+        return response()->json([
+            'success'=>true,
+            'status'=>200
+        ]);
+    }
 }
