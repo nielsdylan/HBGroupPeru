@@ -422,7 +422,7 @@ p{
     font-family: 'FiraSans-Book';
 }
 /* #footer .pre-footer, #footer */
-#services .container .services-title, .services-card, .services-button, #solution, #business,  .footer-copy, .vision-us, .profile-ordenador, .profile-mobile, .img-carousel-us, .services-view-card {
+#services .container .services-title, .services-card, .services-button, #solution, #business, .vision-us, .profile-ordenador, .profile-mobile, .img-carousel-us, .services-view-card {
     opacity: 0;
 }
 /* .map{
