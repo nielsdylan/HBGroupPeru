@@ -77,6 +77,36 @@
     $(document).ready(function () {
 
     });
+    function getBusiness() {
+        var route   = '{{ route('get.business') }}',
+            html    ='';
+        $.ajax({
+            method: 'GET',
+            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+            url: route,
+            dataType: 'json',
+            data: {},
+            beforeSend: function()
+            {
+                $('[name="bussiness_id"]').attr('disabled','');
+            },
+        }).done(function (response) {
+            $('[name="bussiness_id"]').removeAttr('disabled');
+            if (response.status == 200) {
+
+                html='<option value="">Seleccione...</option>';
+                $.each(response.results, function (index, element) {
+                    html+='<option value="'+element.business_id+'">'+element.name+'</option>';
+                });
+                $('[name="bussiness_id"]').html(html);
+            }else{
+
+            }
+        }).fail(function () {
+            // alert("Error");
+            $('[name="bussiness_id"]').removeAttr('disabled');
+        });
+    }
     function getAsignature() {
         var route   = '{{ route('get.asignature') }}',
             html    ='';
@@ -112,6 +142,16 @@
         var html = '';
         $('#addRowModal').modal('show');
         html =''+
+            '<div class="row">'+
+                '<div class="col-md-12">'+
+                    '<div class="form-group">'+
+                        '<label for="bussiness_id">Empresas :</label>'+
+                        '<select class="form-control" name="bussiness_id" id="bussiness_id" required>'+
+                            '<option value="">Seleccione...</option>'+
+                        '</select>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
             '<div class="row">'+
                 '<div class="col-md-12">'+
                     '<div class="form-group">'+
@@ -161,6 +201,7 @@
         '';
         $('[data-form="form"] .modal-body').html(html);
         getAsignature();
+        getBusiness();
     });
 
 
@@ -180,6 +221,19 @@
         }).done(function (response) {
             if (response.status == 200) {
                 html =''+
+                    '<div class="row">'+
+                        '<div class="col-md-12">'+
+                            '<div class="form-group">'+
+                                '<label for="bussiness_id">Empresas :</label>'+
+                                '<select class="form-control" name="bussiness_id" required>'+
+                                    '<option value="">Seleccione...</option>';
+                                    $.each(response.business, function (index, element) {
+                                        html+='<option value="'+element.business_id +'" '+(element.business_id ==response.cours.business_id ? 'selected' : '' ) +'>'+element.name+' </option>';
+                                    });
+                                html+='</select>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
                     '<div class="row">'+
                         '<div class="col-md-12">'+
                             '<div class="form-group">'+

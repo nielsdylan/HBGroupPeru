@@ -59,6 +59,8 @@ Route::get('certificadoPDF/{number}',  [HomeController::class, 'certificadoPDF' 
 
 Route::get('pdf',  [HomeController::class, 'viewPDF'        ] )->name('view.pdf');
 
+// ruta de autenticacion
+Route::get('autenticacion',  [HomeController::class, 'autentication'   ] )->name('autentication');
 
 #backend -private
 //session
@@ -112,11 +114,12 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::resource('perfil', ProfileController::class );
     Route::resource('cursos', CoursController::class );
     Route::get('getCourses',[CoursController::class, 'getCourses'] )->name('get.courses');
+    Route::post('get-cour-asignature',[CoursController::class, 'getCoursesAsignature'] )->name('get.courses.asignature');
     Route::resource('sede', SedeController::class );
     Route::resource('turno', TurnController::class );
     Route::resource('sede-turno', SedeTurnController::class );
     Route::resource('participantes', ParticipantController::class );
-
+    Route::post('participantes-add',[ParticipantController::class, 'add'] )->name('participantes.add');
     Route::resource('asignatura', AsignatureController::class );
     Route::get('getAsignature',[AsignatureController::class, 'getAsignature'] )->name('get.asignature');
     // Route::resource('programa', ProgramController::class );
@@ -134,7 +137,5 @@ Route::middleware(['hbgroup'])->group(function(){
     // certificados
     Route::resource('certificado', CertificadoController::class );
     Route::get('certificado-model-excel',[ExceltController::class, 'certificadoModelExel'] )->name('certificado.export.model.excel');
-
+    Route::get('get-business',[BusinessController::class, 'getBusiness'] )->name('get.business');
 });
-// ruta de autenticacion
-Route::get('autenticacion',  [HomeController::class, 'autentication'   ] )->name('autentication');

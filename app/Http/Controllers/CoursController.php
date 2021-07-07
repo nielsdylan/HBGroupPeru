@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asignature;
+use App\Models\Business;
 use App\Models\Cours;
 use DateTime;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class CoursController extends Controller
             ->join("asignatures", "asignatures.asignature_id", "=", "cours.asignature_id")
             ->select("cours.*", "asignatures.name as asignature_name", "asignatures.code as asignature_code")
             ->get();
-        return view('frontend.private.courses.index', compact('results'));
+        $business = Business::where('active',1)->get();
+        return view('frontend.private.courses.index', compact('results','business'));
     }
     public function store(Request $request)
     {
@@ -29,6 +31,7 @@ class CoursController extends Controller
         $cours->date_start      = $request->date_start;
         $cours->hour_start      = $request->hour_start;
         $cours->hour_end        = $request->hour_end;
+        $cours->business_id        = $request->bussiness_id;
 
         $cours->create_by = session('hbgroup')['user_id'];
         $cours->save();
@@ -63,12 +66,14 @@ class CoursController extends Controller
     public function edit(Cours $curso)
     {
         $asignature = Asignature::where('active',1)->where('status',1)->get();
+        $business = Business::where('active', 1)->get();
         if ($curso) {
             return response()->json([
                 'success'=>true,
                 'status'=>200,
                 'cours'=>$curso,
-                'asignature'=>$asignature
+                'asignature'=>$asignature,
+                'business'=>$business
             ]);
         }else{
             return response()->json([
@@ -89,6 +94,7 @@ class CoursController extends Controller
             'date_start' => $request->date_start,
             'hour_start' => $request->hour_start,
             'hour_end' => $request->hour_end,
+            'business_id' => $request->bussiness_id,
             'update_by'=>session('hbgroup')['user_id']
         ]);
 
@@ -113,5 +119,22 @@ class CoursController extends Controller
             'success'=>true,
             'status'=>200
         ]);
+    }
+    public function getCoursesAsignature(Request $request)
+    {
+
+        $cours = Cours::where('active',1)->where('asignature_id',$request->id)->get();
+        if ($cours) {
+            return response()->json([
+                'success'=>true,
+                'status'=>200,
+                'results'=>$cours
+            ]);
+        }else{
+            return response()->json([
+                'success'=>false,
+                'status'=>404,
+            ]);
+        }
     }
 }

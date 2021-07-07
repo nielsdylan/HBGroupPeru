@@ -76,4 +76,13 @@ class BusinessController extends Controller
             'status'=>200
         ]);
     }
+    public function getBusiness()
+    {
+        $business = Business::where('active', 1)->get();
+        return response()->json([
+            'success'=>true,
+            'status'=>200,
+            'results'=>$business
+        ]);
+    }
 }

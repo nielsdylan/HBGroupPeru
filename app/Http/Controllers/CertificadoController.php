@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Imports\CertificadoImport;
+use App\Models\Asignature;
+use App\Models\Business;
 use App\Models\Certificado;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,20 +18,21 @@ class CertificadoController extends Controller
             ->where('participants.active',1)
             // ->where('participants.active',1)
             ->join("participants", "participants.participant_id", "=", "certificados.participant_id")
-            // ->join("participants", "participants.participant_id", "=", "cours_participants.participant_id")
-            ->select("participants.*", "certificados.description_cours", "certificados.date", "certificados.certificado_id")
+            ->join("users", "users.id", "=", "participants.user_id")
+            ->select("participants.user_id", "certificados.description_cours", "certificados.date", "certificados.certificado_id", "users.*")
             ->get();
         // return $results;
-        return view('frontend.private.certificados.index', compact('results'));
+        $asignatures =  Asignature::where('active',1)->get();
+        $business = Business::where('active',1)->get();
+        return view('frontend.private.certificados.index', compact('results','asignatures','business'));
     }
     public function store(Request $request)
     {
-        // $json = array(
-        //     'business_id'=>$request->business,
-        //     'asignature_id'=>$request->asignature,
-        // );
-        // return $request;
-        // $request->session()->put('participant',$json);
+        $json = array(
+            'cours_id'=>$request->course,
+            'asignature_id'=>$request->asignature,
+        );
+        $request->session()->put('certificado',$json);
         $file = $request->file('file');
         Excel::import(new CertificadoImport, $file);
 

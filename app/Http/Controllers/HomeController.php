@@ -10,6 +10,7 @@ use App\Models\Configuration;
 use App\Models\Event;
 use App\Models\Participant;
 use App\Models\Slider;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use PDF;
@@ -108,10 +109,14 @@ class HomeController extends Controller
         $certificado='';
         $message='';
         $configurations = Configuration::where('active', 1)->first();
-        $participant = Participant::where('dni',$request->dni)
+        $user = User::where('dni',$request->dni)
             ->where('active',1)
             ->first();
-        if ($participant) {
+        $participant = Participant::where('user_id',$user->id)
+            ->where('active',1)
+            ->first();
+
+        if ($user) {
 
             $json_user = array(
                 'id'=>$participant->participant_id,
@@ -122,13 +127,16 @@ class HomeController extends Controller
                 ->where('certificados.participant_id', session('list_certificado')['id'])
                 ->where('participants.active',1)
                 ->join("participants", "participants.participant_id", "=", "certificados.participant_id")
-                ->select("participants.*", "certificados.description_cours", "certificados.date", "certificados.certificado_id")
+                ->join("users", "users.id", "=", "participants.user_id")
+                ->select("participants.user_id", "certificados.description_cours", "certificados.date", "certificados.certificado_id", "users.*")
                 ->paginate(5);
 
             if (count($certificado)==0) {
                 $message='No cuenta con certificado';
             }
             return view('frontend.public.certificate', compact('configurations','certificado','message'));
+        }else{
+            $message='No se encuentra matriculado';
         }
         return view('frontend.public.certificate', compact('configurations','certificado','message'));
         // return redirect()->route('contact')->with('info','Su mensaje a sido enviado con éxito');

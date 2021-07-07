@@ -106,7 +106,43 @@
             <form action="{{route('certificado.store')}}" method="post" enctype="multipart/form-data" data-form="save-excel">
                 @csrf
                 <div class="modal-body">
+                    {{-- <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="business">Empresa</label>
+                                <select id="business" class="form-control" name="business" required>
+                                    <option value="">Seleccione...</option>
+                                    @foreach ($business as $item)
+                                        <option value="{{$item->business_id}}">{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div> --}}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="asignature">Asignatura</label>
+                                <select id="asignature" class="form-control" select-cours="get-cours"  data-select="add-participant" name="asignature" required>
+                                    <option value="">Seleccione...</option>
+                                    @foreach ($asignatures as $item)
+                                        <option value="{{$item->asignature_id}}">{{$item->name}} ({{$item->abbreviation}})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="course">Curso</label>
+                                <select class="form-control" data-course="add-participant" name="course" data-course="add-participant" required>
+                                    <option value="">Seleccione...</option>
 
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -130,7 +166,79 @@
 {{-- @include('frontend.private.certificados.create')
 @include('frontend.private.certificados.edit') --}}
 <script>
+    $(document).on('change','[select-cours="get-cours"]',function (e) {
+        e.preventDefault();
+        var this_select = $(this),
+            cours_id = $(this).val(),
+            data_select = $(this).attr('data-select'),
+            select = '[data-course="'+data_select+'"]';
+        console.log(data_select);
+        getCourseAsignature(cours_id,select);
+    });
+    function getCourseAsignature(id, select) {
+        var html='',
+            route   = '{{ route('get.courses.asignature') }}';
+        data = {
+            id:id
+        }
+        // get.courses
+        $.ajax({
+            method: 'POST',
+            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+            url: route,
+            dataType: 'json',
+            // processData: false,
+            // contentType: false,
+            data: data,
+            beforeSend: function()
+            {
+                $(select).attr('disabled','')
+            },
+        }).done(function (response) {
+            $(select).removeAttr('disabled');
+            if (response.status == 200) {
+                html = '<option value="">Seleccione...</option>';
+                $.each(response.results, function (index, element) {
+                    html+='<option value="'+element.cours_id+'">'+element.course+' ('+element.code+')</option>';
+                });
+                $(select).html(html);
+            }else{
+                var placementFrom = 'top';
+                var placementAlign = 'center';
+                var state = 'danger';
+                var style = 'withicon';
+                var content = {};
 
+                content.message = 'Ingrese correctamente los datos para la session para HB Group Perú';
+                content.title = 'Session';
+                // if (style == "withicon") {
+                //     content.icon = 'fas fa-times';
+                // } else {
+                //     content.icon = 'none';
+                // }
+                content.icon = 'fas fa-times';
+                content.url = url+'hbgroupp_web';
+                content.target = '_blank';
+
+                $.notify(content,{
+                    type: state,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    },
+                    time: 1000,
+                    delay: 0,
+                });
+
+                setTimeout(function(){
+                    $('[data-notify="dismiss"]').click();
+                }, 3000);
+            }
+        }).fail(function () {
+            // alert("Error");
+            $(select).removeAttr('disabled');
+        });
+    }
     $(document).on('click','[data-action="participant-import"]',function (e) {
         e.preventDefault();
         $('#import-excel-participant').modal('show');

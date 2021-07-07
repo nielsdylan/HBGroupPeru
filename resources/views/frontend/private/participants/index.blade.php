@@ -33,7 +33,7 @@
                             <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('export.model.excel')}}"><i class="fas fa-file-import fon-z"></i></a>
 
                             <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fa-file-upload fon-z"></i></a>
-                            <button class="btn btn-primary btn-round" >
+                            <button class="btn btn-primary btn-round" data-modal="add-modal">
                                 <i class="fa fa-plus"></i>
                                 Nuevo participante
                             </button>
@@ -62,7 +62,7 @@
                                             <td>{{$item->last_name}}</td>
                                             <td>{{$item->name}}</td>
                                             <td>{{$item->email}}</td>
-                                            <td>{{$item->cell}}</td>
+                                            <td>{{$item->telephone}}</td>
                                             <td>{{$item->name_business}}</td>
                                             <td>
                                                 <div class="form-button-action">
@@ -102,11 +102,11 @@
             <form action="{{route('participantes.store')}}" method="post" enctype="multipart/form-data" data-form="save-excel">
                 @csrf
                 <div class="modal-body">
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="business">Empresa</label>
-                                <select id="business" class="form-control" name="business" required>
+                                <select  class="form-control" name="business" required>
                                     <option value="">Seleccione...</option>
                                     @foreach ($business as $item)
                                         <option value="{{$item->business_id}}">{{$item->name}}</option>
@@ -114,12 +114,12 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="asignature">Asignatura</label>
-                                <select id="asignature" class="form-control" name="asignature" required>
+                                <select class="form-control" name="asignature" select-cours="get-cours" data-select="get-course" required>
                                     <option value="">Seleccione...</option>
                                     @foreach ($asignatures as $item)
                                         <option value="{{$item->asignature_id}}">{{$item->name}} ({{$item->abbreviation}})</option>
@@ -128,16 +128,16 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="row">
+                    <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="course">Curso</label>
-                                <select id="course" class="form-control" name="course" required>
+                                <select class="form-control" name="course" data-course="get-course" required>
                                     <option value="">Seleccione...</option>
                                 </select>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -155,12 +155,193 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header no-bd">
+                <h2 class="modal-title">
+                    <span class="fw-mediumbold">
+                    Nuevo participante</span>
+
+                </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{route('participantes.add')}}" method="post" enctype="multipart/form-data" data-form="save-add">
+                @csrf
+                <div class="modal-body">
+                    {{-- <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="business">Empresa</label>
+                                <select class="form-control" name="business" required>
+                                    <option value="">Seleccione...</option>
+                                    @foreach ($business as $item)
+                                        <option value="{{$item->business_id}}">{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div> --}}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="asignature">Asignatura</label>
+                                <select class="form-control" name="asignature" select-cours="get-cours" data-select="add-participant" required>
+                                    <option value="">Seleccione...</option>
+                                    @foreach ($asignatures as $item)
+                                        <option value="{{$item->asignature_id}}">{{$item->name}} ({{$item->abbreviation}})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="course">Curso</label>
+                                <select class="form-control" name="course" data-course="add-participant" required>
+                                    <option value="">Seleccione...</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="document_type_id">Tipo de documento :</label>
+                                <select id="document_type_id" class="form-control" name="document_type_id" required>
+                                    <option value="">Seleccione...</option>
+                                    @foreach ($document_types as $key=>$type )
+                                        <option value="{{$type->document_type_id }}">{{$type->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="dni">Nùmero de documento :</label>
+                                <input id="dni" class="form-control" type="number" name="dni">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="dni">Email :</label>
+                                <input id="email" class="form-control" type="email" name="email">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="last_name">Apellidos :</label>
+                                <input id="last_name" class="form-control" type="text" name="last_name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Nombres :</label>
+                                <input id="name" class="form-control" type="text" name="name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cell">Celular :</label>
+                                <input id="cell" class="form-control" type="number" name="cell">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer no-bd">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script>
     $(document).on('click','[data-action="participant-import"]',function (e) {
         e.preventDefault();
         $('#import-excel-participant').modal('show');
 
     });
+    $(document).on('change','[select-cours="get-cours"]',function (e) {
+        e.preventDefault();
+        var this_select = $(this),
+            cours_id = $(this).val(),
+            data_select = $(this).attr('data-select'),
+            select = '[data-course="'+data_select+'"]';
+        console.log(data_select);
+        getCourseAsignature(cours_id,select);
+    });
+    function getCourseAsignature(id, select) {
+        var html='',
+            route   = '{{ route('get.courses.asignature') }}';
+        data = {
+            id:id
+        }
+        // get.courses
+        $.ajax({
+            method: 'POST',
+            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+            url: route,
+            dataType: 'json',
+            // processData: false,
+            // contentType: false,
+            data: data,
+            beforeSend: function()
+            {
+                $(select).attr('disabled','')
+            },
+        }).done(function (response) {
+            $(select).removeAttr('disabled');
+            if (response.status == 200) {
+                html = '<option value="">Seleccione...</option>';
+                $.each(response.results, function (index, element) {
+                    html+='<option value="'+element.cours_id+'">'+element.course+' ('+element.code+')</option>';
+                });
+                $(select).html(html);
+            }else{
+                var placementFrom = 'top';
+                var placementAlign = 'center';
+                var state = 'danger';
+                var style = 'withicon';
+                var content = {};
+
+                content.message = 'Ingrese correctamente los datos para la session para HB Group Perú';
+                content.title = 'Session';
+                // if (style == "withicon") {
+                //     content.icon = 'fas fa-times';
+                // } else {
+                //     content.icon = 'none';
+                // }
+                content.icon = 'fas fa-times';
+                content.url = url+'hbgroupp_web';
+                content.target = '_blank';
+
+                $.notify(content,{
+                    type: state,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    },
+                    time: 1000,
+                    delay: 0,
+                });
+
+                setTimeout(function(){
+                    $('[data-notify="dismiss"]').click();
+                }, 3000);
+            }
+        }).fail(function () {
+            // alert("Error");
+            $(select).removeAttr('disabled');
+        });
+    }
     $(document).on('submit','[data-form="save-excel"]',function (e) {
         e.preventDefault();
         var data = new FormData($(this)[0]),
@@ -242,6 +423,139 @@
             }
         }).fail(function () {
             // alert("Error");
+        });
+
+    });
+    $(document).on('click','[data-modal="add-modal"]',function () {
+        $('#add-modal').modal('show');
+    });
+    $(document).on('submit','[data-form="save-add"]',function (e) {
+        e.preventDefault();
+        var data = $(this).serialize(),
+            route = $(this).attr('action');
+
+        $.ajax({
+            method: 'POST',
+            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+            url: route,
+            dataType: 'json',
+            // processData: false,
+            // contentType: false,
+            data: data,
+            beforeSend: function()
+            {
+                $('[data-form="save-add"] .modal-footer button[type="submit"]').addClass('is-loading')
+            },
+        }).done(function (response) {
+            $('[data-form="save-add"] .modal-footer button[type="submit"]').removeClass('is-loading');
+            if (response.status == 200) {
+                $('#import-excel-participant').modal('hide');
+                var placementFrom = 'top';
+                var placementAlign = 'right';
+                var state = 'success';
+                var style = 'withicon';
+                var content = {};
+
+                content.message = 'Se guardo con Éxito';
+                content.title = 'Guardar';
+                content.icon = 'fas fa-check';
+                content.url = url+'login';
+                content.target = '_blank';
+
+                $.notify(content,{
+                    type: state,
+                    placement: {
+                        from: placementFrom,
+                        align: placementAlign
+                    },
+                    time: 1000,
+                    delay: 2,
+                });
+                setTimeout(function(){
+                    location.reload();
+                }, 3000);
+                console.log(response);
+            }else{
+                var placementFrom = 'top';
+                var placementAlign = 'center';
+                var state = 'danger';
+                var style = 'withicon';
+                var content = {};
+
+                content.message = 'Ingrese correctamente los datos para la session para HB Group Perú';
+                content.title = 'Session';
+                // if (style == "withicon") {
+                //     content.icon = 'fas fa-times';
+                // } else {
+                //     content.icon = 'none';
+                // }
+                content.icon = 'fas fa-times';
+                content.url = url+'hbgroupp_web';
+                content.target = '_blank';
+
+                $.notify(content,{
+                    type: state,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    },
+                    time: 1000,
+                    delay: 0,
+                });
+
+                setTimeout(function(){
+                    $('[data-notify="dismiss"]').click();
+                }, 3000);
+            }
+        }).fail(function () {
+        // alert("Error");
+        });
+    });
+    $(document).on('click','[data-delete="modal"]',function (e) {
+        e.preventDefault();
+        var id = $(this).attr('data-id'),
+            route = '{{ route('participantes.destroy', ['participante' => 'id'] ) }}';
+            route = route.replace('id', id);
+        swal({
+            title: "¿Está seguro de eliminar??",
+            text: "Se eliminara su registro.",
+            type: "info",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true,
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No',
+        }, function () {
+            $.ajax({
+                method: 'DELETE',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: route,
+                dataType: 'json',
+                data: {},
+                beforeSend: function()
+                {
+                },
+            }).done(function (response) {
+                if (response.status == 200) {
+
+                    swal({
+                        title: " ",
+                        text: "Se elimino con éxito",
+                        type: "success",
+                        showCancelButton: false,
+                        confirmButtonColor: '#78cbf2',
+                        confirmButtonText: 'Aceptar',
+                        },
+                        function(){
+                            location.reload();
+                    });
+                }else{
+                    swal("Informativo", "Ocurrio un error", "warning")
+                }
+            }).fail(function () {
+                // alert("Error");
+                swal("Informativo", "Ocurrio un error", "warning");
+            });
         });
 
     });

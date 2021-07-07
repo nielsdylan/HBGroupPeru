@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Cours;
 use App\Models\CoursParticipant;
 use App\Models\Participant;
 use App\Models\User;
@@ -20,37 +21,36 @@ class ParticipantImport implements ToCollection
         foreach ($collection as $key => $value) {
 
             if ($key!=0) {
-                $participant = Participant::where('dni',$value[0])->first();
-                if (!$participant) {
-                    $participant = new Participant();
-                    $participant->dni       = $value[0];
-                    $participant->last_name = $value[1];
-                    $participant->name      = $value[2];
-                    $participant->email     = $value[3];
-                    $participant->cell      = $value[4];
-                    $participant->sex       = $value[5];
-                    $participant->create_by   = session('hbgroup')['user_id'];
-                    $participant->save();
-
+                $user = User::where('active',1)->where('dni',$value[0])->first();
+                if (!$user) {
                     $user = new User();
-                    $user->dni       = $value[0];
-                    $user->last_name = $value[1];
-                    $user->name      = $value[2];
-                    $user->email     = $value[3];
-                    $user->telephone      = $value[4];
-                    $user->password       = sha1($value[0]);
-                    $user->group_id       = 4;
-                    $user->create_by   = session('hbgroup')['user_id'];
+                    $user->name             = $value[2];
+                    $user->email            = $value[3];
+                    $user->password         = sha1($value[0]);
+                    $user->group_id         = 4;
+                    $user->dni              = $value[0];
+                    $user->last_name        = $value[1];
+                    $user->telephone        = $value[4];
+                    $user->create_by        = session('hbgroup')['user_id'];
                     $user->save();
                 }
 
 
+                $participan = new Participant();
+                $participan->user_id = $user->id;
+                $participan->create_by = session('hbgroup')['user_id'];
+                $participan->save();
+
+                $cours = Cours::where('active',1)->where('cours_id',session('participant')['cours_id'])->first();
+
                 $cours_participant = new CoursParticipant();
-                $cours_participant->business_id  = session('participant')['business_id'];
-                $cours_participant->asignature_id  = session('participant')['asignature_id'];
-                $cours_participant->participant_id  = $participant->participant_id;
-                $cours_participant->create_by  = session('hbgroup')['user_id'];
+                $cours_participant->business_id     = $cours->business_id;
+                $cours_participant->asignature_id   = session('participant')['asignature_id'];
+                $cours_participant->participant_id  = $participan->participant_id;
+                $cours_participant->cours_id        = $cours->cours_id ;
+                $cours_participant->create_by       = session('hbgroup')['user_id'];
                 $cours_participant->save();
+
                 // dd($participant);
                 // dd($value[0]);
             }
