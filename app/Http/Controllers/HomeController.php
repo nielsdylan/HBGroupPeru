@@ -7,6 +7,7 @@ use App\Mail\ContactMailable;
 use App\Models\Business;
 use App\Models\Certificado;
 use App\Models\Configuration;
+use App\Models\Customer;
 use App\Models\Event;
 use App\Models\Participant;
 use App\Models\Slider;
@@ -72,12 +73,52 @@ class HomeController extends Controller
         $mail = new ContactMailable($data);
         Mail::to($request->email)->send($mail);
 
+        $customer = new Customer();
+        $customer->name         = $request->name;
+        $customer->last_name    = $request->last_name;
+        $customer->email        = $request->email;
+        $customer->telephone    = $request->telephone ;
+        $customer->message      = $request->message ;
+
+        $customer->save();
+
         return redirect()->route('contact')->with('info','Su mensaje a sido enviado con éxito');
     }
     public function autentication()
     {
-        $configurations = Configuration::where('active', 1)->first();
-        return view('frontend.public.autentication', compact('configurations'));
+        if (!empty($_GET['code']) ) {
+            $code_tele = strpos($_GET['code'], 'T');
+            $code_email = strpos($_GET['code'], 'E');
+
+            if ($code_tele) {
+                $strin = explode('T',$_GET['code']);
+                User::where('active', 1)->where('id', $strin[1])->update([
+                    'confirme_telephone' => 1,
+                ]);
+            }elseif ($code_email) {
+                $strin = explode('E',$_GET['code']);
+                User::where('active', 1)->where('id', $strin[1])->update([
+                    'confirme_email'=>1,
+                ]);
+            }else{
+                return view('errors.404');
+            }
+            $user = User::where('active',1)->where('id',$strin[1])->first();
+            $result = array(
+                'id'                =>$user->id,
+                'last_name'         =>$user->last_name,
+                'name'              =>$user->name,
+                'dni'               =>$user->dni,
+                'email'             =>$user->email,
+                'telephone'         =>$user->telephone,
+                'confirme_telephone'=>$user->confirme_telephone,
+                'confirme_email'    =>$user->confirme_email,
+
+            );
+            $configurations = Configuration::where('active', 1)->first();
+            return view('frontend.public.autentication', compact('configurations','result'));
+        }
+        return view('errors.404');
     }
     public function calendar()
     {
@@ -154,61 +195,6 @@ class HomeController extends Controller
         $mesDesc = strftime("%d de %B del %Y", strtotime($newDate));
         $year = strftime("%Y", strtotime($newDate));
 
-        // return $mesDesc;
-        // para obtner la imagen y convertirlo en base 64 y poder pintarlo en el pdf
-        // $img_logo = storage_path('assets/img/logo_snc.png');
-        // $img_logo = str_replace('storage','public',$img_logo);
-        // $img_logo = file_get_contents($img_logo);
-        // $img_logo = base64_encode($img_logo);
-        // -----
-        // para obtner la imagen - liston y convertirlo en base 64 y poder pintarlo en el pdf
-        // $img_liston = storage_path('assets/img/liston-sf-hb.png');
-        // $img_liston = str_replace('storage','public',$img_liston);
-        // $img_liston = file_get_contents($img_liston);
-        // $img_liston = base64_encode($img_liston);
-        // -----
-        // para obtner la imagen - firma y convertirlo en base 64 y poder pintarlo en el pdf
-        // $img_firma = storage_path('assets/img/firma-hb.png');
-        // $img_firma = str_replace('storage','public',$img_firma);
-        // $img_firma = file_get_contents($img_firma);
-        // $img_firma = base64_encode($img_firma);
-        // -----
-        // para obtner la imagen - sello y convertirlo en base 64 y poder pintarlo en el pdf
-        // $img_sello = storage_path('assets/img/sello-hb.png');
-        // $img_sello = str_replace('storage','public',$img_sello);
-        // $img_sello = file_get_contents($img_sello);
-        // $img_sello = base64_encode($img_sello);
-        // -----
-        // para obtner la imagen - fondo y convertirlo en base 64 y poder pintarlo en el pdf
-        // $img_fondo = storage_path('assets/img/fondo-hb.png');
-        // $img_fondo = str_replace('storage','public',$img_fondo);
-        // $img_fondo = file_get_contents($img_fondo);
-        // $img_fondo = base64_encode($img_fondo);
-        // -----
-        // para obtner la imagen - fondo y convertirlo en base 64 y poder pintarlo en el pdf
-        // $img_sello_whitw = storage_path('assets/img/sello-fondo-hb.png');
-        // $img_sello_whitw = str_replace('storage','public',$img_sello_whitw);
-        // $img_sello_whitw = file_get_contents($img_sello_whitw);
-        // $img_sello_whitw = base64_encode($img_sello_whitw);
-        // -----
-        // para obtner la imagen - telephone y convertirlo en base 64 y poder pintarlo en el pdf
-        // $img_telephone = storage_path('assets/img/telephone-cetificado.png');
-        // $img_telephone = str_replace('storage','public',$img_telephone);
-        // $img_telephone = file_get_contents($img_telephone);
-        // $img_telephone = base64_encode($img_telephone);
-        // -----
-        // para obtner la imagen - telephone y convertirlo en base 64 y poder pintarlo en el pdf
-        // $img_message = storage_path('assets/img/message-certificado.png');
-        // $img_message = str_replace('storage','public',$img_message);
-        // $img_message = file_get_contents($img_message);
-        // $img_message = base64_encode($img_message);
-        // -----
-        // para obtner la imagen - telephone y convertirlo en base 64 y poder pintarlo en el pdf
-        // $img_web = storage_path('assets/img/web-certificado.png');
-        // $img_web = str_replace('storage','public',$img_web);
-        // $img_web = file_get_contents($img_web);
-        // $img_web = base64_encode($img_web);
-        // -----
         $json = array(
             'name'=>$participant->name,
             'last_name'=>$participant->last_name,
@@ -305,5 +291,10 @@ class HomeController extends Controller
             'number'=>'2021-0051'
         );
         return view('pdf.certificado', compact('json'));
+    }
+    public function helper()
+    {
+
+        return test();
     }
 }

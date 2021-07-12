@@ -61,6 +61,7 @@ Route::get('pdf',  [HomeController::class, 'viewPDF'        ] )->name('view.pdf'
 
 // ruta de autenticacion
 Route::get('autenticacion',  [HomeController::class, 'autentication'   ] )->name('autentication');
+Route::get('helper',  [HomeController::class, 'helper'   ] )->name('helper');
 
 #backend -private
 //session
@@ -138,4 +139,6 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::resource('certificado', CertificadoController::class );
     Route::get('certificado-model-excel',[ExceltController::class, 'certificadoModelExel'] )->name('certificado.export.model.excel');
     Route::get('get-business',[BusinessController::class, 'getBusiness'] )->name('get.business');
+
+    Route::get('get-user{slug}',[UsersController::class, 'getUser'] )->name('get.user');
 });

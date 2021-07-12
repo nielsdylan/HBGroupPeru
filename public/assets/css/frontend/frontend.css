@@ -524,3 +524,9 @@ p{
     padding-bottom: 70px;
     background-color: #eeeeee
 }
+.display-block-item{
+    display: block !important;
+}
+.display-none-item{
+    display: none !important;
+}

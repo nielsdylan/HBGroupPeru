@@ -90,4 +90,76 @@ class UsersController extends Controller
             'status'=> $status
         ]);
     }
+    public function getUser($slug)
+    {
+        $slug = explode('-',$slug);
+        $success=false;
+        $status=404;
+        $user='';
+        $array = array();
+        switch ($slug[1]) {
+            case 'dni':
+                $user = $this->APIReniec($slug[0],$slug[1]);
+                $user = json_decode($user);
+                if ($user) {
+                    $success=true;
+                    $status=200;
+                }
+
+                $array['dni'] = $user->{'dni'};
+                $array['last_name'] =$user->{'apellidoPaterno'}.' '.$user->{'apellidoMaterno'};
+                $array['name'] =$user->{'nombres'};
+                $array['document_type_id'] =2;
+                $user = (object) $array;
+            break;
+            case 'ruc':
+                $user = $this->APIReniec($slug[0],$slug[1]);
+                $user = json_decode($user);
+                if ($user) {
+                    $success=true;
+                    $status=200;
+                }
+                $name = explode(' ',$user->{'razonSocial'});
+                $array['dni'] = $user->{'ruc'};
+                $array['last_name'] =$name[0].' '.$name[1];
+                $array['name'] =$name[2].' '.$name[3];
+                $array['document_type_id'] = 4;
+                $user = (object) $array;
+            break;
+
+            case 'hbgroup':
+                $user = User::where('dni',$slug)->where('active',1)->first();
+                if ($user) {
+                    $success=true;
+                    $status=200;
+                }
+            break;
+        }
+        return response()->json([
+            'success'   =>  $success,
+            'status'    =>  $status,
+            'results'   =>  $user
+        ]);
+
+    }
+    public function APIReniec($number,$type)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://dniruc.apisperu.com/api/v1/'.$type.'/'.$number.'?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5pZWxzX2R5bGFuQGhvdG1haWwuY29tIn0.CB9fKgeDRyw-zRfqV-C6tPZ-Pe0J3FXtdADpABTmYZk',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        return $response;
+    }
 }
