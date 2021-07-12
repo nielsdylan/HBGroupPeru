@@ -45,3 +45,19 @@
 
         return $pos;
     }
+    function credits(){
+        $altiriaSMS = new AltiriaSMS();
+        // $altiriaSMS->setUrl("http://www.altiria.net/api/http");
+
+        $altiriaSMS->setDebug(true);
+        $altiriaSMS->setLogin('info@hbgroup.pe');
+        $altiriaSMS->setPassword('eb9ga5ty');
+
+        $str = $altiriaSMS->getCredit();
+        if (preg_match('/.*OK credit\(0\):(.*?)$/',$str,$match)==1) {
+            # code...
+            return "".$match[1]." créditos";
+        }else{
+            return " 0.00 créditos";
+        }
+    }

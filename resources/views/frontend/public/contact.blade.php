@@ -125,8 +125,9 @@
     <section id="map-gps">
         <div style="overflow:hidden;max-width:100%;width:100%;height:400px;">
             <div id="googlemaps-display" style="height:100%; width:100%;max-width:100%;">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3801.868826203472!2d-71.3256665851199!3d-17.656370687917946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTfCsDM5JzIyLjkiUyA3McKwMTknMjQuNSJX!5e0!3m2!1ses!2spe!4v1619019370458!5m2!1ses!2spe" style="height:100%;width:100%;border:0;" allowfullscreen="" loading="lazy">
-                </iframe>
+                {{-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3801.868826203472!2d-71.3256665851199!3d-17.656370687917946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTfCsDM5JzIyLjkiUyA3McKwMTknMjQuNSJX!5e0!3m2!1ses!2spe!4v1619019370458!5m2!1ses!2spe" style="height:100%;width:100%;border:0;" allowfullscreen="" loading="lazy">
+                </iframe> --}}
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3801.8677661772545!2d-71.3256346855188!3d-17.65642087619746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91445bcfd4f05ab1%3A0x3477887f664b4e1d!2sHB%20Group%20Per%C3%BA!5e0!3m2!1ses-419!2spe!4v1626123103607!5m2!1ses-419!2spe" style="height:100%;width:100%;border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
     </section>

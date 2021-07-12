@@ -37,14 +37,20 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
+                                            <label for="">Disponibilidad de créditos para el envio de mensajes de texto :</label>
+                                            <input id="" class="form-control" type="text" name="" value="{{$credits}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
                                             <label for="my-input">Cargo:</label>
-                                            <input id="my-input" class="form-control" type="text" name="" value="{{$user->group}}" disabled>
+                                            <input id="" class="form-control" type="text" name="" value="{{$user->group}}" disabled>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="my-input">Email:</label>
-                                            <input id="my-input" class="form-control" type="text" name="" value="{{$user->email}}" disabled>
+                                            <input id="" class="form-control" type="text" name="" value="{{$user->email}}" disabled>
                                         </div>
                                     </div>
                                 </div>

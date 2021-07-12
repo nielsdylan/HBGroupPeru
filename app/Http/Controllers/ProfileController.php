@@ -12,13 +12,13 @@ class ProfileController extends Controller
     public function index()
     {
         # code...
-        $document_types = Document_type::where('active', 1)
-                            ->get();
+        $document_types = Document_type::where('active', 1)->get();
         $user = User::where('id',session('hbgroup')['user_id'])
-                ->join("groups", "groups.group_id", "=", "users.group_id")
-                ->select("groups.name as group", "users.*")
-                ->first();
-        return view('frontend.private.profile.index', compact('user', 'document_types'));
+            ->join("groups", "groups.group_id", "=", "users.group_id")
+            ->select("groups.name as group", "users.*")
+            ->first();
+        $credits = credits();
+        return view('frontend.private.profile.index', compact('user', 'document_types','credits'));
     }
     public function update(Request $request, User $perfil)
     {
