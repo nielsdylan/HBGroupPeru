@@ -34,4 +34,31 @@
 </div>
 
 </body>
+<script>
+    $('#datetime').datetimepicker({
+        format: 'MM/DD/YYYY H:mm',
+    });
+    $('[type="text"].date').datetimepicker({
+        format: 'DD/MM/YYYY',
+    });
+    $('.form-control[type="time"]').datetimepicker({
+        format: 'h:mm A',
+    });
+
+    $('select.form-control').select2({
+        theme: "bootstrap"
+    });
+
+    $('select.form-control.select2').select2({
+        theme: "bootstrap"
+    });
+
+    $('#multiple-states').select2({
+        theme: "bootstrap"
+    });
+
+    $('#tagsinput').tagsinput({
+        tagClass: 'badge-info'
+    });
+</script>
 </html>

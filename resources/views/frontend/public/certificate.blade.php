@@ -73,6 +73,13 @@
                                 <div class="col-md-12">
                                     <div class="alert alert-warning" role="alert">
                                         {{$message}}
+                                        <p>
+                                            Si no encuentra su certificado comuniquese con el area de soporte academico, marcando al numero telefonico
+                                            <a href="tel:992 933 603" class="email-contact" >{{$configurations->telephone}}</a>
+                                            o enviando un correo electronico a
+                                            <a href="mailto:{{$configurations->email}}?Subject=Consulta%20de%20su%20servicio&body=Con%20urgencia" class="email-contact">&nbsp;{{$configurations->email}}</a>.
+                                            Gracias por su comprensión.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -103,6 +110,24 @@
                             @endif
                         </div>
                     </div>
+                    @else
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-warning" role="alert">
+                                        {{$message}}
+                                        <p>
+                                            Si desea tener un certificado comuniquese con el area de soporte academico, marcando al numero telefonico
+                                            <a href="tel:992 933 603" class="email-contact" >{{$configurations->telephone}}</a>
+                                            o enviando un correo electronico a
+                                            <a href="mailto:{{$configurations->email}}?Subject=Consulta%20de%20su%20servicio&body=Con%20urgencia" class="email-contact">&nbsp;{{$configurations->email}}</a>. Gracias por su comprensión.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @endif
                 </div>
             </div>
@@ -116,6 +141,13 @@
                                 <div class="col-md-12">
                                     <div class="alert alert-warning" role="alert">
                                         {{$message}}
+                                        <p>
+                                            Si no encuentra su certificado comuniquese con el area de soporte academico, marcando al numero telefonico
+                                            <a href="tel:992 933 603" class="email-contact" >{{$configurations->telephone}}</a>
+                                            o enviando un correo electronico a
+                                            <a href="mailto:{{$configurations->email}}?Subject=Consulta%20de%20su%20servicio&body=Con%20urgencia" class="email-contact">&nbsp;{{$configurations->email}}</a>.
+                                            Gracias por su comprensión.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -144,6 +176,24 @@
                                 </div>
                             </div>
                             @endif
+                        </div>
+                    </div>
+                    @else
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-warning" role="alert">
+                                        {{$message}}
+                                        <p>
+                                            Si desea tener un certificado comuniquese con el area de soporte academico, marcando al numero telefonico
+                                            <a href="tel:992 933 603" class="email-contact" >{{$configurations->telephone}}</a>
+                                            o enviando un correo electronico a
+                                            <a href="mailto:{{$configurations->email}}?Subject=Consulta%20de%20su%20servicio&body=Con%20urgencia" class="email-contact">&nbsp;{{$configurations->email}}</a>. Gracias por su comprensión.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     @endif

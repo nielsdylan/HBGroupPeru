@@ -7,6 +7,7 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\CertificadoController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CoursController;
+use App\Http\Controllers\CoursParticipantController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExceltController;
 use App\Http\Controllers\GroupController;
@@ -123,6 +124,8 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::post('participantes-add',[ParticipantController::class, 'add'] )->name('participantes.add');
     Route::resource('asignatura', AsignatureController::class );
     Route::get('getAsignature',[AsignatureController::class, 'getAsignature'] )->name('get.asignature');
+    Route::resource('asignacion-cursos', CoursParticipantController::class );
+    Route::get('get-list-cours-participant',[AjaxController::class, 'getCoursParticipanPagination'] )->name('get.list.participant');
     // Route::resource('programa', ProgramController::class );
     // Route::resource('pensum', PensumController::class );
     // Route::resource('pensum-asignatura', PensumAsignatureController::class );

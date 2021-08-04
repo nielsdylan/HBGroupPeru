@@ -86,6 +86,7 @@ class HomeController extends Controller
     }
     public function autentication()
     {
+        $configurations = Configuration::where('active', 1)->first();
         if (!empty($_GET['code']) ) {
             $code_tele = strpos($_GET['code'], 'T');
             $code_email = strpos($_GET['code'], 'E');
@@ -104,6 +105,21 @@ class HomeController extends Controller
                 return view('errors.404');
             }
             $user = User::where('active',1)->where('id',$strin[1])->first();
+            if ($user->confirme_telephone == 1 && $user->confirme_email == 1) {
+                $data = array(
+                    "name"=> $user->name,
+                    "last_name"=> $user->last_name,
+                    "email"=> $user->email,
+                    "telephone"=> $user->telephone,
+                    "message"=> 'Su número telefonico y su correo electronico a sido confirmado, su usuario y contraseña es su DNI.',
+                    "email_from"=>$configurations->sender,
+                    "view"=>"confirmation",
+                    "subject"=>"Confirmacion"
+
+                );
+                $mail = new ContactMailable($data);
+                Mail::to($user->email)->send($mail);
+            }
             $result = array(
                 'id'                =>$user->id,
                 'last_name'         =>$user->last_name,
@@ -115,7 +131,7 @@ class HomeController extends Controller
                 'confirme_email'    =>$user->confirme_email,
 
             );
-            $configurations = Configuration::where('active', 1)->first();
+
             return view('frontend.public.autentication', compact('configurations','result'));
         }
         return view('errors.404');
@@ -153,12 +169,11 @@ class HomeController extends Controller
         $user = User::where('dni',$request->dni)
             ->where('active',1)
             ->first();
-        $participant = Participant::where('user_id',$user->id)
-            ->where('active',1)
-            ->first();
 
         if ($user) {
-
+            $participant = Participant::where('user_id',$user->id)
+            ->where('active',1)
+            ->first();
             $json_user = array(
                 'id'=>$participant->participant_id,
                 'dni'=>$request->dni,
@@ -178,7 +193,9 @@ class HomeController extends Controller
             return view('frontend.public.certificate', compact('configurations','certificado','message'));
         }else{
             $message='No se encuentra matriculado';
+
         }
+
         return view('frontend.public.certificate', compact('configurations','certificado','message'));
         // return redirect()->route('contact')->with('info','Su mensaje a sido enviado con éxito');
     }
@@ -188,6 +205,7 @@ class HomeController extends Controller
         $certificado = Certificado::where('certificado_id',$number)->where('active',1)->first();
         // return $certificado;
         $participant = Participant::where('participant_id', $certificado->participant_id)->where('active',1)->first();
+        $user = User::where('active',1)->where('id',$participant->user_id)->first();
         setlocale(LC_TIME, "spanish");
         $fecha = $certificado->date;
         $fecha = str_replace("/", "-", $fecha);
@@ -196,9 +214,9 @@ class HomeController extends Controller
         $year = strftime("%Y", strtotime($newDate));
 
         $json = array(
-            'name'=>$participant->name,
-            'last_name'=>$participant->last_name,
-            'document'=>$participant->dni,
+            'name'=>$user->name,
+            'last_name'=>$user->last_name,
+            'document'=>$user->dni,
             'description'=>$certificado->description_cours,
             'date_1'=>'Realizado el '.$mesDesc.',',
             'date_2'=>'con una duración '.$certificado->hour.' horas efectivas.',
@@ -218,6 +236,7 @@ class HomeController extends Controller
     public function viewPDF()
     {
         // -----
+        $url = url('/public/assets/fonts/calibre/Calibre-Regular.ttf');
         $json = array(
             'name'=>'Niels Dylan',
             'last_name'=>'Quispe Peralta',
@@ -236,7 +255,7 @@ class HomeController extends Controller
             'name_business'=>'HB GROUP PERU S.R.L',
             'number'=>'2021-0051'
         );
-        return view('pdf.certificado', compact('json'));
+        return view('pdf.certificado', compact('json','url'));
     }
     public function helper()
     {

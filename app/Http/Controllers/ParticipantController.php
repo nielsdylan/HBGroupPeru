@@ -11,6 +11,7 @@ use App\Models\Cours;
 use App\Models\CoursParticipant;
 use App\Models\Document_type;
 use App\Models\Participant;
+use App\Models\Prefixe;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
@@ -22,22 +23,57 @@ class ParticipantController extends Controller
     //
     public function index()
     {
-        $participants = CoursParticipant::where('cours_participants.active',1)
-            ->where('businesses.active',1)
-            ->where('participants.active',1)
-            ->where('users.group_id',4)
-            ->join("businesses", "businesses.business_id", "=", "cours_participants.business_id")
-            ->join("participants", "participants.participant_id", "=", "cours_participants.participant_id")
-            ->join("users", "users.id", "=", "participants.user_id")
-            ->select("businesses.name as name_business", "participants.*",'users.*',"cours_participants.cours_participant_id")
-            ->orderByDesc('cours_participants.cours_participant_id')
-            ->get();
-        // return $participants->groupBy('id');
-        $asignatures =  Asignature::where('active',1)->get();
-        $business = Business::where('active',1)->get();
-        $cours = Cours::where('active',1)->get();
+        // $participants = CoursParticipant::where('cours_participants.active',1)
+        //     ->where('businesses.active',1)
+        //     ->where('participants.active',1)
+        //     ->where('users.group_id',4)
+        //     ->join("businesses", "businesses.business_id", "=", "cours_participants.business_id")
+        //     ->join("participants", "participants.participant_id", "=", "cours_participants.participant_id")
+        //     ->join("users", "users.id", "=", "participants.user_id")
+        //     ->select("businesses.name as name_business", "participants.*",'users.*',"cours_participants.cours_participant_id")
+        //     ->orderByDesc('cours_participants.cours_participant_id')
+        //     ->get();
+        $participants = User::where('active',1)->where('group_id',4)->get();
+        // return $participants;
+        $asignatures    = Asignature::where('active',1)->get();
+        $business       = Business::where('active',1)->get();
+        $cours          = Cours::where('active',1)->get();
+        $prefixes       = Prefixe::get();
         $document_types = Document_type::where('active', 1)->get();
-        return view('frontend.private.participants.index', compact('participants', 'asignatures', 'business','cours','document_types'));
+        return view(
+            'frontend.private.participants.index',
+            compact(
+                'participants',
+                'asignatures',
+                'business',
+                'cours',
+                'document_types',
+                'prefixes'
+            )
+        );
+    }
+    public function create()
+    {
+
+        $asignatures    = Asignature::where('active',1)->get();
+        $business       = Business::where('active',1)->get();
+        $cours          = Cours::where('active',1)->get();
+        $prefixes       = Prefixe::get();
+        $document_types = Document_type::where('active', 1)->get();
+        // return response()->json([
+        //     $asignatures,
+        //     $cours
+        // ]);
+        return view(
+            'frontend.private.participants.create',
+            compact(
+                'asignatures',
+                'business',
+                'cours',
+                'document_types',
+                'prefixes'
+            )
+        );
     }
     public function store(Request $request)
     {
@@ -55,10 +91,11 @@ class ParticipantController extends Controller
             'status'=>200,
         ]);
     }
-    public function edit($participante)
+    public function edit(User $participante)
     {
+        $participant = Participant::where('active',1)->where('user_id',$participante->id)->first();
         $participants = CoursParticipant::where('cours_participants.active',1)
-            ->where('cours_participants.participant_id',$participante)
+            ->where('cours_participants.participant_id',$participant->participant_id)
             ->where('participants.active',1)
             ->join("participants", "participants.participant_id", "=", "cours_participants.participant_id")
             ->join("users", "users.id", "=", "participants.user_id")
@@ -67,22 +104,30 @@ class ParticipantController extends Controller
             ->select("participants.participant_id","users.*","asignatures.asignature_id","cours.*","cours_participants.cours_participant_id")
             ->first();
         $cours = Cours::where('active',1)->where('asignature_id',$participants->asignature_id)->get();
-        return response()->json([
-            'success'=>true,
-            'status'=>200,
-            'results'=>$participants,
-            'cours'=>$cours
-        ]);
+        $document_types = Document_type::where('active', 1)->get();
+        $prefixes       = Prefixe::get();
+        return view(
+            'frontend.private.participants.edit',
+            compact(
+                'participante',
+                'participants',
+                'participant',
+                'cours',
+                'document_types',
+                'prefixes',
+            )
+        );
     }
-    public function update(Request $request, CoursParticipant $participante)
+    public function update(Request $request, Participant $participante)
     {
 
-        CoursParticipant::where('active', 1)->where('cours_participant_id', $participante->cours_participant_id)
-        ->update([
-            'asignature_id' => $request->asignature,
-            'cours_id' => $request->course,
-            'update_by'=>session('hbgroup')['user_id']
-        ]);
+        // CoursParticipant::where('active', 1)->where('cours_participant_id', $participante->cours_participant_id)
+        // ->update([
+        //     'asignature_id' => $request->asignature,
+        //     'cours_id' => $request->course,
+        //     'update_by'=>session('hbgroup')['user_id']
+        // ]);
+
         $participant = Participant::where('active',1)->where('participant_id',$participante->participant_id)->first();
 
         $user = User::where('active',1)->where('id',$participant->user_id)->first();
@@ -132,6 +177,7 @@ class ParticipantController extends Controller
             'dni' => $request->dni,
             'last_name' => $request->last_name,
             'telephone' => $request->cell,
+            'prefixe_id' => $request->prefixe_id,
             'send_email' => $request->send_email== 1 ? $request->send_email : 0,
             'send_telephone' => $request->send_telephone == 1 ? $request->send_telephone : 0,
             'update_by'=>session('hbgroup')['user_id']
@@ -141,19 +187,18 @@ class ParticipantController extends Controller
             'status'=>200
         ]);
     }
-    public function destroy(Participant $participante)
+    public function destroy(User $participante)
     {
         $fecha = new DateTime();
         $fecha->format('U = Y-m-d H:i:s');
-        $participant = Participant::where('active',1)->where('participant_id',$participante->participant_id)->first();
+        $participant = Participant::where('active',1)->where('user_id',$participante->id)->first();
 
-        Participant::where('active', 1)->where('participant_id', $participante->participant_id)
-        ->update([
+        Participant::where('active', 1)->where('participant_id', $participant->participant_id)->update([
             'active' => 0,
             'deleted_at'=>$fecha,
             'delete_by'=>session('hbgroup')['user_id']
         ]);
-        User::where('active', 1)->where('id', $participante->user_id)
+        User::where('active', 1)->where('id', $participant->user_id)
         ->update([
             'active' => 0,
             'deleted_at'=>$fecha,
@@ -166,6 +211,7 @@ class ParticipantController extends Controller
     }
     public function add(Request $request)
     {
+
         $rand_telephone = uniqid();
         $rand_email = uniqid();
         $user = User::where('active',1)->where('dni',$request->dni)->first();
@@ -185,6 +231,7 @@ class ParticipantController extends Controller
             $user->document_type_id = $request->document_type_id;
             $user->dni              = $request->dni;
             $user->last_name        = $request->last_name;
+            $user->prefixe_id       = $request->prefixe_id;
             $user->telephone        = $request->cell;
 
             // $user->code_telephone   = $rand_telephone;
@@ -278,15 +325,19 @@ class ParticipantController extends Controller
         $participan->create_by = session('hbgroup')['user_id'];
         $participan->save();
 
-        $cours = Cours::where('active',1)->where('cours_id',$request->course)->first();
 
-        $cours_participant = new CoursParticipant();
-        $cours_participant->business_id     = $cours->business_id;
-        $cours_participant->asignature_id   = $request->asignature;
-        $cours_participant->participant_id  = $participan->participant_id;
-        $cours_participant->cours_id        = $cours->cours_id ;
-        $cours_participant->create_by       = session('hbgroup')['user_id'];
-        $cours_participant->save();
+        // foreach ($request->cours as $key => $value) {
+        //     $cours = Cours::where('active',1)->where('cours_id',$value)->first();
+
+        //     $cours_participant = new CoursParticipant();
+        //     $cours_participant->business_id     = $cours->business_id;
+        //     $cours_participant->asignature_id   = $request->asignature;
+        //     $cours_participant->participant_id  = $participan->participant_id;
+        //     $cours_participant->cours_id        = $cours->cours_id ;
+        //     $cours_participant->create_by       = session('hbgroup')['user_id'];
+        //     $cours_participant->save();
+        // }
+
 
         return response()->json([
             'success'=>true,

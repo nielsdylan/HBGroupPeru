@@ -11,8 +11,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne&display=swap" rel="stylesheet"> --}}
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Syne&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
     body{
         font-family: 'Syne', sans-serif;
+    }
+    @font-face{
+        font-family: 'Roboto', sans-serif;
     }
     .container{
         width: 100%;
@@ -206,7 +210,7 @@
             </div>
             {{-- ---- --}}
             {{-- footer del pdf  --}}
-            <div class="text-center border-footer" style="font-size: 14px;">
+            <div class="text-center border-footer" style="font-size: 14px; font-family: 'Roboto' !important;">
                 <span>{{$json['name_business']}}</span> | <img src="{{asset('assets/img/telephone-cetificado.png')}}" width="15" class="firma"><span> {{$json['telephone']}}</span> |
                 <span>{{$json['cell']}}</span> | <img src="{{asset('assets/img/message-certificado.png')}}" width="15" class="firma"> <span>{{$json['email']}}</span> | <img src="{{asset('assets/img/web-certificado.png')}}" width="15" class="firma"> <span>{{$json['web']}}</span>
             </div>

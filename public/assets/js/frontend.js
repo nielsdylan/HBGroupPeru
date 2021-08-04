@@ -33,8 +33,6 @@ $(document).ready(function(){
     }
     fancybox();
     owlCarousel();
-
-
 });
 function owlCarousel() {
     var owl = $('.slider_card');

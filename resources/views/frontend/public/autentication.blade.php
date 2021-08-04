@@ -52,12 +52,12 @@
                         <div class="card-body">
                             <h5 class="card-title text-center">Verificación</h5>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="table-responsive col-md-12">
                                     <table class="table">
                                         <tbody>
                                             <tr>
                                                 <td>Correo electronico</td>
-                                                <td>{{$result['email'].$result['confirme_email']}}</td>
+                                                <td>{{$result['email']}}</td>
                                                 <td>
                                                     <i class="fas {{ $result['confirme_email']==0 ? 'fa-times text-danger' : 'fa-check text-success' }} "></i>
                                                 </td>
@@ -69,9 +69,17 @@
                                             </tr>
                                         </tbody>
                                     </table>
-
                                 </div>
                             </div>
+                            @if ($result['confirme_email']==1 && $result['confirme_telephone']==1)
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Señor {{$result['last_name']}}, {{$result['name']}} gracias por confirmar su identidad, usted puede ingresar a la plataforma del <a href="https://hb.q10.com" target="_blank" class="list-inline-item icon"><i class="fas fa-user-graduate"></i> Aula virtual</a> Su usuario y contraseña son su DNI({{$result['dni']}})</p>
+                                    <p>Si desea cambiar su contraseña ingrese a qui <a href="https://hb.q10.com/RecuperarContrasena?aplentId=05554f9b-6439-4175-8443-321c9ebcf09d" target="_blank" rel="noopener noreferrer">Cambiar contraseña</a></p>
+                                </div>
+                            </div>
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -84,9 +92,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <p>Comuniquese con el área de soporte academico por el inconveniente.</p>
-                                    <p>Correo electronico: {{$configurations->email}}</p>
-                                    <p>Número telefonico: {{$configurations->mobile}}</p>
-
+                                    <p>Correo electronico: <a href="mailto:{{$configurations->email}}?Subject=Consulta%20de%20su%20servicio&body=Con%20urgencia" class="email-contact">&nbsp;{{$configurations->email}}</a></p>
+                                    <p>Número telefonico: <a href="tel:992 933 603" class="email-contact" >{{$configurations->mobile}}</a></p>
+                                    <p>Número de whatsapp : <a href="https://wa.me/{{$configurations->whatsapp}}?text=" target="_blank" class="email-contact"><i class="fab fa-whatsapp text-white"></i> 946877806</a></p>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +151,7 @@
                         <div class="card-body">
                             <h5 class="card-title text-center">Verificación</h5>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 table-responsive">
                                     <table class="table">
                                         <tbody>
                                             <tr>
@@ -163,6 +171,14 @@
 
                                 </div>
                             </div>
+                            @if ($result['confirme_email']==1 && $result['confirme_telephone']==1)
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Señor {{$result['last_name']}}, {{$result['name']}} gracias por confirmar su identidad, usted puede ingresar a la plataforma del <a href="https://hb.q10.com" target="_blank" class="list-inline-item icon"><i class="fas fa-user-graduate"></i> Aula virtual</a> Su usuario y contraseña son su DNI({{$result['dni']}})</p>
+                                    <p>Si desea cambiar su contraseña ingrese a qui <a href="https://hb.q10.com/RecuperarContrasena?aplentId=05554f9b-6439-4175-8443-321c9ebcf09d" target="_blank" rel="noopener noreferrer"></a></p>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -175,8 +191,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <p>Comuniquese con el área de soporte academico por el inconveniente.</p>
-                                    <p>Correo electronico: {{$configurations->email}}</p>
-                                    <p>Número telefonico: {{$configurations->mobile}}</p>
+                                    <p>Correo electronico: <a href="mailto:{{$configurations->email}}?Subject=Consulta%20de%20su%20servicio&body=Con%20urgencia" class="email-contact">&nbsp;{{$configurations->email}}</a></p>
+                                    <p>Número telefonico: <a href="tel:992 933 603" class="email-contact" >{{$configurations->mobile}}</a></p>
+                                    <p>Número de whatsapp : <a href="https://wa.me/{{$configurations->whatsapp}}?text=" target="_blank" class="email-contact"><i class="fab fa-whatsapp text-white"></i> 946877806</a></p>
 
                                 </div>
                             </div>

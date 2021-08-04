@@ -33,10 +33,7 @@
                             <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('export.model.excel')}}"><i class="fas fa-file-import fon-z"></i></a>
 
                             <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fa-file-upload fon-z"></i></a>
-                            <button class="btn btn-primary btn-round" data-modal="add-modal">
-                                <i class="fa fa-plus"></i>
-                                Nuevo participante
-                            </button>
+                            <a class="btn btn-primary btn-round" href="{{route('participantes.create')}}"> <i class="fa fa-plus"></i> Nuevo participante</a>
                         </div>
                     </div>
                 </div>
@@ -48,9 +45,9 @@
                                     <td>DNI</td>
                                     <td>APELLIDOS</td>
                                     <td>NOMBRE</td>
-                                    <td>EMAIL</td>
+                                    {{-- <td>EMAIL</td>
                                     <td>CELULAR</td>
-                                    <td>EMPRESA</td>
+                                    <td>EMPRESA</td> --}}
                                     <th style="width: 10%">Action</th>
                                 </tr>
                             </thead>
@@ -61,17 +58,20 @@
                                             <td>{{$item->dni}}</td>
                                             <td>{{$item->last_name}}</td>
                                             <td>{{$item->name}}</td>
-                                            <td>{{$item->email}}</td>
+                                            {{-- <td>{{$item->email}}</td>
                                             <td>{{$item->telephone}}</td>
-                                            <td>{{$item->name_business}}</td>
+                                            <td>{{$item->name_business}}</td> --}}
                                             <td>
                                                 <div class="form-button-action">
-                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar {{$item->last_name}}" data-edit="modal" data-id="{{$item->participant_id  }}">
+                                                    <a data-toggle="tooltip" title="" class="btn btn-link btn-warning btn-lg" data-original-title="Asignar cursos al participante"  href="{{route('asignacion-cursos.index').'?DNI='.$item->dni}}">
+                                                        <i class="fas fa-project-diagram"></i>
+                                                    </a>
+                                                    <a type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar {{$item->last_name}}"  data-id="{{$item->participant_id  }}" href="{{route('participantes.edit', $item->id)}}">
                                                         <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Eliminar {{$item->last_name}}" data-delete="modal" data-id="{{$item->participant_id  }}">
+                                                    </a>
+                                                    <a type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Eliminar {{$item->last_name}}" data-delete="modal" data-id="{{$item->id  }}">
                                                         <i class="fa fa-times"></i>
-                                                    </button>
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -142,79 +142,15 @@
         </div>
     </div>
 </div>
-@include('frontend.private.participants.create')
-@include('frontend.private.participants.edit')
+{{-- @include('frontend.private.participants.create') --}}
+{{-- @include('frontend.private.participants.edit') --}}
 <script>
     $(document).on('click','[data-action="participant-import"]',function (e) {
         e.preventDefault();
         $('#import-excel-participant').modal('show');
 
     });
-    $(document).on('click','[data-edit="modal"]',function (e) {
-        e.preventDefault();
-        $('#edit-modal').modal('show');
 
-        var data = $(this).attr('data-id'),
-            route = '{{ route('participantes.edit', ['participante' => 'data'] ) }}';
-            route = route.replace('data', data),
-            html = '';
-
-        $.ajax({
-            method: 'GET',
-            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
-            url: route,
-            dataType: 'json',
-            data: {},
-            beforeSend: function()
-            {
-                $('[data-form="edit"]').addClass('is-loading is-loading-lg');
-            },
-        }).done(function (response) {
-            if (response.status == 200) {
-                $('[data-form="edit"]').removeClass('is-loading is-loading-lg');
-
-                $('[data-form="edit"] select[name="asignature"] option[value="'+response.results.asignature_id+'"]').attr("selected",'');
-                // $('[data-form="edit"] .modal-body [name="course"] option[value="'+response.sede_turn.turn_id+'"]').attr("selected",true);
-                $('[data-form="edit"] .modal-body [name="document_type_id"] option[value="'+response.results.document_type_id+'"]').attr("selected",'');
-
-                $('[data-form="edit"] .modal-body input[name="dni"]').val(response.results.dni);
-                $('[data-form="edit"] .modal-body [name="email"]').val(response.results.email);
-                $('[data-form="edit"] .modal-body [name="last_name"]').val(response.results.last_name);
-                $('[data-form="edit"] .modal-body [name="cell"]').val(response.results.telephone);
-                $('[data-form="edit"] .modal-body [name="name"]').val(response.results.name);
-                $('[data-form="edit"] .modal-body [name="id"]').val(response.results.cours_participant_id);
-                html = '<option value="">Seleccione...</option>';
-                $.each(response.cours, function (idnex, element) {
-                    html+='<option value="'+element.cours_id+'" '+ (element.cours_id==response.results.cours_id ? "selected" : "") +' >'+element.course+' ('+element.code+')</option>';
-                });
-                $('[data-form="edit"] select[name="course"]').html(html);
-
-
-                if (response.results.send_email==1) {
-                    $('[data-action="send-option"][aria-expanded="false"]').click();
-                }else if (response.results.send_telephone==1) {
-                    $('[data-action="send-option"][aria-expanded="false"]').click();
-                }else{
-                    $('[data-action="send-option"][aria-expanded="true"]').click();
-                }
-                if (response.results.send_email==1) {
-                    $('[data-email="send"][name="send_email"]').parent('.off').click();
-                }else{
-                    $('[data-email="send"][name="send_email"]').parent('.btn-success').click();
-                }
-                if (response.results.send_telephone==1) {
-                    $('[data-telephone="send"][name="send_telephone"]').parent('.off').click();
-                }else{
-                    $('[data-telephone="send"][name="send_telephone"]').parent('.btn-success').click();
-                }
-
-            }else{
-            }
-        }).fail(function () {
-            // alert("Error");
-        });
-
-    });
     $(document).on('change','[select-cours="get-cours"]',function (e) {
         e.preventDefault();
         var this_select = $(this),

@@ -80,4 +80,7 @@
   'syne' => array(
     'normal' => $fontDir . '/syne_normal_8250e385646a5f6aca98c78e734f3c56',
   ),
+  'roboto' => array(
+    'normal' => $fontDir . '/roboto_normal_b7834828abc03e1e6aa6b18153302986',
+  ),
 ) ?>

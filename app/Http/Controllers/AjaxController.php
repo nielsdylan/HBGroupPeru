@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cours;
 use App\Models\Event;
 use App\Models\PensumAsignature;
 use Illuminate\Http\Request;
@@ -54,5 +55,29 @@ class AjaxController extends Controller
             'success' =>true,
             'status'  =>200,
         ]);
+    }
+    public function getCoursParticipanPagination(Request $request)
+    {
+
+        if ($request->ajax()) {
+            // return $request->date;
+            $results = Cours::where('active',1);
+
+            if (!empty($request->asignature_id)) {
+                $results = $results->where('asignature_id','=',$request->asignature_id);
+            }
+            if (!empty($request->date)){
+
+                $date = date("Y-d-m", strtotime($request->date));
+
+                $results = $results->where('date_start','=',$date);
+            }
+            if (!empty($request->name)){
+                $results = $results->where('course','like','%'.$request->name.'%')->orWhere('code','like','%'.$request->name.'%');
+            }
+            // $results = $results->paginate(6);
+            $results = $results->paginate(6);
+            return response()->json(view('frontend.private.cours_participants.list', compact('results'))->render());
+        }
     }
 }

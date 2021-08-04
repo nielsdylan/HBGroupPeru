@@ -31,6 +31,15 @@
 <!-- Bootstrap Toggle -->
 <script src="{{asset('assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js')}}"></script>
 
+<!-- DateTimePicker pasar-->
+{{-- <script src="../../assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script> --}}
+<script src="{{asset('assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
+<!-- Select2 -->
+{{-- <script src="../../assets/js/plugin/select2/select2.full.min.js"></script> --}}
+<script src="{{asset('assets/js/plugin/select2/select2.full.min.js')}}"></script>
+<!-- Bootstrap Tagsinput -->
+{{-- <script src="../../assets/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script> --}}
+<script src="{{asset('assets/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js')}}"></script>
 <!-- jQuery Vector Maps -->
 {{-- <script src="{{asset('assets/js/plugin/jqvmap/jquery.vmap.min.js')}}"></script>
 <script src="{{asset('assets/js/plugin/jqvmap/maps/jquery.vmap.world.js')}}"></script> --}}
@@ -41,15 +50,17 @@
 <!-- Sweet Alert -->
 {{-- <script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script> --}}
 
+
+
+<script src="{{asset('assets/js/plugin/fancybox_backend/jquery.fancybox.min.js')}}"></script>
+<script src="{{asset('assets/js/backend.js')}}"></script>
+
 <!-- Azzara JS -->
-<script src="{{asset('assets/js/ready.min.js')}}"></script>
+<script src="{{asset('assets/js/ready_2.min.js')}}"></script>
 
 <!-- Azzara DEMO methods, don't include it in your project! -->
 <script src="{{asset('assets/js/setting-demo.js')}}"></script>
 <script src="{{asset('assets/js/demo.js')}}"></script>
-
-<script src="{{asset('assets/js/plugin/fancybox_backend/jquery.fancybox.min.js')}}"></script>
-<script src="{{asset('assets/js/backend.js')}}"></script>
 
 <script >
     $(document).ready(function() {
