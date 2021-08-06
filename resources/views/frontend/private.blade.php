@@ -38,11 +38,11 @@
     $('#datetime').datetimepicker({
         format: 'MM/DD/YYYY H:mm',
     });
-    $('[type="text"].date').datetimepicker({
+    $('.form-control.datepicker').datetimepicker({
         format: 'DD/MM/YYYY',
     });
-    $('.form-control[type="time"]').datetimepicker({
-        format: 'h:mm A',
+    $('.form-control.timepicker').datetimepicker({
+        format: 'H:mm',
     });
 
     $('select.form-control').select2({

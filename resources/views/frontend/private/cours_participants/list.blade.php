@@ -3,8 +3,8 @@
         <thead>
             <tr>
                 <th style="width: 5%"> </th>
-                <td>CODIGO</td>
-                <td>CURSO</td>
+                <td style="width: 25%">CURSO</td>
+                <td>DOCENTE</td>
                 <td>FECHA</td>
                 <td>HORA</td>
             </tr>
@@ -21,8 +21,8 @@
 
                         </label>
                     </td>
-                    <td> {{$item->code}}</td>
-                    <td>{{$item->course}}</td>
+                    <td> {{$item->course}} ({{$item->code}})</td>
+                    <td>{{$item->teacher_lastname}}, {{$item->teacher_name}}</td>
                     <td>{{ date("d/m/Y", strtotime($item->date_start))}}</td>
                     <td>{{$item->hour_start}} - {{$item->hour_end}}</td>
                 </tr>

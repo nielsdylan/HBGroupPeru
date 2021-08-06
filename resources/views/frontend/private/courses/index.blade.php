@@ -24,10 +24,12 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="card-title">Lista de cursos</h4>
-                        <button class="btn btn-primary btn-round ml-auto" data-modal="save">
+
+                        {{-- <button class="btn btn-primary btn-round ml-auto" data-modal="save">
                             <i class="fa fa-plus"></i>
                             Nuevo curso
-                        </button>
+                        </button> --}}
+                        <a href="{{route('cursos.create')}}" class="btn btn-primary btn-round ml-auto"><i class="fa fa-plus"></i> Nuevo curso</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -51,9 +53,10 @@
                                         <td>{{$element->asignature_name}}</td>
                                         <td>
                                             <div class="form-button-action">
-                                                '<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar el curso {{$element->course}}" data-id="{{$element->cours_id}}" data-edit="modal">
+
+                                                <a href="{{route('cursos.edit', $element->cours_id)}}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar el curso {{$element->course}}" data-id="{{$element->cours_id}}">
                                                     <i class="fa fa-edit"></i>
-                                                </button>
+                                                </a>
                                                 <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Eliminar {{$element->course}}" data-id="{{$element->cours_id}}" data-delete="modal">
                                                     <i class="fa fa-times"></i>
                                                 </button>
@@ -70,8 +73,8 @@
         </div>
     </div>
 </div>
-@include('frontend.private.courses.create')
-@include('frontend.private.courses.edit')
+{{-- @include('frontend.private.courses.create') --}}
+{{-- @include('frontend.private.courses.edit') --}}
 
 <script>
     $(document).ready(function () {
@@ -166,7 +169,7 @@
                 '<div class="col-md-6">'+
                     '<div class="form-group">'+
                         '<label for="code">Codigo :</label>'+
-                        '<input id="code" class="form-control" type="text" name="code" required>'+
+                        '<input id="code" class="form-control" type="text" name="code" search="code-search" required>'+
                     '</div>'+
                 '</div>'+
                 '<div class="col-md-6">'+
@@ -252,7 +255,7 @@
                         '<div class="col-md-6">'+
                             '<div class="form-group">'+
                                 '<label for="code">Codigo :</label>'+
-                                '<input id="code" class="form-control" type="text" name="code" value="'+response.cours.code+'" required>'+
+                                '<input id="code" class="form-control" type="text" name="code" value="'+response.cours.code+'" search="search" required>'+
                             '</div>'+
                         '</div>'+
                         '<div class="col-md-6">'+
@@ -370,6 +373,58 @@
         });
     });
 
+    $(document).on('change','[search="code-search"]',function () {
+        var code = $(this).val(),
+            this_input = $(this),
+            route = '{{ route('get.cod.cours', ['code' => 'code'] ) }}';
+            route = route.replace('code', code);
+        $.ajax({
+            method: 'GET',
+            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+            url: route,
+            dataType: 'json',
+            data: {},
+            beforeSend: function()
+            {
+            },
+        }).done(function (response) {
+            if (response.status == 200) {
+                this_input.val('');
+                swal("Informativo", "Este codigo ya se encuentra en uso", "warning")
+            }
+        }).fail(function () {
+            // alert("Error");
+        });
+
+
+    });
+
+    $(document).on('change','[search="search"]',function () {
+        var code = $(this).val(),
+            id = $('[data-form="form-edit"] [name="id"]').val(),
+            this_input = $(this),
+            route = '{{ route('get.cod.cours.id') }}';
+
+        $.ajax({
+            method: 'GET',
+            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+            url: route,
+            dataType: 'json',
+            data: {id:id,code:code},
+            beforeSend: function()
+            {
+            },
+        }).done(function (response) {
+            if (response.status == 200) {
+                this_input.val('');
+                swal("Informativo", "Este codigo ya se encuentra en uso", "warning")
+            }
+        }).fail(function () {
+            // alert("Error");
+        });
+
+
+    });
 </script>
 
 @endsection

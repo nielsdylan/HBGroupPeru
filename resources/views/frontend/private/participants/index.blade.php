@@ -30,9 +30,9 @@
                         <div class="col-md-6 text-right">
                             <a class="btn btn-light" data-toggle="tooltip" data-original-title="Exportar la lista de los participantes" href="{{route('participant.excel.export')}}"><i class="fas fa-file-excel fon-z"></i></a>
 
-                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('export.model.excel')}}"><i class="fas fa-file-import fon-z"></i></a>
+                            {{-- <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('export.model.excel')}}"><i class="fas fa-file-import fon-z"></i></a>
 
-                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fa-file-upload fon-z"></i></a>
+                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fa-file-upload fon-z"></i></a> --}}
                             <a class="btn btn-primary btn-round" href="{{route('participantes.create')}}"> <i class="fa fa-plus"></i> Nuevo participante</a>
                         </div>
                     </div>
@@ -85,8 +85,82 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="card-title">Importar participantes</h4>
+                            </div>
+                            <div class="col-md-6 text-right">
+
+                                <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('export.model.excel')}}"><i class="fas fa-file-import fon-z"></i></a>
+
+                                <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fa-file-upload fon-z"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{route('participantes.store')}}" method="post" enctype="multipart/form-data" data-form="save-excel">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="asignature">Asignatura</label>
+                                        <select class="form-control" name="asignature" select-cours="get-cours" data-select="get-course" required>
+                                            <option value="">Seleccione...</option>
+                                            @foreach ($asignatures as $item)
+                                                <option value="{{$item->asignature_id}}">{{$item->name}} ({{$item->abbreviation}})</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="course">Curso</label>
+                                        <select class="form-control" name="course" data-course="get-course" required>
+                                            <option value="">Seleccione...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="participant">Agregar lista de los participantes:</label>
+                                        <input id="participant" class="form-control" type="file" name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 pt-4">
+                                    <div class="form-group">
+                                        <label for="send_email">Enviar correo electronico : </label>
+                                        <input type="checkbox" data-toggle="toggle" data-on="Si" data-off="No" data-onstyle="success" data-offstyle="danger" name="send_email" value="1">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 pt-4">
+                                    <div class="form-group">
+                                        <label for="send_telephone">Enviar mensaje de texto : </label>
+                                        <input type="checkbox" data-toggle="toggle" data-on="Si" data-off="No" data-onstyle="success" data-offstyle="danger" name="send_telephone" value="1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="modal fade" id="import-excel-participant" tabindex="-1" role="dialog" aria-hidden="true">
+{{-- <div class="modal fade" id="import-excel-participant" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header no-bd">
@@ -141,7 +215,7 @@
             </form>
         </div>
     </div>
-</div>
+</div> --}}
 {{-- @include('frontend.private.participants.create') --}}
 {{-- @include('frontend.private.participants.edit') --}}
 <script>
@@ -240,12 +314,11 @@
             data: data,
             beforeSend: function()
             {
-                $('[data-form="save-excel"] .modal-footer button[type="submit"]').addClass('is-loading')
+                $('[data-form="save-excel"] button[type="submit"]').addClass('is-loading')
             },
         }).done(function (response) {
-            $('[data-form="save-excel"] .modal-footer button[type="submit"]').removeClass('is-loading');
+            $('[data-form="save-excel"] button[type="submit"]').removeClass('is-loading');
             if (response.status == 200) {
-                $('#import-excel-participant').modal('hide');
                 var placementFrom = 'top';
                 var placementAlign = 'right';
                 var state = 'success';
@@ -278,8 +351,8 @@
                 var style = 'withicon';
                 var content = {};
 
-                content.message = 'Ingrese correctamente los datos para la session para HB Group Perú';
-                content.title = 'Session';
+                content.message = 'Ingrese correctamente los datos para la importación de los participantes';
+                content.title = 'Importación';
                 // if (style == "withicon") {
                 //     content.icon = 'fas fa-times';
                 // } else {

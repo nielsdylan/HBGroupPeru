@@ -61,7 +61,9 @@ class AjaxController extends Controller
 
         if ($request->ajax()) {
             // return $request->date;
-            $results = Cours::where('active',1);
+            $results = Cours::where('cours.active',1)->where('users.group_id',5)
+                ->join('users', 'cours.user_id', '=', 'users.id')
+                ->select('cours.*', 'users.name as teacher_name', 'users.last_name as teacher_lastname');
 
             if (!empty($request->asignature_id)) {
                 $results = $results->where('asignature_id','=',$request->asignature_id);
@@ -76,7 +78,7 @@ class AjaxController extends Controller
                 $results = $results->where('course','like','%'.$request->name.'%')->orWhere('code','like','%'.$request->name.'%');
             }
             // $results = $results->paginate(6);
-            $results = $results->paginate(6);
+            $results = $results->paginate(7);
             return response()->json(view('frontend.private.cours_participants.list', compact('results'))->render());
         }
     }

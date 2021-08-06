@@ -21,60 +21,89 @@
 
         <div class="row">
             <div class="col-md-4">
-                <div class="card card-profile card-secondary">
-                    <div class="card-header" style="background-image: url('{{asset('assets/img/blogpost.jpg')}}">
-                        <div class="profile-picture">
-                            <div class="avatar avatar-xl">
-                                @if ($user->image)
-                                    <img src="{{asset('assets/img/user/'.$user->image)}}" alt="..." class="avatar-img rounded-circle">
-                                @else
-                                    <img src="{{asset('assets/img/profile.jpg')}}" alt="..." class="avatar-img rounded-circle">
-                                @endif
 
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-profile card-secondary">
+                            <div class="card-header" style="background-image: url('{{asset('assets/img/blogpost.jpg')}}">
+                                <div class="profile-picture">
+                                    <div class="avatar avatar-xl">
+                                        @if ($user->image)
+                                            <img src="{{asset('assets/img/user/'.$user->image)}}" alt="..." class="avatar-img rounded-circle">
+                                        @else
+                                            <img src="{{asset('assets/img/profile.jpg')}}" alt="..." class="avatar-img rounded-circle">
+                                        @endif
+
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="user-profile text-center">
-                            <input type="hidden" name="user_id" value="{{$user->id}}">
-                            <div class="name">{{$user->last_name}}</div>
-                            <div class="job">{{$user->name}}</div>
-                            <div class="desc">HB GROUP PERÚ</div>
-                            {{-- <div class="social-media">
-                                <a class="btn btn-info btn-twitter btn-sm btn-link" href="#">
-                                    <span class="btn-label just-icon"><i class="flaticon-twitter"></i> </span>
-                                </a>
-                                <a class="btn btn-danger btn-sm btn-link" rel="publisher" href="#">
-                                    <span class="btn-label just-icon"><i class="flaticon-google-plus"></i> </span>
-                                </a>
-                                <a class="btn btn-primary btn-sm btn-link" rel="publisher" href="#">
-                                    <span class="btn-label just-icon"><i class="flaticon-facebook"></i> </span>
-                                </a>
-                                <a class="btn btn-danger btn-sm btn-link" rel="publisher" href="#">
-                                    <span class="btn-label just-icon"><i class="flaticon-dribbble"></i> </span>
-                                </a>
+                            <div class="card-body">
+                                <div class="user-profile text-center">
+                                    <input type="hidden" name="user_id" value="{{$user->id}}">
+                                    <div class="name">{{$user->last_name}}</div>
+                                    <div class="job">{{$user->name}}</div>
+                                    <div class="desc">HB GROUP PERÚ</div>
+                                    {{-- <div class="social-media">
+                                        <a class="btn btn-info btn-twitter btn-sm btn-link" href="#">
+                                            <span class="btn-label just-icon"><i class="flaticon-twitter"></i> </span>
+                                        </a>
+                                        <a class="btn btn-danger btn-sm btn-link" rel="publisher" href="#">
+                                            <span class="btn-label just-icon"><i class="flaticon-google-plus"></i> </span>
+                                        </a>
+                                        <a class="btn btn-primary btn-sm btn-link" rel="publisher" href="#">
+                                            <span class="btn-label just-icon"><i class="flaticon-facebook"></i> </span>
+                                        </a>
+                                        <a class="btn btn-danger btn-sm btn-link" rel="publisher" href="#">
+                                            <span class="btn-label just-icon"><i class="flaticon-dribbble"></i> </span>
+                                        </a>
+                                    </div> --}}
+                                    <div class="view-profile">
+                                        <a href="#" class="btn btn-secondary btn-block">View Full Profile</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <div class="card-footer">
+                                <div class="row user-stats text-center">
+                                    <div class="col">
+                                        <div class="number">125</div>
+                                        <div class="title">Post</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="number">25K</div>
+                                        <div class="title">Followers</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="number">134</div>
+                                        <div class="title">Following</div>
+                                    </div>
+                                </div>
                             </div> --}}
-                            <div class="view-profile">
-                                <a href="#" class="btn btn-secondary btn-block">View Full Profile</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="avatar avatar-online">
+                                        <span class="avatar-title rounded-circle border border-white bg-info">QJ</span>
+                                    </div>
+                                    <div class="flex-1 ml-3 pt-1">
+                                        <h4 class="text-uppercase fw-bold mb-1">PRUEBA DE MANEJO <span class="text-warning">(0001-MANEJO)</span></h4>
+                                        <span class="text-muted">QUISPE, JAILEE</span>
+                                    </div>
+                                    <div class="float-right pt-1">
+                                        <div class="text-right"><small class="text-muted">17/05/2021</small></div>
+                                        <div class="text-right"><small class="text-muted">8:40 PM</small></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="card-footer">
-                        <div class="row user-stats text-center">
-                            <div class="col">
-                                <div class="number">125</div>
-                                <div class="title">Post</div>
-                            </div>
-                            <div class="col">
-                                <div class="number">25K</div>
-                                <div class="title">Followers</div>
-                            </div>
-                            <div class="col">
-                                <div class="number">134</div>
-                                <div class="title">Following</div>
-                            </div>
-                        </div>
-                    </div> --}}
+
+
                 </div>
             </div>
             <div class="col-md-8">
@@ -91,7 +120,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control date" name="date">
+                                    <input type="text" class="form-control date datepicker" name="date">
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="fa fa-calendar-check"></i>

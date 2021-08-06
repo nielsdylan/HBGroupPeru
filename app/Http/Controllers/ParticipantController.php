@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\ParticipantImport;
+use App\Imports\UsersImport;
 use App\Mail\ContactMailable;
 use App\Models\Asignature;
 use App\Models\Business;
@@ -77,19 +78,145 @@ class ParticipantController extends Controller
     }
     public function store(Request $request)
     {
-        $json = array(
-            'asignature_id'=>$request->asignature,
-            'cours_id'=>$request->course,
-        );
+        $rand_telephone = uniqid();
+        $rand_email = uniqid();
+        // $json = array(
+        //     'asignature_id'=>$request->asignature,
+        //     'cours_id'=>$request->course,
+        //     'rand_telephone'=>$rand_telephone,
+        //     'rand_email'=>$rand_email,
+        //     'send_telephone'=>$request->send_telephone == 1 ? $request->send_telephone : 0,
+        //     'send_email'=>$request->send_email== 1 ? $request->send_email : 0,
+        //     'response'=>false
+        // );
 
-        $request->session()->put('participant',$json);
+        // $request->session()->put('participant',$json);
         $file = $request->file('file');
-        Excel::import(new ParticipantImport, $file);
 
-        return response()->json([
-            'success'=>true,
-            'status'=>200,
-        ]);
+        $array = Excel::toArray(new UsersImport, $file);
+
+        $success = true;
+        foreach ($array[0] as $key => $value) {
+            if ($key!=0) {
+                if ($value[0]=='' || $value[0]==null) {
+                    $success=false;
+                }
+                if ($value[1]=='' || $value[1]==null) {
+                    $success=false;
+                }
+                if ($value[2]=='' || $value[2]==null) {
+                    $success=false;
+                }
+                if ($value[3]=='' || $value[3]==null) {
+                    $success=false;
+                }
+                if ($value[4]=='' || $value[4]==null) {
+                    $success=false;
+                }
+
+            }
+        }
+
+        if ($success==true) {
+            foreach ($array[0] as $key => $value) {
+
+                if ($key!=0) {
+                    $user = User::where('active',1)->where('dni',$value[0])->first();
+                    if (!$user) {
+
+                        $user = new User();
+                        $user->name             = $value[2];
+                        $user->email            = $value[3];
+                        $user->password         = sha1($value[0]);
+                        $user->group_id         = 4;
+                        $user->dni              = $value[0];
+                        $user->last_name        = $value[1];
+                        $user->telephone        = $value[4];
+                        $user->create_by        = session('hbgroup')['user_id'];
+                        $user->save();
+
+                        User::where('active', 1)->where('id', $user->id)->update([
+                            'code_telephone' => $rand_telephone.'T'.$user->id,
+                            'code_email'=>$rand_email.'E'.$user->id,
+                        ]);
+
+                        if ($request->send_email == 1) {
+                            $message_email_1='El proposito de este mensaje es de confirmar su correo electronico, el mismo mensaje se le envio a su número telefonico con el mismo proposito.';
+                            $message_email_2='Por favor confirmar ambos medios de comunicacion para poder ingresar al curso gracias por su comprención.';
+                            $message_email_3='Saludos cordiales HB GROUP PERU S.R.L.';
+
+                            $button_email = 'Click para verificar su correo electronico.';
+                            $configurations = Configuration::where('active', 1)->first();
+                            $data = array(
+                                "name"=> $user->name,
+                                "last_name"=> $user->last_name,
+                                "email"=> $user->email,
+                                "telephone"=> $user->telephone,
+                                "message_1"=> $message_email_1,
+                                "message_2"=> $message_email_2,
+                                "message_3"=> $message_email_3,
+                                "button"=>$button_email,
+                                "email_from"=>$configurations->sender,
+                                "view"=>"verification",
+                                "subject"=>"Autenticación de su correo electronico",
+                                "rand"=>$rand_email.'E'.$user->id
+
+                            );
+                            $mail = new ContactMailable($data);
+                            Mail::to($data['email'])->send($mail);
+                        }
+
+                        if ($request->send_telephone == 1) {
+
+                            $data =array(
+                                "message"=>"ingrese al link para verificar su nùmero telefonico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."",
+                                "destination"=>$user->telephone,
+                                "setLogin"=>"info@hbgroup.pe",
+                                "setPassword"=>"eb9ga5ty"
+                            );
+                            // sendText($data);
+                        }
+                        User::where('active', 1)->where('id', $user->id)->update([
+                            'send_email' => $request->send_email== 1 ? $request->send_email : 0,
+                            'send_telephone' => $request->send_telephone == 1 ? $request->send_telephone : 0
+                        ]);
+
+                    }
+
+                    $participan = new Participant();
+                    $participan->user_id = $user->id;
+                    $participan->create_by = session('hbgroup')['user_id'];
+                    $participan->save();
+
+                    $cours = Cours::where('active',1)->where('cours_id',$request->course)->first();
+
+                    $cours_participant = new CoursParticipant();
+                    $cours_participant->business_id     = $cours->business_id;
+                    $cours_participant->asignature_id   = $request->asignature;
+                    $cours_participant->participant_id  = $participan->participant_id;
+                    $cours_participant->cours_id        = $cours->cours_id ;
+                    $cours_participant->create_by       = session('hbgroup')['user_id'];
+                    $cours_participant->save();
+
+                }
+            }
+        }
+
+
+        if ($success == true) {
+            return response()->json([
+                'success'=>true,
+                'status'=>200,
+            ]);
+        }else{
+            return response()->json([
+                'success'=>false,
+                'status'=>404,
+            ]);
+        }
+
+
+
     }
     public function edit(User $participante)
     {
