@@ -128,6 +128,8 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::get('getAsignature',[AsignatureController::class, 'getAsignature'] )->name('get.asignature');
     Route::resource('asignacion-cursos', CoursParticipantController::class );
     Route::get('get-list-cours-participant',[AjaxController::class, 'getCoursParticipanPagination'] )->name('get.list.participant');
+    Route::get('get-cours-participant',[CoursParticipantController::class, 'getCoursParticipantPagination'] )->name('get.cours.participant.pagination');
+    Route::post('delete-participant-cours',[CoursParticipantController::class, 'deleteParticipantCours'] )->name('delete.participant.cours');
     // Route::resource('programa', ProgramController::class );
     // Route::resource('pensum', PensumController::class );
     // Route::resource('pensum-asignatura', PensumAsignatureController::class );

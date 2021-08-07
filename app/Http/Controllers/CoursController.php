@@ -134,6 +134,23 @@ class CoursController extends Controller
             'status'=>200
         ]);
     }
+    public function show($curso)
+    {
+        # code...
+        $curso = Cours::where('cours.active', 1)->where('cours.cours_id', $curso)->where('asignatures.active', 1)
+            ->join('asignatures', 'cours.asignature_id','=','asignatures.asignature_id')
+            ->join('businesses', 'cours.business_id','=','businesses.business_id')
+            ->join('users', 'cours.user_id','=','users.id')
+            ->select('cours.*', 'asignatures.name as asignature_name', 'asignatures.abbreviation as abbreviation', 'businesses.name as business', 'users.name as user_name', 'users.last_name as user_lastname' )
+            ->first();
+        // return $curso;
+        return view(
+            'frontend.private.courses.show',
+            compact(
+                'curso'
+            )
+        );
+    }
     public function getCoursesAsignature(Request $request)
     {
 

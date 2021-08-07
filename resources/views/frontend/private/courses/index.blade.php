@@ -53,6 +53,9 @@
                                         <td>{{$element->asignature_name}}</td>
                                         <td>
                                             <div class="form-button-action">
+                                                <a href="{{route('cursos.show', $element->cours_id)}}" data-toggle="tooltip" title="" class="btn btn-link btn-warning btn-lg" data-original-title="Ver el curso {{$element->course}}">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
 
                                                 <a href="{{route('cursos.edit', $element->cours_id)}}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar el curso {{$element->course}}" data-id="{{$element->cours_id}}">
                                                     <i class="fa fa-edit"></i>

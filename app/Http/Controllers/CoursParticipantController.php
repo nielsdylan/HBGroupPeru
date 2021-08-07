@@ -54,4 +54,56 @@ class CoursParticipantController extends Controller
             ]);
         }
     }
+    public function getCoursParticipantPagination(Request $request)
+    {
+        if ($request->ajax()) {
+            // return $request->date;
+            $results = CoursParticipant::where('cours_participants.active',1)
+                ->where('cours.cours_id',$request->cours_id)
+                ->where('cours.active',1)
+                ->where('participants.active',1)
+                ->join('cours', 'cours_participants.cours_id', '=', 'cours.cours_id')
+                ->join('participants', 'cours_participants.participant_id', '=', 'participants.participant_id')
+                ->join('users', 'participants.user_id', '=', 'users.id')
+                ->select('participants.user_id', 'users.*', 'cours_participants.cours_participant_id');
+
+            // if (!empty($request->asignature_id)) {
+            //     $results = $results->where('asignature_id','=',$request->asignature_id);
+            // }
+            // if (!empty($request->date)){
+
+            //     $date = date("Y-d-m", strtotime($request->date));
+
+            //     $results = $results->where('date_start','=',$date);
+            // }
+            // if (!empty($request->name)){
+            //     $results = $results->where('course','like','%'.$request->name.'%')->orWhere('code','like','%'.$request->name.'%');
+            // }
+            // $results = $results->paginate(6);
+                $results = $results->paginate(5);
+            // return response()->json([
+            //     'success'=>$results,
+            //     'status'=>200
+            // ]);
+            return response()->json(view('frontend.private.courses.list_participant_pagination', compact('results'))->render());
+        }
+        // return response()->json([
+        //     'success'=>$request->cours_id,
+        //     'status'=>200
+        // ]);
+    }
+    public function deleteParticipantCours(Request $request)
+    {
+        $hoy = date('Y-m-d H:i:s');
+        $response = CoursParticipant::where('active', 1)->where('cours_participant_id', $request->id)
+        ->update([
+            'active' => 0,
+            'deleted_at'=>$hoy,
+            'delete_by'=>session('hbgroup')['user_id']
+        ]);
+        return response()->json([
+            'success'=>$response,
+            'status'=>200
+        ]);
+    }
 }
