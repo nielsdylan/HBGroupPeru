@@ -50,7 +50,8 @@ Route::get('nosotros',  [HomeController::class, 'us'        ] )->name('us');
 Route::get('servicios', [HomeController::class, 'services'  ] )->name('services');
 Route::get('contacto',  [HomeController::class, 'contact'   ] )->name('contact');
 Route::post('send/email',  [HomeController::class, 'sendEmail'   ] )->name('send.email');
-Route::get('cursos-programados',  [HomeController::class, 'calendar'   ] )->name('calendar.program');
+// Route::get('cursos-programados',  [HomeController::class, 'calendar'   ] )->name('calendar.program');
+Route::get('calendario',  [HomeController::class, 'calendar'   ] )->name('calendar.program');
 Route::get('getEvents',  [AjaxController::class, 'getEvents'   ] )->name('get.events');
 Route::get('event/{event}',  [AjaxController::class, 'event'   ] )->name('events');
 Route::get('certificados-list',  [HomeController::class, 'certificateView'        ] )->name('certificate.view');
@@ -124,6 +125,7 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::resource('sede-turno', SedeTurnController::class );
     Route::resource('participantes', ParticipantController::class );
     Route::post('participantes-add',[ParticipantController::class, 'add'] )->name('participantes.add');
+    Route::get('get-participant',[ParticipantController::class, 'getPagination'] )->name('get.pagination.participant');
     Route::resource('asignatura', AsignatureController::class );
     Route::get('getAsignature',[AsignatureController::class, 'getAsignature'] )->name('get.asignature');
     Route::resource('asignacion-cursos', CoursParticipantController::class );
@@ -140,8 +142,9 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::get('participant-export/excel',[ExceltController::class, 'exportParticipant'] )->name('participant.excel.export');
 
     Route::resource('cliente', ClientController::class );
-    Route::resource('calendario', CalendarController::class );
+    Route::resource('calendarios', CalendarController::class )->names('calendario');
     Route::post('calendario-date',[AjaxController::class, 'updateDate'] )->name('date.update');
+    Route::get('count',[AjaxController::class, 'getCount'] )->name('get.count');
     // certificados
     Route::resource('certificado', CertificadoController::class );
     Route::get('certificado-model-excel',[ExceltController::class, 'certificadoModelExel'] )->name('certificado.export.model.excel');

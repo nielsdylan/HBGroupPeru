@@ -13,3 +13,8 @@
 {{-- <script src="{{asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script> --}}
 {{-- my js --}}
 <script src="{{asset('assets/js/frontend.js')}}"></script>
+{{--  --}}
+<script src="{{asset('assets/calendar/js/moment.min.js')}}"></script>
+	<script src="{{asset('assets/calendar/js/fullcalendar/fullcalendar.min.js')}}"></script>
+	<script src="{{asset('assets/calendar/js/fullcalendar/fullcalendar.js')}}"></script>
+	<script src="{{asset('assets/calendar/js/fullcalendar/locale/es.js')}}"></script>

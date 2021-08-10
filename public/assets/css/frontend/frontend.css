@@ -530,3 +530,4 @@ p{
 .display-none-item{
     display: none !important;
 }
+@media screen and (max-width:576px){#chart-container{min-height:250px}.form-check-inline{display:flex;flex-direction:column;align-items:left}#calendar .fc-toolbar{display:flex;flex-direction:column}#calendar .fc-toolbar .fc-center,#calendar .fc-toolbar .fc-left,#calendar .fc-toolbar .fc-right{margin:auto;margin-bottom:15px}#calendar .fc-toolbar .fc-left{order:1}#calendar .fc-toolbar .fc-right{order:3}#calendar .fc-toolbar .fc-center{order:2}.conversations .conversations-body{padding:1.5rem 1rem}}

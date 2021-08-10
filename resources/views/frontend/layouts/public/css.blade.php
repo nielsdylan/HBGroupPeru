@@ -35,4 +35,5 @@
 
 {{-- --- --}}
 {{-- <link href="{{asset('assets/js/plugin/fontawesome-5/css/all.css')}}"  rel="stylesheet"> --}}
-
+<link href="{{asset('assets/calendar/css/fullcalendar.css')}}" rel='stylesheet' />
+<link href="{{asset('assets/css/calendar.css')}}" rel='stylesheet' />

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Asignature;
 use App\Models\Cours;
 use App\Models\CoursParticipant;
+use App\Models\Participant;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -31,22 +32,52 @@ class CoursParticipantController extends Controller
     public function store(Request $request)
     {
 
+        $participant = Participant::where('user_id',$request->id)->first();
+        // return $participant;
+
         if (!empty($request->cours)) {
+            $existen = false;
             foreach ($request->cours as $key => $value) {
+                $cours_exist = CoursParticipant::where('active',1)->where('cours_id',$value)->where('participant_id',$participant->participant_id)->first();
+                if ($cours_exist) {
+                    $existen = true;
+                }
 
-                $cours = Cours::where('active',1)->where('cours_id',$value)->first();
+            }
+            if ($existen === false) {
+                foreach ($request->cours as $key => $value) {
+                    $cours = Cours::where('active',1)->where('cours_id',$value)->first();
 
-                $cours_participant = new CoursParticipant();
-                $cours_participant->asignature_id = $cours->asignature_id;
-                $cours_participant->participant_id =$request->id;
-                $cours_participant->cours_id =$value;
-                $cours_participant->save();
+                    $cours_participant = new CoursParticipant();
+                    $cours_participant->asignature_id = $cours->asignature_id;
+                    $cours_participant->participant_id =$participant->participant_id;
+                    $cours_participant->cours_id =$value;
+                    $cours_participant->save();
+                }
+
+                return response()->json([
+                    'status'=>200,
+                    'placementFrom'=>'top',
+                    'placementAlign'=>'center',
+                    'state'=>'success',
+                    'style'=>'withicon',
+                    'message'=>'Se guardo con éxito',
+                    'title'=>'Éxito',
+                    'icon'=>'fas fa-check',
+                ]);
+            }else{
+                return response()->json([
+                    'status'=>200,
+                    'placementFrom'=>'top',
+                    'placementAlign'=>'center',
+                    'state'=>'warning',
+                    'style'=>'withicon',
+                    'message'=>'Asignese cursos que no ha llevado.',
+                    'title'=>'Curso ya asignados',
+                    'icon'=>'fas fa-info',
+                ]);
             }
 
-            return response()->json([
-                'success'=>true,
-                'status'=>200
-            ]);
         }else{
             return response()->json([
                 'success'=>false,

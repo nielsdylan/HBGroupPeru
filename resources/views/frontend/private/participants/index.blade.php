@@ -66,6 +66,9 @@
                                                     <a data-toggle="tooltip" title="" class="btn btn-link btn-warning btn-lg" data-original-title="Asignar cursos al participante"  href="{{route('asignacion-cursos.index').'?DNI='.$item->dni}}">
                                                         <i class="fas fa-project-diagram"></i>
                                                     </a>
+                                                    <a data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Ver a {{$item->last_name}}"  href="{{route('participantes.show',$item->id)}}">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
                                                     <a type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar {{$item->last_name}}"  data-id="{{$item->participant_id  }}" href="{{route('participantes.edit', $item->id)}}">
                                                         <i class="fa fa-edit"></i>
                                                     </a>

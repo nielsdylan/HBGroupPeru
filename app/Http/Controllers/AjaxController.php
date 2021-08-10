@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cours;
+use App\Models\CoursParticipant;
 use App\Models\Event;
+use App\Models\Participant;
 use App\Models\PensumAsignature;
 use Illuminate\Http\Request;
+use Svg\Tag\Rect;
 
 class AjaxController extends Controller
 {
@@ -81,5 +84,16 @@ class AjaxController extends Controller
             $results = $results->paginate(7);
             return response()->json(view('frontend.private.cours_participants.list', compact('results'))->render());
         }
+    }
+    public function getCount(Request $request)
+    {
+        $participant = Participant::where('active',1)->where('user_id',$request->id)->first();
+        $count_cours = CoursParticipant::where('active',1)->where('participant_id',$participant->participant_id)->count();
+        return response()->json([
+            'cours' => $count_cours,
+            'passed'=> 0,
+            'disapproved'=> 0,
+            'status'  => 200,
+        ]);
     }
 }

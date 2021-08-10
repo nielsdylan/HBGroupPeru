@@ -1,4 +1,4 @@
-
+{{--
 
 <!DOCTYPE html>
 <html lang="es">
@@ -24,22 +24,27 @@
     <meta property="og:image"              content="{{asset('uploads/public/logo_marco.png')}}" />
     <?php endif ?>
     <link rel="icon" href="{{asset('uploads/public/logo_snc.png')}}" type="image/x-icon">
-    <title>HB Group Perú</title>
+    <title>HB Group Perú</title> --}}
 
     <!-- Bootstrap Core CSS -->
     {{-- <link href="{{asset('assets/calendar/css/bootstrap.min.css')}}" rel="stylesheet"> --}}
-    @include('frontend.layouts.public.css')
+    {{-- @include('frontend.layouts.public.css') --}}
 	<!-- FullCalendar -->
-	<link href="{{asset('assets/calendar/css/fullcalendar.css')}}" rel='stylesheet' />
-    <link href="{{asset('assets/css/calendar.css')}}" rel='stylesheet' />
+	{{-- <link href="{{asset('assets/calendar/css/fullcalendar.css')}}" rel='stylesheet' />
+    <link href="{{asset('assets/css/calendar.css')}}" rel='stylesheet' /> --}}
     {{-- <link rel="stylesheet" href="{{asset('assets/css/frontend/animate.css')}}"> --}}
 
     <!-- Custom CSS -->
 
-</head>
+{{-- </head> --}}
 
-<body>
-    <section class="header">
+{{-- <body> --}}
+@extends('frontend.public')
+@section('title','HB Group Perú')
+@section('content')
+{{-- <link href="{{asset('assets/calendar/css/fullcalendar.css')}}" rel='stylesheet' />
+<link href="{{asset('assets/css/calendar.css')}}" rel='stylesheet' /> --}}
+    {{-- <section class="header">
         <div class="top-nav">
             <div class="container">
                 <div class="row">
@@ -59,9 +64,6 @@
                             @if ($configurations->whatsapp)
                             <a href="https://wa.me/+51{{ $configurations->whatsapp}}?text=" target="_blank" class="list-inline-item text-white"><i class="fab fa-whatsapp text-white"></i> {{ $configurations->whatsapp}}</a>
                             @endif
-
-                            {{-- <a href="https://www.facebook.com/HBgroup.pe" target="_blank" class="list-inline-item icon text-white"><i class="fab fa-facebook-f text-white"></i></a> --}}
-
                             <a href="https://site5.q10.com/login?ReturnUrl=%2F&aplentId=05554f9b-6439-4175-8443-321c9ebcf09d" target="_blank" class="list-inline-item icon text-white"><i class="fas fa-user-graduate text-white"></i> Aula virtual</a>
 
                             <a href="{{route('index')}}" target="_blank" class="list-inline-item icon text-white"><i class="fas fa-globe-americas text-white"></i> HB GROUP PERÚ</a>
@@ -88,23 +90,23 @@
                 </ul>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <section id="calendar-cours">
 
         <div class="container">
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-md-12">
                             <h1>Curso programados</h1>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="row">
-                        <div class="col-md-12">
-                            <div id="calendar" class="col-md-12 ">
+                        {{-- <div class="container"> --}}
+                            <div id="calendar" class="col-md-12">
                             </div>
-                        </div>
+                        {{-- </div> --}}
                     </div>
                 </div>
             </div>
@@ -181,16 +183,16 @@
 
         </div>
 
-    @include('frontend.layouts.public.js')
-	<!-- FullCalendar -->
-	<script src="{{asset('assets/calendar/js/moment.min.js')}}"></script>
+    {{-- @include('frontend.layouts.public.js') --}}
+
+	{{-- <script src="{{asset('assets/calendar/js/moment.min.js')}}"></script>
 	<script src="{{asset('assets/calendar/js/fullcalendar/fullcalendar.min.js')}}"></script>
 	<script src="{{asset('assets/calendar/js/fullcalendar/fullcalendar.js')}}"></script>
-	<script src="{{asset('assets/calendar/js/fullcalendar/locale/es.js')}}"></script>
+	<script src="{{asset('assets/calendar/js/fullcalendar/locale/es.js')}}"></script> --}}
 
-    @if ($configurations->whatsapp)<a href="https://wa.me/+51{{ $configurations->whatsapp}}?text=Mi consulta es..." target="_blank" id="whatsapp-floot" class="btn-whatsapp-link"><i class="fab fa-whatsapp"></i></a>@endif
-    <a href="#" id="back-to-top" class="btn btn-lg btn-back-top"><i class="fa fa-angle-up"></i></a>
-    <section id="footeer">
+    {{-- @if ($configurations->whatsapp)<a href="https://wa.me/+51{{ $configurations->whatsapp}}?text=Mi consulta es..." target="_blank" id="whatsapp-floot" class="btn-whatsapp-link"><i class="fab fa-whatsapp"></i></a>@endif
+    <a href="#" id="back-to-top" class="btn btn-lg btn-back-top"><i class="fa fa-angle-up"></i></a> --}}
+    {{-- <section id="footeer">
         <div class="pre-footer">
             <div class="container">
                 <div class="row">
@@ -289,7 +291,7 @@
 
         </div>
 
-    </section>
+    </section> --}}
 	<script>
 
         $(document).ready(function() {
@@ -472,7 +474,8 @@
 
         });
     </script>
-
+{{--
 </body>
 
-</html>
+</html> --}}
+@endsection

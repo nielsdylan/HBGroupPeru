@@ -21,9 +21,9 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card card-space">
-                <div class="card-header">
+                {{-- <div class="card-header">
                     <h4 class="card-title"> Información</h4>
-                </div>
+                </div> --}}
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-3">

@@ -58,52 +58,29 @@
                                         </a>
                                     </div> --}}
                                     <div class="view-profile">
-                                        <a href="#" class="btn btn-secondary btn-block">View Full Profile</a>
+                                        <a href="{{route('participantes.show',$user->id)}}" class="btn btn-secondary btn-block">View Full Profile</a>
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="card-footer">
+
+                            <div class="card-footer">
                                 <div class="row user-stats text-center">
-                                    <div class="col">
-                                        <div class="number">125</div>
-                                        <div class="title">Post</div>
+                                    <div class="col" data-section="cours">
+                                        <div class="number cours">0</div>
+                                        <div class="title">Cursos</div>
                                     </div>
-                                    <div class="col">
-                                        <div class="number">25K</div>
-                                        <div class="title">Followers</div>
+                                    <div class="col" data-section="passed">
+                                        <div class="number passed">0</div>
+                                        <div class="title">Aprobados</div>
                                     </div>
-                                    <div class="col">
-                                        <div class="number">134</div>
-                                        <div class="title">Following</div>
-                                    </div>
-                                </div>
-                            </div> --}}
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex">
-                                    <div class="avatar avatar-online">
-                                        <span class="avatar-title rounded-circle border border-white bg-info">QJ</span>
-                                    </div>
-                                    <div class="flex-1 ml-3 pt-1">
-                                        <h4 class="text-uppercase fw-bold mb-1">PRUEBA DE MANEJO <span class="text-warning">(0001-MANEJO)</span></h4>
-                                        <span class="text-muted">QUISPE, JAILEE</span>
-                                    </div>
-                                    <div class="float-right pt-1">
-                                        <div class="text-right"><small class="text-muted">17/05/2021</small></div>
-                                        <div class="text-right"><small class="text-muted">8:40 PM</small></div>
+                                    <div class="col" data-section="disapproved">
+                                        <div class="number disapproved">0</div>
+                                        <div class="title">Desaprobados</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
             <div class="col-md-8">
@@ -152,6 +129,7 @@
         var data ={};
         $(document).ready(function () {
             getCoursPagination();
+            getCount();
         });
         $(document).on('click','.pagination a',function (e) {
             e.preventDefault();
@@ -223,14 +201,18 @@
                 $('.cours-list').removeClass('is-loading is-loading-lg');
                 if (response.status == 200) {
                     alertDashboard(
-                        'top',
-                        'center',
-                        'success',
-                        'withicon',
-                        'Se guardo con éxito',
-                        'Éxito',
-                        'fas fa-check',
+                        response.placementFrom,
+                        response.placementAlign,
+                        response.state,
+                        response.style,
+                        response.message,
+                        response.title,
+                        response.icon,
                     );
+                    if (response.state=='success') {
+                        getCoursPagination();
+                        getCount()
+                    }
                 }else{
                     alertDashboard(
                         'top',
@@ -242,6 +224,7 @@
                         'fas fa-times',
                     );
                 }
+
             }).fail(function () {
                 $('.cours-list').removeClass('is-loading is-loading-lg');
             });
@@ -275,7 +258,37 @@
                     align: placementAlign
                 },
                 time: 1000,
-                delay: 2,
+                delay: 3,
+            });
+        }
+        function getCount(){
+            var route = '{{ route('get.count')}}',
+                uder_id = $('[name="user_id"]').val();
+            data={
+                id:uder_id
+            }
+            $.ajax({
+                method: 'GET',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: route,
+                dataType: 'json',
+                // processData: false,
+                // contentType: false,
+                data: data,
+                beforeSend: function()
+                {
+                },
+            }).done(function (response) {
+                if (response.status == 200) {
+
+                    $('[data-section="cours"] .cours').text(response.cours);
+                    $('[data-section="passed"] .passed').text(response.passed);
+                    $('[data-section="disapproved"] .disapproved').text(response.disapproved);
+                }else{
+                }
+
+            }).fail(function () {
+                $('.cours-list').removeClass('is-loading is-loading-lg');
             });
         }
     </script>

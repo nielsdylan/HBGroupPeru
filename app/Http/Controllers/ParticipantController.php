@@ -314,6 +314,25 @@ class ParticipantController extends Controller
             'status'=>200
         ]);
     }
+    public function show($participante)
+    {
+        $participante = User::where('users.active', 1)
+        ->where('users.id', $participante)
+        ->where('participants.active', 1)
+        ->where('document_types.active', 1)
+        ->join('participants', 'users.id','=','participants.user_id')
+        ->join('document_types', 'users.document_type_id','=','document_types.document_type_id')
+        ->select('users.*', 'participants.participant_id', 'document_types.name as document')
+        ->first();
+
+        // return $participante;
+        return view(
+            'frontend.private.participants.show',
+            compact(
+                'participante'
+            )
+        );
+    }
     public function destroy(User $participante)
     {
         $fecha = new DateTime();
@@ -482,5 +501,23 @@ class ParticipantController extends Controller
         # code...
         $mail = new ContactMailable($data);
         Mail::to($data['email'])->send($mail);
+    }
+
+    public function getPagination(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $results = CoursParticipant::where('cours_participants.active',1)
+                ->where('cours_participants.participant_id',$request->id)
+                ->where('cours.active',1)
+                ->where('users.active',1)
+                ->join('cours', 'cours_participants.cours_id', '=', 'cours.cours_id')
+                ->join('users', 'cours.user_id', '=', 'users.id')
+                ->select( 'cours.*', 'cours_participants.cours_participant_id','users.last_name','users.name as name');
+
+
+            $results = $results->paginate(6);
+            return response()->json(view('frontend.private.participants.list_cours', compact('results'))->render());
+        }
     }
 }
