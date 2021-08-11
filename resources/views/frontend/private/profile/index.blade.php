@@ -35,12 +35,14 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
+                                    @if (session('hbgroup')['group_id'] == 1)
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="">Disponibilidad de créditos para el envio de mensajes de texto :</label>
                                             <input id="" class="form-control" type="text" name="" value="{{$credits}}" disabled>
                                         </div>
                                     </div>
+                                    @endif
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="my-input">Cargo:</label>

@@ -24,7 +24,7 @@
                 </div>
             </div>
             <ul class="nav">
-                @if (session('hbgroup')['group_id'] == 1 || session('hbgroup')['group_id'] == 5)
+                @if (session('hbgroup')['group_id'] == 1 || session('hbgroup')['group_id'] == 5 || session('hbgroup')['group_id'] == 4)
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#cours">
                         <i class="fas fa-server"></i>
@@ -33,26 +33,41 @@
                     </a>
                     <div class="collapse" id="cours">
                         <ul class="nav nav-collapse">
+                            @if (session('hbgroup')['group_id'] == 1 || session('hbgroup')['group_id'] == 5)
                             <li>
                                 <a href="{{route('cursos.index')}}">
                                     <span class="sub-item">Cursos</span>
                                 </a>
                             </li>
+                            @endif
+                            @if (session('hbgroup')['group_id'] == 1 || session('hbgroup')['group_id'] == 5)
                             <li>
                                 <a href="{{route('participantes.index')}}">
                                     <span class="sub-item">Participantes</span>
                                 </a>
                             </li>
+                            @endif
+                            @if (session('hbgroup')['group_id'] == 1 || session('hbgroup')['group_id'] == 5)
                             <li>
                                 <a href="{{route('asignatura.index')}}">
                                     <span class="sub-item">Asignatura</span>
                                 </a>
                             </li>
+                            @endif
+                            @if (session('hbgroup')['group_id'] == 1 || session('hbgroup')['group_id'] == 5)
                             <li>
                                 <a href="{{route('certificado.index')}}">
                                     <span class="sub-item">Certificados</span>
                                 </a>
                             </li>
+                            @endif
+                            @if (session('hbgroup')['group_id'] == 4)
+                            <li>
+                                <a href="{{route('mis-cursos.index')}}">
+                                    <span class="sub-item">Mis cursos</span>
+                                </a>
+                            </li>
+                            @endif
                         </ul>
                     </div>
                 </li>
@@ -88,6 +103,7 @@
                     </div>
                 </li>
                 @endif
+                @if (session('hbgroup')['group_id'] == 1 || session('hbgroup')['group_id'] == 5)
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#comercial">
                         <i class="fas fa-store-alt"></i>
@@ -110,6 +126,7 @@
                         </ul>
                     </div>
                 </li>
+                @endif
             </ul>
         </div>
     </div>

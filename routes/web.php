@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MyCoursController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\PensumAsignatureController;
 use App\Http\Controllers\PensumController;
@@ -64,7 +65,9 @@ Route::get('pdf',  [HomeController::class, 'viewPDF'        ] )->name('view.pdf'
 // ruta de autenticacion
 Route::get('autenticacion',  [HomeController::class, 'autentication'   ] )->name('autentication');
 Route::get('helper',  [HomeController::class, 'helper'   ] )->name('helper');
-
+#api
+Route::get('token',  [HomeController::class, 'token'        ] )->name('get.token');
+Route::get('token/logout',  [HomeController::class, 'tokenLogout'        ] )->name('get.token.logout');
 #backend -private
 //session
 
@@ -132,10 +135,6 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::get('get-list-cours-participant',[AjaxController::class, 'getCoursParticipanPagination'] )->name('get.list.participant');
     Route::get('get-cours-participant',[CoursParticipantController::class, 'getCoursParticipantPagination'] )->name('get.cours.participant.pagination');
     Route::post('delete-participant-cours',[CoursParticipantController::class, 'deleteParticipantCours'] )->name('delete.participant.cours');
-    // Route::resource('programa', ProgramController::class );
-    // Route::resource('pensum', PensumController::class );
-    // Route::resource('pensum-asignatura', PensumAsignatureController::class );
-    // Route::post('getpensum',[AjaxController::class, 'getPensumAsignatureShow'] )->name('pensum.asignature.show');
 
     Route::post('participante/excel',[ExceltController::class, 'saveParticipant'] )->name('participant.excel');
     Route::get('model-excel',[ExceltController::class, 'modelExel'] )->name('export.model.excel');
@@ -151,4 +150,7 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::get('get-business',[BusinessController::class, 'getBusiness'] )->name('get.business');
 
     Route::get('get-user{slug}',[UsersController::class, 'getUser'] )->name('get.user');
+
+    Route::resource('mis-cursos', MyCoursController::class );
+    Route::get('mis-cursos-pagination',[MyCoursController::class, 'getPagination'] )->name('get.mis.cursos.pagination');
 });

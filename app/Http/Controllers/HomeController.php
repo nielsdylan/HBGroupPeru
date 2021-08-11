@@ -262,4 +262,13 @@ class HomeController extends Controller
 
         return test();
     }
+    public function token()
+    {
+        # code...
+        return 'e';
+    }
+    public function tokenLogout()
+    {
+        return 'logout';
+    }
 }
