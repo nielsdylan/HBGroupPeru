@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Cours;
 use App\Models\CoursParticipant;
 use App\Models\Event;
+use App\Models\Organizer;
 use App\Models\Participant;
 use App\Models\PensumAsignature;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Svg\Tag\Rect;
 
@@ -95,5 +97,105 @@ class AjaxController extends Controller
             'disapproved'=> 0,
             'status'  => 200,
         ]);
+    }
+    public function createMeetingTeams()
+    {
+        # code...
+        $teams_success = true;
+        $user = User::where('active',1)->where('id',session('hbgroup')['user_id'])->first();
+        $organizer = Organizer::where('active',1)->where('email',$user->email)->first();
+        $token_teams = $this->tokenTeams($organizer->refresh_token);
+        // $token_teams = json_encode($token_teams);
+        if ($token_teams !=true) {
+            $teams_success =false;
+            return $teams_success;
+        }
+        // $calendar = $this->calendarTeams($token_teams->access_token);
+        return $token_teams;
+    }
+    public function tokenTeams($refresh_token)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS => 'client_id=b57f99a3-d61e-4a74-a79e-aa91d4bc03d6&scope=user.read&client_secret=lxU8MHU5XJW_YTdj56uln_omjB_06c3.I_&grant_type=refresh_token&refresh_token='.$refresh_token.'&redirect_uri=https%3A%2F%2Fhbgroup.pe%2Ftoken',
+          CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/x-www-form-urlencoded',
+            'Cookie: buid=0.AX0AFSpzYanp7UyxmM5mlR5hQaOZf7Ue1nRKp56qkdS8A9Z9AAA.AQABAAEAAAD--DLA3VO7QrddgJg7WevrubmlCuWp9TD2C1ChDRnWpr5j2nuKX9MfpfhBWqwfKinDauPn5rKYYyL8WxCf1aR090M48C690cz8OrCwn0jF-7nPpkmpcgm7cpMXJjTb8IAgAA; fpc=ArDA9pPZuqJKhADCdbCSXaEs2i1RAQAAAMmnrdgOAAAA; stsservicecookie=estsfd; x-ms-gateway-slice=estsfd'
+          ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        return $response;
+    }
+    public function meetingTeams($token)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://graph.microsoft.com/v1.0/me/events',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS =>'{
+        "subject": "Primara reunion API 21",
+        "body": {
+            "contentType": "HTML",
+            "content": "Does this time work for you?"
+        },
+        "start": {
+            "dateTime": "2021-08-17T15:00:00",
+            "timeZone": "Pacific Standard Time"
+        },
+        "end": {
+            "dateTime": "2021-08-17T15:00:00",
+            "timeZone": "Pacific Standard Time"
+        },
+        "location":{
+            "displayName":"Cordova conference room ILO"
+        },
+        "attendees": [
+            {
+            "emailAddress": {
+                "address":"info@hbgroup.pe",
+                "name": "Niels"
+            },
+            "type": "required"
+            }
+        ],
+        "organizer": {
+                "emailAddress": {
+                    "name": "Lourdes",
+                    "address": "servicios@hbgroup.pe"
+                }
+            },
+        "allowNewTimeProposals": true,
+        "isOnlineMeeting": true,
+        "onlineMeetingProvider": "teamsForBusiness"
+        }',
+        CURLOPT_HTTPHEADER => array(
+            'Content-type: application/json',
+            'Authorization: Bearer '.$token.''
+        ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        echo $response;
     }
 }

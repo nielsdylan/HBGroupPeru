@@ -119,6 +119,7 @@ Route::post('login/session',  [LoginController::class, 'sessionStart'] );
 Route::middleware(['hbgroup'])->group(function(){
     Route::resource('perfil', ProfileController::class );
     Route::resource('cursos', CoursController::class );
+    Route::get('list/cursos/pagination',[CoursController::class, 'getPagination'] )->name('list.cursos.pagination');
     Route::get('get-cod-cours/{code}',[CoursController::class, 'getCodeCours'] )->name('get.cod.cours');
     Route::get('get-cod-cours',[CoursController::class, 'getCodeCoursID'] )->name('get.cod.cours.id');
     Route::get('getCourses',[CoursController::class, 'getCourses'] )->name('get.courses');

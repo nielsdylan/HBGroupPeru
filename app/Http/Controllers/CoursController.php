@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Asignature;
 use App\Models\Business;
 use App\Models\Cours;
+use App\Models\Organizer;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
@@ -39,7 +40,6 @@ class CoursController extends Controller
     public function store(Request $request)
     {
         # code...
-        // return date("Y-d-m", strtotime($request->date_start));
         $cours = new Cours();
         $cours->asignature_id   = $request->asignature;
         $cours->code            = $request->code;
@@ -198,6 +198,21 @@ class CoursController extends Controller
                 'success'=>false,
                 'status'=>404,
             ]);
+        }
+    }
+    public function getPagination(Request $request)
+    {
+
+        if ($request->ajax()) {
+
+            $results = Cours::where('cours.active',1)->where('asignatures.active',1)
+                ->orderByDesc('cours.cours_id')
+                ->join("asignatures", "asignatures.asignature_id", "=", "cours.asignature_id")
+                ->select("cours.*", "asignatures.name as asignature_name", "asignatures.code as asignature_code");
+
+
+            $results = $results->paginate(6);
+            return response()->json(view('frontend.private.courses.list_cours', compact('results'))->render());
         }
     }
 }

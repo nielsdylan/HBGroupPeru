@@ -24,311 +24,58 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="card-title">Lista de cursos</h4>
-
-                        {{-- <button class="btn btn-primary btn-round ml-auto" data-modal="save">
-                            <i class="fa fa-plus"></i>
-                            Nuevo curso
-                        </button> --}}
                         <a href="{{route('cursos.create')}}" class="btn btn-primary btn-round ml-auto"><i class="fa fa-plus"></i> Nuevo curso</a>
+
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="add-row" class="display table table-striped table-hover" >
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>CODE</th>
-                                    <th>CURSO</th>
-                                    <th>ASIGNATURA</th>
-                                    <th style="width: 10%">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody data-tb="list">
-                                @foreach ($results as $key=>$element )
-                                    <tr>
-                                        <td>{{$element->cours_id}}</td>
-                                        <td>{{$element->code}}</td>
-                                        <td>{{$element->course}}</td>
-                                        <td>{{$element->asignature_name}}</td>
-                                        <td>
-                                            <div class="form-button-action">
-                                                <a href="{{route('cursos.show', $element->cours_id)}}" data-toggle="tooltip" title="" class="btn btn-link btn-warning btn-lg" data-original-title="Ver el curso {{$element->course}}">
-                                                    <i class="fa fa-eye"></i>
-                                                </a>
-
-                                                <a href="{{route('cursos.edit', $element->cours_id)}}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar el curso {{$element->course}}" data-id="{{$element->cours_id}}">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Eliminar {{$element->course}}" data-id="{{$element->cours_id}}" data-delete="modal">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-primary btn-round btn-icon refresh" ><i class="fas fa-sync"></i></button>
+                        </div>
                     </div>
+                    <div class="row" data-table="table"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-{{-- @include('frontend.private.courses.create') --}}
-{{-- @include('frontend.private.courses.edit') --}}
 
 <script>
     $(document).ready(function () {
-
+        getPagination();
     });
-    function getBusiness() {
-        var route   = '{{ route('get.business') }}',
-            html    ='';
-        $.ajax({
-            method: 'GET',
-            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
-            url: route,
-            dataType: 'json',
-            data: {},
-            beforeSend: function()
-            {
-                $('[name="bussiness_id"]').attr('disabled','');
-            },
-        }).done(function (response) {
-            $('[name="bussiness_id"]').removeAttr('disabled');
-            if (response.status == 200) {
-
-                html='<option value="">Seleccione...</option>';
-                $.each(response.results, function (index, element) {
-                    html+='<option value="'+element.business_id+'">'+element.name+'</option>';
-                });
-                $('[name="bussiness_id"]').html(html);
-            }else{
-
-            }
-        }).fail(function () {
-            // alert("Error");
-            $('[name="bussiness_id"]').removeAttr('disabled');
-        });
-    }
-    function getAsignature() {
-        var route   = '{{ route('get.asignature') }}',
-            html    ='';
-        $.ajax({
-            method: 'GET',
-            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
-            url: route,
-            dataType: 'json',
-            data: {},
-            beforeSend: function()
-            {
-                $('#asignature').attr('disabled','');
-            },
-        }).done(function (response) {
-            $('#asignature').removeAttr('disabled');
-            if (response.status == 200) {
-
-                html='<option value="">Seleccione...</option>';
-                $.each(response.results, function (index, element) {
-                    html+='<option value="'+element.asignature_id+'">'+element.name+' ('+element.abbreviation+')</option>';
-                });
-                $('#asignature').html(html);
-            }else{
-
-            }
-        }).fail(function () {
-            // alert("Error");
-            $('#asignature').removeAttr('disabled');
-        });
-    }
-    $(document).on('click','[data-modal="save"]',function (e) {
+    $(document).on('click','.refresh',function () {
+        getPagination();
+    });
+    $(document).on('click','.pagination a',function (e) {
         e.preventDefault();
-        var html = '';
-        $('#addRowModal').modal('show');
-        html =''+
-            '<div class="row">'+
-                '<div class="col-md-12">'+
-                    '<div class="form-group">'+
-                        '<label for="bussiness_id">Empresas :</label>'+
-                        '<select class="form-control" name="bussiness_id" id="bussiness_id" required>'+
-                            '<option value="">Seleccione...</option>'+
-                        '</select>'+
-                    '</div>'+
-                '</div>'+
-            '</div>'+
-            '<div class="row">'+
-                '<div class="col-md-12">'+
-                    '<div class="form-group">'+
-                        '<label for="asignature">Asignatura :</label>'+
-                        '<select class="form-control" name="asignature" id="asignature" required>'+
-                            '<option value="">Seleccione...</option>'+
-                        '</select>'+
-                    '</div>'+
-                '</div>'+
-            '</div>'+
-            '<div class="row">'+
-                '<div class="col-md-6">'+
-                    '<div class="form-group">'+
-                        '<label for="code">Codigo :</label>'+
-                        '<input id="code" class="form-control" type="text" name="code" search="code-search" required>'+
-                    '</div>'+
-                '</div>'+
-                '<div class="col-md-6">'+
-                    '<div class="form-group">'+
-                        '<label for="date_start">Fecha :</label>'+
-                        '<input id="date_start" class="form-control" type="date" name="date_start" required>'+
-                    '</div>'+
-                '</div>'+
-            '</div>'+
-            '<div class="row">'+
-                '<div class="col-md-12">'+
-                    '<div class="form-group">'+
-                        '<label for="course">Curso :</label>'+
-                        '<input id="course" class="form-control" type="text" name="course" required>'+
-                    '</div>'+
-                '</div>'+
-            '</div>'+
-            '<div class="row">'+
-                '<div class="col-md-6">'+
-                    '<div class="form-group">'+
-                        '<label for="hour_start">Inicio :</label>'+
-                        '<input id="hour_start" class="form-control" type="time" name="hour_start" required>'+
-                    '</div>'+
-                '</div>'+
-                '<div class="col-md-6">'+
-                    '<div class="form-group">'+
-                        '<label for="hour_end">Final :</label>'+
-                        '<input id="hour_end" class="form-control" type="time" name="hour_end" required>'+
-                    '</div>'+
-                '</div>'+
-            '</div>'+
-        '';
-        $('[data-form="form"] .modal-body').html(html);
-        getAsignature();
-        getBusiness();
+        var page = $(this).attr('href').split('page=')[1];
+        getPagination(page);
     });
+    function getPagination(page) {
+        route = '{{ route('list.cursos.pagination') }}';
+        console.log(route);
 
-
-    $(document).on('click','[data-edit="modal"]',function () {
-        $('#edit-modal').modal('show');
-        var id = $(this).attr('data-id'),
-            route = '{{ route('cursos.edit', ['curso' => '+id+'] ) }}';
-            route = route.replace('id', id),
-            html  =  '';
         $.ajax({
             method: 'GET',
             headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
             url: route,
             dataType: 'json',
-            data: {},
-
+            data: {page:page},
+            beforeSend: function()
+            {
+                $('[data-table="table"]').addClass('is-loading is-loading-lg');
+            },
         }).done(function (response) {
-            if (response.status == 200) {
-                html =''+
-                    '<div class="row">'+
-                        '<div class="col-md-12">'+
-                            '<div class="form-group">'+
-                                '<label for="bussiness_id">Empresas :</label>'+
-                                '<select class="form-control" name="bussiness_id" required>'+
-                                    '<option value="">Seleccione...</option>';
-                                    $.each(response.business, function (index, element) {
-                                        html+='<option value="'+element.business_id +'" '+(element.business_id ==response.cours.business_id ? 'selected' : '' ) +'>'+element.name+' </option>';
-                                    });
-                                html+='</select>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="row">'+
-                        '<div class="col-md-12">'+
-                            '<div class="form-group">'+
-                                '<input type="hidden" value="'+response.cours.cours_id+'" name="id">'+
-                                '<label for="asignature">Asignatura :</label>'+
-                                '<select class="form-control" name="asignature" id="asignature" required>'+
-                                    '<option value="">Seleccione...</option>';
-                                    $.each(response.asignature, function (index, element) {
-                                        html+='<option value="'+element.asignature_id+'" '+(element.asignature_id==response.cours.asignature_id ? 'selected' : '' ) +'>'+element.name+' ('+element.abbreviation+')</option>';
-                                    });
-                                html+='</select>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="row">'+
-                        '<div class="col-md-6">'+
-                            '<div class="form-group">'+
-                                '<label for="code">Codigo :</label>'+
-                                '<input id="code" class="form-control" type="text" name="code" value="'+response.cours.code+'" search="search" required>'+
-                            '</div>'+
-                        '</div>'+
-                        '<div class="col-md-6">'+
-                            '<div class="form-group">'+
-                                '<label for="date_start">Fecha :</label>'+
-                                '<input id="date_start" class="form-control" type="date" name="date_start" value="'+response.cours.date_start+'" required>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="row">'+
-                        '<div class="col-md-12">'+
-                            '<div class="form-group">'+
-                                '<label for="course">Curso :</label>'+
-                                '<input id="course" class="form-control" type="text" name="course" value="'+response.cours.course+'" required>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="row">'+
-                        '<div class="col-md-6">'+
-                            '<div class="form-group">'+
-                                '<label for="hour_start">Inicio :</label>'+
-                                '<input id="hour_start" class="form-control" type="time" name="hour_start" value="'+response.cours.hour_start+'" required>'+
-                            '</div>'+
-                        '</div>'+
-                        '<div class="col-md-6">'+
-                            '<div class="form-group">'+
-                                '<label for="hour_end">Final :</label>'+
-                                '<input id="hour_end" class="form-control" type="time" name="hour_end" value="'+response.cours.hour_end+'" required>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                '';
-                $('[data-form="form-edit"] .modal-body').html(html);
-
-            }else{
-                var placementFrom = 'top';
-                var placementAlign = 'center';
-                var state = 'danger';
-                var style = 'withicon';
-                var content = {};
-
-                content.message = 'Intentelo mas tarde o contacte con el area de informatica';
-                content.title = 'Error';
-                // if (style == "withicon") {
-                //     content.icon = 'fas fa-times';
-                // } else {
-                //     content.icon = 'none';
-                // }
-                content.icon = 'fas fa-times';
-                content.url = url+'hbgroupp_web';
-                content.target = '_blank';
-
-                $.notify(content,{
-                    type: state,
-                    placement: {
-                        from: placementFrom,
-                        align: placementAlign
-                    },
-                    time: 1000,
-                    delay: 0,
-                });
-
-                setTimeout(function(){
-                    $('[data-notify="dismiss"]').click();
-                }, 3000);
+            $('[data-table="table"]').removeClass('is-loading is-loading-lg');
+            if (response) {
+                $('[data-table="table"]').html(response);
             }
         }).fail(function () {
-            // alert("Error");
+            alert("Error");
         });
-    });
+    }
 
     $(document).on('click','[data-delete="modal"]',function () {
         var id = $(this).attr('data-id'),
@@ -375,59 +122,11 @@
             });
         });
     });
-
-    $(document).on('change','[search="code-search"]',function () {
-        var code = $(this).val(),
-            this_input = $(this),
-            route = '{{ route('get.cod.cours', ['code' => 'code'] ) }}';
-            route = route.replace('code', code);
-        $.ajax({
-            method: 'GET',
-            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
-            url: route,
-            dataType: 'json',
-            data: {},
-            beforeSend: function()
-            {
-            },
-        }).done(function (response) {
-            if (response.status == 200) {
-                this_input.val('');
-                swal("Informativo", "Este codigo ya se encuentra en uso", "warning")
-            }
-        }).fail(function () {
-            // alert("Error");
-        });
-
-
+    $(document).on('click','[data-location="href"]',function () {
+        location.href = $(this).attr('data-href');
     });
 
-    $(document).on('change','[search="search"]',function () {
-        var code = $(this).val(),
-            id = $('[data-form="form-edit"] [name="id"]').val(),
-            this_input = $(this),
-            route = '{{ route('get.cod.cours.id') }}';
 
-        $.ajax({
-            method: 'GET',
-            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
-            url: route,
-            dataType: 'json',
-            data: {id:id,code:code},
-            beforeSend: function()
-            {
-            },
-        }).done(function (response) {
-            if (response.status == 200) {
-                this_input.val('');
-                swal("Informativo", "Este codigo ya se encuentra en uso", "warning")
-            }
-        }).fail(function () {
-            // alert("Error");
-        });
-
-
-    });
 </script>
 
 @endsection
