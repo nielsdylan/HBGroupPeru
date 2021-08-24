@@ -265,7 +265,19 @@ class HomeController extends Controller
     public function token()
     {
         # code...
-        return 'e';
+        if (!empty($_GET['code']) || !empty($_GET['state']) ) {
+            return response()->json([
+                'code'=>$_GET['code'],
+                'state'=>$_GET['state']
+            ]);
+        }
+        /*if (!empty($_GET['tenant']) || !empty($_GET['tenant']) ) {
+            return response()->json([
+                'tenant'=>$_GET['tenant'],
+                'tenant'=>$_GET['tenant']
+            ]);
+        }*/
+        return 'error';
     }
     public function tokenLogout()
     {
