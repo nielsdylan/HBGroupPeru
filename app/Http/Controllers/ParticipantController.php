@@ -80,17 +80,8 @@ class ParticipantController extends Controller
     {
         $rand_telephone = uniqid();
         $rand_email = uniqid();
-        // $json = array(
-        //     'asignature_id'=>$request->asignature,
-        //     'cours_id'=>$request->course,
-        //     'rand_telephone'=>$rand_telephone,
-        //     'rand_email'=>$rand_email,
-        //     'send_telephone'=>$request->send_telephone == 1 ? $request->send_telephone : 0,
-        //     'send_email'=>$request->send_email== 1 ? $request->send_email : 0,
-        //     'response'=>false
-        // );
 
-        // $request->session()->put('participant',$json);
+
         $file = $request->file('file');
 
         $array = Excel::toArray(new UsersImport, $file);
@@ -100,6 +91,8 @@ class ParticipantController extends Controller
             if ($key!=0) {
                 if ($value[0]=='' || $value[0]==null) {
                     $success=false;
+                }else{
+
                 }
                 if ($value[1]=='' || $value[1]==null) {
                     $success=false;
@@ -116,10 +109,10 @@ class ParticipantController extends Controller
 
             }
         }
-
+        $participant_exclude_array=array();
         if ($success==true) {
             foreach ($array[0] as $key => $value) {
-
+                $exist_cours_participant = false;
                 if ($key!=0) {
                     $user = User::where('active',1)->where('dni',$value[0])->first();
                     if (!$user) {
@@ -181,22 +174,40 @@ class ParticipantController extends Controller
                             'send_telephone' => $request->send_telephone == 1 ? $request->send_telephone : 0
                         ]);
 
+                        $participan = new Participant();
+                        $participan->user_id = $user->id;
+                        $participan->create_by = session('hbgroup')['user_id'];
+                        $participan->save();
+
+                    }else{
+                        $participan = Participant::where('active',1)->where('user_id',$user->id)->first();
+                        $search_cours_participant = CoursParticipant::where('active',1)->where('cours_id',$request->course)->where('participant_id',$participan->participant_id)->first();
+                        if ($search_cours_participant) {
+                            $exist_cours_participant = true;
+                        }
+
                     }
 
-                    $participan = new Participant();
-                    $participan->user_id = $user->id;
-                    $participan->create_by = session('hbgroup')['user_id'];
-                    $participan->save();
+                    if ($exist_cours_participant == true) {
+                        array_push($participant_exclude_array,
+                            array(
+                                "dni"=>$value[0],
+                                "last_name"=>$value[1],
+                                "name"=>$value[2],
+                            )
+                        );
+                    }else{
+                        $cours = Cours::where('active',1)->where('cours_id',$request->course)->first();
 
-                    $cours = Cours::where('active',1)->where('cours_id',$request->course)->first();
+                        $cours_participant = new CoursParticipant();
+                        // $cours_participant->business_id     = $cours->business_id;
+                        $cours_participant->asignature_id   = $request->asignature;
+                        $cours_participant->participant_id  = $participan->participant_id;
+                        $cours_participant->cours_id        = $cours->cours_id ;
+                        $cours_participant->create_by       = session('hbgroup')['user_id'];
+                        $cours_participant->save();
+                    }
 
-                    $cours_participant = new CoursParticipant();
-                    $cours_participant->business_id     = $cours->business_id;
-                    $cours_participant->asignature_id   = $request->asignature;
-                    $cours_participant->participant_id  = $participan->participant_id;
-                    $cours_participant->cours_id        = $cours->cours_id ;
-                    $cours_participant->create_by       = session('hbgroup')['user_id'];
-                    $cours_participant->save();
 
                 }
             }
@@ -207,6 +218,7 @@ class ParticipantController extends Controller
             return response()->json([
                 'success'=>true,
                 'status'=>200,
+                'existen'=>$participant_exclude_array
             ]);
         }else{
             return response()->json([

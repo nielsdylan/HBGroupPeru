@@ -85,7 +85,7 @@
             </div>
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-none d-sm-none d-lg-block d-md-block">
                         <div class="d-flex align-items-center">
                             <div class="form-group">
                                 <select class="form-control" name="asignature_id" required>
@@ -97,7 +97,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control date datepicker" name="date">
+                                    <input type="text" class="form-control date datepicker" name="date" >
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="fa fa-calendar-check"></i>
@@ -114,9 +114,44 @@
                             </button>
                         </div>
                     </div>
+                    <div class="row d-block d-sm-block d-lg-none d-md-none">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <select class="form-control" name="asignature_id" required>
+                                    <option value="">Asignaturas...</option>
+                                    @foreach ($asignatures as $key=>$type )
+                                        <option value="{{$type->asignature_id  }}">{{$type->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control date datepicker movil" name="date" >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-calendar-check"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="name" placeholder="CODIGO/CURSO..." >
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <button class="btn btn-primary btn-round ml-auto" data-search="search-movil">
+                                <i class="fas fa-search"></i>
+                                Buscar
+                            </button>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-12 table-pagination">
+                            <div class="col-md-12 table-pagination table-responsive">
 
                             </div>
                         </div>
@@ -136,14 +171,38 @@
             var page = $(this).attr('href').split('page=')[1];
             getCoursPagination(page);
         });
+        $(document).on('change','[name="asignature_id"]',function () {
+            var asignature_id = $(this).val();
+            data.asignature_id  =   asignature_id;
+
+        });
+
+        $(document).on('change','[name="name"]',function () {
+            var name = $(this).val();
+            data.name           =   name;
+
+        });
+        // $(document).on('click','.input-date',function () {
+        //     var date = $('[name="date"]').val();
+        //     data.asignature_id  =   date;
+        //     console.log(data);
+        // });
+
+
         $(document).on('click','[data-search="search"]',function () {
 
             var asignature_id = $('[name="asignature_id"]').val(),
-                date = $('[name="date"]').val(),
-                name = $('[name="name"]').val();
-                data.asignature_id  =   asignature_id,
+                date = $('[name="date"]').val();
                 data.date           =   date;
-                data.name           =   name;
+                console.log(date);
+                getCoursPagination(1);
+        });
+        $(document).on('click','[data-search="search-movil"]',function () {
+
+            var asignature_id = $('[name="asignature_id"]').val(),
+                date = $('.movil[name="date"]').val();
+                data.date           =   date;
+                console.log(date);
                 getCoursPagination(1);
         });
         function getCoursPagination(page, asignature_id, date, name) {

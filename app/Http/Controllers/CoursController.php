@@ -20,8 +20,9 @@ class CoursController extends Controller
             ->join("asignatures", "asignatures.asignature_id", "=", "cours.asignature_id")
             ->select("cours.*", "asignatures.name as asignature_name", "asignatures.code as asignature_code")
             ->get();
+        $asignatures = Asignature::where('active',1)->get();
         $business = Business::where('active',1)->get();
-        return view('frontend.private.courses.index', compact('results','business'));
+        return view('frontend.private.courses.index', compact('results','business','asignatures'));
     }
     public function create()
     {
@@ -40,12 +41,14 @@ class CoursController extends Controller
     public function store(Request $request)
     {
         # code...
+        $date = explode('/',$request->date_start);
+        $date = $date[2].'-'.$date[1].'-'.$date[0];
         $cours = new Cours();
         $cours->asignature_id   = $request->asignature;
         $cours->code            = $request->code;
         $cours->course          = $request->course;
         $cours->user_id         = $request->teacher;
-        $cours->date_start      = date("Y-d-m", strtotime($request->date_start));
+        $cours->date_start      = $date;
         $cours->hour_start      = $request->hour_start;
         $cours->hour_end        = $request->hour_end;
         $cours->business_id        = $request->bussiness_id;
@@ -99,17 +102,20 @@ class CoursController extends Controller
     public function update(Request $request, Cours $curso)
     {
         // return $request->id;
+        $date = explode('/',$request->date_start);
+        $date = $date[2].'-'.$date[1].'-'.$date[0];
         Cours::where('active', 1)->where('cours_id', $curso->cours_id)
         ->update([
             'asignature_id' => $request->asignature,
             'code' => $request->code,
             'course' => $request->course,
             'user_id' => $request->teacher,
-            'date_start' => date("Y-d-m", strtotime($request->date_start)),
+            'date_start' => $date,
             'hour_start' => $request->hour_start,
             'hour_end' => $request->hour_end,
             'business_id' => $request->bussiness_id,
-            'update_by'=>session('hbgroup')['user_id']
+            'update_by'=>session('hbgroup')['user_id'],
+            'meeting_active' => 0,
         ]);
 
         return response()->json([
@@ -210,9 +216,23 @@ class CoursController extends Controller
                 ->join("asignatures", "asignatures.asignature_id", "=", "cours.asignature_id")
                 ->select("cours.*", "asignatures.name as asignature_name", "asignatures.code as asignature_code");
 
+            if (!empty($request->asignature_id)) {
+                $results = $results->where('cours.asignature_id','=',$request->asignature_id);
+            }
+            if (!empty($request->date)){
+                $date = explode('/',$request->date);
+                $date = $date[2].'-'.$date[1].'-'.$date[0];
+
+                $results = $results->where('cours.date_start','=',$date);
+            }
+            if (!empty($request->name)){
+                $results = $results->where('cours.course','like','%'.$request->name.'%')->orWhere('cours.code','like','%'.$request->name.'%');
+            }
 
             $results = $results->paginate(6);
-            return response()->json(view('frontend.private.courses.list_cours', compact('results'))->render());
+            $organizer = Organizer::where('active',1)->get();
+            $attendee = User::where('active',1)->where('email','like','%@hbgroup.pe%')->get();
+            return response()->json(view('frontend.private.courses.list_cours', compact('results','organizer','attendee'))->render());
         }
     }
 }

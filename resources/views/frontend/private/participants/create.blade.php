@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="dni">Nùmero de documento :</label>
+                                        <label for="dni">Número de documento :</label>
                                         <input  class="form-control" type="number" name="dni" data-search="hbgroup" data-codument="codument" data-disabled="disabled" required>
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                                         <label for="cell">Celular :</label>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <select id="document_type_id" class="form-control select2 my-select" data-document="select-type" name="prefixe_id" required>
+                                                <select id="document_type_id" class="form-control select2 my-select"  name="prefixe_id" required>
                                                     <option value="">Seleccione...</option>
                                                     @foreach ($prefixes as $key=>$type )
                                                         <option value="{{$type->prefixe_id }}"
@@ -383,7 +383,7 @@
                     delay: 2,
                 });
                 setTimeout(function(){
-                    location.href= {{ route('participantes.index') }}
+                    location.href=' {{ route('participantes.index') }}'
                 }, 3000);
                 console.log(response);
             }else{

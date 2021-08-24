@@ -1,96 +1,100 @@
 @extends('frontend.private')
 @section('title','HB Group Perú')
 @section('content')
-<div class="page-inner">
-    <div class="page-header">
-        <h4 class="page-title">Participantes</h4>
-        <ul class="breadcrumbs">
-            <li class="nav-home">
-                <a href="#">
-                    <i class="flaticon-home"></i>
-                </a>
-            </li>
-            <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-            </li>
-            <li class="nav-item">
-                <a href="#">Lista de participantes</a>
-            </li>
-        </ul>
-    </div>
+    <div class="page-inner">
+        <div class="page-header">
+            <h4 class="page-title">Participantes</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Lista de participantes</a>
+                </li>
+            </ul>
+        </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4 class="card-title">Participantes</h4>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Exportar la lista de los participantes" href="{{route('participant.excel.export')}}"><i class="fas fa-file-excel fon-z"></i></a>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="card-title">Participantes</h4>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a class="btn btn-light" data-toggle="tooltip" data-original-title="Exportar la lista de los participantes" href="{{route('participant.excel.export')}}"><i class="fas fa-file-excel fon-z"></i></a>
 
-                            {{-- <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('export.model.excel')}}"><i class="fas fa-file-import fon-z"></i></a>
+                                {{-- <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('export.model.excel')}}"><i class="fas fa-file-import fon-z"></i></a>
 
-                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fa-file-upload fon-z"></i></a> --}}
-                            <a class="btn btn-primary btn-round" href="{{route('participantes.create')}}"> <i class="fa fa-plus"></i> Nuevo participante</a>
+                                <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fa-file-upload fon-z"></i></a> --}}
+                                <a class="btn btn-primary btn-round" href="{{route('participantes.create')}}"> <i class="fa fa-plus"></i> Nuevo participante</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="add-row" class="display table table-striped table-hover" >
-                            <thead>
-                                <tr>
-                                    <td>DNI</td>
-                                    <td>APELLIDOS</td>
-                                    <td>NOMBRE</td>
-                                    {{-- <td>EMAIL</td>
-                                    <td>CELULAR</td>
-                                    <td>EMPRESA</td> --}}
-                                    <th style="width: 10%">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($participants)
-                                    @foreach ($participants as $key=>$item)
-                                        <tr>
-                                            <td>{{$item->dni}}</td>
-                                            <td>{{$item->last_name}}</td>
-                                            <td>{{$item->name}}</td>
-                                            {{-- <td>{{$item->email}}</td>
-                                            <td>{{$item->telephone}}</td>
-                                            <td>{{$item->name_business}}</td> --}}
-                                            <td>
-                                                <div class="form-button-action">
-                                                    <a data-toggle="tooltip" title="" class="btn btn-link btn-warning btn-lg" data-original-title="Asignar cursos al participante"  href="{{route('asignacion-cursos.index').'?DNI='.$item->dni}}">
-                                                        <i class="fas fa-project-diagram"></i>
-                                                    </a>
-                                                    <a data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Ver a {{$item->last_name}}"  href="{{route('participantes.show',$item->id)}}">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    <a type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar {{$item->last_name}}"  data-id="{{$item->participant_id  }}" href="{{route('participantes.edit', $item->id)}}">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    <a type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Eliminar {{$item->last_name}}" data-delete="modal" data-id="{{$item->id  }}">
-                                                        <i class="fa fa-times"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="add-row" class="display table table-striped table-hover" >
+                                <thead>
+                                    <tr>
+                                        <td>DNI</td>
+                                        <td>APELLIDOS</td>
+                                        <td>NOMBRE</td>
+                                        {{-- <td>EMAIL</td>
+                                        <td>CELULAR</td>
+                                        <td>EMPRESA</td> --}}
+                                        <th style="width: 10%">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if ($participants)
+                                        @foreach ($participants as $key=>$item)
+                                            <tr>
+                                                <td>{{$item->dni}}</td>
+                                                <td>{{$item->last_name}}</td>
+                                                <td>{{$item->name}}</td>
+                                                {{-- <td>{{$item->email}}</td>
+                                                <td>{{$item->telephone}}</td>
+                                                <td>{{$item->name_business}}</td> --}}
+                                                <td>
+                                                    <div class="form-button-action">
+                                                        <a data-toggle="tooltip" title="" class="btn btn-link btn-warning btn-lg" data-original-title="Asignar cursos al participante"  href="{{route('asignacion-cursos.index').'?DNI='.$item->dni}}">
+                                                            <i class="fas fa-project-diagram"></i>
+                                                        </a>
+                                                        <a data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Ver a {{$item->last_name}}"  href="{{route('participantes.show',$item->id)}}">
+                                                            <i class="fas fa-eye"></i>
+                                                        </a>
+                                                        <a type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar {{$item->last_name}}"  data-id="{{$item->participant_id  }}" href="{{route('participantes.edit', $item->id)}}">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                        <a type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Eliminar {{$item->last_name}}" data-delete="modal" data-id="{{$item->id  }}">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col-md-12" data-table="response">
 
-    <div class="row">
-        <div class="col-md-12">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
@@ -161,66 +165,10 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-{{-- <div class="modal fade" id="import-excel-participant" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header no-bd">
-                <h2 class="modal-title">
-                    <span class="fw-mediumbold">
-                    Importar lista de participantes</span>
 
-                </h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="{{route('participantes.store')}}" method="post" enctype="multipart/form-data" data-form="save-excel">
-                @csrf
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="asignature">Asignatura</label>
-                                <select class="form-control" name="asignature" select-cours="get-cours" data-select="get-course" required>
-                                    <option value="">Seleccione...</option>
-                                    @foreach ($asignatures as $item)
-                                        <option value="{{$item->asignature_id}}">{{$item->name}} ({{$item->abbreviation}})</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="course">Curso</label>
-                                <select class="form-control" name="course" data-course="get-course" required>
-                                    <option value="">Seleccione...</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="participant">Agregar lista de los participantes:</label>
-                                <input id="participant" class="form-control" type="file" name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer no-bd">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
-                </div>
-            </form>
-        </div>
     </div>
-</div> --}}
-{{-- @include('frontend.private.participants.create') --}}
-{{-- @include('frontend.private.participants.edit') --}}
+
+</div>
 <script>
     $(document).on('click','[data-action="participant-import"]',function (e) {
         e.preventDefault();
@@ -304,7 +252,7 @@
     $(document).on('submit','[data-form="save-excel"]',function (e) {
         e.preventDefault();
         var data = new FormData($(this)[0]),
-
+            html='',
             route = $(this).attr('action');
 
         $.ajax({
@@ -317,10 +265,13 @@
             data: data,
             beforeSend: function()
             {
-                $('[data-form="save-excel"] button[type="submit"]').addClass('is-loading')
+                $('[data-form="save-excel"] button[type="submit"]').addClass('is-loading');
+                $('[data-form="save-excel"] button[type="submit"]').attr('disabled','');
             },
         }).done(function (response) {
+            $('[data-table="response"]').html('');
             $('[data-form="save-excel"] button[type="submit"]').removeClass('is-loading');
+            $('[data-form="save-excel"] button[type="submit"]').removeAttr('disabled');
             if (response.status == 200) {
                 var placementFrom = 'top';
                 var placementAlign = 'right';
@@ -344,9 +295,35 @@
                     delay: 2,
                 });
                 setTimeout(function(){
-                    location.reload();
+                    // location.reload();
                 }, 3000);
-                console.log(response);
+
+                if (response.existen) {
+                    html = ''+
+                        '<div class="alert alert-warning animated fadeInDown btn-pulse" role="alert">'+
+                            '<div class="d-flex align-items-center">'+
+                                '<h3>'+
+                                    'Participantes ya inscritos con anticipación.'+
+                                '</h3>'+
+                                '<button class="btn btn-light btn-ms ml-auto close-alert"><i class="fa fa-times"></i></button>'+
+                            '</div>'+
+                            '<table class="table">'+
+                                '<tbody>';
+                                    $.each(response.existen, function (index, element) {
+                                        html+='<tr>'+
+                                            '<td>'+element.dni+'</td>'+
+                                            '<td>'+element.last_name+'</td>'+
+                                            '<td>'+element.name+'</td>'+
+                                        '</tr>';
+                                    });
+                                html+='</tbody>'+
+                            '</table>'+
+                        '</div>'+
+
+                    '';
+                    $('[data-table="response"]').html(html);
+                    console.log(response.existen);
+                }
             }else{
                 var placementFrom = 'top';
                 var placementAlign = 'center';
@@ -435,6 +412,9 @@
             });
         });
 
+    });
+    $(document).on('click','.close-alert',function () {
+        $('[data-table="response"]').html('');
     });
 </script>
 @endsection

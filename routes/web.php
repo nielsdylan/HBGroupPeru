@@ -154,4 +154,7 @@ Route::middleware(['hbgroup'])->group(function(){
 
     Route::resource('mis-cursos', MyCoursController::class );
     Route::get('mis-cursos-pagination',[MyCoursController::class, 'getPagination'] )->name('get.mis.cursos.pagination');
+
+    #ajax
+    Route::post('meetings/teams',[AjaxController::class, 'createMeetingTeams'] )->name('create.meeting');
 });
