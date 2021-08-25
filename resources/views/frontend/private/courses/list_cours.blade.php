@@ -10,7 +10,7 @@
                 <div class="info-user ml-3">
                     <div class="username">{{$item->course}} ({{$item->code}})</div>
                     <div class="status">{{$item->asignature_name}}</div>
-                    <div class="status">{{ date("m/d/Y", strtotime($item->date_start))}}</div>
+                    <div class="status">{{ date("d/m/Y", strtotime($item->date_start))}}</div>
                     <div class="status">{{$item->hour_start}} - {{$item->hour_end}} </div>
                 </div>
                 @if ($item->meeting_active == 1)

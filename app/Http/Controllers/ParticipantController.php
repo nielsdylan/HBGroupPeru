@@ -212,12 +212,15 @@ class ParticipantController extends Controller
                 }
             }
         }
-
-
+        $existen_status = 2;
+        if (count($participant_exclude_array)>0) {
+            $existen_status = 1;
+        }
         if ($success == true) {
             return response()->json([
                 'success'=>true,
                 'status'=>200,
+                'existen_status'=>$existen_status,
                 'existen'=>$participant_exclude_array
             ]);
         }else{

@@ -103,9 +103,9 @@
                             </div>
                             <div class="col-md-6 text-right">
 
-                                <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('export.model.excel')}}"><i class="fas fa-file-import fon-z"></i></a>
+                                <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('export.model.excel')}}"><i class="fas fa-cloud-download-alt fon-z"></i></a>
 
-                                <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fa-file-upload fon-z"></i></a>
+                                <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fa-cloud-upload-alt fon-z"></i></a>
                             </div>
                         </div>
                     </div>
@@ -295,35 +295,35 @@
                     delay: 2,
                 });
                 setTimeout(function(){
-                    // location.reload();
+                    location.reload();
                 }, 3000);
 
-                if (response.existen) {
-                    html = ''+
-                        '<div class="alert alert-warning animated fadeInDown btn-pulse" role="alert">'+
-                            '<div class="d-flex align-items-center">'+
-                                '<h3>'+
-                                    'Participantes ya inscritos con anticipación.'+
-                                '</h3>'+
-                                '<button class="btn btn-light btn-ms ml-auto close-alert"><i class="fa fa-times"></i></button>'+
-                            '</div>'+
-                            '<table class="table">'+
-                                '<tbody>';
-                                    $.each(response.existen, function (index, element) {
-                                        html+='<tr>'+
-                                            '<td>'+element.dni+'</td>'+
-                                            '<td>'+element.last_name+'</td>'+
-                                            '<td>'+element.name+'</td>'+
-                                        '</tr>';
-                                    });
-                                html+='</tbody>'+
-                            '</table>'+
-                        '</div>'+
+                // if (response.existen_status == 1) {
+                //     html = ''+
+                //         '<div class="alert alert-warning animated fadeInDown btn-pulse" role="alert">'+
+                //             '<div class="d-flex align-items-center">'+
+                //                 '<h3>'+
+                //                     'Participantes ya inscritos con anticipación.'+
+                //                 '</h3>'+
+                //                 '<button class="btn btn-light btn-ms ml-auto close-alert"><i class="fa fa-times"></i></button>'+
+                //             '</div>'+
+                //             '<table class="table">'+
+                //                 '<tbody>';
+                //                     $.each(response.existen, function (index, element) {
+                //                         html+='<tr>'+
+                //                             '<td>'+element.dni+'</td>'+
+                //                             '<td>'+element.last_name+'</td>'+
+                //                             '<td>'+element.name+'</td>'+
+                //                         '</tr>';
+                //                     });
+                //                 html+='</tbody>'+
+                //             '</table>'+
+                //         '</div>'+
 
-                    '';
-                    $('[data-table="response"]').html(html);
-                    console.log(response.existen);
-                }
+                //     '';
+                //     $('[data-table="response"]').html(html);
+                //     console.log(response.existen);
+                // }
             }else{
                 var placementFrom = 'top';
                 var placementAlign = 'center';

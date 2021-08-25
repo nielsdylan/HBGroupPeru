@@ -6,6 +6,7 @@ use App\Models\Cours;
 use App\Models\CoursParticipant;
 use App\Models\Event;
 use App\Models\Meeting;
+use App\Models\MeetingsAssistant;
 use App\Models\Organizer;
 use App\Models\Participant;
 use App\Models\PensumAsignature;
@@ -191,6 +192,13 @@ class AjaxController extends Controller
             'update_by'     =>session('hbgroup')['user_id'],
             'delete_by'     =>session('hbgroup')['user_id']
         ]);
+        MeetingsAssistant::where('cours_id', $request->cours_id)
+        ->update([
+            'active'        => 0,
+            'deleted_at'    =>$hoy,
+            'update_by'     =>session('hbgroup')['user_id'],
+            'delete_by'     =>session('hbgroup')['user_id']
+        ]);
         $meeting = new Meeting();
         $meeting->organizer_id  = $request->organizer;
         $meeting->cours_id      = $request->cours_id;
@@ -198,6 +206,17 @@ class AjaxController extends Controller
         $meeting->join_meeting  = $join_meeting->onlineMeeting->joinUrl;
         $meeting->create_by     = session('hbgroup')['user_id'];
         $meeting->save();
+
+
+        foreach ($request->attendee as $key => $value) {
+            $attendee = User::where('active',1)->where('id',$value)->first();
+            $meetings_assistants = new MeetingsAssistant();
+            $meetings_assistants->user_id  = $attendee->id;
+            $meetings_assistants->meeting_id      = $meeting->meeting_id ;
+            $meetings_assistants->cours_id  = $request->cours_id;
+            $meetings_assistants->create_by     = session('hbgroup')['user_id'];
+            $meetings_assistants->save();
+        }
 
         return response()->json([
             'status'=>200,

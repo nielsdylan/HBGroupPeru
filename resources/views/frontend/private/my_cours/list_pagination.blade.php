@@ -19,10 +19,14 @@
             <div class="float-right pt-1">
                 <div><small class="text-muted">Fecha: {{date('d/m/Y', strtotime($item->date_start))}} </small></div>
                 <div><small class="text-muted">Hora: {{$item->hour_start}} - {{$item->hour_end}}</small></div>
-                <a href="{{$item->join_meeting}}" target="_blank" class="btn btn-secondary btn-round btn-sm btn-pulse mt-1">
-                    <i class="fas fa-chalkboard"></i>
-                    UNIRSE A LA REUNION
-                </a>
+
+                @if ($item->meeting_active)
+                    <a href="{{$item->join_meeting}}" target="_blank" class="btn btn-secondary btn-round btn-sm btn-pulse mt-1">
+                        <i class="fas fa-chalkboard"></i>
+                        UNIRSE A LA REUNION
+                    </a>
+                @endif
+
             </div>
         </div>
         <div class="separator-dashed"></div>
