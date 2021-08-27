@@ -162,4 +162,23 @@ class UsersController extends Controller
         curl_close($curl);
         return $response;
     }
+    public function searchDNIGroup(Request $request)
+    {
+
+        $user = User::where('active',1)->where('dni',$request->dni)->where('group_id',$request->group_id)->first();
+        $group = Group::where('active',1)->where('group_id',$request->group_id)->first();
+        if ($user) {
+            return response()->json([
+                'status'=>200,
+                'type'=>'warning',
+                'message'=>'Este usuario ya tine una cuenta como '.$group->name.' asignele otro rol.',
+                'title'=>'Informativo'
+            ]);
+        }else{
+            return response()->json([
+                'status'=>405,
+            ]);
+        }
+
+    }
 }

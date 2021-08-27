@@ -52,7 +52,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="group">Grupos</label>
-                                        <select id="group" class="form-control" name="group_id" required>
+                                        <select id="group" class="form-control" name="group_id" data-action="search-dni-group" required>
                                             <option value="">Seleccione...</option>
                                             @if ($groups)
                                               @foreach ($groups as $key=>$item )
@@ -65,7 +65,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input id="email" class="form-control email" type="email" name="email"  required>
+                                        <input id="email" class="form-control" type="email" name="email"  required>
                                     </div>
                                 </div>
                             </div>
@@ -86,10 +86,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">DNI</label>
-                                        <input id="dni" class="form-control" type="number" name="dni" required>
+                                        <input id="dni" class="form-control" type="number" name="dni" data-action="search-dni-group" required>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -126,7 +125,6 @@
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
@@ -179,6 +177,33 @@
         }
 
 
+    });
+    $(document).on('change','[data-action="search-dni-group"]',function () {
+        var group_id = $('[name="group_id"]').val(),
+            dni = $('[name="dni"]').val(),
+            route = '{{ route('user.dni.group') }}';
+        if (group_id && dni) {
+            data = {
+                group_id:group_id,
+                dni:dni
+            }
+            $.ajax({
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: route,
+                dataType: 'json',
+                data: data,
+            }).done(function (response) {
+                if (response.status==200) {
+                    swal(response.title, response.message, response.type);
+                    $('[name="group_id"] option').removeAttr("selected");
+                    $('[name="group_id"] option[value=""]').attr("selected",true);
+                }
+
+            }).fail(function () {
+                console.log('error');
+            });
+        }
     });
 
 </script>

@@ -29,6 +29,17 @@
 			<h3 class="text-center">Inicia session</h3>
             <form action="" method="POST" data-login="session-start">
                 <input type="hidden" name="token" value="{{ csrf_token() }}">
+                <div class="form-group">
+                    <label for="group">Tipo de usuario</label>
+                    <select id="group" class="form-control" name="group_id" data-action="search-dni-group" required>
+                        <option value="">Seleccione...</option>
+                        @if ($groups)
+                          @foreach ($groups as $key=>$item )
+                                <option value="{{$item->group_id}}" {{ ($item->group_id==4?'selected':'') }} >{{$item->name}}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
                 <div class="login-form">
                     <div class="form-group">
                         <label for="username" class="placeholder"><b>Correo</b></label>

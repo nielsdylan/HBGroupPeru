@@ -85,6 +85,7 @@ Route::group(['middleware'=>'isLogged'],function(){
     Route::put('user/edit/{user}',[UsersController::class, 'upload'] )->name('user.upload');
     Route::post('user/eliminar',[UsersController::class, 'delete'] )->name('user.delete');
     Route::post('user/buscar',[UsersController::class, 'search'] )->name('user.search');
+    Route::post('user/dni-group',[UsersController::class, 'searchDNIGroup'] )->name('user.dni.group');
 
     Route::get('configuracion',[SettingController::class, 'setting'] )->name('setting');
     Route::post('configuracion',[SettingController::class, 'save'] )->name('setting.save');

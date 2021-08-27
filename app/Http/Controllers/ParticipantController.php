@@ -375,7 +375,7 @@ class ParticipantController extends Controller
 
         $rand_telephone = uniqid();
         $rand_email = uniqid();
-        $user = User::where('active',1)->where('dni',$request->dni)->first();
+        $user = User::where('active',1)->where('dni',$request->dni)->where('group_id',4)->first();
         $text='';
         $message_email_1='El proposito de este mensaje es de confirmar su correo electronico, el mismo mensaje se le envio a su número telefonico con el mismo proposito.';
         $message_email_2='Por favor confirmar ambos medios de comunicacion para poder ingresar al curso gracias por su comprención.';

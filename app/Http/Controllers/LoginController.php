@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -58,18 +59,21 @@ class LoginController extends Controller
     }
     public function login()
     {
-        return view('frontend.login');
+        $groups = Group::where('active', 1)
+                    ->get();
+        return view('frontend.login', compact('groups'));
     }
     public function sessionStart(Request $request)
     {
         // $user = User::where('email', $request->username)
         //         ->where('password', sha1($request->password))
         //         ->first();
-                $user = User::where('users.email', $request->username)->orWhere('users.dni','=',$request->username)->where('users.active',1)
-                ->where('password', sha1($request->password))
-                ->join("groups", "groups.group_id", "=", "users.group_id")
-                ->select("groups.name as group", "users.*")
-                ->first();
+        $user = User::where('users.email', $request->username)->orWhere('users.dni','=',$request->username)->where('users.active',1)
+        ->where('users.group_id',$request->group_id)
+        ->where('password', sha1($request->password))
+        ->join("groups", "groups.group_id", "=", "users.group_id")
+        ->select("groups.name as group", "users.*")
+        ->first();
         if ($user) {
             $json_user = array(
                 'user_id'=>$user->id,
