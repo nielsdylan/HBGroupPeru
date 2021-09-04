@@ -9,6 +9,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CoursController;
 use App\Http\Controllers\CoursParticipantController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ExceltController;
 use App\Http\Controllers\GroupController;
 use Illuminate\Support\Facades\Route;
@@ -158,4 +159,7 @@ Route::middleware(['hbgroup'])->group(function(){
 
     #ajax
     Route::post('meetings/teams',[AjaxController::class, 'createMeetingTeams'] )->name('create.meeting');
+
+    #email
+    Route::resource('email',EmailController::class );
 });

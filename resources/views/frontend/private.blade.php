@@ -60,5 +60,10 @@
     $('#tagsinput').tagsinput({
         tagClass: 'badge-info'
     });
+    $('#editor').summernote({
+        fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+        tabsize: 2,
+        height: 300
+    });
 </script>
 </html>

@@ -9,7 +9,7 @@
 
 <!-- jQuery Scrollbar -->
 <script src="{{asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
-
+<script src="{{asset('assets/js/plugin/summernote/summernote-bs4.min.js')}}"></script>
 <!-- Moment JS -->
 <script src="{{asset('assets/js/plugin/moment/moment.min.js')}}"></script>
 

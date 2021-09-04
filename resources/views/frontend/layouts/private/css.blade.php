@@ -12,11 +12,12 @@
 <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
 {{-- <link rel="stylesheet" href="{{asset('assets/css/azzara.css')}}"> --}}
 <link rel="stylesheet" href="{{asset('assets/css/azzara_2.min.css')}}">
+<!-- CSS Just for demo purpose, don't include it in your project -->
+<link rel="stylesheet" href="{{asset('assets/css/demo.css')}}">
+
 <link href="{{asset('assets/styles.css')}}" rel="stylesheet" />
 <link href="{{asset('assets/prism.css')}}" rel="stylesheet" />
 
-<!-- CSS Just for demo purpose, don't include it in your project -->
-<link rel="stylesheet" href="{{asset('assets/css/demo.css')}}">
 {{-- my css --}}
 <link rel="stylesheet" href="{{asset('assets/js/plugin/sweetAlert2/dist/sweetalert.css')}}">
 <link rel="stylesheet" href="{{asset('assets/js/plugin/fancybox_backend/jquery.fancybox.min.css')}}">
