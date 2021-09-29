@@ -71,18 +71,42 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item {{ request()->routeIs('index') ? 'active' : '' }}">
-                    <a class="nav-link text-white" href="{{ url('/') }}">INICIO <span class="sr-only">(current)</span></a>
+                    <a class="nav-link hb-active text-white" href="{{ url('/') }}">INICIO <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('us') ? 'active' : '' }}">
-                    <a class="nav-link text-white" href="{{ url('/nosotros') }}">NOSOTROS</a>
+                    <a class="nav-link hb-active text-white" href="{{ url('/nosotros') }}">NOSOTROS</a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('services') ? 'active' : '' }}">
-                    <a class="nav-link text-white" href="{{ url('/servicios') }}">SERVICIOS</a>
+                    <a class="nav-link hb-active text-white" href="{{ url('/servicios') }}">SERVICIOS</a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('contact') ? 'active' : '' }}">
-                    <a class="nav-link text-white" href="{{ url('/contacto') }}">CONTACTO</a>
+                    <a class="nav-link hb-active text-white" href="{{ url('/contacto') }}">CONTACTO</a>
+                </li>
+                <li class="nav-item @yield('active_menu') d-none d-sm-none d-lg-block d-md-block">
+                    <a class="nav-link hb-active text-white " href="#">MÁS OPCIONES</a>
+                    <ul >
+                        <li>
+                            <a class="nav-link text-white" href="{{route('certificate.view')}}">CERTIFICADOS</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item @yield('active_menu') d-block d-sm-block d-lg-none d-md-none">
+                    <a class="nav-link text-white" data-toggle="collapse" href="#option" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        MÁS OPCIONES
+                    </a>
+                    <div class="collapse" id="option">
+                        <div class="card card-body hb-bg-blue p-0">
+                            <ul class="hb-list-block">
+                                <li><a class="nav-link text-white " href="{{route('certificate.view')}}">CERTIFICADOS</a></li>
+                                <li><a class="nav-link text-white " href="{{route('certificate.view')}}">CERTIFICADOS</a></li>
+                                <li><a class="nav-link text-white " href="{{route('certificate.view')}}">CERTIFICADOS</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+

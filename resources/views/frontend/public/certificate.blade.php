@@ -1,5 +1,6 @@
 @extends('frontend.public')
 @section('title','HB Group Perú')
+@section('active_menu','active')
 @section('content')
     <section id="certificate-section">
         <div class="container">
