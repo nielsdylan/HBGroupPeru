@@ -162,4 +162,6 @@ Route::middleware(['hbgroup'])->group(function(){
 
     #email
     Route::resource('email',EmailController::class );
+    Route::get('inbox/outlook',[EmailController::class, 'inboxOutlook'] )->name('inbox.outlook');
+    Route::get('inbox/meil/content',[EmailController::class, 'mailConten'] )->name('inbox.mail.content');
 });

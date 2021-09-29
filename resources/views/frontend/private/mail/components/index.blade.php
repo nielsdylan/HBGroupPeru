@@ -2,7 +2,7 @@
 @section('title','HB Group Perú')
 @section('mail_content')
     <div class="inbox-head">
-        <h3>Inbox</h3>
+        <h3>Bandeja de entrada</h3>
         <form action="#" class="ml-auto">
             <div class="input-group">
                 <input type="text" placeholder="Search Email" class="form-control">
@@ -14,8 +14,8 @@
             </div>
         </form>
     </div>
-    <div class="inbox-body">
-        <div class="mail-option">
+    <div class="inbox-body inbox-outlook">
+        {{-- <div class="mail-option">
             <div class="email-filters-left">
                 <div class="chk-all">
                     <div class="btn-group">
@@ -35,7 +35,7 @@
                 <div class="btn-group">
                     <button type="button" class="btn btn-option">Archive</button>
                     <button type="button" class="btn btn-option">Span</button>
-                    <button type="button" class="btn btn-option">Delete</button>
+                    <button type="button" class="btn btn-option" data-action="refresh">Delete</button>
                 </div>
                 <div class="btn-group">
                     <button data-toggle="dropdown" type="button" class="btn btn-option dropdown-toggle" aria-expanded="false">Order by </button>
@@ -51,10 +51,10 @@
                     <button type="button" class="btn btn-option"><i class="fa fa-angle-right"></i></button>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
-        <div class="email-list">
-            <div class="email-list-item unread">
+        {{-- <div class="email-list "> --}}
+            {{-- <div class="email-list-item unread">
                 <div class="email-list-actions">
                     <div class="d-flex">
                         <label class="custom-control custom-checkbox">
@@ -162,7 +162,45 @@
                 <div class="email-list-detail"><span class="date float-right">12 May</span><span class="from">Kristopher Donny</span>
                     <p class="msg">Hello Friend, How are you?</p>
                 </div>
-            </div>
-        </div>
+            </div> --}}
+        {{-- </div> --}}
     </div>
+    <script>
+        $(document).ready(function () {
+            inboxOutlook();
+        });
+        function inboxOutlook() {
+
+
+            route = '{{ route('inbox.outlook') }}';
+            $.ajax({
+                method: 'GET',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: route,
+                dataType: 'json',
+                data: {},
+                beforeSend: function()
+                {
+                    $('.inbox-outlook').addClass('is-loading is-loading-lg');
+                },
+            }).done(function (response) {
+                $('.inbox-outlook').removeClass('is-loading is-loading-lg');
+                $('.inbox-outlook').html(response);
+            }).fail(function () {
+                alert("Error");
+            });
+
+
+        }
+        $(document).on('click','[data-action="refresh"]',function () {
+            inboxOutlook();
+        });
+        $(document).on('click','[data-click="select-mail"]',function () {
+            var mail_id = $(this).parents('div.email-list-item').attr('data-id'),
+            route = '{{ route('email.show', ['email' => 'mail_id'] ) }}',
+            route = route.replace('mail_id', mail_id);
+
+            location.href=route;
+        });
+    </script>
 @endsection
