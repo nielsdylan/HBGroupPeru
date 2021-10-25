@@ -1,3 +1,100 @@
+<div class="chatbox d-none d-sm-none d-lg-block d-md-block" data-close="chat-bot">
+    <div class="row display-none-item">
+        <div class="col-md-12">
+            <div class="chat-header">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src='{{asset('uploads/public/img-Alexa.png')}}' class='img-alexa mt-2 ml-2'/>
+                    </div>
+                    <div class="col-md-7 text-left pt-2">
+                        <h2>Alexa</h2>
+                        <span class="text-font-asisten">Asistente de HB Group Perú</span>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-link pl-2" data-action="close-chat-bot"><i class="fa fa-times text-white"></i> </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row display-none-item">
+        <div class="col-md-12">
+            <div class="body chat-body" id="chatbody">
+                <div class="ms-alexa">
+                    <img src='{{asset('uploads/public/img-Alexa.png')}}' class='img-alexa-chat '/>
+                    <div class="alexa">
+                        Hola mi nombre es Alexa, ¿Cuál es su consulta?
+                    </div>
+                </div>
+                <div class="scroller"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row display-none-item">
+        <div class="col-md-12">
+            <div class="chat-footer">
+                <form class="chat" data-action="chat-box" method="post" action="{{route('msg.send')}}" autocomplete="off">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control input-chat-bot" placeholder="Escriba..." name="chat" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-light btn-chat-bot" type="submit" ><i class="far fa-paper-plane text-dark"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="chatbox-movil d-block d-sm-block d-lg-none d-md-none" data-close="chat-bot-movil">
+
+    <div class="chat-header display-none-item mb-3">
+        <div class="d-flex flex-row bd-highlight">
+            <div class="bd-highlight">
+                <img src='{{asset('uploads/public/img-Alexa.png')}}' class='img-alexa-movil mt-1'/>
+            </div>
+            <div class="p-2 bd-highlight">
+                <h5>Alexa</h5>
+                <span class="text-font-asisten-movil">Asistente de HB Group Perú</span>
+            </div>
+            <button class="btn btn-link pl-2 mb-auto " data-action="close-chat-bot"><i class="fa fa-times text-white"></i> </button>
+        </div>
+
+
+        {{-- <div class="p-2 bd-highlight"><button class="btn btn-link pl-2"><i class="fa fa-times text-white"></i> </button></div> --}}
+    </div>
+
+
+    <div class="body chat-body-movil display-none-item" id="chatbody">
+        <div class="ms-alexa">
+            <img src='{{asset('uploads/public/img-Alexa.png')}}' class='img-alexa-chat '/>
+            <div class="alexa">
+                Hola mi nombre es Alexa, ¿Cuál es su consulta?
+            </div>
+        </div>
+        <div class="scroller-movil"></div>
+    </div>
+    <div class="chat-footer display-none-item">
+        <form class="chat" data-action="chat-box-movil" method="post" action="{{route('msg.send')}}" autocomplete="off">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control input-chat-bot" placeholder="Escriba..." name="chat" required>
+                <div class="input-group-append">
+                <button class="btn btn-outline-light btn-chat-bot" type="submit" ><i class="far fa-paper-plane text-dark"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+</div>
+
+
+<a href="#" class="img-bot" data-action="open-chat">
+    <img src="{{asset('uploads/public/iconBOT.png')}}" class="btn-hb-bot hb-bot-hover">
+    <div class="btn-hb-msg-bot display-none-item">Hola, ¿Te puedo ayudar en algo?</div>
+</a>
 @if ($configurations->whatsapp)<a href="https://wa.me/+51{{ $configurations->whatsapp}}?text=Mi consulta es..." target="_blank" id="whatsapp-floot" class="btn-whatsapp-link"><i class="fab fa-whatsapp"></i></a>@endif
 <a href="#" id="back-to-top" class="btn btn-lg btn-back-top"><i class="fa fa-angle-up"></i></a>
 <section id="footer">

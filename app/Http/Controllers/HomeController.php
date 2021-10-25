@@ -10,6 +10,8 @@ use App\Models\Configuration;
 use App\Models\Customer;
 use App\Models\Event;
 use App\Models\Participant;
+use App\Models\Question;
+use App\Models\QuestionsResponse;
 use App\Models\Slider;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -282,5 +284,37 @@ class HomeController extends Controller
     public function tokenLogout()
     {
         return 'logout';
+    }
+    public function msgSend(Request $request)
+    {
+        $msg = $request->chat;
+        $question = Question::where('description',$msg)->first();
+        // $question_response = Question::where('description',$msg)->first();
+        $img_chat = asset('uploads/public/img-Alexa.png');
+        $results = QuestionsResponse::where('questions_responses.active',1)->where('responses.active',1)->where('questions.active',1)->where('questions.description',$msg)
+            ->join("questions", "questions.question_id", "=", "questions_responses.question_id")
+            ->join("responses", "responses.response_id", "=", "questions_responses.response_id")
+            ->select("responses.*", "questions_responses.*")
+            ->first();
+
+        if (isset($msg)) {
+
+            $msg = strtolower($msg);
+
+            return response()->json([
+                'success'=>true,
+                'status'=>200,
+                'response_msg'=>$results,
+                'img_chat'=>$img_chat
+            ]);
+        }else{
+            return response()->json([
+                'success'=>false,
+                'status'=>404,
+                'response_msg'=>$results
+            ]);
+        }
+
+
     }
 }

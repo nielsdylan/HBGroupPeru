@@ -62,7 +62,8 @@ Route::post('certificados-list',  [HomeController::class, 'certificateList'     
 Route::get('certificadoPDF/{number}',  [HomeController::class, 'certificadoPDF'        ] )->name('certificado.pdf');
 
 Route::get('pdf',  [HomeController::class, 'viewPDF'        ] )->name('view.pdf');
-
+//chatbot
+Route::post('msg/send',  [HomeController::class, 'msgSend'        ] )->name('msg.send');
 // ruta de autenticacion
 Route::get('autenticacion',  [HomeController::class, 'autentication'   ] )->name('autentication');
 Route::get('helper',  [HomeController::class, 'helper'   ] )->name('helper');

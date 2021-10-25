@@ -41,6 +41,7 @@
 {{-- <body> --}}
 @extends('frontend.public')
 @section('title','HB Group Perú')
+@section('active_menu','active')
 @section('content')
 {{-- <link href="{{asset('assets/calendar/css/fullcalendar.css')}}" rel='stylesheet' />
 <link href="{{asset('assets/css/calendar.css')}}" rel='stylesheet' /> --}}

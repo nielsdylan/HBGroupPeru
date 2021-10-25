@@ -33,6 +33,13 @@ $(document).ready(function(){
     }
     fancybox();
     owlCarousel();
+    // imgBot();
+
+    setTimeout(function() {
+        $("a.img-bot div").removeClass("display-none-item");
+        $("a.img-bot div").removeClass("animated fadeOut");
+        $("a.img-bot div").addClass("animated slideInRight");
+    }, 1000);
 });
 function owlCarousel() {
     var owl = $('.slider_card');
@@ -140,3 +147,155 @@ function fancybox() {
         autoSize: false,
     });
 }
+// $("a.img-bot").hover(function() {
+//         $("a.img-bot div").removeClass("display-none-item");
+//         $("a.img-bot div").removeClass("animated fadeOut");
+//         $("a.img-bot div").addClass("animated slideInRight");
+//     }, function() {
+//         $("a.img-bot div").removeClass("animated slideInRight");
+//         $("a.img-bot div").addClass("animated fadeOut");
+
+//         setTimeout(function() {
+//             $("a.img-bot div").addClass("display-none-item");
+//         }, 500);
+//     }
+// )
+
+// function imgBot() {
+//     $("a.img-bot").mouseover(function(){
+//         $("a.img-bot div").removeClass("display-none-item");
+//         $("a.img-bot div").removeClass("animated fadeOut");
+//         $("a.img-bot div").addClass("animated slideInRight");
+//     });
+
+//     $("a.img-bot").mouseout(function(){
+//         $("a.img-bot div").removeClass("animated slideInRight");
+//         $("a.img-bot div").addClass("animated fadeOut");
+//     });
+// }
+
+$(document).on('submit','[data-action="chat-box"]',function (e) {
+    e.preventDefault();
+    var msg = $('[data-action="chat-box"] input[name="chat"]').val(),
+        data = $(this).serialize(),
+        route   = $(this).attr('action'),
+        html = '';
+
+    console.log($('[data-action="chat-box"] input[name="chat"]').val());
+    html = ''+
+        '<div class="me-msg">'+
+            ''+msg+''+
+        '</div>'+
+    '';
+    $('.scroller').append(html);
+    $('[data-action="chat-box"] [name="chat"]').val('');
+
+    $.ajax({
+        method: 'POST',
+        headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+        url: route,
+        dataType: 'json',
+        data: data,
+        beforeSend: function()
+        {
+
+        },
+
+    }).done(function (response) {
+        htm = ''+
+            '<div class="ms-alexa">'+
+                '<img src="'+response.img_chat+'" class="img-alexa-chat"/>'+
+                '<div class="alexa">'+
+                    ''+response.response_msg.description+''+
+                '</div>'+
+            '</div>'
+        '';
+        $('.scroller').append(htm);
+        console.log(response);
+
+        // setTimeout(function(){
+        //     $('[data-notify="dismiss"]').click();
+        // }, 3000);
+
+    }).fail(function () {
+        // alert("Error");
+    });
+});
+
+
+$(document).on('submit','[data-action="chat-box-movil"]',function (e) {
+    e.preventDefault();
+    var msg = $('[data-action="chat-box-movil"] input[name="chat"]').val(),
+        data = $(this).serialize(),
+        route   = $(this).attr('action'),
+        html = '';
+
+    console.log(msg);
+    html = ''+
+        '<div class="me-msg">'+
+            ''+msg+''+
+        '</div>'+
+    '';
+    $('.scroller-movil').append(html);
+    $('[data-action="chat-box-movil"] [name="chat"]').val('');
+
+    $.ajax({
+        method: 'POST',
+        headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+        url: route,
+        dataType: 'json',
+        data: data,
+        beforeSend: function()
+        {
+
+        },
+
+    }).done(function (response) {
+        htm = ''+
+            '<div class="ms-alexa">'+
+                '<img src="'+response.img_chat+'" class="img-alexa-chat"/>'+
+                '<div class="alexa">'+
+                    ''+response.response_msg.description+''+
+                '</div>'+
+            '</div>'
+        '';
+        $('.scroller-movil').append(htm);
+        console.log(response);
+
+        // setTimeout(function(){
+        //     $('[data-notify="dismiss"]').click();
+        // }, 3000);
+
+    }).fail(function () {
+        // alert("Error");
+    });
+});
+$(document).on('click','[data-action="close-chat-bot"]',function () {
+    $('[data-close="chat-bot"] .row').addClass('display-none-item');
+
+    $('[data-close="chat-bot-movil"] .chat-header').addClass('display-none-item');
+    $('[data-close="chat-bot-movil"] .chat-body-movil').addClass('display-none-item');
+    $('[data-close="chat-bot-movil"] .chat-footer').addClass('display-none-item');
+
+    setTimeout(function() {
+        $("a.img-bot div").removeClass("display-none-item");
+        $("a.img-bot div").removeClass("animated fadeOut");
+        $("a.img-bot div").addClass("animated slideInRight");
+    }, 1000);
+});
+$(document).on('click','[data-action="open-chat"]',function (e) {
+    e.preventDefault();
+    $('[data-close="chat-bot"] .row').removeClass('display-none-item');
+
+    $('[data-close="chat-bot-movil"] .chat-header').removeClass('display-none-item');
+    $('[data-close="chat-bot-movil"] .chat-body-movil').removeClass('display-none-item');
+    $('[data-close="chat-bot-movil"] .chat-footer').removeClass('display-none-item');
+
+    $("a.img-bot div").removeClass("animated slideInRight");
+    $("a.img-bot div").addClass("animated fadeOut");
+
+    setTimeout(function() {
+        $("a.img-bot div").addClass("display-none-item");
+    }, 500);
+
+});

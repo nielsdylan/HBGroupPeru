@@ -88,6 +88,9 @@
                         <li>
                             <a class="nav-link text-white" href="{{route('certificate.view')}}">CERTIFICADOS</a>
                         </li>
+                        <li>
+                            <a class="nav-link text-white" href="{{route('calendar.program')}}">CALENDARIO</a>
+                        </li>
                     </ul>
                 </li>
 
@@ -99,8 +102,8 @@
                         <div class="card card-body hb-bg-blue p-0">
                             <ul class="hb-list-block">
                                 <li><a class="nav-link text-white " href="{{route('certificate.view')}}">CERTIFICADOS</a></li>
-                                <li><a class="nav-link text-white " href="{{route('certificate.view')}}">CERTIFICADOS</a></li>
-                                <li><a class="nav-link text-white " href="{{route('certificate.view')}}">CERTIFICADOS</a></li>
+                                <li><a class="nav-link text-white " href="{{route('calendar.program')}}">CALENDARIO</a></li>
+
                             </ul>
                         </div>
                     </div>

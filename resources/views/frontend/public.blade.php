@@ -11,7 +11,7 @@
 </head>
 <body>
     {{-- header --}}
-
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
     @include('frontend.layouts.public.header')
     @include('frontend.layouts.public.menu')
     {{-- nav --}}
