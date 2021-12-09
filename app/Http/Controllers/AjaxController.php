@@ -68,7 +68,7 @@ class AjaxController extends Controller
 
         if ($request->ajax()) {
 
-            $results = Cours::where('cours.active',1)->where('users.group_id',5)
+            $results = Cours::where('cours.active',1)
                 ->join('users', 'cours.user_id', '=', 'users.id')
                 ->select('cours.*', 'users.name as teacher_name', 'users.last_name as teacher_lastname');
 
@@ -93,7 +93,7 @@ class AjaxController extends Controller
     public function getCount(Request $request)
     {
         $participant = Participant::where('active',1)->where('user_id',$request->id)->first();
-        $count_cours = CoursParticipant::where('active',1)->where('participant_id',$participant->participant_id)->count();
+        $count_cours = CoursParticipant::where('active',1)->where('user_id',$request->id)->count();
         return response()->json([
             'cours' => $count_cours,
             'passed'=> 0,

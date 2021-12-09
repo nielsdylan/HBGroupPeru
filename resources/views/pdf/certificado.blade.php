@@ -197,10 +197,11 @@
                         <tr>
                             <td class="td-img-sello-whited"><img src="{{asset('assets/img/sello-fondo-hb.png')}}" width="150" class="sello-white"></td>
                             <td class="text-center font-size-12">
-                                <img src="{{asset('assets/img/firma-hb.png')}}" width="200" class="firma">
+                                <img src="{{asset('assets/img/user/'.$json['img_firm'])}}" width="200" class="firma">
                                 <hr size="1" width="100" class="border-solid">
                                 <div>{{$json['name_firm']}}</div>
                                 <div>{{$json['cargo_firm']}}</div>
+                                <div>{{$json['cip']}}</div>
                                 <div>{{$json['business_firm']}}</div>
                             </td>
                             <td ><img src="{{asset('assets/img/sello-hb.png')}}" width="150" class="sello"></td>

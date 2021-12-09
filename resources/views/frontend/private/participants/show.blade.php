@@ -112,7 +112,7 @@
                                     </div>
 
                                     <hr />
-                                    <input type="hidden" name="id" value="{{$participante->participant_id}}">
+                                    <input type="hidden" name="id" value="{{$participante->id}}">
                                     <div class="row" data-table="table">
                                     </div>
                                 </div>

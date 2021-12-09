@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Group;
 use App\Models\User;
+use App\Models\UsersGroup;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -68,18 +69,16 @@ class LoginController extends Controller
         // $user = User::where('email', $request->username)
         //         ->where('password', sha1($request->password))
         //         ->first();
-        $user = User::where('users.email', $request->username)->orWhere('users.dni','=',$request->username)->where('users.active',1)
-        ->where('users.group_id',$request->group_id)
-        ->where('password', sha1($request->password))
-        ->join("groups", "groups.group_id", "=", "users.group_id")
-        ->select("groups.name as group", "users.*")
-        ->first();
-        if ($user) {
+        $user = User::where('email', $request->username)->orWhere('dni','=',$request->username)->where('active',1) ->where('password', sha1($request->password))->first();
+        $user_group = UsersGroup::where('user_id',$user->id)->where('group_id',$request->group_id)->where('active',1)->first();
+        $group = Group::where('group_id',$request->group_id)->where('active',1)->first();
+
+        if ($user_group) {
             $json_user = array(
                 'user_id'=>$user->id,
                 'email'=>$user->email,
-                'group_id'=>$user->group_id,
-                'group'=>$user->group,
+                'group_id'=>$group->group_id,
+                'group'=>$group->name,
                 'name'=>$user->name,
                 'last_name'=>$user->last_name,
                 'image'=>$user->image,

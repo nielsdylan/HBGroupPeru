@@ -51,11 +51,10 @@
                         <table id="add-row" class="display table table-striped table-hover" >
                             <thead>
                                 <tr>
-                                    <td>#</td>
-                                    <td>DNI</td>
-                                    <td>APELLIDOS</td>
-                                    <td>NOMBRE</td>
+                                    <td>CODE</td>
+                                    <td>TITULO</td>
                                     <td>FECHA</td>
+                                    <td>STADO</td>
                                     <th style="width: 10%">Action</th>
                                 </tr>
                             </thead>
@@ -63,11 +62,16 @@
                                 @if ($results)
                                     @foreach ($results as $key=>$item)
                                         <tr>
-                                            <td>{{$item->certificado_id}}</td>
-                                            <td>{{$item->dni}}</td>
-                                            <td>{{$item->last_name}}</td>
-                                            <td>{{$item->name}}</td>
-                                            <td>{{  $item->date}}</td>
+                                            <td>{{$item->code}}</td>
+                                            <td>{{$item->description_cours}}</td>
+                                            <td>{{$item->date}}</td>
+                                            <td>
+                                                @if ($item->status==1)
+                                                    {{'VIGENTE'}}
+                                                @else
+                                                    {{'CADUCIDAD'}}
+                                                @endif
+                                            </td>
                                             <td>
                                                 <div class="form-button-action">
                                                     <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar {{$item->name}}" data-edit="modal" data-id="{{$item->certificado_id }}">
@@ -106,43 +110,7 @@
             <form action="{{route('certificado.store')}}" method="post" enctype="multipart/form-data" data-form="save-excel">
                 @csrf
                 <div class="modal-body">
-                    {{-- <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="business">Empresa</label>
-                                <select id="business" class="form-control" name="business" required>
-                                    <option value="">Seleccione...</option>
-                                    @foreach ($business as $item)
-                                        <option value="{{$item->business_id}}">{{$item->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div> --}}
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="asignature">Asignatura</label>
-                                <select id="asignature" class="form-control" select-cours="get-cours"  data-select="add-participant" name="asignature" required>
-                                    <option value="">Seleccione...</option>
-                                    @foreach ($asignatures as $item)
-                                        <option value="{{$item->asignature_id}}">{{$item->name}} ({{$item->abbreviation}})</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="course">Curso</label>
-                                <select class="form-control" data-course="add-participant" name="course" data-course="add-participant" required>
-                                    <option value="">Seleccione...</option>
 
-                                </select>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -260,10 +228,12 @@
             data: data,
             beforeSend: function()
             {
-                $('[data-form="save-excel"] .modal-footer button[type="submit"]').addClass('is-loading')
+                $('[data-form="save-excel"] .modal-footer button[type="submit"]').addClass('is-loading');
+                $('[data-form="save-excel"] .modal-footer button[type="submit"]').attr('disabled','');
             },
         }).done(function (response) {
             $('[data-form="save-excel"] .modal-footer button[type="submit"]').removeClass('is-loading');
+            $('[data-form="save-excel"] .modal-footer button[type="submit"]').removeAttr('disabled');
             if (response.status == 200) {
                 $('#import-excel-participant').modal('hide');
                 var placementFrom = 'top';
@@ -298,8 +268,8 @@
                 var style = 'withicon';
                 var content = {};
 
-                content.message = 'Ingrese correctamente los datos para la session para HB Group Perú';
-                content.title = 'Session';
+                content.message = 'Ingrese correctamente los datos';
+                content.title = 'Importar lista de certificados';
                 // if (style == "withicon") {
                 //     content.icon = 'fas fa-times';
                 // } else {

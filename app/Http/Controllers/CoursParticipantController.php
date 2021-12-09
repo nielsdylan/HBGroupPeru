@@ -7,6 +7,7 @@ use App\Models\Cours;
 use App\Models\CoursParticipant;
 use App\Models\Participant;
 use App\Models\User;
+use App\Models\UsersGroup;
 use Illuminate\Http\Request;
 
 class CoursParticipantController extends Controller
@@ -16,7 +17,12 @@ class CoursParticipantController extends Controller
     {
         # code...
         if (!empty($_GET['DNI']) ) {
-            $user = User::where('dni',$_GET['DNI'])->where('active',1)->first();
+            // $user = User::where('dni',$_GET['DNI'])->where('active',1)->first();
+            $user = UsersGroup::where('users.dni',$_GET['DNI'])->where('users.active',1)->where('users_groups.group_id',4)
+                ->join('users', 'users_groups.user_id','=','users.id')
+                ->select('users.*')
+                ->first();
+            // return $user;
             if ($user) {
                 $asignatures = Asignature::where('active',1)->get();
                 $results = Cours::where('active',1)->paginate(2);
@@ -38,7 +44,7 @@ class CoursParticipantController extends Controller
         if (!empty($request->cours)) {
             $existen = false;
             foreach ($request->cours as $key => $value) {
-                $cours_exist = CoursParticipant::where('active',1)->where('cours_id',$value)->where('participant_id',$participant->participant_id)->first();
+                $cours_exist = CoursParticipant::where('active',1)->where('cours_id',$value)->where('user_id',$request->id)->first();
                 if ($cours_exist) {
                     $existen = true;
                 }
@@ -50,7 +56,7 @@ class CoursParticipantController extends Controller
 
                     $cours_participant = new CoursParticipant();
                     $cours_participant->asignature_id = $cours->asignature_id;
-                    $cours_participant->participant_id =$participant->participant_id;
+                    $cours_participant->user_id =$request->id;
                     $cours_participant->cours_id =$value;
                     $cours_participant->save();
                 }

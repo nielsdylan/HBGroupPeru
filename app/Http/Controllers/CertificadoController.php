@@ -6,6 +6,10 @@ use App\Imports\CertificadoImport;
 use App\Models\Asignature;
 use App\Models\Business;
 use App\Models\Certificado;
+use App\Models\Instructor;
+use App\Models\User;
+use App\Models\UsersBusiness;
+use App\Models\UsersGroup;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -15,32 +19,86 @@ class CertificadoController extends Controller
     public function index()
     {
         $results = Certificado::where('certificados.active',1)
-            ->where('participants.active',1)
+            ->where('users.active',1)
             // ->where('participants.active',1)
-            ->join("participants", "participants.participant_id", "=", "certificados.participant_id")
-            ->join("users", "users.id", "=", "participants.user_id")
-            ->select("participants.user_id", "certificados.description_cours", "certificados.date", "certificados.certificado_id", "users.*")
+            ->join("users", "users.id", "=", "certificados.user_id")
+            ->select("certificados.certificado_id","certificados.code","certificados.description_cours", "certificados.date", "certificados.status")
             ->get();
-        // return $results;
-        $asignatures =  Asignature::where('active',1)->get();
-        $business = Business::where('active',1)->get();
-        return view('frontend.private.certificados.index', compact('results','asignatures','business'));
+
+        return view('frontend.private.certificados.index', compact('results'));
     }
     public function store(Request $request)
     {
-        $json = array(
-            'cours_id'=>$request->course,
-            'asignature_id'=>$request->asignature,
-        );
-        $request->session()->put('certificado',$json);
         $file = $request->file('file');
-        Excel::import(new CertificadoImport, $file);
+        $array = Excel::toArray(new CertificadoImport, $file);
+        $array_json = array();
 
+        foreach ($array[0] as $key => $value) {
+            if ($key!=0) {
+                if ($value[1]!=='' || $value[1]!==null||$value[9]!=='' || $value[9]!==null||$value[10]!=='' || $value[10]!==null ||$value[21]!=='' || $value[21]!==null) {
+                    $user = User::where('active',1)->where('dni',$value[9])->first();
+                    if (!$user) {
+                        $user = new User();
+                        $user->name             = $value[5];
+                        $user->password         = sha1($value[9]);
+                        $user->dni              = $value[9];
+                        $user->last_name        = $value[6]." ".$value[7];
+                        $user->create_by        = session('hbgroup')['user_id'];
+                        $user->save();
+                    }
+                    $user_group = UsersGroup::where('active',1)->where('user_id',$user->id)->where('group_id',4)->first();
+                        if (!$user_group) {
+                            $user_group = new UsersGroup();
+                            $user_group->user_id    = $user->id;
+                            $user_group->group_id   = 4;
+                            $user_group->create_by  = session('hbgroup')['user_id'];
+                            $user_group->save();
+                        }
+                    UsersBusiness::where('user_id', $user->id)->update([
+                        'active'    => 0,
+                        'deleted_at'=>date('Y-m-d H:i:s'),
+                        'delete_by' =>session('hbgroup')['user_id']
+                    ]);
+                    $user_business = new UsersBusiness();
+                    $user_business->name    = $value[8];
+                    $user_business->user_id = $user->id;
+                    $user->create_by        = session('hbgroup')['user_id'];
+                    $user_business->save();
+
+                    $certificado = Certificado::where('active',1)->where('code',$value[10])->first();
+                    $status=0;
+                    $instrucor = User::where('active',1)->where('dni',$value[21])->first();
+                    $instrucor = Instructor::where('active',1)->where('user_id',$instrucor->id)->first();
+
+                    if (!$certificado) {
+                        if (date("Y-m-d",strtotime((gmdate("Y-m-d", (($value[11] - 25569) * 86400)))."+ 1 year"))<date('Y-m-d')) {
+                            $status=2;
+                        }else{
+                            $status=1;
+                        }
+                        $certificado = new Certificado();
+                        $certificado->description_cours = $value[2]." ".$value[3];
+                        $certificado->date              = gmdate("Y-m-d", (($value[11] - 25569) * 86400));
+                        $certificado->hour              = $value[15];
+                        $certificado->code              = $value[10];
+                        $certificado->user_id           = $user->id;
+                        $certificado->status            = $status;
+                        $certificado->user_business_id  = $user_business->user_business_id;
+                        $certificado->instructor_id     = $instrucor->instructor_id;
+                        $certificado->create_by         = session('hbgroup')['user_id'];
+                        $certificado->save();
+                    }
+                }
+
+
+            }
+
+        }
 
 
         return response()->json([
             'success'=>true,
-            'status'=>200,
+            'status'=>200
         ]);
     }
     public function destroy(Certificado $certificado)

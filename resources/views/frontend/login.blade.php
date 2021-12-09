@@ -130,6 +130,7 @@
                 data: data,
             }).done(function (response) {
                 if (response.status == 200) {
+                    // console.log(response);
                     location.href = '{!! route('perfil.index') !!}';
                 }else{
                     var placementFrom = 'top';

@@ -21,21 +21,16 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card card-space">
-                {{-- <div class="card-header">
-                    <h4 class="card-title"> Información</h4>
-                </div> --}}
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="nav flex-column nav-pills nav-secondary nav-pills-no-bd nav-pills-icons" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                 <a class="nav-link active show" data-toggle="pill" href="#v-pills-info-icons" role="tab" aria-controls="v-pills-profile-icons" aria-selected="true">
                                     <i class="flaticon-agenda-1"></i>
-
                                 </a>
                                 <a class="nav-link" data-toggle="pill" href="#v-pills-user-icons" role="tab" aria-controls="v-pills-user-icons" aria-selected="false">
                                     <i class="flaticon-users"></i>
                                 </a>
-
                             </div>
                         </div>
                         <div class="col-md-9">
@@ -44,14 +39,6 @@
                                     <h5 class="mt-3">{{$curso->course}} ({{$curso->code}})</h5>
                                     <hr />
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group form-inline">
-                                                <label for="inlineinput" class="col-md-3 col-form-label">Empresa: </label>
-                                                <div class="col-md-9 p-0">
-                                                    <input type="text" class="form-control input-full" value="{{ $curso->business }}" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="col-md-12">
                                             <div class="form-group form-inline">
                                                 <label for="inlineinput" class="col-md-3 col-form-label">Asignatura: </label>
@@ -102,29 +89,19 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="tab-pane fade" id="v-pills-user-icons" role="tabpanel" aria-labelledby="v-pills-user-tab-icons">
                                     <div class="d-flex align-items-center">
                                         <h5 class="mt-3">Lista de participantes</h5>
-
                                         <button class="btn btn-icon btn-primary btn-round btn-sm ml-auto" data-refresh="refresh">
                                             <i class="fa fas fa-sync-alt"></i>
                                         </button>
                                     </div>
-
                                     <hr />
                                     <input type="hidden" name="cours_id" value="{{$curso->cours_id}}">
                                     <div class="row" data-table="table">
-                                        {{-- <div class="col-md-12" data-table="table">
-
-                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
-
-
-
-
                         </div>
                     </div>
                 </div>

@@ -14,7 +14,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Lista de participantes</a>
+                    <a href="#">Participantes</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="{{route('participantes.update',$participant->participant_id)}}" method="post" enctype="multipart/form-data" data-form="save-add">
+                        <form action="{{route('participantes.update',$participante->id)}}" method="post" enctype="multipart/form-data" data-form="save-add">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
@@ -70,6 +70,20 @@
                                     <div class="form-group">
                                         <label for="name">Nombres :</label>
                                         <input  class="form-control" data-disabled="disabled" type="text" name="name" value="{{$participante->name}}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="business">Empresa :</label>
+                                        <input  class="form-control" type="text" name="business" value="{{$business->name}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="stall">Puesto :</label>
+                                        <input  class="form-control" type="text" name="stall" value="{{$participante->stall}}" required>
                                     </div>
                                 </div>
                             </div>
@@ -277,8 +291,8 @@
                         });
 
                         setTimeout(function(){
-                            location.href= {{ route('participantes.index') }}
-                        }, 2000);
+                            location.href=' {{ route('participantes.index') }}'
+                        }, 3000);
                     }else{
                         var placementFrom = 'top';
                         var placementAlign = 'center';

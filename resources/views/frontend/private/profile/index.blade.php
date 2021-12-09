@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{route('perfil.update', $user)}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('perfil.update', $profile)}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('put')
                         <div class="row" id="galeria_imagenes">
@@ -118,12 +118,35 @@
                                     <label for="sexo">Sexo:</label>
                                     <select id="sexo" class="form-control" name="sexo" required>
                                         <option value="">Seleccione su sexo</option>
-                                        <option value="M" {{ $user->sexo =='M' ? 'selected' : '' }} >Masculino</option>
-                                        <option value="F" {{ $user->sexo =='F' ? 'selected' : '' }}>Femenino</option>
+                                        <option value="Masculino" {{ $user->sexo =='Masculino' ? 'selected' : '' }} >Masculino</option>
+                                        <option value="Femenino" {{ $user->sexo =='Femenino' ? 'selected' : '' }}>Femenino</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
+                        @if ($user->group_id == 5)
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="img_firm">Firma (imagen sin fondo):</label>
+                                    <input class="form-control" type="file" name="img_firm" required>
+                                    <span>{{$instructor ? $instructor->img_firm:''}}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="cip">N° CIP:</label>
+                                    <input class="form-control" type="number" name="cip" value="{{$instructor ? $instructor->cip:''}}">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="cip">Descrición: </label>
+                                    <input class="form-control" type="text" name="description" value="{{$instructor?$instructor->description:''}}" placeholder="Ingeniero example de" required>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                         <div class="row">
                             <div class="col-md-12 text-right">
                                 <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Guardar</button>

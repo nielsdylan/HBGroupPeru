@@ -23,13 +23,13 @@
                 <div class="col-md-6 offset-3 animated slideInUp">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{route('certificate.list')}}" method="POST">
+                            <form action="{{route('certificate.list')}}" method="POST" data-form="certi-send">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="dni">Ingrese su número de documento:</label>
-                                            <input id="dni" class="form-control" type="text" name="dni">
+                                            <input class="form-control" type="text" name="dni" required>
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
@@ -45,13 +45,13 @@
                 <div class="col-md-12 animated slideInUp">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{route('certificate.list')}}" method="POST">
+                            <form action="{{route('certificate.list')}}" method="POST" data-form="certi-send">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="dni">Ingrese su número de documento:</label>
-                                            <input id="dni" class="form-control" type="text" name="dni">
+                                            <input class="form-control" type="text" name="dni" required>
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
@@ -66,140 +66,69 @@
 
             <div class="row d-none d-sm-none d-lg-block d-md-block">
                 <div class="col-md-6 offset-3 mt-5 animated slideInUp">
-                    @if ($certificado)
-                    <div class="card">
-                        <div class="card-body">
-                            @if ($message)
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="alert alert-warning" role="alert">
-                                        {{$message}}
-                                        <p>
-                                            Si no encuentra su certificado comuniquese con el area de soporte academico, marcando al numero telefonico
-                                            <a href="tel:992 933 603" class="email-contact" >{{$configurations->telephone}}</a>
-                                            o enviando un correo electronico a
-                                            <a href="mailto:{{$configurations->email}}?Subject=Consulta%20de%20su%20servicio&body=Con%20urgencia" class="email-contact">&nbsp;{{$configurations->email}}</a>.
-                                            Gracias por su comprensión.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            @else
-                            <h5 class="card-title">Listado de certificados</h5>
-                            <div class="row">
-                                <div class="col-md-12 table-responsive">
-                                    <table class="table">
-                                        <tbody>
-                                            @foreach ($certificado as $certi)
-                                                <tr>
-                                                    <td>{{ $certi->last_name.' '.$certi->name }}</td>
-                                                    <td>{{ $certi->description_cours }}</td>
-                                                    <td>{{ date('d/m/Y', strtotime($certi->date)) }}</td>
-                                                    <td><a href="{{route('certificado.pdf',$certi->certificado_id )}}"><i class="fas fa-cloud-download-alt"></i> PDF</a></td>
-                                                </tr>
+                    <div class="card d-none" data-card="class-none">
+                        <div class="card-body" data-table="table">
 
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 d-flex justify-content-center">
-                                    {{ $certificado->links() }}
-                                </div>
-                            </div>
-                            @endif
                         </div>
                     </div>
-                    @else
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="alert alert-warning" role="alert">
-                                        {{$message}}
-                                        <p>
-                                            Si desea tener un certificado comuniquese con el area de soporte academico, marcando al numero telefonico
-                                            <a href="tel:992 933 603" class="email-contact" >{{$configurations->telephone}}</a>
-                                            o enviando un correo electronico a
-                                            <a href="mailto:{{$configurations->email}}?Subject=Consulta%20de%20su%20servicio&body=Con%20urgencia" class="email-contact">&nbsp;{{$configurations->email}}</a>. Gracias por su comprensión.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
+
                 </div>
             </div>
             <div class="row d-block d-sm-block d-lg-none d-md-none">
                 <div class="col-md-12 mt-5 animated slideInUp">
-                    @if ($certificado)
-                    <div class="card">
-                        <div class="card-body">
-                            @if ($message)
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="alert alert-warning" role="alert">
-                                        {{$message}}
-                                        <p>
-                                            Si no encuentra su certificado comuniquese con el area de soporte academico, marcando al numero telefonico
-                                            <a href="tel:992 933 603" class="email-contact" >{{$configurations->telephone}}</a>
-                                            o enviando un correo electronico a
-                                            <a href="mailto:{{$configurations->email}}?Subject=Consulta%20de%20su%20servicio&body=Con%20urgencia" class="email-contact">&nbsp;{{$configurations->email}}</a>.
-                                            Gracias por su comprensión.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            @else
-                            <h5 class="card-title">Listado de certificados</h5>
-                            <div class="row">
-                                <div class="col-md-12 table-responsive">
-                                    <table class="table">
-                                        <tbody>
-                                            @foreach ($certificado as $certi)
-                                                <tr>
-                                                    <td>{{ $certi->last_name.' '.$certi->name }}</td>
-                                                    <td>{{ $certi->description_cours }}</td>
-                                                    <td>{{ date('d/m/Y', strtotime($certi->date)) }}</td>
-                                                    <td><a href="{{route('certificado.pdf',$certi->certificado_id )}}"><i class="fas fa-cloud-download-alt"></i> PDF</a></td>
-                                                </tr>
+                    <div class="card d-none" data-card="class-none">
+                        <div class="card-body" data-table="table">
 
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 d-flex justify-content-center">
-                                    {{ $certificado->links() }}
-                                </div>
-                            </div>
-                            @endif
                         </div>
                     </div>
-                    @else
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="alert alert-warning" role="alert">
-                                        {{$message}}
-                                        <p>
-                                            Si desea tener un certificado comuniquese con el area de soporte academico, marcando al numero telefonico
-                                            <a href="tel:992 933 603" class="email-contact" >{{$configurations->telephone}}</a>
-                                            o enviando un correo electronico a
-                                            <a href="mailto:{{$configurations->email}}?Subject=Consulta%20de%20su%20servicio&body=Con%20urgencia" class="email-contact">&nbsp;{{$configurations->email}}</a>. Gracias por su comprensión.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
+
                 </div>
             </div>
         </div>
     </section>
+    <script>
+        var data ={};
+        $(document).ready(function () {
+            // getPagination();
+        });
+
+        $(document).on('click','.pagination a',function (e) {
+            e.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            getPagination(page);
+        });
+
+        function getPagination(page) {
+            route = '{{ route('certificate.list') }}';
+            data.page = page;
+
+            $.ajax({
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: route,
+                dataType: 'json',
+                data: data,
+                beforeSend: function()
+                {
+                    $('[data-table="table"]').addClass('is-loading is-loading-lg');
+                },
+            }).done(function (response) {
+                $('[data-table="table"]').removeClass('is-loading is-loading-lg');
+                $('[data-card="class-none"]').removeClass('d-none');
+
+                if (response) {
+                    $('[data-table="table"]').html(response);
+                }
+            }).fail(function () {
+                alert("Error");
+            });
+        }
+        $(document).on('submit','[data-form="certi-send"]',function (e) {
+            e.preventDefault();
+            data.dni= $('[name="dni"]').val();
+            getPagination();
+
+
+        });
+    </script>
 @endsection

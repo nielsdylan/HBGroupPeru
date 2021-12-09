@@ -3,7 +3,7 @@
 @section('content')
     <div class="page-inner">
         <div class="page-header">
-            <h4 class="page-title">Participantes</h4>
+            <h4 class="page-title">Academico</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
                     <a href="#">
@@ -14,7 +14,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Lista de participantes</a>
+                    <a href="#">Participantes</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
@@ -70,6 +70,20 @@
                                     <div class="form-group">
                                         <label for="name">Nombres :</label>
                                         <input  class="form-control" data-disabled="disabled" type="text" name="name" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="business">Empresa :</label>
+                                        <input  class="form-control" type="text" name="business" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="stall">Puesto :</label>
+                                        <input  class="form-control" type="text" name="stall" required>
                                     </div>
                                 </div>
                             </div>

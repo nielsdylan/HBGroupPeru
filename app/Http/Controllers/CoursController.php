@@ -7,6 +7,7 @@ use App\Models\Business;
 use App\Models\Cours;
 use App\Models\Organizer;
 use App\Models\User;
+use App\Models\UsersGroup;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,11 @@ class CoursController extends Controller
     }
     public function create()
     {
-        $teacher = User::where('active',1)->where('group_id',5)->get();
+        // $teacher = User::where('active',1)->where('group_id',5)->get();
+        $teacher = UsersGroup::where('users_groups.group_id',5)->where('users_groups.active',1)
+            ->join("users", "users.id", "=", "users_groups.user_id")
+            ->select("users.*")
+            ->get();
         $asignature = Asignature::where('active',1)->where('status',1)->get();
         $business = Business::where('active', 1)->get();
         return view(
@@ -51,7 +56,7 @@ class CoursController extends Controller
         $cours->date_start      = $date;
         $cours->hour_start      = $request->hour_start;
         $cours->hour_end        = $request->hour_end;
-        $cours->business_id        = $request->bussiness_id;
+        // $cours->business_id        = $request->bussiness_id;
 
         $cours->create_by = session('hbgroup')['user_id'];
         $cours->save();
@@ -85,7 +90,10 @@ class CoursController extends Controller
     }
     public function edit(Cours $curso)
     {
-        $teacher = User::where('active',1)->where('group_id',5)->get();
+        $teacher = UsersGroup::where('users_groups.group_id',5)->where('users_groups.active',1)
+            ->join("users", "users.id", "=", "users_groups.user_id")
+            ->select("users.*")
+            ->get();
         $asignature = Asignature::where('active',1)->where('status',1)->get();
         $business = Business::where('active', 1)->get();
 
@@ -113,7 +121,6 @@ class CoursController extends Controller
             'date_start' => $date,
             'hour_start' => $request->hour_start,
             'hour_end' => $request->hour_end,
-            'business_id' => $request->bussiness_id,
             'update_by'=>session('hbgroup')['user_id'],
             'meeting_active' => 0,
         ]);
@@ -145,9 +152,8 @@ class CoursController extends Controller
         # code...
         $curso = Cours::where('cours.active', 1)->where('cours.cours_id', $curso)->where('asignatures.active', 1)
             ->join('asignatures', 'cours.asignature_id','=','asignatures.asignature_id')
-            ->join('businesses', 'cours.business_id','=','businesses.business_id')
             ->join('users', 'cours.user_id','=','users.id')
-            ->select('cours.*', 'asignatures.name as asignature_name', 'asignatures.abbreviation as abbreviation', 'businesses.name as business', 'users.name as user_name', 'users.last_name as user_lastname' )
+            ->select('cours.*', 'asignatures.name as asignature_name', 'asignatures.abbreviation as abbreviation', 'users.name as user_name', 'users.last_name as user_lastname' )
             ->first();
         // return $curso;
         return view(

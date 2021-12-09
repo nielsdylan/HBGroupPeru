@@ -298,32 +298,6 @@
                     location.reload();
                 }, 3000);
 
-                // if (response.existen_status == 1) {
-                //     html = ''+
-                //         '<div class="alert alert-warning animated fadeInDown btn-pulse" role="alert">'+
-                //             '<div class="d-flex align-items-center">'+
-                //                 '<h3>'+
-                //                     'Participantes ya inscritos con anticipación.'+
-                //                 '</h3>'+
-                //                 '<button class="btn btn-light btn-ms ml-auto close-alert"><i class="fa fa-times"></i></button>'+
-                //             '</div>'+
-                //             '<table class="table">'+
-                //                 '<tbody>';
-                //                     $.each(response.existen, function (index, element) {
-                //                         html+='<tr>'+
-                //                             '<td>'+element.dni+'</td>'+
-                //                             '<td>'+element.last_name+'</td>'+
-                //                             '<td>'+element.name+'</td>'+
-                //                         '</tr>';
-                //                     });
-                //                 html+='</tbody>'+
-                //             '</table>'+
-                //         '</div>'+
-
-                //     '';
-                //     $('[data-table="response"]').html(html);
-                //     console.log(response.existen);
-                // }
             }else{
                 var placementFrom = 'top';
                 var placementAlign = 'center';

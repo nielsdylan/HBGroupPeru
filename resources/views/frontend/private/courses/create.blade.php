@@ -36,7 +36,7 @@
                     <div class="card-body">
                         <form action="{{route('cursos.store')}}" method="POST" data-form="form">
                             <div class="row">
-                                <div class="col-md-4">
+                                {{-- <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="bussiness_id">Empresas<span class="required-label">*</span>:</label>
                                         <select class="form-control" name="bussiness_id" id="bussiness_id" required>
@@ -46,7 +46,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="asignature">Asignatura<span class="required-label">*</span>:</label>

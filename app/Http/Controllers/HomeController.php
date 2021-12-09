@@ -9,6 +9,7 @@ use App\Models\Certificado;
 use App\Models\Configuration;
 use App\Models\Customer;
 use App\Models\Event;
+use App\Models\Instructor;
 use App\Models\Participant;
 use App\Models\Question;
 use App\Models\QuestionsResponse;
@@ -164,57 +165,50 @@ class HomeController extends Controller
     }
     public function certificateList(Request $request)
     {
-
-        $certificado='';
-        $message='';
         $configurations = Configuration::where('active', 1)->first();
-        $user = User::where('dni',$request->dni)
-            ->where('active',1)
-            ->first();
+        $value=1;
+        if ($request->ajax()) {
 
-        if ($user) {
-            $participant = Participant::where('user_id',$user->id)
-            ->where('active',1)
-            ->first();
-            $json_user = array(
-                'id'=>$participant->participant_id,
-                'dni'=>$request->dni,
-            );
-            $request->session()->put('list_certificado',$json_user);
-            $certificado = Certificado::where('certificados.active',1)
-                ->where('certificados.participant_id', session('list_certificado')['id'])
-                ->where('participants.active',1)
-                ->join("participants", "participants.participant_id", "=", "certificados.participant_id")
-                ->join("users", "users.id", "=", "participants.user_id")
-                ->select("participants.user_id", "certificados.description_cours", "certificados.date", "certificados.certificado_id", "users.*")
+            $certificado = Certificado::where('certificados.active',1)->where('users.dni',$request->dni)->where('users.active',1)
+                ->join("users", "users.id", "=", "certificados.user_id")
+                ->select("certificados.description_cours", "certificados.date", "certificados.status", "certificados.certificado_id", "users.*")
                 ->paginate(5);
 
-            if (count($certificado)==0) {
-                $message='No cuenta con certificado';
+            if ($certificado['data']=='' || $certificado['data']==null) {
+                $value = 2;
             }
-            return view('frontend.public.certificate', compact('configurations','certificado','message'));
-        }else{
-            $message='No se encuentra matriculado';
 
+            return response()->json(view('frontend.public.list_certificate', compact('certificado','configurations','value'))->render());
         }
 
-        return view('frontend.public.certificate', compact('configurations','certificado','message'));
-        // return redirect()->route('contact')->with('info','Su mensaje a sido enviado con éxito');
     }
     public function certificadoPDF($number)
     {
         // $participant = Participant::where('dni', $number)->where('active',1)->first();
         $certificado = Certificado::where('certificado_id',$number)->where('active',1)->first();
-        // return $certificado;
+        $instructor = Instructor::where('active',1)->where('instructor_id',$certificado->instructor_id)
+        ->first();
+
+        $instructor = Instructor::where('instructors.active',1)->where('instructors.instructor_id',$certificado->instructor_id)->where('users.active',1)
+            // ->where('participants.active',1)
+            ->join("users", "users.id", "=", "instructors.user_id")
+            ->select("instructors.*","users.*")
+            ->first();
+
+
         $participant = Participant::where('participant_id', $certificado->participant_id)->where('active',1)->first();
-        $user = User::where('active',1)->where('id',$participant->user_id)->first();
+        $user = User::where('active',1)->where('id',$certificado->user_id)->first();
         setlocale(LC_TIME, "spanish");
         $fecha = $certificado->date;
         $fecha = str_replace("/", "-", $fecha);
         $newDate = date("d-m-Y", strtotime($fecha));
         $mesDesc = strftime("%d de %B del %Y", strtotime($newDate));
         $year = strftime("%Y", strtotime($newDate));
-
+        $cip = '';
+        if ($instructor->cip>0) {
+            $cip = 'REG. CIP '.$instructor->cip;
+        }
+        // return $cip;
         $json = array(
             'name'=>$user->name,
             'last_name'=>$user->last_name,
@@ -222,15 +216,17 @@ class HomeController extends Controller
             'description'=>$certificado->description_cours,
             'date_1'=>'Realizado el '.$mesDesc.',',
             'date_2'=>'con una duración '.$certificado->hour.' horas efectivas.',
-            'name_firm'=>'Helard Bejarano Otazu',
-            'cargo_firm'=>'Gerente General',
+            'name_firm'=>$instructor->name.' '.$instructor->last_name,
+            'cargo_firm'=>$instructor->description,
             'business_firm'=>'HB GROUP PERU S.R.L.',
             'cell'=>'932 777 533',
             'telephone'=>'053 474 805',
             'email'=>'info@hbgroup.pe',
             'web'=>'www.hbgroup.pe',
             'name_business'=>'HB GROUP PERU S.R.L',
-            'number'=>''.$year.' - 00'.$certificado->certificado_id
+            'number'=>''.$year.' - 00'.$certificado->certificado_id,
+            'cip'=>$cip,
+            'img_firm'=>$instructor->img_firm
         );
         $pdf = PDF::loadView('pdf.certificado', compact('json'));
         return $pdf->download('certificado.pdf');
