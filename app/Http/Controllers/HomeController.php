@@ -229,11 +229,37 @@ class HomeController extends Controller
             'img_firm'=>$instructor->img_firm
         );
         $pdf = PDF::loadView('pdf.certificado', compact('json'));
+        // $pdf = PDF::loadView('pdf.certifi', compact('json'));
         return $pdf->download('certificado.pdf');
+        // return $pdf->download('certifi.pdf');;
     }
     public function viewPDF()
     {
         // -----
+        $certificado = Certificado::where('certificado_id',678)->where('active',1)->first();
+        $instructor = Instructor::where('active',1)->where('instructor_id',$certificado->instructor_id)
+        ->first();
+
+        $instructor = Instructor::where('instructors.active',1)->where('instructors.instructor_id',$certificado->instructor_id)->where('users.active',1)
+            // ->where('participants.active',1)
+            ->join("users", "users.id", "=", "instructors.user_id")
+            ->select("instructors.*","users.*")
+            ->first();
+
+
+        $participant = Participant::where('participant_id', $certificado->participant_id)->where('active',1)->first();
+        $user = User::where('active',1)->where('id',$certificado->user_id)->first();
+        setlocale(LC_TIME, "spanish");
+        $fecha = $certificado->date;
+        $fecha = str_replace("/", "-", $fecha);
+        $newDate = date("d-m-Y", strtotime($fecha));
+        $mesDesc = strftime("%d de %B del %Y", strtotime($newDate));
+        $year = strftime("%Y", strtotime($newDate));
+        $cip = '';
+        if ($instructor->cip>0) {
+            $cip = 'REG. CIP '.$instructor->cip;
+        }
+
         $url = url('/public/assets/fonts/calibre/Calibre-Regular.ttf');
         $json = array(
             'name'=>'Niels Dylan',
@@ -242,8 +268,8 @@ class HomeController extends Controller
             'description'=>'Control de Energías Peligrosas (Bloqueo y Etiquetado / Consignación de Equipos)',
             'date_1'=>'Realizado el 21 de Mayo del 2021,',
             'date_2'=>'con una duración Cuatro (04) horas efectivas.',
-            'name_firm'=>'Helard Bejarano Otazu',
-            'cargo_firm'=>'Gerente General',
+            'name_firm'=>$instructor->name.' '.$instructor->last_name,
+            'cargo_firm'=>$instructor->description,
             'business_firm'=>'HB GROUP PERU S.R.L.',
 
             'cell'=>'932 777 533',
@@ -251,9 +277,12 @@ class HomeController extends Controller
             'email'=>'info@hbgroup.pe',
             'web'=>'www.hbgroup.pe',
             'name_business'=>'HB GROUP PERU S.R.L',
-            'number'=>'2021-0051'
+            'number'=>'2021-0051',
+
+            'cip'=>$cip,
+            'img_firm'=>$instructor->img_firm
         );
-        return view('pdf.certificado', compact('json','url'));
+        return view('pdf.certifi', compact('json','url'));
     }
     public function helper()
     {
