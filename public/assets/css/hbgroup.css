@@ -74,3 +74,6 @@
 .opaciti-0{
     opacity: 0;
 }
+.custom-checkbox-textarea{
+    display: block !important;
+}

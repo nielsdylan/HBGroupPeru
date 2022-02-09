@@ -68,6 +68,11 @@
                                 </a>
                             </li>
                             @endif
+                            <li>
+                                <a href="{{route('examen.index')}}">
+                                    <span class="sub-item">Examen</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -132,15 +137,6 @@
                         <i class="far fa-envelope"></i>
                         <p>Email</p>
                     </a>
-                    {{-- <div class="collapse" id="email-app-nav">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{route('email.index')}}">
-                                    <span class="sub-item">Correo nuevo</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div> --}}
                 </li>
             </ul>
         </div>

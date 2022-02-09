@@ -10,6 +10,7 @@ use App\Http\Controllers\CoursController;
 use App\Http\Controllers\CoursParticipantController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ExceltController;
 use App\Http\Controllers\GroupController;
 use Illuminate\Support\Facades\Route;
@@ -22,12 +23,14 @@ use App\Http\Controllers\PensumAsignatureController;
 use App\Http\Controllers\PensumController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\QuestionExamController;
 use App\Http\Controllers\SedeController;
 use App\Http\Controllers\SedeTurnController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\TurnController;
 use App\Http\Controllers\UsersController;
+use App\Models\QuestionsExam;
 use Illuminate\Routing\RouteGroup;
 
 /*
@@ -165,4 +168,12 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::resource('email',EmailController::class );
     Route::get('inbox/outlook',[EmailController::class, 'inboxOutlook'] )->name('inbox.outlook');
     Route::get('inbox/meil/content',[EmailController::class, 'mailConten'] )->name('inbox.mail.content');
+
+    #exam
+    Route::resource('examen',ExamController::class );
+    Route::get('preguntas/{examen}',[QuestionExamController::class, 'questionExam'] )->name('question.exam');
+    Route::get('preguntas/{examen}/nueva',[QuestionExamController::class, 'create'] )->name('question.create');
+    Route::post('save/question',[QuestionExamController::class, 'store'] )->name('question.store');
+    Route::get('preguntas/editar/{question}',[QuestionExamController::class, 'edit'] )->name('question.edit');
+
 });

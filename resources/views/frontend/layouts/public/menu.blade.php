@@ -15,8 +15,8 @@
                         @if ($configurations->telephone)
                         <a href="tel:+51 {{$configurations->telephone}}" class="list-inline-item text-white"><i class="fa fa-phone"></i> (+51) 53 474805</a>
                         @endif
-                        @if ($configurations->whatsapp)
-                        <a href="https://wa.me/+51{{ $configurations->whatsapp}}?text=" target="_blank" class="list-inline-item text-white"><i class="fab fa-whatsapp text-white"></i> {{ $configurations->whatsapp}}</a>
+                        @if ($configurations->mobile)
+                        <a href="https://wa.me/+51{{ $configurations->mobile}}?text=" target="_blank" class="list-inline-item text-white"><i class="fab fa-whatsapp text-white"></i> {{ $configurations->mobile}}</a>
                         @endif
 
                         {{-- <a href="https://www.facebook.com/HBgroup.pe" target="_blank" class="list-inline-item icon text-white"><i class="fab fa-facebook-f text-white"></i></a> --}}
@@ -40,8 +40,8 @@
                 @if ($configurations->telephone)
                 <a href="tel:992 933 603" class="list-inline-item text-white"><i class="fa fa-phone"></i> {{$configurations->telephone}}</a>
                 @endif
-                @if ($configurations->whatsapp)
-                <a href="https://wa.me/{{$configurations->whatsapp}}?text=" target="_blank" class="list-inline-item text-white"><i class="fab fa-whatsapp text-white"></i> 946877806</a>
+                @if ($configurations->mobile)
+                <a href="https://wa.me/{{$configurations->mobile}}?text=" target="_blank" class="list-inline-item text-white"><i class="fab fa-whatsapp text-white"></i> {{$configurations->mobile}}</a>
                 @endif
                 <a href="https://site5.q10.com/login?ReturnUrl=%2F&aplentId=05554f9b-6439-4175-8443-321c9ebcf09d" target="_blank" class="list-inline-item icon text-white"><i class="fas fa-user-graduate text-white"></i> Aula virtual</a>
                 {{-- <a href="{{route('autentication')}}" target="_blank" class="list-inline-item icon text-white"><i class="fas fa-user-graduate text-white"></i> Aula virtual</a> --}}

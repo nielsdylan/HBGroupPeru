@@ -91,10 +91,10 @@
 </div>
 
 
-<a href="#" class="img-bot" data-action="open-chat">
+{{-- <a href="#" class="img-bot" data-action="open-chat">
     <img src="{{asset('uploads/public/iconBOT.png')}}" class="btn-hb-bot hb-bot-hover">
     <div class="btn-hb-msg-bot display-none-item">Hola, ¿Te puedo ayudar en algo?</div>
-</a>
+</a> --}}
 @if ($configurations->whatsapp)<a href="https://wa.me/+51{{ $configurations->whatsapp}}?text=Mi consulta es..." target="_blank" id="whatsapp-floot" class="btn-whatsapp-link"><i class="fab fa-whatsapp"></i></a>@endif
 <a href="#" id="back-to-top" class="btn btn-lg btn-back-top"><i class="fa fa-angle-up"></i></a>
 <section id="footer">
@@ -139,13 +139,13 @@
                                 @if ($configurations->direction)
                                     <li><span class="text-footer"><i class="fas fa-map-marker-alt text-footer"></i> {{$configurations->direction}}</span></li>
                                 @endif
-                                @if ($configurations->whatsapp)
-                                    <li><span class="text-footer"><i class="fab fa-whatsapp text-footer"></i> {{$configurations->whatsapp}}</span></li>
+                                @if ($configurations->mobile)
+                                    <li><span class="text-footer"><i class="fab fa-whatsapp text-footer"></i> {{$configurations->mobile}}</span></li>
                                 @endif
                                 @if ($configurations->telephone)
                                     <li><span class="text-footer"><i class="fa fa-phone text-footer"></i> {{$configurations->telephone}}</span></li>
                                 @endif
-                                @if ($configurations->telephone)
+                                @if ($configurations->email)
                                     <li><span class="text-footer"><i class="fa fa-envelope text-footer"></i> {{$configurations->email}}</span></li>
                                 @endif
 
