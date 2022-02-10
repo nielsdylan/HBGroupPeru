@@ -353,10 +353,10 @@ class HomeController extends Controller
         $rand_telephone = $rand_telephone.'T'.$user->id;
         $rand_email = $rand_email.'E'.$user->id;
         $message='';
-        $message_email_1='El proposito de este mensaje es de confirmar su correo electronico, el mismo mensaje se le envio a su número telefonico con el mismo proposito.';
-        $message_email_2='Por favor confirmar ambos medios de comunicacion para poder ingresar al curso gracias por su comprención.';
+        $message_email_1='El propósito de este mensaje es de confirmar su correo electrónico, el mismo mensaje se le envió a su número telefónico con el mismo propósito.';
+        $message_email_2='Por favor confirmar ambos medios de comunicación para poder ingresar al curso gracias por su comprensión.';
         $message_email_3='Saludos cordiales HB GROUP PERU S.R.L.';
-        $button_email = 'Click para verificar su correo electronico.';
+        $button_email = 'Click para verificar su correo electrónico.';
         $configurations = Configuration::where('active', 1)->first();
 
         if ($user) {
@@ -373,7 +373,7 @@ class HomeController extends Controller
                         "name"=> $user->name,
                         "last_name"=> $user->last_name,
                         "email"=> $user->email,
-                        "message_1"=> 'El proposito de este mensaje es de confirmar su correo electronico por segunda vez, el mismo mensaje se le envio a su número telefonico con el mismo proposito.',
+                        "message_1"=> 'El propósito de este mensaje es de confirmar su correo electrónico, el mismo mensaje se le envió a su número telefónico con el mismo propósito.',
                         "message_2"=> $message_email_2,
                         "message_3"=> $message_email_3,
                         "button"=>$button_email,
@@ -396,7 +396,7 @@ class HomeController extends Controller
                     $message_result = 'Se envió el mensaje de texto con éxito';
 
                     $phono=$user->telephone ;
-                    $message="ingrese al link para verificar su nùmero telefonico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."";
+                    $message="Ingrese al link para verificar su número telefónico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."";
                     $json_game_net = $this->gameNet($phono, $message);
                     User::where('active', 1)->where('id', $user->id)->update([
                         'json_game_net' => $json_game_net,

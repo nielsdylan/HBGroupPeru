@@ -43,7 +43,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="document_type_id">Tipo de documento :</label>
+                                        <label for="document_type_id">Tipo de documento <span class="required-label">*</span>:</label>
                                         <select class="form-control" data-document="select-type" name="document_type_id" required>
                                             <option value="">Seleccione...</option>
                                             @foreach ($document_types as $key=>$type )
@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="dni">Nùmero de documento :</label>
+                                        <label for="dni">Nùmero de documento <span class="required-label">*</span>:</label>
                                         <input  class="form-control" type="number" name="dni" data-search="hbgroup" data-codument="codument" value="{{$participante->dni}}" data-disabled="disabled" required>
                                     </div>
                                 </div>
@@ -62,13 +62,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="last_name">Apellidos :</label>
+                                        <label for="last_name">Apellidos <span class="required-label">*</span>:</label>
                                         <input  class="form-control" data-disabled="disabled" type="text" name="last_name" value="{{$participante->last_name}}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name">Nombres :</label>
+                                        <label for="name">Nombres <span class="required-label">*</span>:</label>
                                         <input  class="form-control" data-disabled="disabled" type="text" name="name" value="{{$participante->name}}" required>
                                     </div>
                                 </div>
@@ -76,13 +76,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="business">Empresa :</label>
+                                        <label for="business">Empresa <span class="required-label">*</span>:</label>
                                         <input  class="form-control" type="text" name="business" value="{{$business->name}}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="stall">Puesto :</label>
+                                        <label for="stall">Puesto <span class="required-label">*</span>:</label>
                                         <input  class="form-control" type="text" name="stall" value="{{$participante->stall}}" required>
                                     </div>
                                 </div>
@@ -90,13 +90,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="dni">Email :</label>
+                                        <label for="dni">Email <span class="required-label">*</span>:</label>
                                         <input  class="form-control" type="email" name="email" value="{{$participante->email}}" data-search="search" data-type="email" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="cell">Celular :</label>
+                                        <label for="cell">Celular <span class="required-label">*</span>:</label>
                                         <input  class="form-control" type="number" name="cell" value="{{$participante->telephone}}" data-search="search" data-type="phone" required>
                                         {{-- <div class="row">
                                             <div class="col-md-4">
