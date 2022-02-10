@@ -346,6 +346,7 @@ class HomeController extends Controller
     }
     public function changeValidation(Request $request)
     {
+
         $rand_telephone = uniqid();
         $rand_email = uniqid();
         $user = User::where('active',1)->where('id',$request->id)->first();
@@ -367,7 +368,7 @@ class HomeController extends Controller
                         'code_email'=>$rand_email,
                         'send_email'=>1
                     ]);
-                    $message = 'Se envio el mensaje a su correo electronico';
+                    $message_result = 'Se envió el correo electrónico con éxito';
                     $data = array(
                         "name"=> $user->name,
                         "last_name"=> $user->last_name,
@@ -392,7 +393,7 @@ class HomeController extends Controller
                         'code_telephone' => $rand_telephone,
                         'send_telephone'=>1
                     ]);
-                    $message = 'Se envio el mensaje de texto a su número telefonico';
+                    $message_result = 'Se envió el mensaje de texto con éxito';
 
                     $phono=$user->telephone ;
                     $message="ingrese al link para verificar su nùmero telefonico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."";
@@ -407,7 +408,7 @@ class HomeController extends Controller
                 'success'=>true,
                 'status'=>200,
                 'type'=>$request->type,
-                'message'=>$message
+                'message'=>$message_result
             ]);
         }
     }

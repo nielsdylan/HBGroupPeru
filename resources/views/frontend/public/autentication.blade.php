@@ -143,6 +143,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6 offset-3 alert-sendt pt-3">
+
+                    </div>
                 </div>
             @endif
 
@@ -278,6 +281,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12 alert-sendt pt-3">
+
+                    </div>
                 </div>
             @endif
 
@@ -327,7 +333,7 @@
                                     '<input class="form-control" type="email" name="value" required>'+
                                     '<input type="hidden" name="type" value="email" required>'+
                                 '</div>'+
-                                '<button class="btn btn-primary" type="submit">Enviar</button>'+
+                                '<button class="btn btn-primary" type="submit"> Enviar</button>'+
                             '</form>'+
                         '';
                     break;
@@ -339,7 +345,7 @@
                                     '<input class="form-control" type="text" name="value" required>'+
                                     '<input type="hidden" name="type" value="phone" required>'+
                                 '</div>'+
-                                '<button class="btn btn-primary" type="submit">Enviar</button>'+
+                                '<button class="btn btn-primary" type="submit"> Enviar</button>'+
                             '</form>'+
                         '';
                     break;
@@ -394,7 +400,6 @@
             var route = '{{ route('change.validation') }}',
                 id = $('[name="id"]').val();
             data = data+'&id='+id;
-            console.log(data);
 
 
             $.ajax({
@@ -407,19 +412,27 @@
                 data: data,
                 beforeSend: function()
                 {
-
+                    $('form[data-form="sent"] button[type="submit"]').attr('disabled','').prepend('<i class="fa fa-spin fa-spinner"></i>');
                 },
             }).done(function (response) {
+                $('form[data-form="sent"] button[type="submit"]').removeAttr('disabled').find('i.fa').remove();
                 if (response.success == true) {
                     html=''+
                             '<i class="fas fa-times text-danger "></i>'+
                         '';
                     $('[data-html="'+response.type+'"]').html(html);
+                    html=''+
+                        '<div class="alert alert-success animated flipInX" role="alert">'+
+                            ''+response.message+''+
+                        '</div>'+
+                    '';
+                    $('.alert-sendt').html(html);
                     $('[data-remove="remove"]').remove();
                 }else{
 
                 }
             }).fail(function () {
+                $('form[data-form="sent"] button[type="submit"]').removeAttr('disabled').find('i.fa').remove();
                 alert("Error");
             });
 
