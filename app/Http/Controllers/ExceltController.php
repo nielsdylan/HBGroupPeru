@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\CertificadoExport;
 use App\Exports\ModelExport;
 use App\Exports\ParticipantsExport;
+use App\Exports\ValidationExport;
 use App\Imports\ParticipantImport;
 use App\Imports\ParticipantsImport;
 use Illuminate\Http\Request;
@@ -36,5 +37,9 @@ class ExceltController extends Controller
     public function certificadoModelExel()
     {
         return Excel::download(new CertificadoExport, 'Certificado-Modelo-Excel.xlsx');
+    }
+    public function exportParticipantValidados()
+    {
+        return Excel::download(new ValidationExport, 'Lista-Participantes-Validation.xlsx');
     }
 }

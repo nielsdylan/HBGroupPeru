@@ -132,6 +132,8 @@ class HomeController extends Controller
                 'telephone'         =>$user->telephone,
                 'confirme_telephone'=>$user->confirme_telephone,
                 'confirme_email'    =>$user->confirme_email,
+                'change_email'    =>$user->change_email,
+                'change_phone'    =>$user->change_phone,
 
             );
 
@@ -339,6 +341,160 @@ class HomeController extends Controller
                 'response_msg'=>$results
             ]);
         }
+
+
+    }
+    public function changeValidation(Request $request)
+    {
+        $rand_telephone = uniqid();
+        $rand_email = uniqid();
+        $user = User::where('active',1)->where('id',$request->id)->first();
+        $rand_telephone = $rand_telephone.'T'.$user->id;
+        $rand_email = $rand_email.'E'.$user->id;
+        $message='';
+        $message_email_1='El proposito de este mensaje es de confirmar su correo electronico, el mismo mensaje se le envio a su número telefonico con el mismo proposito.';
+        $message_email_2='Por favor confirmar ambos medios de comunicacion para poder ingresar al curso gracias por su comprención.';
+        $message_email_3='Saludos cordiales HB GROUP PERU S.R.L.';
+        $button_email = 'Click para verificar su correo electronico.';
+        $configurations = Configuration::where('active', 1)->first();
+
+        if ($user) {
+            switch ($request->type) {
+                case 'email':
+                    User::where('active', 1)->where('id', $request->id)->update([
+                        'email' => $request->value,
+                        'change_email' => 1,
+                        'code_email'=>$rand_email,
+                        'send_email'=>1
+                    ]);
+                    $message = 'Se envio el mensaje a su correo electronico';
+                    $data = array(
+                        "name"=> $user->name,
+                        "last_name"=> $user->last_name,
+                        "email"=> $user->email,
+                        "message_1"=> 'El proposito de este mensaje es de confirmar su correo electronico por segunda vez, el mismo mensaje se le envio a su número telefonico con el mismo proposito.',
+                        "message_2"=> $message_email_2,
+                        "message_3"=> $message_email_3,
+                        "button"=>$button_email,
+                        "email_from"=>$configurations->sender,
+                        "view"=>"verification",
+                        "subject"=>"HB GROUP PERÚ-AULA VIRTUAL",
+                        "rand"=>$rand_email.'E'.$user->id
+
+                    );
+                    $this->sendEmailValidation($data);
+                break;
+
+                case 'phone':
+                    User::where('active', 1)->where('id', $request->id)->update([
+                        'telephone' => $request->value,
+                        'change_phone' => 1,
+                        'code_telephone' => $rand_telephone,
+                        'send_telephone'=>1
+                    ]);
+                    $message = 'Se envio el mensaje de texto a su número telefonico';
+
+                    $phono=$user->telephone ;
+                    $message="ingrese al link para verificar su nùmero telefonico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."";
+                    $json_game_net = $this->gameNet($phono, $message);
+                    User::where('active', 1)->where('id', $user->id)->update([
+                        'json_game_net' => $json_game_net,
+                    ]);
+                break;
+            }
+
+            return response()->json([
+                'success'=>true,
+                'status'=>200,
+                'type'=>$request->type,
+                'message'=>$message
+            ]);
+        }
+    }
+    public function sendEmailValidation($data)
+    {
+        # code...
+        $mail = new ContactMailable($data);
+        Mail::to($data['email'])->send($mail);
+    }
+    public function changeValidationAfirmation(Request $request)
+    {
+        switch ($request->type) {
+            case 'email':
+                User::where('active', 1)->where('id', $request->id)->update([
+                    'change_email' => 1
+                ]);
+            break;
+
+            case 'phone':
+                User::where('active', 1)->where('id', $request->id)->update([
+                    'change_phone' => 1
+                ]);
+            break;
+        }
+        return response()->json([
+            'success'=>true,
+            'status'=>200
+        ]);
+
+    }
+    public function gameNet($phono, $message)
+    {
+
+        //Ejemplo PHP.  Para verificar libreria CURL use phpinfo()
+
+        $apikey = "O4R7X3PGDJCS";
+        $apicard = "5353000223";
+        $fields_string = "";
+        $smsnumber = $phono;
+        $smstext = $message;
+        $smstype = "0"; // 0: remitente largo, 1: remitente corto
+        $shorturl = "0"; // acortador URL
+
+        //Preparamos las variables que queremos enviar
+        $url = 'http://api2.gamacom.com.pe/smssend'; // Para HTTPS $url = 'https://api3.gamanet.pe/smssend';
+        $fields = array(
+            'apicard'=>urlencode($apicard),
+            'apikey'=>urlencode($apikey),
+            'smsnumber'=>urlencode($smsnumber),
+            'smstext'=>urlencode($smstext),
+            'smstype'=>urlencode($smstype),
+            'shorturl'=>urlencode($shorturl)
+        );
+
+        //Preparamos el string para hacer POST (formato querystring)
+        foreach($fields as $key=>$value) {
+            $fields_string .= $key.'='.$value.'&';
+        }
+        $fields_string = rtrim($fields_string,'&');
+
+
+        //abrimos la conexion
+        $ch = curl_init();
+
+        //configuramos la URL, numero de variables POST y los datos POST
+        curl_setopt($ch,CURLOPT_URL,$url);
+        //curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false); //Descomentarlo si usa HTTPS
+        curl_setopt($ch,CURLOPT_POST,count($fields));
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
+
+        //ejecutamos POST
+        $result = curl_exec($ch);
+
+        if($result===false){
+            echo 'Curl error: '.curl_error($ch);
+            exit();
+        }
+
+        //cerramos la conexion
+        curl_close($ch);
+
+        //Resultado
+        $array = json_decode($result,true);
+        return $array;
+        // echo "error:".$array["message"];
+        // echo "uniqueid:".$array["uniqueid"];
 
 
     }

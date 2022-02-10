@@ -18,3 +18,8 @@
 	<script src="{{asset('assets/calendar/js/fullcalendar/fullcalendar.min.js')}}"></script>
 	<script src="{{asset('assets/calendar/js/fullcalendar/fullcalendar.js')}}"></script>
 	<script src="{{asset('assets/calendar/js/fullcalendar/locale/es.js')}}"></script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>

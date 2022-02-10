@@ -30,6 +30,8 @@
                             <div class="col-md-6 text-right">
                                 <a class="btn btn-light" data-toggle="tooltip" data-original-title="Exportar la lista de los participantes" href="{{route('participant.excel.export')}}"><i class="fas fa-file-excel fon-z"></i></a>
 
+                                <a class="btn btn-light" data-toggle="tooltip" data-original-title="Exportar la lista de los participantes validados" href="{{route('participant.excel.validados')}}"><i class="fas fa-file-excel fon-z"></i></a>
+
                                 {{-- <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('export.model.excel')}}"><i class="fas fa-file-import fon-z"></i></a>
 
                                 <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fa-file-upload fon-z"></i></a> --}}

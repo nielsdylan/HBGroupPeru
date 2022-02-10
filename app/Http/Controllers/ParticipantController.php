@@ -103,6 +103,9 @@ class ParticipantController extends Controller
                 if ($value[4]=='' || $value[4]==null) {
                     $success=false;
                 }
+                if ($value[5]=='' || $value[5]==null) {
+                    $success=false;
+                }
 
             }
         }
@@ -115,13 +118,13 @@ class ParticipantController extends Controller
                     if (!$user) {
 
                         $user = new User();
-                        $user->name             = $value[2];
-                        $user->email            = $value[3];
+                        $user->name             = $value[3];
+                        $user->email            = $value[4];
                         $user->password         = sha1($value[0]);
                         $user->group_id         = 4;
                         $user->dni              = $value[0];
-                        $user->last_name        = $value[1];
-                        $user->telephone        = $value[4];
+                        $user->last_name        = $value[1]." ".$value[2];
+                        $user->telephone        = $value[5];
                         $user->create_by        = session('hbgroup')['user_id'];
                         $user->save();
 
@@ -148,7 +151,7 @@ class ParticipantController extends Controller
                                 "button"=>$button_email,
                                 "email_from"=>$configurations->sender,
                                 "view"=>"verification",
-                                "subject"=>"Autenticación de su correo electronico",
+                                "subject"=>"HB GROUP PERÚ-AULA VIRTUAL",
                                 "rand"=>$rand_email.'E'.$user->id
 
                             );
@@ -165,6 +168,12 @@ class ParticipantController extends Controller
                                 "setPassword"=>"eb9ga5ty"
                             );
                             // sendText($data);
+                            $phono=$user->telephone ;
+                            $message="ingrese al link para verificar su nùmero telefonico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."";
+                            $json_game_net = $this->gameNet($phono, $message);
+                            User::where('active', 1)->where('id', $user->id)->update([
+                                'json_game_net' => $json_game_net,
+                            ]);
                         }
                         User::where('active', 1)->where('id', $user->id)->update([
                             'send_email' => $request->send_email== 1 ? $request->send_email : 0,
@@ -270,7 +279,7 @@ class ParticipantController extends Controller
                 "button"=>$button_email,
                 "email_from"=>$configurations->sender,
                 "view"=>"verification",
-                "subject"=>"Autenticación de su correo electronico",
+                "subject"=>"HB GROUP PERÚ-AULA VIRTUAL",
                 "rand"=>$user->code_email
 
             );
@@ -279,13 +288,14 @@ class ParticipantController extends Controller
         }
         if ($user->send_telephone == 0 && $request->send_telephone == 1) {
             # code...
-            $data =array(
-                "message"=>"ingrese al link para verificar su nùmero telefonico=>".url('/autenticacion?code=').$user->code_telephone."",
-                "destination"=>$request->cell,
-                "setLogin"=>"info@hbgroup.pe",
-                "setPassword"=>"eb9ga5ty"
-            );
-            $this->sendTelephone($data);
+
+            // a qui telefono
+            $phono=$request->cell;
+            $message="ingrese al link para verificar su nùmero telefonico=>".url('/autenticacion?code=').$user->code_telephone."";
+            $json_game_net = $this->gameNet($phono, $message);
+            User::where('active', 1)->where('id', $user->id)->update([
+                'json_game_net' => $json_game_net,
+            ]);
 
         }
         User::where('active', 1)->where('id', $participante->id)
@@ -370,7 +380,6 @@ class ParticipantController extends Controller
             ->select('users.*', 'users_groups.*' )
             ->first();
 
-        // return $curso;
 
         $text='';
         $message_email_1='El proposito de este mensaje es de confirmar su correo electronico, el mismo mensaje se le envio a su número telefonico con el mismo proposito.';
@@ -421,7 +430,7 @@ class ParticipantController extends Controller
                     "button"=>$button_email,
                     "email_from"=>$configurations->sender,
                     "view"=>"verification",
-                    "subject"=>"Autenticación de su correo electronico",
+                    "subject"=>"HB GROUP PERÚ-AULA VIRTUAL",
                     "rand"=>$rand_email.'E'.$user->id
 
                 );
@@ -430,13 +439,14 @@ class ParticipantController extends Controller
 
             if ($request->send_telephone == 1) {
 
-                $data =array(
-                    "message"=>"ingrese al link para verificar su nùmero telefonico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."",
-                    "destination"=>$request->cell,
-                    "setLogin"=>"info@hbgroup.pe",
-                    "setPassword"=>"eb9ga5ty"
-                );
-                $text= $this->sendTelephone($data);
+
+                // a qui telefono
+                $phono=$request->cell;
+                $message="ingrese al link para verificar su nùmero telefonico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."";
+                $json_game_net = $this->gameNet($phono, $message);
+                User::where('active', 1)->where('id', $user->id)->update([
+                    'json_game_net' => $json_game_net,
+                ]);
             }
         }else{
             if ($user->send_email == 0 && $request->send_email ==1) {
@@ -452,7 +462,7 @@ class ParticipantController extends Controller
                     "button"=>$button_email,
                     "email_from"=>$configurations->sender,
                     "view"=>"verification",
-                    "subject"=>"Autenticación de su correo electronico",
+                    "subject"=>"HB GROUP PERÚ-AULA VIRTUAL",
                     "rand"=>$rand_email.'E'.$user->id
 
                 );
@@ -463,13 +473,13 @@ class ParticipantController extends Controller
             }
             if ($user->send_telephone == 0 && $request->send_telephone == 1) {
                 # code...
-                $data =array(
-                    "message"=>"ingrese al link para verificar su nùmero telefonico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."",
-                    "destination"=>$user->telephone,
-                    "setLogin"=>"info@hbgroup.pe",
-                    "setPassword"=>"eb9ga5ty"
-                );
-                $text= $this->sendTelephone($data);
+                // a qui telefono
+                $phono=$request->cell;
+                $message="ingrese al link para verificar su nùmero telefonico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."";
+                $json_game_net = $this->gameNet($phono, $message);
+                User::where('active', 1)->where('id', $user->id)->update([
+                    'json_game_net' => $json_game_net,
+                ]);
                 User::where('active', 1)->where('id', $user->id)->update([
                     'send_telephone' => $request->send_telephone,
                 ]);
@@ -542,4 +552,93 @@ class ParticipantController extends Controller
             return response()->json(view('frontend.private.participants.list_cours', compact('results'))->render());
         }
     }
+    public function searcParticipant(Request $request)
+    {
+        $user = '';
+        $validate = true;
+        $message='';
+        switch ($request->type) {
+            case 'dni':
+                $user = User::where('active',1)->where('dni',$request->slug)->first();
+                $message='Este Número de documento se encuentra registrado';
+            break;
+            case 'phone':
+                $user = User::where('active',1)->where('telephone',$request->slug)->first();
+                $message='Este Número de telefono se encuentra registrado';
+            break;
+            case 'email':
+                $user = User::where('active',1)->where('email',$request->slug)->first();
+                $message='Este Email se encuentra registrado';
+            break;
+
+        }
+        if (!$user) {
+            $validate = false;
+        }
+        return response()->json([
+            'success'=>$validate,
+            'message'=>$message
+        ]);
+    }
+    public function gameNet($phono, $message)
+    {
+
+        //Ejemplo PHP.  Para verificar libreria CURL use phpinfo()
+
+        $apikey = "O4R7X3PGDJCS";
+        $apicard = "5353000223";
+        $fields_string = "";
+        $smsnumber = $phono;
+        $smstext = $message;
+        $smstype = "0"; // 0: remitente largo, 1: remitente corto
+        $shorturl = "0"; // acortador URL
+
+        //Preparamos las variables que queremos enviar
+        $url = 'http://api2.gamacom.com.pe/smssend'; // Para HTTPS $url = 'https://api3.gamanet.pe/smssend';
+        $fields = array(
+            'apicard'=>urlencode($apicard),
+            'apikey'=>urlencode($apikey),
+            'smsnumber'=>urlencode($smsnumber),
+            'smstext'=>urlencode($smstext),
+            'smstype'=>urlencode($smstype),
+            'shorturl'=>urlencode($shorturl)
+        );
+
+        //Preparamos el string para hacer POST (formato querystring)
+        foreach($fields as $key=>$value) {
+            $fields_string .= $key.'='.$value.'&';
+        }
+        $fields_string = rtrim($fields_string,'&');
+
+
+        //abrimos la conexion
+        $ch = curl_init();
+
+        //configuramos la URL, numero de variables POST y los datos POST
+        curl_setopt($ch,CURLOPT_URL,$url);
+        //curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false); //Descomentarlo si usa HTTPS
+        curl_setopt($ch,CURLOPT_POST,count($fields));
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
+
+        //ejecutamos POST
+        $result = curl_exec($ch);
+
+        if($result===false){
+            echo 'Curl error: '.curl_error($ch);
+            exit();
+        }
+
+        //cerramos la conexion
+        curl_close($ch);
+
+        //Resultado
+        $array = json_decode($result,true);
+        return $array;
+        // echo "error:".$array["message"];
+        // echo "uniqueid:".$array["uniqueid"];
+
+
+    }
+
 }

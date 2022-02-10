@@ -91,13 +91,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="dni">Email :</label>
-                                        <input  class="form-control" type="email" name="email" required>
+                                        <input  class="form-control" type="email" name="email" data-search="search" data-type="email" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="cell">Celular :</label>
-                                        <div class="row">
+                                        <input  class="form-control" type="number" name="cell" data-search="search" data-type="phone" required>
+                                        {{-- <div class="row">
                                             <div class="col-md-4">
                                                 <select id="document_type_id" class="form-control select2 my-select"  name="prefixe_id" required>
                                                     <option value="">Seleccione...</option>
@@ -114,9 +115,9 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-8">
-                                                <input  class="form-control" type="number" name="cell" required>
+                                                <input  class="form-control" type="number" name="cell" data-search="search" data-type="email" required>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -158,6 +159,22 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="send_email">Enviar correo electronico : </label>
+                                        <input type="checkbox" data-toggle="toggle" data-on="Si" data-off="No" data-onstyle="success" data-offstyle="danger" name="send_email" value="1" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="send_telephone">Enviar mensaje de texto : </label>
+                                        <input type="checkbox" data-toggle="toggle" data-on="Si" data-off="No" data-onstyle="success" data-offstyle="danger" name="send_telephone" value="1" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <div class="row">
+                                <div class="col-md-12">
                                     <div class="collapse" id="collapseExample">
                                         <div class="card card-body">
                                             <h5 class="card-title"></h5>
@@ -165,7 +182,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="send_email">Enviar correo electronico : </label>
-                                                        <input type="checkbox" data-toggle="toggle" data-on="Si" data-off="No" data-onstyle="success" data-offstyle="danger" name="send_email" value="1">
+                                                        <input type="checkbox" data-toggle="toggle" data-on="Si" data-off="No" data-onstyle="success" data-offstyle="danger" name="send_email" value="1" checked>
                                                     </div>
                                                 </div>
                                             </div>
@@ -173,14 +190,14 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="send_telephone">Enviar mensaje de texto : </label>
-                                                        <input type="checkbox" data-toggle="toggle" data-on="Si" data-off="No" data-onstyle="success" data-offstyle="danger" name="send_telephone" value="1">
+                                                        <input type="checkbox" data-toggle="toggle" data-on="Si" data-off="No" data-onstyle="success" data-offstyle="danger" name="send_telephone" value="1" checked>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="row">
                                 <div class="col-md-12 text-right">
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
@@ -289,25 +306,79 @@
     $(document).on('change','[data-codument="codument"]',function () {
         var slug = $(this).val(),
             search = $(this).attr('data-search'),
-            route = '';
+            route = '',
+            input_this = $(this),
+            question, type='dni';
 
-        slug = slug+'-'+search;
-        route = '{{ route('get.user', ['slug' => 'slug'] ) }}';
-        route = route.replace('slug', slug);
-
-        if (slug) {
-            switch (search) {
-                case 'dni':
-                    APIReniec(route);
-                break;
-                case 'ruc':
-                    APIReniec(route);
-                break;
-                case 'hbgroup':
-                    APIReniec(route);
-                break;
-            }
+        var route_validate = '{{ route('search.participant') }}';
+        data = {
+            slug:slug,
+            type:"dni",
         }
+        $.ajax({
+            method: 'POST',
+            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+            url: route_validate,
+            dataType: 'json',
+            // processData: false,
+            // contentType: false,
+            data: data,
+            beforeSend: function()
+            {
+
+            },
+        }).done(function (response) {
+            if (response.success == false) {
+                slug = slug+'-'+search;
+                route = '{{ route('get.user', ['slug' => 'slug'] ) }}';
+                route = route.replace('slug', slug);
+
+                if (slug) {
+                    switch (search) {
+                        case 'dni':
+                            APIReniec(route);
+                        break;
+                        case 'ruc':
+                            APIReniec(route);
+                        break;
+                        case 'hbgroup':
+                            APIReniec(route);
+                        break;
+                    }
+                }
+            }else{
+                input_this.val('');
+                var placementFrom = 'top';
+                var placementAlign = 'center';
+                var state = 'danger';
+                var style = 'withicon';
+                var content = {};
+
+                content.message = response.message;
+                content.title = 'Error';
+                // if (style == "withicon") {
+                //     content.icon = 'fas fa-times';
+                // } else {
+                //     content.icon = 'none';
+                // }
+                content.icon = 'fas fa-times';
+                content.url = url+'hbgroupp_web';
+                content.target = '_blank';
+
+                $.notify(content,{
+                    type: state,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    },
+                    time: 1000,
+                    delay: 2,
+                });
+            }
+        }).fail(function () {
+            alert("Error");
+        });
+
 
     });
     function APIReniec(route) {
@@ -436,5 +507,63 @@
         // alert("Error");
         });
     });
+    $(document).on('change','[data-search="search"]',function () {
+        var slug = $(this).val(),
+            type = $(this).attr('data-type'),
+            route_validate = '{{ route('search.participant') }}';
+
+        data = {
+            slug:slug,
+            type:type,
+        }
+        $.ajax({
+            method: 'POST',
+            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+            url: route_validate,
+            dataType: 'json',
+            // processData: false,
+            // contentType: false,
+            data: data,
+            beforeSend: function()
+            {
+
+            },
+        }).done(function (response) {
+            if (response.success == false) {
+
+            }else{
+                $('[data-type="'+type+'"]').val('');
+                var placementFrom = 'top';
+                var placementAlign = 'center';
+                var state = 'danger';
+                var style = 'withicon';
+                var content = {};
+
+                content.message = response.message;
+                content.title = 'Error';
+                // if (style == "withicon") {
+                //     content.icon = 'fas fa-times';
+                // } else {
+                //     content.icon = 'none';
+                // }
+                content.icon = 'fas fa-times';
+                content.url = url+'hbgroupp_web';
+                content.target = '_blank';
+
+                $.notify(content,{
+                    type: state,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    },
+                    time: 1000,
+                    delay: 2,
+                });
+            }
+        }).fail(function () {
+            alert("Error");
+        });
+    });
+
 </script>
 @endsection

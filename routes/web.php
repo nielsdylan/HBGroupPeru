@@ -61,6 +61,8 @@ Route::get('getEvents',  [AjaxController::class, 'getEvents'   ] )->name('get.ev
 Route::get('event/{event}',  [AjaxController::class, 'event'   ] )->name('events');
 Route::get('certificados-list',  [HomeController::class, 'certificateView'        ] )->name('certificate.view');
 Route::post('certificados-list',  [HomeController::class, 'certificateList'        ] )->name('certificate.list');
+Route::post('change/validation',[HomeController::class, 'changeValidation'] )->name('change.validation');
+Route::post('change/validation/afirmation',[HomeController::class, 'changeValidationAfirmation'] )->name('change.validation.afirmation');
 // prueba de pdf
 Route::get('certificadoPDF/{number}',  [HomeController::class, 'certificadoPDF'        ] )->name('certificado.pdf');
 
@@ -146,6 +148,7 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::post('participante/excel',[ExceltController::class, 'saveParticipant'] )->name('participant.excel');
     Route::get('model-excel',[ExceltController::class, 'modelExel'] )->name('export.model.excel');
     Route::get('participant-export/excel',[ExceltController::class, 'exportParticipant'] )->name('participant.excel.export');
+    Route::get('participant-validados/excel',[ExceltController::class, 'exportParticipantValidados'] )->name('participant.excel.validados');
 
     Route::resource('cliente', ClientController::class );
     Route::resource('calendarios', CalendarController::class )->names('calendario');
@@ -175,5 +178,5 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::get('preguntas/{examen}/nueva',[QuestionExamController::class, 'create'] )->name('question.create');
     Route::post('save/question',[QuestionExamController::class, 'store'] )->name('question.store');
     Route::get('preguntas/editar/{question}',[QuestionExamController::class, 'edit'] )->name('question.edit');
-
+    Route::post('search/participant',[ParticipantController::class, 'searcParticipant'] )->name('search.participant');
 });
