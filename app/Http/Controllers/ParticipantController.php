@@ -114,14 +114,19 @@ class ParticipantController extends Controller
             foreach ($array[0] as $key => $value) {
                 $exist_cours_participant = false;
                 if ($key!=0) {
-                    $user = User::where('active',1)->where('dni',$value[0])->first();
+                    $user = User::where('users.active', 1)->where('users.dni',$value[0])->where('users_groups.group_id',4)
+                        ->join('users_groups', 'users.id','=','users_groups.user_id')
+                        ->select('users.*')
+                        ->first();
+
+                    // $user = User::where('active',1)->where('dni',$value[0])->first();
                     if (!$user) {
 
                         $user = new User();
                         $user->name             = $value[3];
                         $user->email            = $value[4];
                         $user->password         = sha1($value[0]);
-                        $user->group_id         = 4;
+                        // $user->group_id         = 4;
                         $user->dni              = $value[0];
                         $user->last_name        = $value[1]." ".$value[2];
                         $user->telephone        = $value[5];
@@ -132,6 +137,12 @@ class ParticipantController extends Controller
                             'code_telephone' => $rand_telephone.'T'.$user->id,
                             'code_email'=>$rand_email.'E'.$user->id,
                         ]);
+
+                        $user_groups = new UsersGroup();
+                        $user_groups->user_id   = $user->id;
+                        $user_groups->group_id  = 4;
+                        $user_groups->create_by = session('hbgroup')['user_id'];
+                        $user_groups->save();
 
                         if ($request->send_email == 1) {
                             $message_email_1='El propósito de este mensaje es de confirmar su correo electrónico, el mismo mensaje se le envió a su número telefónico con el mismo propósito.';
@@ -162,7 +173,7 @@ class ParticipantController extends Controller
 
                             $data =array(
                                 "message"=>"Ingrese al link para verificar su número telefónico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."",
-                                "destination"=>$user->telephone,
+                                "destination"=>'51'.$user->telephone,
                                 "setLogin"=>"info@hbgroup.pe",
                                 "setPassword"=>"eb9ga5ty"
                             );
@@ -179,38 +190,37 @@ class ParticipantController extends Controller
                             'send_telephone' => $request->send_telephone == 1 ? $request->send_telephone : 0
                         ]);
 
-                        $participan = new Participant();
-                        $participan->user_id = $user->id;
-                        $participan->create_by = session('hbgroup')['user_id'];
-                        $participan->save();
+                        // $participan = new Participant();
+                        // $participan->user_id = $user->id;
+                        // $participan->create_by = session('hbgroup')['user_id'];
+                        // $participan->save();
 
                     }else{
-                        $participan = Participant::where('active',1)->where('user_id',$user->id)->first();
-                        $search_cours_participant = CoursParticipant::where('active',1)->where('cours_id',$request->course)->where('participant_id',$participan->participant_id)->first();
-                        if ($search_cours_participant) {
-                            $exist_cours_participant = true;
-                        }
+                        // $participan = Participant::where('active',1)->where('user_id',$user->id)->first();
+                        // $search_cours_participant = CoursParticipant::where('active',1)->where('cours_id',$request->course)->where('participant_id',$user->id)->first();
+                        // if ($search_cours_participant) {
+                        //     $exist_cours_participant = true;
+                        // }
 
                     }
 
                     if ($exist_cours_participant == true) {
-                        array_push($participant_exclude_array,
-                            array(
-                                "dni"=>$value[0],
-                                "last_name"=>$value[1],
-                                "name"=>$value[2],
-                            )
-                        );
+                        // array_push($participant_exclude_array,
+                        //     array(
+                        //         "dni"=>$value[0],
+                        //         "last_name"=>$value[1],
+                        //         "name"=>$value[2],
+                        //     )
+                        // );
                     }else{
-                        $cours = Cours::where('active',1)->where('cours_id',$request->course)->first();
+                        // $cours = Cours::where('active',1)->where('cours_id',$request->course)->first();
 
-                        $cours_participant = new CoursParticipant();
-                        // $cours_participant->business_id     = $cours->business_id;
-                        $cours_participant->asignature_id   = $request->asignature;
-                        $cours_participant->participant_id  = $participan->participant_id;
-                        $cours_participant->cours_id        = $cours->cours_id ;
-                        $cours_participant->create_by       = session('hbgroup')['user_id'];
-                        $cours_participant->save();
+                        // $cours_participant = new CoursParticipant();
+                        // $cours_participant->asignature_id   = $request->asignature;
+                        // $cours_participant->participant_id  = $user->participant_id;
+                        // $cours_participant->cours_id        = $cours->cours_id ;
+                        // $cours_participant->create_by       = session('hbgroup')['user_id'];
+                        // $cours_participant->save();
                     }
 
 
@@ -337,11 +347,7 @@ class ParticipantController extends Controller
         ->select('users.*', 'document_types.name as document')
         ->first();
 
-        return view(
-            'frontend.private.participants.show',
-            compact(
-                'participante'
-            )
+        return view('frontend.private.participants.show',compact('participante')
         );
     }
     public function destroy(User $participante)
@@ -473,7 +479,7 @@ class ParticipantController extends Controller
             if ($user->send_telephone == 0 && $request->send_telephone == 1) {
                 # code...
                 // a qui telefono
-                $phono=$request->cell;
+                $phono='51'.$request->cell;
                 $message="Ingrese al link para verificar su número telefónico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."";
                 $json_game_net = $this->gameNet($phono, $message);
                 User::where('active', 1)->where('id', $user->id)->update([
@@ -537,7 +543,7 @@ class ParticipantController extends Controller
         if ($request->ajax()) {
 
             $results = CoursParticipant::where('cours_participants.active',1)
-                ->where('cours_participants.user_id',$request->id)
+                ->where('cours_participants.participant_id',$request->id)
                 ->where('cours.active',1)
                 ->where('users.active',1)
                 ->join('cours', 'cours_participants.cours_id', '=', 'cours.cours_id')
@@ -638,6 +644,51 @@ class ParticipantController extends Controller
         // echo "uniqueid:".$array["uniqueid"];
 
 
+    }
+    public function getPaginationParticipant(Request $request)
+    {
+
+        if ($request->ajax()) {
+
+            $results = User::where('users.active', 1)->where('users_groups.group_id',4)
+                ->join('users_groups', 'users.id','=','users_groups.user_id')
+                ->select('users.*', 'users_groups.*' );
+            // $participants = UsersGroup::where('users.active',1)->where('users_groups.group_id',4)->where('users_businesses.active',1)
+            //     ->join("users", "users.id", "=", "users_groups.user_id")
+            //     ->join("users_businesses", "users_businesses.user_id", "=", "users.id")
+            //     ->select("users.*", "users_businesses.name as business")
+            //     ->get();
+
+            if (!empty($request->dni)) {
+                $results = $results->where('users.dni','=',$request->dni);
+            }
+
+            if (!empty($request->name)){
+                $results = $results->where('users.name','like','%'.$request->name.'%')->orWhere('users.last_name','like','%'.$request->name.'%');
+            }
+            $results = $results->paginate(6);
+            return response()->json(view('frontend.private.participants.list_participants', compact('results'))->render());
+        }
+    }
+    public function oneValidation(Request $request)
+    {
+        switch ($request->type) {
+            case 'email':
+                User::where('active', 1)->where('id', $request->id)->update([
+                    'confirme_email' => $request->confirmation
+                ]);
+            break;
+
+            case 'telephone':
+                User::where('active', 1)->where('id', $request->id)->update([
+                    'confirme_telephone' => $request->confirmation
+                ]);
+            break;
+        }
+        return response()->json([
+            'status'=>200,
+            'success'=>true
+        ]);
     }
 
 }

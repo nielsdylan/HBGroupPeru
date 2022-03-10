@@ -50,6 +50,7 @@
                                 <h5 class="card-title text-center">Información del Alumno</h5>
                                 <div class="row">
                                     <div class="col-md-6 text-right">
+
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <label>Apellidos : </label>
@@ -107,13 +108,13 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Correo electronico</td>
+                                                    <td>Correo electronico </td>
                                                     <td>{{$result['email']}}</td>
                                                     <td class="text-center" data-html="email">
                                                         @if ($result['confirme_email']==0)
                                                         <i class="fas fa-times text-danger " data-remove="remove"></i>
-                                                        <button class="btn btn-primary" data-action="question" data-remove="remove" data-value="si" data-html="email" data-toggle="tooltip" data-placement="top" title="Tooltip on top">Si</button>
-                                                        <button class="btn btn-danger" data-action="question" data-remove="remove" data-value="no" data-html="email" data-toggle="tooltip" data-placement="top" title="Tooltip on top">No</button>
+                                                        <button class="btn btn-primary tooltip" data-action="question" data-remove="remove" data-value="si" data-html="email"  >Si <span class="tooltiptext">el tooltip</span></button>
+                                                        <button class="btn btn-danger" data-action="question" data-remove="remove" data-value="no" data-html="email"  >No</button>
                                                         @else
                                                         <i class="fas fa-check text-success "></i>
                                                         @endif
@@ -126,8 +127,8 @@
                                                         @if ($result['confirme_telephone']==0)
                                                         <i class="fas fa-times text-danger " data-remove="remove"></i>
                                                         @if ($result['change_phone']==0)
-                                                            <button class="btn btn-primary" data-action="question" data-remove="remove" data-value="si" data-html="phone" data-toggle="tooltip" data-placement="top" title="Tooltip on top">Si</button>
-                                                            <button class="btn btn-danger" data-action="question" data-remove="remove" data-value="no" data-html="phone" data-toggle="tooltip" data-placement="top" title="Tooltip on top">No</button>
+                                                            <button class="btn btn-primary" data-action="question" data-remove="remove" data-value="si" data-html="phone"  >Si</button>
+                                                            <button class="btn btn-danger" data-action="question" data-remove="remove" data-value="no" data-html="phone"  >No</button>
                                                         @endif
 
                                                         @else
@@ -139,6 +140,35 @@
                                         </table>
                                     </div>
                                 </div>
+                                @if ($result['confirme_email']==0)
+                                    @if ($result['change_email']==0)
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="alert alert-info alert-text" role="alert">
+                                                Confirme si los datos son correctos, en caso contrario marque una opción:
+                                                Si: Informacion recibida para su validacióm.
+                                                No: Tendra una oportunidad de cambiar su informacion.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                @endif
+                                @if ($result['confirme_telephone']==0)
+                                    @if ($result['change_phone']==0)
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="alert alert-info alert-text" role="alert">
+                                                Confirme si los datos son correctos, en caso contrario marque una opción:
+                                                Si: Informacion recibida para su validacióm.
+                                                No: Tendra una oportunidad de cambiar su informacion.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                @endif
+
 
                             </div>
                         </div>
@@ -251,8 +281,8 @@
                                                     <td class="text-center" data-html="email">
                                                         @if ($result['confirme_email']==0)
                                                         <i class="fas fa-times text-danger "></i>
-                                                        <button class="btn btn-primary" data-action="question" data-remove="remove" data-value="si" data-html="email" data-toggle="tooltip" data-placement="top" title="Tooltip on top">Si</button>
-                                                        <button class="btn btn-danger" data-action="question" data-remove="remove" data-value="no" data-html="email" data-toggle="tooltip" data-placement="top" title="Tooltip on top">No</button>
+                                                        <button class="btn btn-primary" data-action="question" data-remove="remove" data-value="si" data-html="email"  >Si</button>
+                                                        <button class="btn btn-danger" data-action="question" data-remove="remove" data-value="no" data-html="email"  >No</button>
                                                         @else
                                                         <i class="fas fa-check text-success "></i>
                                                         @endif
@@ -266,8 +296,8 @@
                                                         <i class="fas fa-times text-danger "></i>
 
                                                         @if ($result['change_phone']==0)
-                                                            <button class="btn btn-primary" data-action="question" data-remove="remove" data-value="si" data-html="phone" data-toggle="tooltip" data-placement="top" title="Tooltip on top">Si</button>
-                                                            <button class="btn btn-danger" data-action="question" data-remove="remove" data-value="no" data-html="phone" data-toggle="tooltip" data-placement="top" title="Tooltip on top">No</button>
+                                                            <button class="btn btn-primary" data-action="question" data-remove="remove" data-value="si" data-html="phone"  >Si</button>
+                                                            <button class="btn btn-danger" data-action="question" data-remove="remove" data-value="no" data-html="phone"  >No</button>
                                                         @endif
                                                         @else
                                                         <i class="fas fa-check text-success "></i>
@@ -276,6 +306,38 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @if ($result['confirme_email']==0)
+                                            @if ($result['change_email']==0)
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-info alert-text" role="alert">
+                                                        Confirme si los datos son correctos, en caso contrario marque una opción:
+                                                        Si: Informacion recibida para su validacióm.
+                                                        No: Tendra una oportunidad de cambiar su informacion.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
+                                        @endif
+                                        @if ($result['confirme_telephone']==0)
+                                            @if ($result['change_phone']==0)
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-info alert-text" role="alert">
+                                                        Confirme si los datos son correctos, en caso contrario marque una opción:
+                                                        Si: Informacion recibida para su validacióm.
+                                                        No: Tendra una oportunidad de cambiar su informacion.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -324,6 +386,8 @@
             var value = $(this).attr('data-value'),
                 type = $(this).attr('data-html'),
                 html='';
+
+            $('.alert-text').remove();
             if (value=='no') {
                 switch (type) {
                     case 'email':

@@ -95,7 +95,7 @@
     <img src="{{asset('uploads/public/iconBOT.png')}}" class="btn-hb-bot hb-bot-hover">
     <div class="btn-hb-msg-bot display-none-item">Hola, ¿Te puedo ayudar en algo?</div>
 </a> --}}
-@if ($configurations->whatsapp)<a href="https://wa.me/+51{{ $configurations->whatsapp}}?text=Mi consulta es..." target="_blank" id="whatsapp-floot" class="btn-whatsapp-link"><i class="fab fa-whatsapp"></i></a>@endif
+@if ($configurations->whatsapp)<a href="https://wa.me/+51{{ $configurations->whatsapp}}?text=Mi consulta es..." target="_blank" id="whatsapp-floot" class="btn-whatsapp-link d-none"><i class="fab fa-whatsapp"></i></a>@endif
 <a href="#" id="back-to-top" class="btn btn-lg btn-back-top"><i class="fa fa-angle-up"></i></a>
 <section id="footer">
     <div class="pre-footer">

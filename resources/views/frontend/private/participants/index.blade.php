@@ -40,50 +40,27 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="add-row" class="display table table-striped table-hover" >
-                                <thead>
-                                    <tr>
-                                        <td>DNI</td>
-                                        <td>APELLIDOS</td>
-                                        <td>NOMBRE</td>
-                                        {{-- <td>EMAIL</td>
-                                        <td>CELULAR</td>
-                                        <td>EMPRESA</td> --}}
-                                        <th style="width: 10%">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if ($participants)
-                                        @foreach ($participants as $key=>$item)
-                                            <tr>
-                                                <td>{{$item->dni}}</td>
-                                                <td>{{$item->last_name}}</td>
-                                                <td>{{$item->name}}</td>
-                                                {{-- <td>{{$item->email}}</td>
-                                                <td>{{$item->telephone}}</td>
-                                                <td>{{$item->name_business}}</td> --}}
-                                                <td>
-                                                    <div class="form-button-action">
-                                                        <a data-toggle="tooltip" title="" class="btn btn-link btn-warning btn-lg" data-original-title="Asignar cursos al participante"  href="{{route('asignacion-cursos.index').'?DNI='.$item->dni}}">
-                                                            <i class="fas fa-project-diagram"></i>
-                                                        </a>
-                                                        <a data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Ver a {{$item->last_name}}"  href="{{route('participantes.show',$item->id)}}">
-                                                            <i class="fas fa-eye"></i>
-                                                        </a>
-                                                        <a type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar {{$item->last_name}}"  data-id="{{$item->participant_id  }}" href="{{route('participantes.edit', $item->id)}}">
-                                                            <i class="fa fa-edit"></i>
-                                                        </a>
-                                                        <a type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Eliminar {{$item->last_name}}" data-delete="modal" data-id="{{$item->id  }}">
-                                                            <i class="fa fa-times"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                </tbody>
-                            </table>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input class="form-control" type="text" name="dni" placeholder="DNI..." >
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input class="form-control" type="text" name="name" placeholder="Apellidos/Nombres..." >
+                                </div>
+                            </div>
+                            <div class="col-md-3 mt-2">
+                                <button type="button" class="btn btn-primary btn-round" data-action="search"><i class="fas fa-search"></i>  Buscar</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                               <div class="table-responsive" data-table="table">
+
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -115,7 +92,7 @@
                         <form action="{{route('participantes.store')}}" method="post" enctype="multipart/form-data" data-form="save-excel">
                             @csrf
                             <div class="row">
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="asignature">Asignatura <span class="required-label">*</span>:</label>
                                         <select class="form-control" name="asignature" select-cours="get-cours" data-select="get-course" required>
@@ -133,7 +110,7 @@
                                             <option value="">Seleccione...</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
@@ -172,6 +149,11 @@
 
 </div>
 <script>
+    var data ={};
+    $(document).ready(function () {
+        getPagination();
+    });
+
     $(document).on('click','[data-action="participant-import"]',function (e) {
         e.preventDefault();
         $('#import-excel-participant').modal('show');
@@ -392,5 +374,92 @@
     $(document).on('click','.close-alert',function () {
         $('[data-table="response"]').html('');
     });
+
+
+    $(document).on('click','[data-action="search"]',function () {
+        getPagination();
+    });
+    $(document).on('click','.pagination a',function (e) {
+        e.preventDefault();
+        var page = $(this).attr('href').split('page=')[1];
+        getPagination(page);
+    });
+    function getPagination(page) {
+        route = '{{ route('participant.list') }}';
+        data.page = page;
+        $.ajax({
+            method: 'GET',
+            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+            url: route,
+            dataType: 'json',
+            data: data,
+            beforeSend: function()
+            {
+                $('[data-table="table"]').addClass('is-loading is-loading-lg');
+            },
+        }).done(function (response) {
+            $('[data-table="table"]').removeClass('is-loading is-loading-lg');
+            if (response) {
+                $('[data-table="table"]').html(response);
+            }
+        }).fail(function () {
+            alert("Error");
+        });
+    }
+    $(document).on('change','[name="name"]',function () {
+        var name=$(this).val();
+        data.name = name;
+        getPagination();
+    });
+    $(document).on('change','[name="dni"]',function () {
+        var dni=$(this).val();
+        data.dni = dni;
+        getPagination();
+    });
+    $(document).on('click','.confirmation-email',function () {
+        var id=$(this).val();
+        if( $(this).is(':checked') ){
+            // Hacer algo si el checkbox ha sido seleccionado
+            oneValidation(id,1,"email")
+        } else {
+            // Hacer algo si el checkbox ha sido deseleccionado
+            oneValidation(id,0,"email")
+        }
+
+    });
+    $(document).on('click','.confirmation-telephone',function () {
+        var id=$(this).val();
+        if( $(this).is(':checked') ){
+            // Hacer algo si el checkbox ha sido seleccionado
+            oneValidation(id,1,"telephone")
+
+        } else {
+            // Hacer algo si el checkbox ha sido deseleccionado
+            oneValidation(id,0,"telephone")
+        }
+    });
+    function oneValidation(id,confirmation,type) {
+        route = '{{ route('one.validation') }}';
+        $.ajax({
+            method: 'POST',
+            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+            url: route,
+            dataType: 'json',
+            data: {
+                id:id,
+                confirmation:confirmation,
+                type:type
+            },
+            beforeSend: function()
+            {
+                // $('[data-table="table"]').addClass('is-loading is-loading-lg');
+            },
+        }).done(function (response) {
+            // $('[data-table="table"]').removeClass('is-loading is-loading-lg');
+
+        }).fail(function () {
+            alert("Error");
+        });
+    }
 </script>
 @endsection

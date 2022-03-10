@@ -73,6 +73,11 @@
                                     <span class="sub-item">Examen</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{route('validacion.index')}}">
+                                    <span class="sub-item">Validación</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

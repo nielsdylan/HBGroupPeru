@@ -90,6 +90,7 @@ class HomeController extends Controller
     public function autentication()
     {
         $configurations = Configuration::where('active', 1)->first();
+
         if (!empty($_GET['code']) ) {
             $code_tele = strpos($_GET['code'], 'T');
             $code_email = strpos($_GET['code'], 'E');
@@ -107,7 +108,9 @@ class HomeController extends Controller
             }else{
                 return view('errors.404');
             }
+
             $user = User::where('active',1)->where('id',$strin[1])->first();
+            // return $user;
             if ($user->confirme_telephone == 1 && $user->confirme_email == 1) {
                 $data = array(
                     "name"=> $user->name,

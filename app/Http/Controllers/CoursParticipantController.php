@@ -38,13 +38,13 @@ class CoursParticipantController extends Controller
     public function store(Request $request)
     {
 
-        $participant = Participant::where('user_id',$request->id)->first();
+        // $participant = Participant::where('user_id',$request->id)->first();
         // return $participant;
 
         if (!empty($request->cours)) {
             $existen = false;
             foreach ($request->cours as $key => $value) {
-                $cours_exist = CoursParticipant::where('active',1)->where('cours_id',$value)->where('user_id',$request->id)->first();
+                $cours_exist = CoursParticipant::where('active',1)->where('cours_id',$value)->where('participant_id',$request->id)->first();
                 if ($cours_exist) {
                     $existen = true;
                 }
@@ -56,7 +56,7 @@ class CoursParticipantController extends Controller
 
                     $cours_participant = new CoursParticipant();
                     $cours_participant->asignature_id = $cours->asignature_id;
-                    $cours_participant->user_id =$request->id;
+                    $cours_participant->participant_id =$request->id;
                     $cours_participant->cours_id =$value;
                     $cours_participant->save();
                 }
@@ -68,7 +68,7 @@ class CoursParticipantController extends Controller
                     'state'=>'success',
                     'style'=>'withicon',
                     'message'=>'Se guardo con éxito',
-                    'title'=>'Éxito',
+                    'title'=>'Seleccion de cursos',
                     'icon'=>'fas fa-check',
                 ]);
             }else{
@@ -79,7 +79,7 @@ class CoursParticipantController extends Controller
                     'state'=>'warning',
                     'style'=>'withicon',
                     'message'=>'Asignese cursos que no ha llevado.',
-                    'title'=>'Curso ya asignados',
+                    'title'=>'Seleccion de cursos',
                     'icon'=>'fas fa-info',
                 ]);
             }
@@ -87,7 +87,14 @@ class CoursParticipantController extends Controller
         }else{
             return response()->json([
                 'success'=>false,
-                'status'=>404
+                'status'=>404,
+                'placementFrom'=>'top',
+                'placementAlign'=>'center',
+                'state'=>'warning',
+                'style'=>'withicon',
+                'message'=>'Seleccione almenos un curso.',
+                'title'=>'Seleccion de cursos',
+                'icon'=>'fas fa-info',
             ]);
         }
     }

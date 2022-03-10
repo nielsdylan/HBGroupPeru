@@ -1012,3 +1012,28 @@ p{
     }
 }
 
+/* Animación con keyframe llamada "latidos" */
+@keyframes latidos {
+    from { transform: none; }
+    50% { transform: scale(1.1); }
+    to { transform: none; }
+}
+/* En la clase corazon vamos a llamar latidos en la animación  */
+.corazon {
+	display: inline-block;
+	/* font-size: 150px;
+	text-shadow: 0 0 10px #222,1px 1px  0 #450505;
+	color: red; */
+	animation: latidos .9s infinite;
+	transform-origin: center;
+}
+.hidden{
+    overflow: hidden;
+}
+.centrado{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

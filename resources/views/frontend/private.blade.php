@@ -9,7 +9,8 @@
     @include('frontend.layouts.private.css')
     @include('frontend.layouts.private.js')
 </head>
-<body data-background-color="bg3">
+<body class="hidden" data-background-color="bg3">
+
 	<div class="wrapper">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <script type="text/javascript"> var url="{{url('').'/'}}"; </script>

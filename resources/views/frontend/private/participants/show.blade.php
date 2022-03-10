@@ -165,7 +165,7 @@
             route = '{{ route('delete.participant.cours') }}';;
         swal({
             title: "Eliminar",
-            text: "¿Esta seguro de elimnar este participante?",
+            text: "¿Esta seguro de elimnar este curso?",
             type: "info",
             showCancelButton: true,
             closeOnConfirm: false,

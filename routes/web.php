@@ -30,6 +30,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\TurnController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ValidationController;
 use App\Models\QuestionsExam;
 use Illuminate\Routing\RouteGroup;
 
@@ -138,6 +139,7 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::resource('participantes', ParticipantController::class );
     Route::post('participantes-add',[ParticipantController::class, 'add'] )->name('participantes.add');
     Route::get('get-participant',[ParticipantController::class, 'getPagination'] )->name('get.pagination.participant');
+    Route::get('participant-list',[ParticipantController::class, 'getPaginationParticipant'] )->name('participant.list');
     Route::resource('asignatura', AsignatureController::class );
     Route::get('getAsignature',[AsignatureController::class, 'getAsignature'] )->name('get.asignature');
     Route::resource('asignacion-cursos', CoursParticipantController::class );
@@ -179,4 +181,9 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::post('save/question',[QuestionExamController::class, 'store'] )->name('question.store');
     Route::get('preguntas/editar/{question}',[QuestionExamController::class, 'edit'] )->name('question.edit');
     Route::post('search/participant',[ParticipantController::class, 'searcParticipant'] )->name('search.participant');
+
+    #validacion
+    Route::resource('validacion', ValidationController::class );
+    Route::get('validation-list',[ValidationController::class, 'getPagination'] )->name('validation.list');
+    Route::post('one-validation',[ParticipantController::class, 'oneValidation'] )->name('one.validation');
 });

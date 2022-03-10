@@ -1,3 +1,8 @@
+window.onload =function () {
+    $('#loadhb').fadeOut();
+    $('body').removeClass('hidden');
+    $('#whatsapp-floot').removeClass('d-none')
+}
 $(document).ready(function(){
 
     var obj_act_top = $(this).scrollTop();

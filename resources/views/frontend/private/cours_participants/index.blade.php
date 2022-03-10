@@ -14,7 +14,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Lista de participantes</a>
+                    <a href="#">Selección de cursos</a>
                 </li>
             </ul>
         </div>
@@ -274,13 +274,13 @@
                     }
                 }else{
                     alertDashboard(
-                        'top',
-                        'center',
-                        'danger',
-                        'withicon',
-                        'Ocurrio un error comuniquese con el area encargada',
-                        'Error',
-                        'fas fa-times',
+                        response.placementFrom,
+                        response.placementAlign,
+                        response.state,
+                        response.style,
+                        response.message,
+                        response.title,
+                        response.icon,
                     );
                 }
 
