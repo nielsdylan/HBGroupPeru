@@ -8,19 +8,23 @@
                     background-size: cover;
                     background-position: center;
                     background-repeat: no-repeat;
-                    height: 550px;"></div>
+                    height: 550px;">
+                </div>
                 <div class="img-fluid d-none d-sm-block d-md-none"  style="
                     background: url('{{asset('uploads/slider/'.$item->image)}}');
                     background-size: cover;
                     background-position: center;
                     background-repeat: no-repeat;
-                    height: 300px;"></div>
+                    height: 300px;">
+                </div>
                 <div class="img-fluid d-block d-sm-none"  style="
                     background: url('{{asset('uploads/slider/'.$item->image)}}');
                     background-size: cover;
                     background-position: center;
                     background-repeat: no-repeat;
-                    height: 200px;"></div>
+                    height: 200px;">
+                </div>
+
             </div>
         @endforeach
     </div>
@@ -33,3 +37,11 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
+<div class="certificates-here d-lg-block d-md-none d-none d-sm-none" data-visible="visible">
+    <h1 class="text-white">Revisa tus certificados aquí</h1>
+    <a href="{{route('certificate.view')}}" target="_blank" class="btn btn-primary btn-pulse"><i class="fas fa-certificate"></i> CERTIFICADOS</a>
+</div>
+{{-- <div class="certificates-here-movil">
+    <h1 class="text-white">Revisa tus certificados aquí</h1>
+    <a href="{{route('certificate.view')}}" target="_blank" class="btn btn-primary"><i class="fas fa-certificate"></i> CERTIFICADOS</a>
+</div> --}}

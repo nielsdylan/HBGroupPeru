@@ -1,7 +1,8 @@
 window.onload =function () {
     $('#loadhb').fadeOut();
     $('body').removeClass('hidden');
-    $('#whatsapp-floot').removeClass('d-none')
+    $('#whatsapp-floot').removeClass('d-none');
+    $('[data-visible="visible"]').removeClass('d-none');
 }
 $(document).ready(function(){
 

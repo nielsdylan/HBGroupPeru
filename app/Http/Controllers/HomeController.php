@@ -10,6 +10,7 @@ use App\Models\Configuration;
 use App\Models\Customer;
 use App\Models\Event;
 use App\Models\Instructor;
+use App\Models\Organizer;
 use App\Models\Participant;
 use App\Models\Question;
 use App\Models\QuestionsResponse;
@@ -47,19 +48,71 @@ class HomeController extends Controller
     {
         //para la empresa
         $configurations = Configuration::where('active', 1)->first();
-        $data = array(
-            "name"=> $request->name,
-            "last_name"=> $request->last_name,
-            "email"=> $request->email,
-            "telephone"=> $request->telephone,
-            "message"=> $request->message,
-            "email_from"=>$request->email,
-            "view"=>"contact",
-            "subject"=>"Contactanos"
+        // $data = array(
+        //     "name"=> $request->name,
+        //     "last_name"=> $request->last_name,
+        //     "email"=> $request->email,
+        //     "telephone"=> $request->telephone,
+        //     "message"=> $request->message,
+        //     "email_from"=>$request->email,
+        //     "view"=>"contact",
+        //     "subject"=>"Contactanos"
+
+        // );
+        // $mail = new ContactMailable($data);
+        // Mail::to($configurations->sender)->send($mail);
+        $organizer = Organizer::where('active',1)->where('organizer_id',2)->first();
+        $refresh_token = $this->tokenTeams($organizer->refresh_token);
+        $refresh_token = json_decode($refresh_token);
+        $json = array(
+            "message"=>array(
+                "subject"=> "CONSULTAR",
+                "body"=>array(
+                    "contentType"=> "HTML",
+                    "content"=> "<p>Apellidos y Nombres: ".$request->last_name." ".$request->name."</p><p> Email: ".$request->email."</p><p>Celular: ".$request->telephone."</p><p>".$request->message."</p>"
+                ),
+                "toRecipients"=>array(
+                    array(
+                        "emailAddress"=>array(
+                            "address"=> "comercial@hbgroup.pe"
+                        )
+                    )
+                ),
+                "ccRecipients"=>array(
+                    array(
+                        "emailAddress"=>array(
+                            "address"=> "abejarano@hbgroup.pe"
+                        )
+                    )
+                )
+            ) ,
+            "saveToSentItems"=> "true"
 
         );
-        $mail = new ContactMailable($data);
-        Mail::to($configurations->sender)->send($mail);
+
+        $json = json_encode($json);
+        $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://graph.microsoft.com/v1.0/me/sendmail',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS =>''.$json,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Authorization: Bearer '.$refresh_token->access_token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        // echo $response;
 
         //para el cliente
         $data = array(
@@ -501,5 +554,30 @@ class HomeController extends Controller
         // echo "uniqueid:".$array["uniqueid"];
 
 
+    }
+    public function tokenTeams($refresh_token)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS => 'client_id=b57f99a3-d61e-4a74-a79e-aa91d4bc03d6&scope=user.read&client_secret=K4C7Q~Nh3hI1.ISsGuasCyoGRIIlkxGxOzbmX&grant_type=refresh_token&refresh_token='.$refresh_token.'&redirect_uri=https%3A%2F%2Fhbgroup.pe%2Ftoken',
+          CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/x-www-form-urlencoded',
+            'Cookie: buid=0.AX0AFSpzYanp7UyxmM5mlR5hQaOZf7Ue1nRKp56qkdS8A9Z9AAA.AQABAAEAAAD--DLA3VO7QrddgJg7WevrubmlCuWp9TD2C1ChDRnWpr5j2nuKX9MfpfhBWqwfKinDauPn5rKYYyL8WxCf1aR090M48C690cz8OrCwn0jF-7nPpkmpcgm7cpMXJjTb8IAgAA; fpc=ArDA9pPZuqJKhADCdbCSXaEs2i1RAQAAAMmnrdgOAAAA; stsservicecookie=estsfd; x-ms-gateway-slice=estsfd'
+          ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        return $response;
     }
 }

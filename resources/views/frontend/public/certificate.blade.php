@@ -11,12 +11,32 @@
             </div>
             <div class="row d-none d-sm-none d-lg-block d-md-block animated slideInUp">
                 <div class="col-md-6 offset-3  text-justify">
-                    <p>La empresa HB GROUP PERÚ S.R.L. brindar servicios de calidad, pone a disposición, el siguiente formulario en el cual pueden descargar los certificados correspondientes.</p>
+                    {{-- <p>La empresa HB GROUP PERÚ S.R.L. brindar servicios de calidad, pone a disposición, el siguiente formulario en el cual pueden descargar los certificados correspondientes.</p> --}}
+                    <p>
+                        Los certificados de los cursos portuarios son emitidos por la AUTORIDAD PORTUARIA NACIONAL (APN), puedes descargarlos colocando tu DNI en el siguiente enlace
+                    </p>
+                    <p class="text-center">
+                        <a href="https://cursos.apn.gob.pe/cursos/certificado/consulta-certificado" target="_blank" class="btn btn-danger">SISTEMA DE AUTORIDAD PORTUARIA</a>
+                    </p>
+
+                    <p>
+                        Para otros cursos realizados por HB Group Perú puedes descargarlos aquí, ingresa tu número de documentó aquí:
+                    </p>
                 </div>
             </div>
             <div class="row d-block d-sm-block d-lg-none d-md-none animated slideInUp">
                 <div class="col-md-12 text-justify">
-                    <p>La empresa HB GROUP PERÚ S.R.L. brindar servicios de calidad, pone a disposición, el siguiente formulario en el cual pueden descargar los certificados correspondientes.</p>
+                    {{-- <p>La empresa HB GROUP PERÚ S.R.L. brindar servicios de calidad, pone a disposición, el siguiente formulario en el cual pueden descargar los certificados correspondientes.</p> --}}
+                    <p>
+                        Los certificados de los cursos portuarios son emitidos por la AUTORIDAD PORTUARIA NACIONAL (APN), puedes descargarlos colocando tu DNI en el siguiente enlace
+                    </p>
+                    <p class="text-center">
+                        <a href="https://cursos.apn.gob.pe/cursos/certificado/consulta-certificado" target="_blank" class="btn btn-danger">SISTEMA DE AUTORIDAD PORTUARIA</a>
+                    </p>
+
+                    <p>
+                        Para otros cursos realizados por HB Group Perú puedes descargarlos aquí, ingresa tu número de documentó aquí:
+                    </p>
                 </div>
             </div>
             <div class="row d-none d-sm-none d-lg-block d-md-block ">
