@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Asignature;
+use App\Models\Cours;
 use App\Models\Event;
 use DateTime;
 use Illuminate\Http\Request;
@@ -11,7 +13,8 @@ class CalendarController extends Controller
     //
     public function index()
     {
-        return view('frontend.private.calendar.index');
+        $asignature = Asignature::where('active',1)->where('status',1)->get();
+        return view('frontend.private.calendar.index',compact('asignature'));
     }
     public function store(Request $request)
     {
@@ -36,12 +39,22 @@ class CalendarController extends Controller
             'status'=>200,
         ]);
     }
-    public function edit(Event $calendario)
+    public function edit($calendario)
     {
+        // return $calendario
+        // return $event =   Cours::where('cours.cours_id',$calendario)->where('cours.calendar',1)
+        //     ->join("asignatures", "asignatures.asignature_id", "=", "cours.asignature_id")
+        //     ->select("asignatures.name as asignature_name", "asignatures.abbreviation", "cours.*")
+        //     ->first();
+        $asignature = Asignature::where('active',1)->where('status',1)->get();
         return response()->json([
             'success'=>true,
             'status'=>200,
-            'result'=>$calendario
+            'result'=>Cours::where('cours.cours_id',$calendario)->where('cours.calendar',1)
+            ->join("asignatures", "asignatures.asignature_id", "=", "cours.asignature_id")
+            ->select("asignatures.name as asignature_name", "asignatures.abbreviation", "asignatures.asignature_id", "cours.*")
+            ->first(),
+            'asignature'=>$asignature
         ]);
     }
     public function update(Request $request, Event $calendario)

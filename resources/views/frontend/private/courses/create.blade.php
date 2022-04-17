@@ -36,17 +36,6 @@
                     <div class="card-body">
                         <form action="{{route('cursos.store')}}" method="POST" data-form="form">
                             <div class="row">
-                                {{-- <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="bussiness_id">Empresas<span class="required-label">*</span>:</label>
-                                        <select class="form-control" name="bussiness_id" id="bussiness_id" required>
-                                            <option value="">Seleccione...</option>
-                                            @foreach ($business as $key=>$item)
-                                                <option value="{{$item->business_id}}">{{$item->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> --}}
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="asignature">Asignatura<span class="required-label">*</span>:</label>
@@ -69,24 +58,21 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="code">Codigo<span class="required-label">*</span>:</label>
                                         <input id="code" class="form-control" type="text" name="code" search="code-search" required>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="course">Curso<span class="required-label">*</span>:</label>
                                         <input id="course" class="form-control" type="text" name="course" required>
                                     </div>
                                 </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="date_start">Fecha<span class="required-label">*</span>:</label>
                                         {{-- <input id="date_start" class="form-control" type="date" name="date_start" required> --}}
@@ -100,6 +86,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="hour_start">Inicio<span class="required-label">*</span>:</label>
@@ -128,6 +117,21 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="vacancies">Vacantes<span class="required-label">*</span>:</label>
+                                        <input id="vacancies" class="form-control" type="number" name="vacancies" value="20" required>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="calendar">Calendario <span class="required-label">*</span>:</label>
+                                        <input type="checkbox" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-style="btn-round" data-on="Si" data-off="No" name="calendar" value="1">
+
+                                    </div>
+
                                 </div>
                             </div>
 

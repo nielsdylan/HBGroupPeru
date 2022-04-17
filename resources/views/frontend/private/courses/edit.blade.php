@@ -70,24 +70,22 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="code">Codigo<span class="required-label">*</span>:</label>
                                         <input id="code" class="form-control" type="text" name="code" search="search" value="{{$curso->code}}" required>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="course">Curso<span class="required-label">*</span>:</label>
                                         <input id="course" class="form-control" type="text" name="course" value="{{$curso->course}}" required>
                                     </div>
                                 </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="date_start">Fecha<span class="required-label">*</span>:</label>
                                         {{-- <input id="date_start" class="form-control" type="date" name="date_start" required> --}}
@@ -101,6 +99,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="hour_start">Inicio<span class="required-label">*</span>:</label>
@@ -130,6 +131,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="vacancies">Vacantes <span class="required-label">*</span>:</label>
+                                        <i class="fas fa-info-circle
+                                        vacancies" data-toggle="tooltip" data-placement="top" title="Click para ver el historial de las vacantes" > </i><input id="vacancies" class="form-control" type="number" name="vacancies" value="{{$vacancies->number}}" max="20" required>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="calendar">Calendario <span class="required-label">*</span>:</label>
+                                        <input type="checkbox" {{$curso->calendar==1?'checked':''}} data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-style="btn-round" data-on="Si" data-off="No" name="calendar" value="1">
+
+                                    </div>
+
+                                </div>
                             </div>
 
                             <div class="separator-solid"></div>
@@ -146,7 +163,28 @@
             </div>
         </div>
     </div>
+
+    {{-- MODAL DE HISTORIAL --}}
+    <div class="modal fade" id="modalHistory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Historial de vacantes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"data-table="table">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
+        var data ={};
         $(document).on('change','[search="search"]',function () {
             var code = $(this).val(),
                 id = $('[data-form="form"] [name="id"]').val(),
@@ -255,7 +293,43 @@
             });
 
         });
+        $(document).on('click','.vacancies',function () {
+            $('#modalHistory').modal('show');
+            getVacanciesPagination();
 
+        });
+
+        // paginacion de vacantes gistorial
+        $(document).on('click','.pagination a',function (e) {
+            e.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            getVacanciesPagination(page);
+        });
+        function getVacanciesPagination(page) {
+            id = $('[data-form="form"] [name="id"]').val(),
+            route = '{{ route('vacancies.pagination') }}',
+
+            data.page = page;
+            data.id = id;
+            $.ajax({
+                method: 'GET',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: route,
+                dataType: 'json',
+                data: data,
+                beforeSend: function()
+                {
+                    $('[data-table="table"]').addClass('is-loading is-loading-lg');
+                },
+            }).done(function (response) {
+                $('[data-table="table"]').removeClass('is-loading is-loading-lg');
+                if (response) {
+                    $('[data-table="table"]').html(response);
+                }
+            }).fail(function () {
+                alert("Error");
+            });
+        }
     </script>
 @endsection
 

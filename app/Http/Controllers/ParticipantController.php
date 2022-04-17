@@ -170,17 +170,70 @@ class ParticipantController extends Controller
                         }
 
                         if ($request->send_telephone == 1) {
-
+                            $data_number = array();
                             $data =array(
                                 "message"=>"Ingrese al link para verificar su número telefónico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."",
-                                "destination"=>'51'.$user->telephone,
+                                "destination"=>$user->telephone,
                                 "setLogin"=>"info@hbgroup.pe",
                                 "setPassword"=>"eb9ga5ty"
                             );
                             // sendText($data);
                             $phono=$user->telephone ;
                             $message="Ingrese al link para verificar su número telefónico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."";
-                            $json_game_net = $this->gameNet($phono, $message);
+                            // $json_game_net = $this->gameNet($phono, $message);
+
+                             //Ejemplo PHP.  Para verificar libreria CURL use phpinfo()
+
+                            $apikey = "O4R7X3PGDJCS";
+                            $apicard = "5353000223";
+                            $fields_string = "";
+                            $smsnumber = '51'.$phono;
+                            $smstext = $message;
+                            $smstype = "0"; // 0: remitente largo, 1: remitente corto
+                            $shorturl = "0"; // acortador URL
+
+                            //Preparamos las variables que queremos enviar
+                            $url = 'http://api2.gamacom.com.pe/smssend'; // Para HTTPS $url = 'https://api3.gamanet.pe/smssend';
+                            $fields = array(
+                                'apicard'=>urlencode($apicard),
+                                'apikey'=>urlencode($apikey),
+                                'smsnumber'=>urlencode($smsnumber),
+                                'smstext'=>urlencode($smstext),
+                                'smstype'=>urlencode($smstype),
+                                'shorturl'=>urlencode($shorturl)
+                            );
+
+                            //Preparamos el string para hacer POST (formato querystring)
+                            foreach($fields as $key=>$value) {
+                                $fields_string .= $key.'='.$value.'&';
+                            }
+                            $fields_string = rtrim($fields_string,'&');
+
+
+                            //abrimos la conexion
+                            $ch = curl_init();
+
+                            //configuramos la URL, numero de variables POST y los datos POST
+                            curl_setopt($ch,CURLOPT_URL,$url);
+                            //curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false); //Descomentarlo si usa HTTPS
+                            curl_setopt($ch,CURLOPT_POST,count($fields));
+                            curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+                            curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
+
+                            //ejecutamos POST
+                            $result = curl_exec($ch);
+
+                            if($result===false){
+                                echo 'Curl error: '.curl_error($ch);
+                                exit();
+                            }
+
+                            //cerramos la conexion
+                            curl_close($ch);
+
+                            //Resultado
+                            $array = json_decode($result,true);
+                            $json_game_net = $array;
                             User::where('active', 1)->where('id', $user->id)->update([
                                 'json_game_net' => $json_game_net,
                             ]);
@@ -479,7 +532,7 @@ class ParticipantController extends Controller
             if ($user->send_telephone == 0 && $request->send_telephone == 1) {
                 # code...
                 // a qui telefono
-                $phono='51'.$request->cell;
+                $phono=$request->cell;
                 $message="Ingrese al link para verificar su número telefónico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."";
                 $json_game_net = $this->gameNet($phono, $message);
                 User::where('active', 1)->where('id', $user->id)->update([
@@ -593,7 +646,7 @@ class ParticipantController extends Controller
         $apikey = "O4R7X3PGDJCS";
         $apicard = "5353000223";
         $fields_string = "";
-        $smsnumber = $phono;
+        $smsnumber = '51'.$phono;
         $smstext = $message;
         $smstype = "0"; // 0: remitente largo, 1: remitente corto
         $shorturl = "0"; // acortador URL

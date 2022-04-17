@@ -186,4 +186,6 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::resource('validacion', ValidationController::class );
     Route::get('validation-list',[ValidationController::class, 'getPagination'] )->name('validation.list');
     Route::post('one-validation',[ParticipantController::class, 'oneValidation'] )->name('one.validation');
+    // GET DE HISTORY DE VACANCIES
+    Route::get('vacancies',[CoursController::class, 'getVacanciesPagination'] )->name('vacancies.pagination');
 });

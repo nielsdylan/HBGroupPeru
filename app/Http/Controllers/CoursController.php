@@ -8,6 +8,7 @@ use App\Models\Cours;
 use App\Models\Organizer;
 use App\Models\User;
 use App\Models\UsersGroup;
+use App\Models\Vacancie;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -56,10 +57,19 @@ class CoursController extends Controller
         $cours->date_start      = $date;
         $cours->hour_start      = $request->hour_start;
         $cours->hour_end        = $request->hour_end;
+        $cours->calendar        = $request->calendar==1?1:2;
         // $cours->business_id        = $request->bussiness_id;
 
         $cours->create_by = session('hbgroup')['user_id'];
         $cours->save();
+
+        $vacancies = new Vacancie();
+        $vacancies->number      = $request->vacancies;
+        $vacancies->cours_id    = $cours->cours_id;
+        $vacancies->create_by    = session('hbgroup')['user_id'];
+        $vacancies->update_by    = session('hbgroup')['user_id'];
+        $vacancies->save();
+
         return response()->json([
             'success'=>true,
             'status'=>200,
@@ -96,6 +106,7 @@ class CoursController extends Controller
             ->get();
         $asignature = Asignature::where('active',1)->where('status',1)->get();
         $business = Business::where('active', 1)->get();
+        $vacancies = Vacancie::where('active',1)->where('cours_id',$curso->cours_id)->first();
 
         return view(
             'frontend.private.courses.edit',
@@ -103,7 +114,8 @@ class CoursController extends Controller
                 'curso',
                 'asignature',
                 'business',
-                'teacher'
+                'teacher',
+                'vacancies'
             )
         );
     }
@@ -121,9 +133,25 @@ class CoursController extends Controller
             'date_start' => $date,
             'hour_start' => $request->hour_start,
             'hour_end' => $request->hour_end,
+            'calendar' => $request->calendar ==1?$request->calendar:2,
             'update_by'=>session('hbgroup')['user_id'],
             'meeting_active' => 0,
         ]);
+        $hoy = date('Y-m-d H:i:s');
+        Vacancie::where('active', 1)->where('cours_id', $curso->cours_id)
+        ->update([
+            'active'        => 0,
+            'deleted_at'    => $hoy,
+            'update_by'     => session('hbgroup')['user_id'],
+            'delete_by'     => session('hbgroup')['user_id']
+        ]);
+
+        $vacancies = new Vacancie();
+        $vacancies->number      = $request->vacancies;
+        $vacancies->cours_id    = $curso->cours_id;
+        $vacancies->create_by    = session('hbgroup')['user_id'];
+        $vacancies->update_by    = session('hbgroup')['user_id'];
+        $vacancies->save();
 
         return response()->json([
             'success'=>true,
@@ -240,5 +268,39 @@ class CoursController extends Controller
             $attendee = User::where('active',1)->where('email','like','%@hbgroup.pe%')->get();
             return response()->json(view('frontend.private.courses.list_cours', compact('results','organizer','attendee'))->render());
         }
+    }
+    public function getVacanciesPagination(Request $request)
+    {
+        // return $request->id;
+        if ($request->ajax()) {
+
+            $results = Vacancie::where('vacancies.cours_id',$request->id)->where('users.active',1)
+
+                ->join("users", "users.id", "=", "vacancies.update_by")
+                ->select("users.name", "users.last_name", "vacancies.*");
+
+            // if (!empty($request->asignature_id)) {
+            //     $results = $results->where('cours.asignature_id','=',$request->asignature_id);
+            // }
+            // if (!empty($request->date)){
+            //     $date = explode('/',$request->date);
+            //     $date = $date[2].'-'.$date[1].'-'.$date[0];
+
+            //     $results = $results->where('cours.date_start','=',$date);
+            // }
+            // if (!empty($request->name)){
+            //     $results = $results->where('cours.course','like','%'.$request->name.'%')->orWhere('cours.code','like','%'.$request->name.'%');
+            // }
+
+            $results = $results->paginate(5);
+            // return $results;
+            return response()->json(view('frontend.private.courses.list_vacancies', compact('results'))->render());
+        }
+        // $vacancies = Vacancie::where('cours_id',$request->id)->get();
+        // return response()->json([
+        //     'data'=>$vacancies,
+        //     'success'=>true,
+        //     'status'=>200,
+        // ]);
     }
 }

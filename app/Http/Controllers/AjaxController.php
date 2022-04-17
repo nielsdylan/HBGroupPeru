@@ -39,7 +39,11 @@ class AjaxController extends Controller
     }
     public function getEvents()
     {
-        return $events =   Event::where('active',1)->get();
+        // return $events =   Event::where('active',1)->get();
+        return $events =   Cours::where('cours.active',1)->where('cours.calendar',1)
+            ->join("asignatures", "asignatures.asignature_id", "=", "cours.asignature_id")
+            ->select("asignatures.name as asignature_name", "asignatures.abbreviation", "asignatures.asignature_id", "cours.*")
+            ->get();
     }
     public function event(Event $event)
     {

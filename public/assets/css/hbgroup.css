@@ -77,3 +77,6 @@
 .custom-checkbox-textarea{
     display: block !important;
 }
+.modal-body .select2-container.select2-container--bootstrap{
+    width: 100% !important;
+}

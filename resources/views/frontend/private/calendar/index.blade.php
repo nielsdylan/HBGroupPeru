@@ -47,8 +47,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="asignature">Asignatura</label>
-                                <input id="asignature" class="form-control" type="text" name="asignature" required>
+                                <label for="asignature">Asignatura<span class="required-label">*</span>:</label>
+                                <select class="form-control" name="asignature" id="asignature" required>
+                                    <option value="">Seleccione...</option>
+                                    @foreach ($asignature as $key=>$item)
+                                        <option value="{{$item->asignature_id}}">{{$item->name}}({{$item->abbreviation}})</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -110,7 +115,12 @@
                             <div class="form-group">
                             <input type="hidden" name="id" id="id">
                                 <label for="asignature">Asignatura</label>
-                                <input id="asignature" class="form-control" type="text" name="asignature" required>
+                                <select class="form-control" name="asignature" required>
+                                    {{-- <option value="">Seleccione...</option> --}}
+                                    {{-- @foreach ($asignature as $key=>$item)
+                                        <option value="{{$item->asignature_id}}">{{$item->name}}({{$item->abbreviation}})</option>
+                                    @endforeach --}}
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -175,7 +185,7 @@
         var dd  = (date.getDate()).toString().length == 1 ? "0"+(date.getDate()).toString() : (date.getDate()).toString();
         var route = '{{ route('get.events' ) }}';
         var array_events = [];
-
+        var html ='';
         $.ajax({
             method: 'GET',
             headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
@@ -183,13 +193,13 @@
             dataType: 'json',
             data: {},
         }).done(function (response) {
-
+            console.log(response);
             $.each(response, function (index, element) {
 
                 if (element.date_start) {
                     a={
-                        id: element.id,
-                        title: element.course+', '+element.asignature,
+                        id: element.cours_id,
+                        title: element.course+', '+element.asignature_name,
                         start: element.date_start,
                         end: element.date_start,
                         color: '#40E0D0',
@@ -235,8 +245,13 @@
                         }).done(function (response) {
                             if (response.status == 200) {
                                 console.log(response);
-                                $('#ModalEdit #id').val(response.result.id);
-                                $('#ModalEdit #asignature').val(response.result.asignature);
+                                $('#ModalEdit #id').val(response.result.cours_id);
+                                $.each(response.asignature, function (index, element) {
+                                    console.log(element);
+                                    html+='<option value="'+element.asignature_id+'" '+element.asignature_id==response.result.asignature_id?'selected':''+'>'+element.name+' ('+element.abbreviation+')</option>'
+                                });
+                                $('#ModalEdit [name="asignature"]').html(html);
+
                                 $('#ModalEdit #course').val(response.result.course);
                                 $('#ModalEdit #hour_end').val(response.result.hour_end);
                                 $('#ModalEdit #hour_start').val(response.result.hour_start);
