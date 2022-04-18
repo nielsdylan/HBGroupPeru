@@ -43,6 +43,13 @@
 @section('title','HB Group Perú')
 @section('active_menu','active')
 @section('content')
+<script src="{{asset('assets/js/core/popper.min.js')}}"></script>
+<script src="{{asset('assets/js/core/bootstrap.min.js')}}"></script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
 {{-- <link href="{{asset('assets/calendar/css/fullcalendar.css')}}" rel='stylesheet' />
 <link href="{{asset('assets/css/calendar.css')}}" rel='stylesheet' /> --}}
     {{-- <section class="header">
@@ -146,14 +153,20 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <i class="far fa-calendar-alt"></i>
+                                            <i class="far fa-calendar-alt" data-toggle="tooltip" data-original-title="Fecha a dictarse el curso"></i>
                                             <label id="date_start"></label>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <i class="far fa-clock"></i>
+                                            <i class="far fa-clock" data-toggle="tooltip" data-original-title="Hora que iniciara y terminara el curso"></i>
                                             <label id="hour_start"></label> - <label id="hour_end"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <i class="fas fa-users" data-toggle="tooltip" data-original-title="Vacantes disponibles / Maximo de vacantes"></i>
+                                            <label id="vacancies"></label>
                                         </div>
                                     </div>
                                 </div>
@@ -167,7 +180,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <p>
-                                            Para mas información contactarse al número <a href="tel:+51 932 777 533" class="email-contact"> 932 777 533</a> o al correo de
+                                            Separa tu vacante comunicandote al número <a href="tel:+51 932 777 533" class="email-contact"> 932 777 533</a> o al correo de
                                             <a href="mailto:{{$configurations->email}}?Subject=Inscripción%20del%20curso%20&body=Con%20urgencia" class="email-contact"> &nbsp;{{$configurations->email}}</a>
                                         </p>
                                     </div>
@@ -320,11 +333,12 @@
 
                     if (element.date_start) {
                         a={
-                            id: element.id,
-                            title: element.course+', '+element.asignature,
+                            id: element.cours_id,
+                            title: element.course+', '+element.asignature_name,
                             start: element.date_start,
                             end: element.date_start,
                             color: '#40E0D0',
+                            asignature_id: element.asignature_id,
                         }
                         array_events.push(a);
                     }
@@ -357,7 +371,8 @@
 
                             var id_event = event.id,
                                 route   = '{{ route('events', ['event' => '+id_event+'] ) }}',
-                                route   = route.replace('id_event', id_event);
+                                route   = route.replace('id_event', id_event),
+                                h_start = '', h_end = '';
                             $.ajax({
                                 method: 'GET',
                                 headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
@@ -366,14 +381,21 @@
                                 data: {},
                             }).done(function (response) {
                                 if (response.status == 200) {
-
+                                    console.log(response);
                                     $('#ModalEdit #id').val(response.result.id);
-                                    $('#ModalEdit #asignature').text(response.result.asignature);
+                                    $('#ModalEdit #asignature').text(response.result.asignature_name);
                                     $('#ModalEdit #course').text(response.result.course);
-                                    $('#ModalEdit #hour_end').text(response.result.hour_end);
-                                    $('#ModalEdit #hour_start').text(response.result.hour_start);
+                                    h_end = response.result.hour_end;
+                                    h_end = h_end.split(':');
+
+                                    h_start = response.result.hour_start;
+                                    h_start = h_start.split(':');
+
+                                    $('#ModalEdit #hour_end').text(h_end[0]+':'+h_end[1]);
+                                    $('#ModalEdit #hour_start').text(h_start[0]+':'+h_start[1]);
                                     $('#ModalEdit #date_start').text((response.result.date_start).split('-').reverse().join('-'));
                                     $('#ModalEdit #date_hidden').val(response.result.date_start);
+                                    $('#ModalEdit #vacancies').html(response.result.number+'/20');
 
                                     $('#ModalEdit').modal('show');
                                 }
