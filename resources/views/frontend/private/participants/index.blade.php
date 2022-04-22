@@ -150,6 +150,8 @@
 </div>
 <script>
     var data ={};
+    var count_text = 0;
+    var data_excel = new Array();
     $(document).ready(function () {
         getPagination();
     });
@@ -257,6 +259,9 @@
             $('[data-form="save-excel"] button[type="submit"]').removeClass('is-loading');
             $('[data-form="save-excel"] button[type="submit"]').removeAttr('disabled');
             if (response.status == 200) {
+                console.log(response.number_msm_text);
+                data_excel=response.number_msm_text;
+                numberText(0,10);
                 var placementFrom = 'top';
                 var placementAlign = 'right';
                 var state = 'success';
@@ -460,6 +465,13 @@
         }).fail(function () {
             alert("Error");
         });
+    }
+    function numberText(inicio, fin) {
+        var data_part=[],
+            length_data = data_excel.length;
+        for (let i = inicio; i < fin; i++) {
+            console.log(data[i]);
+        }
     }
 </script>
 @endsection

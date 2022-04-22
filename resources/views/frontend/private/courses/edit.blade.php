@@ -79,13 +79,13 @@
                             </div>
                             <div class="row">
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="course">Curso<span class="required-label">*</span>:</label>
                                         <input id="course" class="form-control" type="text" name="course" value="{{$curso->course}}" required>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="date_start">Fecha<span class="required-label">*</span>:</label>
                                         {{-- <input id="date_start" class="form-control" type="date" name="date_start" required> --}}
@@ -99,9 +99,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="hour_start">Inicio<span class="required-label">*</span>:</label>
@@ -117,6 +114,8 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="hour_end">Final<span class="required-label">*</span>:</label>
@@ -141,11 +140,16 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="calendar">Calendario <span class="required-label">*</span>:</label>
-                                        <input type="checkbox" {{$curso->calendar==1?'checked':''}} data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-style="btn-round" data-on="Si" data-off="No" name="calendar" value="1">
+                                        <label for="max_vacancies">Maximo de vacantes<span class="required-label">*</span>:</label>
+                                        <input id="max_vacancies" class="form-control" type="number" name="max_vacancies" value="{{$curso->max_vacancies}}" required>
 
                                     </div>
-
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="calendar">Calendario <span class="required-label">*</span>:</label>
+                                        <input type="checkbox" {{$curso->calendar==1?'checked':''}} data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-style="btn-round" data-on="Si" data-off="No" name="calendar" value="1">
+                                    </div>
                                 </div>
                             </div>
 

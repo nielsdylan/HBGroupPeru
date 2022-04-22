@@ -188,4 +188,6 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::post('one-validation',[ParticipantController::class, 'oneValidation'] )->name('one.validation');
     // GET DE HISTORY DE VACANCIES
     Route::get('vacancies',[CoursController::class, 'getVacanciesPagination'] )->name('vacancies.pagination');
+    // enviar mensajes por partes
+    Route::post('messenger/text',[ParticipantController::class, 'msmText'] )->name('msm.text');
 });
