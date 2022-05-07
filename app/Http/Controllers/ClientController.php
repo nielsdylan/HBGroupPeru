@@ -90,4 +90,14 @@ class ClientController extends Controller
             'status'=>200
         ]);
     }
+
+    public function getClientsApi()
+    {
+        $client = Client::where('active',1)->get();
+        return response()->json([
+            'success'=>true,
+            'status'=>200,
+            'data'=>$client
+        ]);
+    }
 }
