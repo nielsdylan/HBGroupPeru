@@ -45,19 +45,27 @@ class AjaxController extends Controller
             ->select("asignatures.name as asignature_name", "asignatures.abbreviation", "asignatures.asignature_id", "cours.*")
             ->get();
     }
-    public function event(Event $event)
+    public function event($event)
     {
         # code...
+        $results =   Cours::where('cours.active',1)->where('cours.calendar',1)->where('cours.cours_id',$event)->where('vacancies.active',1)
+            ->join("asignatures", "asignatures.asignature_id", "=", "cours.asignature_id")
+            ->join("vacancies", "vacancies.cours_id", "=", "cours.cours_id")
+            ->select("asignatures.name as asignature_name", "asignatures.abbreviation", "asignatures.asignature_id", "cours.*", "vacancies.number")
+            ->first();
+
+        // return $results;
         return response()->json([
             'success'=>true,
             'status'=>200,
-            'result'=>$event
+            'result'=>$results
         ]);
     }
     public function updateDate(Request $request)
     {
         # code...
-        Event::where('active', 1)->where('id', $request->id )
+        // return $request;
+        Cours::where('active', 1)->where('cours_id', $request->id )
         ->update([
             'date_start'=>$request->start,
             'update_by'=>session('hbgroup')['user_id']

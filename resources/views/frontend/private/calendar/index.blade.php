@@ -104,7 +104,7 @@
         <div class="modal-content">
             <form action="" data-form="course-program-edit" method="POST">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Agregar Cursos</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Cursos</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -115,7 +115,7 @@
                             <div class="form-group">
                             <input type="hidden" name="id" id="id">
                                 <label for="asignature">Asignatura</label>
-                                <select class="form-control" name="asignature" required>
+                                <select class="form-control" name="asignature" required disabled>
                                     {{-- <option value="">Seleccione...</option> --}}
                                     {{-- @foreach ($asignature as $key=>$item)
                                         <option value="{{$item->asignature_id}}">{{$item->name}}({{$item->abbreviation}})</option>
@@ -128,7 +128,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="course">Curso</label>
-                                <input id="course" class="form-control" type="text" name="course" required data>
+                                <input id="course" class="form-control" type="text" name="course" required disabled>
                             </div>
                         </div>
                     </div>
@@ -136,8 +136,8 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="date_start">Fecha de inicio</label>
-                                <input id="date_start" class="form-control" type="text" name="date_start" readonly>
-                                <input type="hidden" id="date_hidden" name="date_hidden" value=""readonly>
+                                <input id="date_start" class="form-control" type="text" name="date_start" readonly disabled>
+                                <input type="hidden" id="date_hidden" name="date_hidden" value=""readonly >
                             </div>
                         </div>
                     </div>
@@ -145,17 +145,17 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="hour_start">Hora de inicio :</label>
-                                <input id="hour_start" class="form-control" type="time" name="hour_start" required>
+                                <input id="hour_start" class="form-control" type="time" name="hour_start" required disabled>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="hour_end">Hora de fin :</label>
-                                <input id="hour_end" class="form-control" type="time" name="hour_end" required>
+                                <input id="hour_end" class="form-control" type="time" name="hour_end" required disabled>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-md-12">
                             <div class="form-check">
                                 <label class="form-check-label">
@@ -164,11 +164,11 @@
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+                    {{-- <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button> --}}
                 </div>
             </form>
 
@@ -203,6 +203,7 @@
                         start: element.date_start,
                         end: element.date_start,
                         color: '#40E0D0',
+                        asignature_id: element.asignature_id,
                     }
                     array_events.push(a);
                 }
@@ -233,9 +234,10 @@
                 eventRender: function(event, element) {
                     element.bind('dblclick', function() {
 
-                        var id_event = event.id,
-                            route   = '{{ route('calendario.edit', ['calendario' => '+id_event+'] ) }}';
-                            route   = route.replace('id_event', id_event);
+                        var id_event        = event.id,
+                            asignature_id   = event.asignature_id,
+                            route           = '{{ route('calendario.edit', ['calendario' => '+id_event+'] ) }}';
+                            route           = route.replace('id_event', id_event);
                         $.ajax({
                             method: 'GET',
                             headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
@@ -246,9 +248,14 @@
                             if (response.status == 200) {
                                 console.log(response);
                                 $('#ModalEdit #id').val(response.result.cours_id);
+                                html='';
                                 $.each(response.asignature, function (index, element) {
-                                    console.log(element);
-                                    html+='<option value="'+element.asignature_id+'" '+element.asignature_id==response.result.asignature_id?'selected':''+'>'+element.name+' ('+element.abbreviation+')</option>'
+                                    if (element.asignature_id == event.asignature_id) {
+                                        html+='<option value="'+element.asignature_id+'" selected>'+element.name+' ('+element.abbreviation+')</option>'
+                                    } else {
+                                        html+='<option value="'+element.asignature_id+'">'+element.name+' ('+element.abbreviation+')</option>'
+                                    }
+
                                 });
                                 $('#ModalEdit [name="asignature"]').html(html);
 
