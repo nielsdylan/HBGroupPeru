@@ -47,18 +47,25 @@ class CoursController extends Controller
     public function store(Request $request)
     {
         # code...
-        $date = explode('/',$request->date_start);
-        $date = $date[2].'-'.$date[1].'-'.$date[0];
+        // return $request;
+
+        if ($request->calendar == 1) {
+            $date = date("Y-m-d", strtotime($request->date_start) ); ;
+        }else{
+            $date = explode('/',$request->date_start);
+            $date = $date[2].'-'.$date[1].'-'.$date[0];
+        }
+
         $cours = new Cours();
         $cours->asignature_id   = $request->asignature;
         $cours->code            = $request->code;
         $cours->course          = $request->course;
-        $cours->user_id         = $request->teacher;
+        $cours->user_id         = $request->teacher?$request->teacher:176;
         $cours->date_start      = $date;
         $cours->hour_start      = $request->hour_start;
         $cours->hour_end        = $request->hour_end;
         $cours->calendar        = $request->calendar==1?1:2;
-        // $cours->business_id        = $request->bussiness_id;
+        $cours->max_vacancies   = $request->max_vacancies>0 ?$request->max_vacancies:0 ;
 
         $cours->create_by = session('hbgroup')['user_id'];
         $cours->save();
@@ -136,6 +143,7 @@ class CoursController extends Controller
             'calendar' => $request->calendar ==1?$request->calendar:2,
             'update_by'=>session('hbgroup')['user_id'],
             'meeting_active' => 0,
+            'max_vacancies'=>$request->max_vacancies>0 ?$request->max_vacancies:0
         ]);
         $hoy = date('Y-m-d H:i:s');
         Vacancie::where('active', 1)->where('cours_id', $curso->cours_id)

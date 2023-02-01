@@ -80,7 +80,7 @@ class ParticipantController extends Controller
 
 
         $file = $request->file('file');
-
+        $data_number_msm_text = array();
         $array = Excel::toArray(new UsersImport, $file);
 
         $success = true;
@@ -170,73 +170,26 @@ class ParticipantController extends Controller
                         }
 
                         if ($request->send_telephone == 1) {
-                            $data_number = array();
-                            $data =array(
-                                "message"=>"Ingrese al link para verificar su número telefónico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."",
-                                "destination"=>$user->telephone,
-                                "setLogin"=>"info@hbgroup.pe",
-                                "setPassword"=>"eb9ga5ty"
+                            array_push($data_number_msm_text,
+                                array(
+                                    "url"=>"Ingrese al link para verificar su número telefónico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."",
+                                    "number"=>$user->telephone,
+                                    "setLogin"=>"info@hbgroup.pe",
+                                    "setPassword"=>"eb9ga5ty",
+                                    "user_id"=>$user->id
+                                )
                             );
-                            // sendText($data);
-                            $phono=$user->telephone ;
-                            $message="Ingrese al link para verificar su número telefónico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."";
-                            // $json_game_net = $this->gameNet($phono, $message);
+                            // $data =array(
+                            //     "message"=>"Ingrese al link para verificar su número telefónico=>".url('/autenticacion?code=').$rand_telephone.'T'.$user->id."",
+                            //     "destination"=>$user->telephone,
+                            //     "setLogin"=>"info@hbgroup.pe",
+                            //     "setPassword"=>"eb9ga5ty"
+                            // );
 
-                             //Ejemplo PHP.  Para verificar libreria CURL use phpinfo()
-
-                            $apikey = "O4R7X3PGDJCS";
-                            $apicard = "5353000223";
-                            $fields_string = "";
-                            $smsnumber = '51'.$phono;
-                            $smstext = $message;
-                            $smstype = "0"; // 0: remitente largo, 1: remitente corto
-                            $shorturl = "0"; // acortador URL
-
-                            //Preparamos las variables que queremos enviar
-                            $url = 'http://api2.gamacom.com.pe/smssend'; // Para HTTPS $url = 'https://api3.gamanet.pe/smssend';
-                            $fields = array(
-                                'apicard'=>urlencode($apicard),
-                                'apikey'=>urlencode($apikey),
-                                'smsnumber'=>urlencode($smsnumber),
-                                'smstext'=>urlencode($smstext),
-                                'smstype'=>urlencode($smstype),
-                                'shorturl'=>urlencode($shorturl)
-                            );
-
-                            //Preparamos el string para hacer POST (formato querystring)
-                            foreach($fields as $key=>$value) {
-                                $fields_string .= $key.'='.$value.'&';
-                            }
-                            $fields_string = rtrim($fields_string,'&');
-
-
-                            //abrimos la conexion
-                            $ch = curl_init();
-
-                            //configuramos la URL, numero de variables POST y los datos POST
-                            curl_setopt($ch,CURLOPT_URL,$url);
-                            //curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false); //Descomentarlo si usa HTTPS
-                            curl_setopt($ch,CURLOPT_POST,count($fields));
-                            curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-                            curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
-
-                            //ejecutamos POST
-                            $result = curl_exec($ch);
-
-                            if($result===false){
-                                echo 'Curl error: '.curl_error($ch);
-                                exit();
-                            }
-
-                            //cerramos la conexion
-                            curl_close($ch);
-
-                            //Resultado
-                            $array = json_decode($result,true);
-                            $json_game_net = $array;
-                            User::where('active', 1)->where('id', $user->id)->update([
-                                'json_game_net' => $json_game_net,
-                            ]);
+                            // $json_game_net = $array;
+                            // User::where('active', 1)->where('id', $user->id)->update([
+                            //     'json_game_net' => $json_game_net,
+                            // ]);
                         }
                         User::where('active', 1)->where('id', $user->id)->update([
                             'send_email' => $request->send_email== 1 ? $request->send_email : 0,
@@ -289,7 +242,8 @@ class ParticipantController extends Controller
                 'success'=>true,
                 'status'=>200,
                 'existen_status'=>$existen_status,
-                'existen'=>$participant_exclude_array
+                'existen'=>$participant_exclude_array,
+                'number_msm_text'=>$data_number_msm_text
             ]);
         }else{
             return response()->json([
@@ -742,6 +696,11 @@ class ParticipantController extends Controller
             'status'=>200,
             'success'=>true
         ]);
+    }
+    public function msmText(Request $request)
+    {
+        # code...
+        return $request;
     }
 
 }

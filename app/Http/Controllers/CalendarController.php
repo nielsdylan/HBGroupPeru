@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asignature;
+use App\Models\Business;
 use App\Models\Cours;
 use App\Models\Event;
+use App\Models\UsersGroup;
+use App\Models\Vacancie;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -41,35 +44,74 @@ class CalendarController extends Controller
     }
     public function edit($calendario)
     {
-        // return $calendario
-        // return $event =   Cours::where('cours.cours_id',$calendario)->where('cours.calendar',1)
-        //     ->join("asignatures", "asignatures.asignature_id", "=", "cours.asignature_id")
-        //     ->select("asignatures.name as asignature_name", "asignatures.abbreviation", "cours.*")
-        //     ->first();
+        $curso = Cours::where('active',1)->where('cours_id',$calendario)->first();
+        $teacher = UsersGroup::where('users_groups.group_id',5)->where('users_groups.active',1)
+            ->join("users", "users.id", "=", "users_groups.user_id")
+            ->select("users.*")
+            ->get();
         $asignature = Asignature::where('active',1)->where('status',1)->get();
+        $business = Business::where('active', 1)->get();
+        $vacancies = Vacancie::where('active',1)->where('cours_id',$curso->cours_id)->first();
+
         return response()->json([
             'success'=>true,
             'status'=>200,
-            'result'=>Cours::where('cours.cours_id',$calendario)->where('cours.calendar',1)
-            ->join("asignatures", "asignatures.asignature_id", "=", "cours.asignature_id")
-            ->select("asignatures.name as asignature_name", "asignatures.abbreviation", "asignatures.asignature_id", "cours.*")
-            ->first(),
+            'cours'=>$curso,
+            'vacancies'=>$vacancies,
             'asignature'=>$asignature
         ]);
     }
-    public function update(Request $request, Event $calendario)
+    public function update(Request $request, Cours $calendario)
     {
+        // return $request;
+        // Event::where('active', 1)->where('id', $request->id )
+        // ->update([
+        //     'asignature' => $request->asignature,
+        //     'course' => $request->course,
+        //     'hour_start' => $request->hour_start,
+        //     'hour_end' => $request->hour_end,
+        //     'date_start' => $request->date_hidden,
+        //     'active' => $request->active==0 ? $request->active : 1,
+        //     'update_by'=>session('hbgroup')['user_id']
+        // ]);
 
-        Event::where('active', 1)->where('id', $request->id )
+
+        // $date = explode('/',$request->date_start);
+        // $date = $date[2].'-'.$date[1].'-'.$date[0];
+        // return $request;
+        $date = date("Y-m-d", strtotime($request->date_hidden) );
+        Cours::where('active', 1)->where('cours_id', $calendario->cours_id)
         ->update([
-            'asignature' => $request->asignature,
+            'asignature_id' => $request->asignature,
+            'code' => $request->code,
             'course' => $request->course,
+            'user_id' => $request->teacher?$request->teacher:176,
+            'date_start' => $date,
             'hour_start' => $request->hour_start,
             'hour_end' => $request->hour_end,
-            'date_start' => $request->date_hidden,
-            'active' => $request->active==0 ? $request->active : 1,
-            'update_by'=>session('hbgroup')['user_id']
+            'calendar' => 1,
+            'update_by'=>session('hbgroup')['user_id'],
+            'meeting_active' => 0,
+            'max_vacancies'=>$request->max_vacancies>0 ?$request->max_vacancies:0,
+            'active' => $request->active==null ? 1 : 0
         ]);
+        $hoy = date('Y-m-d H:i:s');
+        Vacancie::where('active', 1)->where('cours_id', $calendario->cours_id)
+        ->update([
+            'active'        => 0,
+            'deleted_at'    => $hoy,
+            'update_by'     => session('hbgroup')['user_id'],
+            'delete_by'     => session('hbgroup')['user_id']
+        ]);
+
+        $vacancies = new Vacancie();
+        $vacancies->number      = $request->vacancies;
+        $vacancies->cours_id    = $calendario->cours_id;
+        $vacancies->create_by    = session('hbgroup')['user_id'];
+        $vacancies->update_by    = session('hbgroup')['user_id'];
+        $vacancies->save();
+
+
         return response()->json([
             'success'=>true,
             'status'=>200

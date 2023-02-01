@@ -36,7 +36,7 @@
 <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{route('calendario.store')}}" data-form="course-program" method="POST">
+            <form action="{{route('cursos.store')}}" data-form="course-program" method="POST">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Agregar Cursos</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -44,8 +44,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" name="calendar" value="1">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="asignature">Asignatura<span class="required-label">*</span>:</label>
                                 <select class="form-control" name="asignature" id="asignature" required>
@@ -56,21 +57,41 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="code">Codigo<span class="required-label">*</span>:</label>
+                                <input id="code" class="form-control" type="text" name="code" search="code-search" required>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="course">Curso</label>
                                 <input id="course" class="form-control" type="text" name="course" required>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="date_start">Fecha de inicio</label>
                                 <input id="date_start" class="form-control" type="text" name="date_start" readonly>
                                 <input type="hidden" id="date_hidden" name="date_hidden" value=""readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="vacancies">Vacantes<span class="required-label">*</span>:</label>
+                                <input class="form-control" type="number" name="vacancies" value="20" required>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="max_vacancies">Maximo de vacantes<span class="required-label">*</span>:</label>
+                                <input class="form-control" type="number" name="max_vacancies" value="20" required>
+
                             </div>
                         </div>
                     </div>
@@ -111,11 +132,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                             <input type="hidden" name="id" id="id">
                                 <label for="asignature">Asignatura</label>
-                                <select class="form-control" name="asignature" required disabled>
+                                <select class="form-control" name="asignature" required>
                                     {{-- <option value="">Seleccione...</option> --}}
                                     {{-- @foreach ($asignature as $key=>$item)
                                         <option value="{{$item->asignature_id}}">{{$item->name}}({{$item->abbreviation}})</option>
@@ -123,17 +144,21 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="course">Curso</label>
-                                <input id="course" class="form-control" type="text" name="course" required disabled>
+                                <label for="code">Codigo<span class="required-label">*</span>:</label>
+                                <input id="code" class="form-control" type="text" name="code" search="code-search" required>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="course">Curso</label>
+                                <input id="course" class="form-control" type="text" name="course" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="date_start">Fecha de inicio</label>
                                 <input id="date_start" class="form-control" type="text" name="date_start" readonly disabled>
@@ -144,18 +169,34 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label for="vacancies">Vacantes<span class="required-label">*</span>:</label>
+                                <input id="vacancies" class="form-control" type="number" name="vacancies" required>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="max_vacancies">Maximo de vacantes<span class="required-label">*</span>:</label>
+                                <input id="max_vacancies" class="form-control" type="number" name="max_vacancies" required>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label for="hour_start">Hora de inicio :</label>
-                                <input id="hour_start" class="form-control" type="time" name="hour_start" required disabled>
+                                <input id="hour_start" class="form-control" type="time" name="hour_start" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="hour_end">Hora de fin :</label>
-                                <input id="hour_end" class="form-control" type="time" name="hour_end" required disabled>
+                                <input id="hour_end" class="form-control" type="time" name="hour_end" required>
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="row">
+                    <div class="row">
                         <div class="col-md-12">
                             <div class="form-check">
                                 <label class="form-check-label">
@@ -164,11 +205,11 @@
                                 </label>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
-                    {{-- <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button> --}}
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
                 </div>
             </form>
 
@@ -247,7 +288,7 @@
                         }).done(function (response) {
                             if (response.status == 200) {
                                 console.log(response);
-                                $('#ModalEdit #id').val(response.result.cours_id);
+                                $('#ModalEdit #id').val(response.cours.cours_id);
                                 html='';
                                 $.each(response.asignature, function (index, element) {
                                     if (element.asignature_id == event.asignature_id) {
@@ -259,12 +300,15 @@
                                 });
                                 $('#ModalEdit [name="asignature"]').html(html);
 
-                                $('#ModalEdit #course').val(response.result.course);
-                                $('#ModalEdit #hour_end').val(response.result.hour_end);
-                                $('#ModalEdit #hour_start').val(response.result.hour_start);
-                                $('#ModalEdit #date_start').val((response.result.date_start).split('-').reverse().join('-'));
-                                $('#ModalEdit #date_hidden').val(response.result.date_start);
+                                $('#ModalEdit #course').val(response.cours.course);
+                                $('#ModalEdit #code').val(response.cours.code);
+                                $('#ModalEdit #hour_end').val(response.cours.hour_end);
+                                $('#ModalEdit #hour_start').val(response.cours.hour_start);
+                                $('#ModalEdit #date_start').val((response.cours.date_start).split('-').reverse().join('-'));
+                                $('#ModalEdit #date_hidden').val(response.cours.date_start);
 
+                                $('#ModalEdit #vacancies').val(response.vacancies.number);
+                                $('#ModalEdit #max_vacancies').val(response.cours.max_vacancies);
                                 $('#ModalEdit').modal('show');
                             }
                         }).fail(function () {
