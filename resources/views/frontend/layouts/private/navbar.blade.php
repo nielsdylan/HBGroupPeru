@@ -44,7 +44,7 @@
                     <i class="fa fa-bell"></i>
                     <span class="notification">4</span>
                 </a>
-                <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
+                {{-- <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
                     <li>
                         <div class="dropdown-title">You have 4 new notification</div>
                     </li>
@@ -95,7 +95,7 @@
                     <li>
                         <a class="see-all" href="javascript:void(0);">See all notifications<i class="fa fa-angle-right"></i> </a>
                     </li>
-                </ul>
+                </ul> --}}
             </li>
             <li class="nav-item dropdown hidden-caret">
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
@@ -133,7 +133,7 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Account Setting</a>
                         <div class="dropdown-divider"></div> --}}
-                        <a class="dropdown-item" href="{{ route('logout.logout') }}">Logout</a>
+                        <a class="dropdown-item" href="{{ route('logout.logout') }}">Cerrar session</a>
                     </li>
                 </ul>
             </li>
@@ -142,5 +142,4 @@
     </div>
 </nav>
 <script>
-    console.log('{{session('hbgroup')['image']}}');
 </script>

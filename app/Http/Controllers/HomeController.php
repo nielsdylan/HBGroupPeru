@@ -242,8 +242,10 @@ class HomeController extends Controller
     }
     public function certificadoPDF($number)
     {
+
         // $participant = Participant::where('dni', $number)->where('active',1)->first();
         $certificado = Certificado::where('certificado_id',$number)->where('active',1)->first();
+        // return $certificado;exit;
         $instructor = Instructor::where('active',1)->where('instructor_id',$certificado->instructor_id)
         ->first();
 

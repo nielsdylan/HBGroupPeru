@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Academico\AlumnoController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\AsignatureController;
 use App\Http\Controllers\BusinessController;
@@ -190,4 +191,19 @@ Route::middleware(['hbgroup'])->group(function(){
     Route::get('vacancies',[CoursController::class, 'getVacanciesPagination'] )->name('vacancies.pagination');
     // enviar mensajes por partes
     Route::post('messenger/text',[ParticipantController::class, 'msmText'] )->name('msm.text');
+
+
+    // -------2023
+    Route::name('academico.')->prefix('academico')->group(function (){
+
+        Route::name('alumnos.')->prefix('alumnos')->group(function (){
+            Route::get('lista', [AlumnoController::class, 'lista'])->name('lista');
+            Route::post('listar', [AlumnoController::class, 'listar'])->name('listar');
+            Route::post('guardar', [AlumnoController::class, 'guardar'])->name('guardar');
+            Route::get('editar/{id}', [AlumnoController::class, 'editar'])->name('editar');
+            Route::put('eliminar/{id}', [AlumnoController::class, 'eliminar'])->name('eliminar');
+
+        });
+    });
+
 });

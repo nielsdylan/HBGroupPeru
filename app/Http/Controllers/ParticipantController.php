@@ -38,8 +38,7 @@ class ParticipantController extends Controller
         $cours          = Cours::where('active',1)->get();
         $prefixes       = Prefixe::get();
         $document_types = Document_type::where('active', 1)->get();
-        return view(
-            'frontend.private.participants.index',
+        return view('frontend.private.participants.index',
             compact(
                 'participants',
                 'asignatures',

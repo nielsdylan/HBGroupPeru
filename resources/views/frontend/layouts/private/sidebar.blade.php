@@ -33,6 +33,11 @@
                     </a>
                     <div class="collapse" id="cours">
                         <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{route('academico.alumnos.lista')}}">
+                                    <span class="sub-item">Alumnos</span>
+                                </a>
+                            </li>
                             @if (session('hbgroup')['group_id'] == 1 || session('hbgroup')['group_id'] == 5)
                             <li>
                                 <a href="{{route('cursos.index')}}">
