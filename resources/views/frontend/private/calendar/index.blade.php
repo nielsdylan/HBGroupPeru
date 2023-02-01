@@ -128,7 +128,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="course">Curso</label>
-                                <input id="course" class="form-control" type="text" name="course" required>
+                                <input id="course" class="form-control" type="text" name="course" required data>
                             </div>
                         </div>
                     </div>
