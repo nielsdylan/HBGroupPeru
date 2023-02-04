@@ -12,6 +12,7 @@ use App\Models\UsersBusiness;
 use App\Models\UsersGroup;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\Facades\DataTables;
 
 class CertificadoController extends Controller
 {
@@ -65,10 +66,11 @@ class CertificadoController extends Controller
                     $user->create_by        = session('hbgroup')['user_id'];
                     $user_business->save();
 
-                    $certificado = Certificado::where('active',1)->where('code',$value[10])->first();
+                    $certificado = 503;
+                    // $certificado = Certificado::where('active',1)->where('code',$value[10])->first();
                     $status=0;
                     $instrucor = User::where('active',1)->where('dni',$value[21])->first();
-                    $instrucor = Instructor::where('active',1)->where('user_id',$instrucor->id)->first();
+                    $instrucor = Instructor::where('active',1)->where('user_id',503)->first();
 
                     if (!$certificado) {
                         if (date("Y-m-d",strtotime((gmdate("Y-m-d", (($value[11] - 25569) * 86400)))."+ 1 year"))<date('Y-m-d')) {
@@ -113,5 +115,20 @@ class CertificadoController extends Controller
             'success'=>true,
             'status'=>200
         ]);
+    }
+    public function listar(Request $request)
+    {
+        $data = Certificado::all();
+        return DataTables::of($data)
+        ->addColumn('accion', function ($data) { return
+            '<div class="btn-group" role="group">
+                <button type="button" class="btn btn-xs btn-okc editar protip" data-id="'.$data->id.'" data-pt-scheme="dark" data-pt-size="small" data-pt-position="top" data-pt-title="Editar">
+                    <span class="fas fa-edit"></span>
+                </button>
+                <button type="button" class="btn btn-xs btn-okc eliminar protip" data-id="'.$data->id.'" data-pt-scheme="dark" data-pt-size="small" data-pt-position="top" data-pt-title="Eliminar">
+                    <span class="fas fa-trash-alt"></span>
+                </button>
+            </div>';
+        })->rawColumns(['accion'])->make(true);
     }
 }

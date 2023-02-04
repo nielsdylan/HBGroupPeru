@@ -204,6 +204,14 @@ Route::middleware(['hbgroup'])->group(function(){
             Route::put('eliminar/{id}', [AlumnoController::class, 'eliminar'])->name('eliminar');
 
         });
+        Route::name('certificados.')->prefix('alumnos')->group(function (){
+            // Route::get('lista', [CertificadoController::class, 'lista'])->name('lista');
+            Route::post('listar', [CertificadoController::class, 'listar'])->name('listar');
+            Route::post('guardar', [CertificadoController::class, 'guardar'])->name('guardar');
+            Route::get('editar/{id}', [CertificadoController::class, 'editar'])->name('editar');
+            Route::put('eliminar/{id}', [CertificadoController::class, 'eliminar'])->name('eliminar');
+
+        });
     });
 
 });

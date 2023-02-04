@@ -1,5 +1,11 @@
 @extends('frontend.private')
 @section('title','HB Group Perú')
+@section('links')
+    <link rel="stylesheet" href="{{ asset('assets/js/plugin/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/js/plugin/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/js/plugin/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+
+@endsection
 @section('content')
 <div class="page-inner">
     <div class="page-header">
@@ -48,18 +54,18 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="add-row" class="display table table-striped table-hover" >
+                        <table class="display table table-striped table-hover" id="tabla-data">
                             <thead>
                                 <tr>
-                                    <td>CODE</td>
-                                    <td>TITULO</td>
+                                    <td>ID</td>
+                                    <td>USUARIO</td>
+                                    <td>CURSO</td>
                                     <td>FECHA</td>
-                                    <td>STADO</td>
                                     <th style="width: 10%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($results)
+                                {{-- @if ($results)
                                     @foreach ($results as $key=>$item)
                                         <tr>
                                             <td>{{$item->code}}</td>
@@ -83,8 +89,8 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                    @endforeach
-                                @endif
+                                    @endforeach --}}
+                                {{-- @endif --}}
                             </tbody>
                         </table>
                     </div>
@@ -131,46 +137,180 @@
 <script>
     var status =0;
 </script>
-{{-- @include('frontend.private.certificados.create')
-@include('frontend.private.certificados.edit') --}}
-<script>
-    $(document).on('change','[select-cours="get-cours"]',function (e) {
-        e.preventDefault();
-        var this_select = $(this),
-            cours_id = $(this).val(),
-            data_select = $(this).attr('data-select'),
-            select = '[data-course="'+data_select+'"]';
-        console.log(data_select);
-        getCourseAsignature(cours_id,select);
-    });
-    function getCourseAsignature(id, select) {
-        var html='',
-            route   = '{{ route('get.courses.asignature') }}';
-        data = {
-            id:id
+
+@endsection
+@section('scripts')
+    {{-- <script src="{{ asset('assets/js/plugin/datatables/jquery.dataTables.min.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/plugin/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugin/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugin/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugin/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            listar();
+        });
+        $(document).on('change','[select-cours="get-cours"]',function (e) {
+            e.preventDefault();
+            var this_select = $(this),
+                cours_id = $(this).val(),
+                data_select = $(this).attr('data-select'),
+                select = '[data-course="'+data_select+'"]';
+            console.log(data_select);
+            getCourseAsignature(cours_id,select);
+        });
+        function getCourseAsignature(id, select) {
+            var html='',
+                route   = '{{ route('get.courses.asignature') }}';
+            data = {
+                id:id
+            }
+            // get.courses
+            $.ajax({
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: route,
+                dataType: 'json',
+                // processData: false,
+                // contentType: false,
+                data: data,
+                beforeSend: function()
+                {
+                    $(select).attr('disabled','')
+                },
+            }).done(function (response) {
+                $(select).removeAttr('disabled');
+                if (response.status == 200) {
+                    html = '<option value="">Seleccione...</option>';
+                    $.each(response.results, function (index, element) {
+                        html+='<option value="'+element.cours_id+'">'+element.course+' ('+element.code+')</option>';
+                    });
+                    $(select).html(html);
+                }else{
+                    var placementFrom = 'top';
+                    var placementAlign = 'center';
+                    var state = 'danger';
+                    var style = 'withicon';
+                    var content = {};
+
+                    content.message = 'Ingrese correctamente los datos para la session para HB Group Perú';
+                    content.title = 'Session';
+                    // if (style == "withicon") {
+                    //     content.icon = 'fas fa-times';
+                    // } else {
+                    //     content.icon = 'none';
+                    // }
+                    content.icon = 'fas fa-times';
+                    content.url = url+'hbgroupp_web';
+                    content.target = '_blank';
+
+                    $.notify(content,{
+                        type: state,
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        },
+                        time: 1000,
+                        delay: 0,
+                    });
+
+                    setTimeout(function(){
+                        $('[data-notify="dismiss"]').click();
+                    }, 3000);
+                }
+            }).fail(function () {
+                // alert("Error");
+                $(select).removeAttr('disabled');
+            });
         }
-        // get.courses
-        $.ajax({
-            method: 'POST',
-            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
-            url: route,
-            dataType: 'json',
-            // processData: false,
-            // contentType: false,
-            data: data,
-            beforeSend: function()
-            {
-                $(select).attr('disabled','')
-            },
-        }).done(function (response) {
-            $(select).removeAttr('disabled');
-            if (response.status == 200) {
-                html = '<option value="">Seleccione...</option>';
-                $.each(response.results, function (index, element) {
-                    html+='<option value="'+element.cours_id+'">'+element.course+' ('+element.code+')</option>';
-                });
-                $(select).html(html);
-            }else{
+        $(document).on('click','[data-action="participant-import"]',function (e) {
+            e.preventDefault();
+            $('#import-excel-participant').modal('show');
+
+        });
+        $(document).on('submit','[data-form="save-excel"]',function (e) {
+            e.preventDefault();
+            var data = new FormData($(this)[0]),
+
+                route = $(this).attr('action');
+
+            $.ajax({
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: route,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                data: data,
+                beforeSend: function()
+                {
+                    $('[data-form="save-excel"] .modal-footer button[type="submit"]').addClass('is-loading');
+                    $('[data-form="save-excel"] .modal-footer button[type="submit"]').attr('disabled','');
+                },
+            }).done(function (response) {
+                $('[data-form="save-excel"] .modal-footer button[type="submit"]').removeClass('is-loading');
+                $('[data-form="save-excel"] .modal-footer button[type="submit"]').removeAttr('disabled');
+                if (response.status == 200) {
+                    $('#import-excel-participant').modal('hide');
+                    var placementFrom = 'top';
+                    var placementAlign = 'right';
+                    var state = 'success';
+                    var style = 'withicon';
+                    var content = {};
+
+                    content.message = 'Se guardo con Éxito';
+                    content.title = 'Guardar';
+                    content.icon = 'fas fa-check';
+                    content.url = url+'login';
+                    content.target = '_blank';
+
+                    $.notify(content,{
+                        type: state,
+                        placement: {
+                            from: placementFrom,
+                            align: placementAlign
+                        },
+                        time: 1000,
+                        delay: 2,
+                    });
+                    setTimeout(function(){
+                        location.reload();
+                    }, 3000);
+                    console.log(response);
+                }else{
+                    var placementFrom = 'top';
+                    var placementAlign = 'center';
+                    var state = 'danger';
+                    var style = 'withicon';
+                    var content = {};
+
+                    content.message = 'Ingrese correctamente los datos';
+                    content.title = 'Importar lista de certificados';
+                    // if (style == "withicon") {
+                    //     content.icon = 'fas fa-times';
+                    // } else {
+                    //     content.icon = 'none';
+                    // }
+                    content.icon = 'fas fa-times';
+                    content.url = url+'hbgroupp_web';
+                    content.target = '_blank';
+
+                    $.notify(content,{
+                        type: state,
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        },
+                        time: 1000,
+                        delay: 0,
+                    });
+
+                    setTimeout(function(){
+                        $('[data-notify="dismiss"]').click();
+                    }, 3000);
+                }
+            }).fail(function () {
+                // alert("Error");
                 var placementFrom = 'top';
                 var placementAlign = 'center';
                 var state = 'danger';
@@ -201,177 +341,118 @@
                 setTimeout(function(){
                     $('[data-notify="dismiss"]').click();
                 }, 3000);
-            }
-        }).fail(function () {
-            // alert("Error");
-            $(select).removeAttr('disabled');
-        });
-    }
-    $(document).on('click','[data-action="participant-import"]',function (e) {
-        e.preventDefault();
-        $('#import-excel-participant').modal('show');
-
-    });
-    $(document).on('submit','[data-form="save-excel"]',function (e) {
-        e.preventDefault();
-        var data = new FormData($(this)[0]),
-
-            route = $(this).attr('action');
-
-        $.ajax({
-            method: 'POST',
-            headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
-            url: route,
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            data: data,
-            beforeSend: function()
-            {
-                $('[data-form="save-excel"] .modal-footer button[type="submit"]').addClass('is-loading');
-                $('[data-form="save-excel"] .modal-footer button[type="submit"]').attr('disabled','');
-            },
-        }).done(function (response) {
-            $('[data-form="save-excel"] .modal-footer button[type="submit"]').removeClass('is-loading');
-            $('[data-form="save-excel"] .modal-footer button[type="submit"]').removeAttr('disabled');
-            if (response.status == 200) {
-                $('#import-excel-participant').modal('hide');
-                var placementFrom = 'top';
-                var placementAlign = 'right';
-                var state = 'success';
-                var style = 'withicon';
-                var content = {};
-
-                content.message = 'Se guardo con Éxito';
-                content.title = 'Guardar';
-                content.icon = 'fas fa-check';
-                content.url = url+'login';
-                content.target = '_blank';
-
-                $.notify(content,{
-                    type: state,
-                    placement: {
-                        from: placementFrom,
-                        align: placementAlign
-                    },
-                    time: 1000,
-                    delay: 2,
-                });
-                setTimeout(function(){
-                    location.reload();
-                }, 3000);
-                console.log(response);
-            }else{
-                var placementFrom = 'top';
-                var placementAlign = 'center';
-                var state = 'danger';
-                var style = 'withicon';
-                var content = {};
-
-                content.message = 'Ingrese correctamente los datos';
-                content.title = 'Importar lista de certificados';
-                // if (style == "withicon") {
-                //     content.icon = 'fas fa-times';
-                // } else {
-                //     content.icon = 'none';
-                // }
-                content.icon = 'fas fa-times';
-                content.url = url+'hbgroupp_web';
-                content.target = '_blank';
-
-                $.notify(content,{
-                    type: state,
-                    placement: {
-                        from: 'top',
-                        align: 'center'
-                    },
-                    time: 1000,
-                    delay: 0,
-                });
-
-                setTimeout(function(){
-                    $('[data-notify="dismiss"]').click();
-                }, 3000);
-            }
-        }).fail(function () {
-            // alert("Error");
-            var placementFrom = 'top';
-            var placementAlign = 'center';
-            var state = 'danger';
-            var style = 'withicon';
-            var content = {};
-
-            content.message = 'Ingrese correctamente los datos para la session para HB Group Perú';
-            content.title = 'Session';
-            // if (style == "withicon") {
-            //     content.icon = 'fas fa-times';
-            // } else {
-            //     content.icon = 'none';
-            // }
-            content.icon = 'fas fa-times';
-            content.url = url+'hbgroupp_web';
-            content.target = '_blank';
-
-            $.notify(content,{
-                type: state,
-                placement: {
-                    from: 'top',
-                    align: 'center'
-                },
-                time: 1000,
-                delay: 0,
             });
 
-            setTimeout(function(){
-                $('[data-notify="dismiss"]').click();
-            }, 3000);
         });
+        $(document).on('click','[data-delete="modal"]',function () {
+            var id = $(this).attr('data-id'),
+                route = '{{ route('certificado.destroy', ['certificado' => 'id'] ) }}';
+                route = route.replace('id', id);
+            swal({
+                title: "¿Está seguro de eliminar??",
+                text: "Se eliminara su registro.",
+                type: "info",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+            }, function () {
+                $.ajax({
+                    method: 'DELETE',
+                    headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                    url: route,
+                    dataType: 'json',
+                    data: {},
+                    beforeSend: function()
+                    {
+                    },
+                }).done(function (response) {
+                    if (response.status == 200) {
 
-    });
-    $(document).on('click','[data-delete="modal"]',function () {
-        var id = $(this).attr('data-id'),
-            route = '{{ route('certificado.destroy', ['certificado' => 'id'] ) }}';
-            route = route.replace('id', id);
-        swal({
-            title: "¿Está seguro de eliminar??",
-            text: "Se eliminara su registro.",
-            type: "info",
-            showCancelButton: true,
-            closeOnConfirm: false,
-            showLoaderOnConfirm: true
-        }, function () {
-            $.ajax({
-                method: 'DELETE',
-                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
-                url: route,
-                dataType: 'json',
-                data: {},
-                beforeSend: function()
-                {
-                },
-            }).done(function (response) {
-                if (response.status == 200) {
+                        swal({
+                            title: " ",
+                            text: "Se elimino con éxito",
+                            type: "success",
+                            showCancelButton: false,
+                            confirmButtonColor: '#78cbf2',
+                            confirmButtonText: 'Aceptar',
+                            },
+                            function(){
+                                location.reload();
+                        });
+                    }else{
+                        swal("Informativo", "Ocurrio un error", "warning")
+                    }
+                }).fail(function () {
+                    // alert("Error");
+                });
+            });
 
-                    swal({
-                        title: " ",
-                        text: "Se elimino con éxito",
-                        type: "success",
-                        showCancelButton: false,
-                        confirmButtonColor: '#78cbf2',
-                        confirmButtonText: 'Aceptar',
-                        },
-                        function(){
-                            location.reload();
+        });
+        function listar() {
+            const $tabla = $('#tabla-data').DataTable({
+                dom: 'Bfrtip',
+                pageLength: 20,
+                language: idioma,
+                serverSide: true,
+                initComplete: function (settings, json) {
+                    const $filter = $('#tabla-data_filter');
+                    const $input = $filter.find('input');
+                    $filter.append('<button id="btnBuscar" class="btn btn-default btn-sm pull-right" type="button"><i class="fas fa-search"></i></button>');
+                    $input.off();
+                    $input.on('keyup', (e) => {
+                        if (e.key == 'Enter') {
+                            $('#btnBuscar').trigger('click');
+                        }
                     });
-                }else{
-                    swal("Informativo", "Ocurrio un error", "warning")
-                }
-            }).fail(function () {
-                // alert("Error");
+                    $('#btnBuscar').on('click', (e) => {
+                        $tabla.search($input.val()).draw();
+                    });
+                },
+                drawCallback: function (settings) {
+                    $('#tabla-data_filter input').prop('disabled', false);
+                    $('#btnBuscar').html('<i class="fas fa-search"></i>').prop('disabled', false);
+                    $('#tabla-data_filter input').trigger('focus');
+                },
+                order: [[0, 'asc']],
+                ajax: {
+                    url: '{{ route('academico.certificados.listar') }}',
+                    method: 'POST',
+                    headers: {'X-CSRF-TOKEN': csrf_token}
+                },
+                columns: [
+                    {data: 'certificado_id'},
+                    {data: 'user_id'},
+                    {data: 'description_cours'},
+                    {data: 'date'},
+                    {data: 'accion', orderable: false, searchable: false, className: 'text-center'}
+                ],
+                buttons: [
+                    // {
+                    //     text: '<i class="fas fa-plus"></i> Nuevo',
+                    //     action: function () {
+                    //         $("#nuevo-formulario")[0].reset();
+                    //         $("#nuevo-formulario h5").text('Nueva clasificación');
+                    //         $("#nuevo-formulario").find('input[name="id"]').val(0);
+                    //         $("#nuevo").modal("show");
+                    //     },
+                    //     className: 'btn btn-sm btn-primary nuevo',
+                    // },
+                ]
             });
-        });
-
-    });
-</script>
-
+            $tabla.on('search.dt', function() {
+                $('#tabla-data_filter input').attr('disabled', true);
+                $('#btnBuscar').html('<i class="fas fa-clock" aria-hidden="true"></i>').prop('disabled', true);
+            });
+            $tabla.on('init.dt', function(e, settings, processing) {
+                // $(e.currentTarget).LoadingOverlay('show', { imageAutoResize: true, progress: true, imageColor: '#3c8dbc' });
+            });
+            $tabla.on('processing.dt', function(e, settings, processing) {
+                if (processing) {
+                    // $(e.currentTarget).LoadingOverlay('show', { imageAutoResize: true, progress: true, imageColor: '#3c8dbc' });
+                } else {
+                    // $(e.currentTarget).LoadingOverlay("hide", true);
+                }
+            });
+        }
+    </script>
 @endsection
