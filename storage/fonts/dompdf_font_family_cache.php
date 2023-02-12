@@ -1,4 +1,5 @@
-<?php return array (
+<?php return function ($fontDir, $rootDir) {
+return array (
   'sans-serif' => array(
     'normal' => $rootDir . '/lib/fonts/Helvetica',
     'bold' => $rootDir . '/lib/fonts/Helvetica-Bold',
@@ -78,9 +79,10 @@
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
   'syne' => array(
-    'normal' => $fontDir . '/syne_normal_8250e385646a5f6aca98c78e734f3c56',
+    'normal' => $fontDir . '/syne_normal_c2a775eeca679f879a5840067d9c927b',
   ),
   'roboto' => array(
-    'normal' => $fontDir . '/roboto_normal_ea8a516f74db1359b3df4ecad83b7f3b',
+    'normal' => $fontDir . '/roboto_normal_7bc701b343c10631f60048716b96e4f7',
   ),
-) ?>
+);
+}; ?>

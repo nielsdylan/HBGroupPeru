@@ -42,10 +42,10 @@
                         </div>
                         <div class="col-md-6 text-right">
 
-                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('certificado.export.model.excel')}}"><i class="fas fa-file-import fon-z"></i></a>
+                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('certificado.export.model.excel')}}"><i class="fas fas fa-cloud-download-alt fon-z"></i></a>
 
-                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fa-file-upload fon-z"></i></a>
-                            <button class="btn btn-primary btn-round" data-toggle="modal" data-target="#addRowModal">
+                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fas fa-cloud-upload-alt fon-z"></i></a>
+                            <button class="btn btn-primary btn-round nuevo-certificado">
                                 <i class="fa fa-plus"></i>
                                 Certificar
                             </button>
@@ -57,10 +57,12 @@
                         <table class="display table table-striped table-hover" id="tabla-data">
                             <thead>
                                 <tr>
-                                    <td>ID</td>
-                                    <td>USUARIO</td>
-                                    <td>CURSO</td>
-                                    <td>FECHA</td>
+                                    <td>Código</td>
+                                    <td>DNI</td>
+                                    <td>Apellidos y Nombres</td>
+                                    <td>Curso</td>
+                                    <td>Empresa</td>
+                                    <td>Fecha</td>
                                     <th style="width: 10%">Action</th>
                                 </tr>
                             </thead>
@@ -134,6 +136,110 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="certificado" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header no-bd">
+                <h2 class="modal-title">
+                    <span class="fw-mediumbold">
+                        Ingresar nuevo participante certificado
+                    </span>
+
+                </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{route('academico.certificados.guardar')}}" method="post"  data-form="certificado">
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" name="id" value="0">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="codigo">Código:</label>
+                                <input id="codigo" class="form-control" type="text" name="codigo" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="nota">Nota:</label>
+                                <input id="nota" class="form-control" type="number" name="nota" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="duracion" data-toggle="tooltip" data-original-title="Tiempo en meses">Duración:</label>
+                                <input id="duracion" class="form-control" type="number" name="duracion" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="dni">DNI:</label>
+                                <input id="dni" class="form-control" type="number" name="dni" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="curso">Curso:</label>
+                                <input id="curso" class="form-control" type="text" name="curso" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="apellido_paterno">Apellido Paterno:</label>
+                                <input id="apellido_paterno" class="form-control" type="text" name="apellido_paterno" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="apellido_materno">Apellido materno:</label>
+                                <input id="apellido_materno" class="form-control" type="text" name="apellido_materno" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nombre">Nombres:</label>
+                                <input id="nombre" class="form-control" type="text" name="nombre" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="empresa">Empresa:</label>
+                                <input id="empresa" class="form-control" type="text" name="empresa" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="date">Fecha:</label>
+                                <input id="date" class="form-control" type="date" name="date" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="hour">Hora:</label>
+                                <input id="hour" class="form-control" type="number" name="hour" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer no-bd">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script>
     var status =0;
 </script>
@@ -141,6 +247,7 @@
 @endsection
 @section('scripts')
     {{-- <script src="{{ asset('assets/js/plugin/datatables/jquery.dataTables.min.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/plugin/loadingoverlay/loadingoverlay.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
@@ -250,7 +357,7 @@
             }).done(function (response) {
                 $('[data-form="save-excel"] .modal-footer button[type="submit"]').removeClass('is-loading');
                 $('[data-form="save-excel"] .modal-footer button[type="submit"]').removeAttr('disabled');
-                if (response.status == 200) {
+                if (response.success == true) {
                     $('#import-excel-participant').modal('hide');
                     var placementFrom = 'top';
                     var placementAlign = 'right';
@@ -273,10 +380,9 @@
                         time: 1000,
                         delay: 2,
                     });
+                    $('#tabla-data').DataTable().ajax.reload(null, false);
                     setTimeout(function(){
-                        location.reload();
                     }, 3000);
-                    console.log(response);
                 }else{
                     var placementFrom = 'top';
                     var placementAlign = 'center';
@@ -341,10 +447,12 @@
                 setTimeout(function(){
                     $('[data-notify="dismiss"]').click();
                 }, 3000);
+                $('[data-form="save-excel"] .modal-footer button[type="submit"]').removeClass('is-loading');
+                $('[data-form="save-excel"] .modal-footer button[type="submit"]').removeAttr('disabled');
             });
 
         });
-        $(document).on('click','[data-delete="modal"]',function () {
+        $(document).on('click','.eliminar',function () {
             var id = $(this).attr('data-id'),
                 route = '{{ route('certificado.destroy', ['certificado' => 'id'] ) }}';
                 route = route.replace('id', id);
@@ -377,7 +485,7 @@
                             confirmButtonText: 'Aceptar',
                             },
                             function(){
-                                location.reload();
+                                $('#tabla-data').DataTable().ajax.reload(null, false);
                         });
                     }else{
                         swal("Informativo", "Ocurrio un error", "warning")
@@ -413,7 +521,7 @@
                     $('#btnBuscar').html('<i class="fas fa-search"></i>').prop('disabled', false);
                     $('#tabla-data_filter input').trigger('focus');
                 },
-                order: [[0, 'asc']],
+                order: [[0, 'desc']],
                 ajax: {
                     url: '{{ route('academico.certificados.listar') }}',
                     method: 'POST',
@@ -421,8 +529,10 @@
                 },
                 columns: [
                     {data: 'certificado_id'},
-                    {data: 'user_id'},
+                    {data: 'dni'},
+                    {data: 'nombre'},
                     {data: 'description_cours'},
+                    {data: 'empresa'},
                     {data: 'date'},
                     {data: 'accion', orderable: false, searchable: false, className: 'text-center'}
                 ],
@@ -444,15 +554,86 @@
                 $('#btnBuscar').html('<i class="fas fa-clock" aria-hidden="true"></i>').prop('disabled', true);
             });
             $tabla.on('init.dt', function(e, settings, processing) {
-                // $(e.currentTarget).LoadingOverlay('show', { imageAutoResize: true, progress: true, imageColor: '#3c8dbc' });
+                $(e.currentTarget).LoadingOverlay('show', { imageAutoResize: true, progress: true, imageColor: '#3c8dbc' });
             });
             $tabla.on('processing.dt', function(e, settings, processing) {
                 if (processing) {
-                    // $(e.currentTarget).LoadingOverlay('show', { imageAutoResize: true, progress: true, imageColor: '#3c8dbc' });
+                    $(e.currentTarget).LoadingOverlay('show', { imageAutoResize: true, progress: true, imageColor: '#3c8dbc' });
                 } else {
-                    // $(e.currentTarget).LoadingOverlay("hide", true);
+                    $(e.currentTarget).LoadingOverlay("hide", true);
                 }
             });
         }
+        $('.nuevo-certificado').click(function (e) {
+            e.preventDefault();
+            $('#certificado').modal('show');
+            $('[data-form="certificado"]')[0].reset();
+        });
+        $('[data-form="certificado"]').submit(function (e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+            $.ajax({
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: $(this).attr('action'),
+                dataType: 'json',
+                // processData: false,
+                // contentType: false,
+                data: data,
+                beforeSend: function()
+                {
+                    // $(select).attr('disabled','')
+                },
+            }).done(function (response) {
+                console.log(response);
+                if (response.success===true) {
+
+                }
+                $('#certificado').modal('hide');
+                $('#tabla-data').DataTable().ajax.reload(null, false);
+            }).fail(function () {
+                // alert("Error");
+
+            });
+        });
+        $(document).on('click','.editar',function () {
+            var id = $(this).attr('data-id'),
+                route = '{{ route('academico.certificados.editar',['id' => 'id'] ) }}';
+            route = route.replace('id', id);
+            $('[data-form="certificado"]')[0].reset();
+            $.ajax({
+                method: 'GET',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: route,
+                dataType: 'json',
+                // processData: false,
+                // contentType: false,
+                data: {},
+                beforeSend: function()
+                {
+                    // $(select).attr('disabled','')
+                },
+            }).done(function (response) {
+                if (response.success===true) {
+                    $('[data-form="certificado"]').find('input[name="id"]').val(id);
+                    $('[data-form="certificado"]').find('input[name="codigo"]').val(response.data.codigo);
+                    $('[data-form="certificado"]').find('input[name="nota"]').val(response.data.nota);
+                    $('[data-form="certificado"]').find('input[name="duracion"]').val(response.data.duracion);
+                    $('[data-form="certificado"]').find('input[name="dni"]').val(response.data.dni);
+                    $('[data-form="certificado"]').find('input[name="curso"]').val(response.data.description_cours);
+                    $('[data-form="certificado"]').find('input[name="apellido_paterno"]').val(response.data.apellido_paterno);
+                    $('[data-form="certificado"]').find('input[name="apellido_materno"]').val(response.data.apellido_materno);
+                    $('[data-form="certificado"]').find('input[name="nombre"]').val(response.data.nombre);
+                    $('[data-form="certificado"]').find('input[name="empresa"]').val(response.data.empresa);
+                    $('[data-form="certificado"]').find('input[name="date"]').val(response.data.date);
+                    $('[data-form="certificado"]').find('input[name="hour"]').val(response.data.hour);
+                    $('#certificado').modal('show');
+                }
+
+            }).fail(function () {
+                // alert("Error");
+
+            });
+        });
     </script>
 @endsection

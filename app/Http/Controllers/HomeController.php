@@ -16,6 +16,7 @@ use App\Models\Question;
 use App\Models\QuestionsResponse;
 use App\Models\Slider;
 use App\Models\User;
+// use Barryvdh\DomPDF\PDF ;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use PDF;
@@ -227,9 +228,12 @@ class HomeController extends Controller
         $value=1;
         if ($request->ajax()) {
 
-            $certificado = Certificado::where('certificados.active',1)->where('users.dni',$request->dni)->where('users.active',1)
-                ->join("users", "users.id", "=", "certificados.user_id")
-                ->select("certificados.description_cours", "certificados.date", "certificados.status", "certificados.certificado_id", "users.*")
+            // $certificado = Certificado::where('certificados.active',1)->where('users.dni',$request->dni)->where('users.active',1)
+            //     ->join("users", "users.id", "=", "certificados.user_id")
+            //     ->select("certificados.description_cours", "certificados.date", "certificados.status", "certificados.certificado_id", "users.*")
+            //     ->paginate(5);
+
+            $certificado = Certificado::where('active',1)->where('dni',$request->dni)
                 ->paginate(5);
 
             if ($certificado['data']=='' || $certificado['data']==null) {
@@ -242,18 +246,26 @@ class HomeController extends Controller
     }
     public function certificadoPDF($number)
     {
-
+        $instructor = (object)array(
+            "name"=>"HELARD JOHN",
+            "last_name"=>"BEJARANO OTAZU",
+            "description"=>"Gerente General",
+            "img_firm"=>"1638456633.png",
+            "cip"=>0,
+        );
+        // return $instructor->name;exit;
         // $participant = Participant::where('dni', $number)->where('active',1)->first();
         $certificado = Certificado::where('certificado_id',$number)->where('active',1)->first();
         // return $certificado;exit;
-        $instructor = Instructor::where('active',1)->where('instructor_id',$certificado->instructor_id)
-        ->first();
 
-        $instructor = Instructor::where('instructors.active',1)->where('instructors.instructor_id',$certificado->instructor_id)->where('users.active',1)
-            // ->where('participants.active',1)
-            ->join("users", "users.id", "=", "instructors.user_id")
-            ->select("instructors.*","users.*")
-            ->first();
+        // $instructor = Instructor::where('active',1)->where('instructor_id',$certificado->instructor_id)
+        // ->first();
+
+        // $instructor = Instructor::where('instructors.active',1)->where('instructors.instructor_id',$certificado->instructor_id)->where('users.active',1)
+        //     // ->where('participants.active',1)
+        //     ->join("users", "users.id", "=", "instructors.user_id")
+        //     ->select("instructors.*","users.*")
+        //     ->first();
 
 
         $participant = Participant::where('participant_id', $certificado->participant_id)->where('active',1)->first();
@@ -265,18 +277,18 @@ class HomeController extends Controller
         $mesDesc = strftime("%d de %B del %Y", strtotime($newDate));
         $year = strftime("%Y", strtotime($newDate));
         $cip = '';
-        if ($instructor->cip>0) {
-            $cip = 'REG. CIP '.$instructor->cip;
-        }
+        // if ($instructor->cip>0) {
+        //     $cip = 'REG. CIP '.$instructor->cip;
+        // }
         // return $cip;
         $json = array(
-            'name'=>$user->name,
-            'last_name'=>$user->last_name,
-            'document'=>$user->dni,
+            'name'=>strtoupper($certificado->nombre),
+            'last_name'=>strtoupper($certificado->apellido_paterno).' '.strtoupper($certificado->apellido_materno),
+            'document'=>$certificado->dni,
             'description'=>$certificado->description_cours,
             'date_1'=>'Realizado el '.$mesDesc.',',
             'date_2'=>'con una duración '.$certificado->hour.' horas efectivas.',
-            'name_firm'=>$instructor->name.' '.$instructor->last_name,
+            'name_firm'=>strtoupper($instructor->name.' '.$instructor->last_name),
             'cargo_firm'=>$instructor->description,
             'business_firm'=>'HB GROUP PERU S.R.L.',
             'cell'=>'932 777 533',
@@ -284,10 +296,13 @@ class HomeController extends Controller
             'email'=>'info@hbgroup.pe',
             'web'=>'www.hbgroup.pe',
             'name_business'=>'HB GROUP PERU S.R.L',
-            'number'=>''.$year.' - 00'.$certificado->certificado_id,
+            // 'number'=>''.$year.' - 00'.$certificado->certificado_id,
+            'number'=>$certificado->codigo,
             'cip'=>$cip,
-            'img_firm'=>$instructor->img_firm
+            'img_firm'=>$instructor->img_firm,
+            'business_curso'=>strtoupper('Tramarsa'),
         );
+
         $pdf = PDF::loadView('pdf.certificado', compact('json'));
         // $pdf = PDF::loadView('pdf.certifi', compact('json'));
         return $pdf->download('certificado.pdf');
@@ -295,16 +310,23 @@ class HomeController extends Controller
     }
     public function viewPDF()
     {
+        $instructor = (object)array(
+            "name"=>"HELARD JOHN",
+            "last_name"=>"BEJARANO OTAZU",
+            "description"=>"Gerente General",
+            "img_firm"=>"1638456633.png",
+            "cip"=>0,
+        );
         // -----
-        $certificado = Certificado::where('certificado_id',678)->where('active',1)->first();
-        $instructor = Instructor::where('active',1)->where('instructor_id',$certificado->instructor_id)
-        ->first();
+        $certificado = Certificado::where('certificado_id',155)->where('active',1)->first();
+        // $instructor = Instructor::where('active',1)->where('instructor_id',$certificado->instructor_id)
+        // ->first();
 
-        $instructor = Instructor::where('instructors.active',1)->where('instructors.instructor_id',$certificado->instructor_id)->where('users.active',1)
-            // ->where('participants.active',1)
-            ->join("users", "users.id", "=", "instructors.user_id")
-            ->select("instructors.*","users.*")
-            ->first();
+        // $instructor = Instructor::where('instructors.active',1)->where('instructors.instructor_id',$certificado->instructor_id)->where('users.active',1)
+        //     // ->where('participants.active',1)
+        //     ->join("users", "users.id", "=", "instructors.user_id")
+        //     ->select("instructors.*","users.*")
+        //     ->first();
 
 
         $participant = Participant::where('participant_id', $certificado->participant_id)->where('active',1)->first();
@@ -322,8 +344,8 @@ class HomeController extends Controller
 
         $url = url('/public/assets/fonts/calibre/Calibre-Regular.ttf');
         $json = array(
-            'name'=>'Niels Dylan',
-            'last_name'=>'Quispe Peralta',
+            'name'=>strtoupper('Niels Dylan'),
+            'last_name'=>strtoupper('Quispe Peralta'),
             'document'=>'74250891',
             'description'=>'Control de Energías Peligrosas (Bloqueo y Etiquetado / Consignación de Equipos)',
             'date_1'=>'Realizado el 21 de Mayo del 2021,',
@@ -338,6 +360,7 @@ class HomeController extends Controller
             'web'=>'www.hbgroup.pe',
             'name_business'=>'HB GROUP PERU S.R.L',
             'number'=>'2021-0051',
+            'business_curso'=>strtoupper('Tramarsa'),
 
             'cip'=>$cip,
             'img_firm'=>$instructor->img_firm

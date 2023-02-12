@@ -19,11 +19,11 @@
         font-family: 'Roboto', sans-serif;
     }
     .container{
-        width: 100%;
+        /* width: 100%;
         padding-right: 15px;
         padding-left: 15px;
         margin-right: auto;
-        margin-left: auto;
+        margin-left: auto; */
     }
     .text-center{
         text-align: center;
@@ -52,6 +52,27 @@
     .margin-bottom-0{
         margin-bottom: 0px
     }
+    .margin-bottom-5{
+        margin-bottom: 5px
+    }
+    .margin-bottom-10{
+        margin-bottom: 10px
+    }
+    .margin-bottom-15{
+        margin-bottom: 15px
+    }
+    .margin-bottom-20{
+        margin-bottom: 20px
+    }
+    .margin-bottom-25{
+        margin-bottom: 25px
+    }
+    .margin-bottom-30{
+        margin-bottom: 30px
+    }
+    .margin-top-0{
+        margin-top: 0px;
+    }
     .margin-top-5{
         margin-top: 5px;
     }
@@ -70,7 +91,7 @@
         border-bottom: 2.5px solid;
         border-left: 2.5px solid;
         border-color: #8090b0;
-        height: 950px;
+        height: 1010px;
     }
     .border-footer{
         border-top: 18.5px solid;
@@ -84,6 +105,7 @@
         border-color: #909cb2;
         padding-right: 20px;
         padding-left: 20px;
+        padding-bottom: 15px;
         /* padding: 10px */
     }
     .border-solid{
@@ -168,20 +190,27 @@
     <div class="container">
         <div id="img-pdf" class="border-pdf">
             <div class="text-right margin-top-10"><span class="border-number margin-right-20">N&deg;: {{$json['number']}}</span></div>
-            <div class="text-center"><img src="{{asset('assets/img/logo_snc.png')}}" width="100"></div>
+            {{-- <div class="text-right margin-top-10 "><label class="border-number margin-right-20 margin-bottom-10">N&deg;: 2019 - 00155234234234234</label></div> --}}
+            <div class="text-center"><img src="{{asset('assets/img/logo_snc.png')}}" width="150"></div>
             <div class="text-center"><h3 class="margin-0">HB GROUP PERU</h3></div>
-            <div class="liston-backgroun">
+            <div class="liston-backgroun margin-bottom-30">
                 <h1 class="text-white text-center padding-top-liston margin-bottom-0">CERTIFICADO</h1>
             </div>
             <div class="text-center"><h3 class="margin-top-0">OTORGADO A:</h3></div>
-            <div class="text-center"><h2 class="margin-0 text-blue">{{$json['last_name'].' '.$json['name']}}</h2></div>
-            <div class="text-center"><h2 class="margin-0">DNI N&deg; {{$json['document']}}</h2></div>
-            <div class="text-center"><h3>Por haber aprobado satisfactoriamente el curso:</h3></div>
-            <div class="text-center"><h2 class="text-blue">"{{$json['description']}}"</h2></div>
-            <div class="text-center"><h3 class="margin-0">{{$json['date_1']}}</h3></div>
-            <div class="text-center"><h3 class="margin-0">{{$json['date_2']}}</h3></div>
+            <div class="text-center margin-bottom-15"><h1 class="margin-0 text-blue">{{$json['last_name'].' '.$json['name']}}</h1></div>
+            <div class="text-center"><h2 class="margin-0 text-blue">Identificado con DNI N&deg; {{$json['document']}}</h2></div>
+            <div class="text-center"><h2 class="margin-0 text-blue">de la empresa {{$json['business_curso']}} </h2></div>
+            <div class="text-center margin-bottom-20 margin-top-20">Por haber aprobado satisfactoriamente el curso de:</div>
+            {{-- descripcion de la base de datos --}}
+            <div class="text-center margin-bottom-30"><h2 class="margin-top-0 text-blue"> “{{$json['description']}}”</h2></div>
+            {{-- temporal --}}
+            {{-- <div class="text-center margin-bottom-30"><h2 class="margin-top-0 text-blue">  “Control de Energías Peligrosas (Bloqueo y Etiquetado / Consignación de Equipos)”</h2></div> --}}
+
+            <div class="text-center">{{$json['date_1']}}</div>
+            <div class="text-center">{{$json['date_2']}}</div>
+            <div class="text-center">Bajo los Estándares de Angloamerican Quellaveco S.A.</div>
             <div></div>
-            <div>
+            {{-- <div>
                 <table style="position: absolute;top: 600px; left: 260px;">
                     <tbody>
                         <tr>
@@ -203,12 +232,25 @@
                 </table>
                 <img src="{{asset('assets/img/sello-fondo-hb.png')}}" width="150" class="sello-white" style="position: absolute;top: 210px;">
                 <img src="{{asset('assets/img/sello-hb.png')}}" width="150" class="sello" style="position: absolute;top: 600px; left:400px">
-            </div>
+            </div> --}}
+            <div class="text-center" style="position: absolute;top: 823px;left: 280px;"><img src="{{asset('assets/img/user/'.$json['img_firm'])}}" width="150"></div>
+            <div class="text-center" style="position: absolute;top: 875px;left: 255px;"><hr size="1" width="150" class="border-solid"></div>
+            <div class="text-center" style="position: absolute;top: 885px;left: 260px;">Mg. Helard Bejarano Otazu</div>
+            <div class="text-center" style="position: absolute;top: 905px;left: 305px;">Gerente General</div>
+            <div class="text-center" style="position: absolute;top: 925px;left: 275px;">HB GROUP PERU S.R.L.</div>
+            <div class="text-center" style="position: absolute;top: 945px;left: 265px;"><a href="http://hbgroup.pe/certificados-list" target="_blank" style="text-decoration: none;color: #000;">Verifique sus certificados</a></div>
+
+            <img src="{{asset('assets/img/sello-fondo-hb.png')}}" width="150" class="sello-white" style="position: absolute;top: 825px;">
+            <img src="{{asset('assets/img/sello-hb.png')}}" width="150" class="sello" style="position: absolute;top: 773px; left:430px">
+
             <div style="font-size: 14px;font-family: 'Roboto' !important;">
-                <hr style="position: absolute;top: 380px;width: 100%;height: 18.5px;background-color: #8090b0;border: transparent;">
-                <div style="position: absolute;top: 400px;margin-left: 28px;">
-                    <span>{{$json['name_business']}}</span> | <img src="{{asset('assets/img/telephone-cetificado.png')}}" width="15" class="firma"><span> {{$json['telephone']}}</span> |
-                    <span>{{$json['cell']}}</span> | <img src="{{asset('assets/img/message-certificado.png')}}" width="15" class="firma"> <span>{{$json['email']}}</span> | <img src="{{asset('assets/img/web-certificado.png')}}" width="15" class="firma"> <span>{{$json['web']}}</span>
+                <hr style="position: absolute;top: 975px;width: 99%;height: 18.5px;background-color: #8090b0;border: transparent;">
+                <div style="position: absolute;top: 1005px;margin-left: 28px;">
+                    <span>{{$json['name_business']}}</span> |
+                    <img src="{{asset('assets/img/telephone-cetificado.png')}}" width="15" class="firma"><span> {{$json['telephone']}}</span> |
+                    <span>{{$json['cell']}}</span> |
+                    <img src="{{asset('assets/img/message-certificado.png')}}" width="15" class="firma"> <span>{{$json['email']}}</span> |
+                    <img src="{{asset('assets/img/web-certificado.png')}}" width="15" class="firma"> <span>{{$json['web']}}</span>
                 </div>
             </div>
         </div>

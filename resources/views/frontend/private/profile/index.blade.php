@@ -160,21 +160,21 @@
     </div>
 </div>
 <script type="text/javascript">
-    function updateLogoStore(event) {
+        function updateLogoStore(event) {
             event.preventDefault();
             document.getElementById('image').click();
         }
         function changeLogoStore(file) {
 
-        var input = file.target;
-        var reader = new FileReader();
+            var input = file.target;
+            var reader = new FileReader();
 
-        reader.onload = function() {
-            var dataURL = reader.result;
-            $("#previewImage").attr('style', 'background-image: url("'+dataURL+'");background-position: center;background-repeat: no-repeat;background-size: cover;');
-        };
+            reader.onload = function() {
+                var dataURL = reader.result;
+                $("#previewImage").attr('style', 'background-image: url("'+dataURL+'");background-position: center;background-repeat: no-repeat;background-size: cover;');
+            };
 
-        reader.readAsDataURL(input.files[0]);
+            reader.readAsDataURL(input.files[0]);
 
         };
         function Send() {
@@ -188,5 +188,5 @@
                 swal('Error','Carga una imagen!','error')
             }
         }
-    </script>
+</script>
 @endsection

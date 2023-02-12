@@ -13,18 +13,27 @@
                   </thead>
                 <tbody>
                     @foreach ($certificado as $certi)
+                    @php
+                        $fecha= date("Y-m-d",strtotime($certi->date));
+                        $fecha_vencimiento = date("Y-m-d",strtotime($fecha."+ ".$certi->duracion." month"));
+                        $fecha_actual = date("Y-m-d",strtotime(date("Y-m-d")));
+                        $estado='CADUCADO';
+                        $color = 'danger';
+                        if ($fecha_vencimiento > $fecha_actual ) {
+                            $estado='VIGENTE';
+                            $color = 'primary';
+                        }
+                    @endphp
+                    {{-- <input type="hidden" name="" id="" class="form-control" value="{{$fecha_vencimient}}" > --}}
+                    {{-- <label for="">{{$fecha_vencimient}}</label> --}}
                         <tr>
-                            <td>{{ $certi->last_name.' '.$certi->name }}</td>
+                            <td>{{ $certi->apellido_paterno.' '.$certi->apellido_materno.' '.$certi->nombre }}</td>
                             <td>{{ $certi->description_cours }}</td>
                             <td>{{ date('d/m/Y', strtotime($certi->date)) }}</td>
                             <td>
-                                @if ($certi->status==1)
-                                <span class="badge badge-pill badge-primary">{{'VIGENTE'}}</span>
-                                @else
-                                <span class="badge badge-pill badge-danger">{{'CADUCIDADO'}}</span>
-                                @endif
+                                <span class="badge badge-pill badge-{{$color}}">{{$fecha_vencimiento}}</span>
                             </td>
-                            <td><a href="{{route('certificado.pdf',$certi->certificado_id )}}"><i class="fas fa-cloud-download-alt"></i> PDF</a></td>
+                            <td><a href="{{route('certificado.pdf',$certi->certificado_id )}}" class="text-{{$color}}"><i class="fas fa-cloud-download-alt"></i> PDF</a></td>
                         </tr>
 
                     @endforeach
