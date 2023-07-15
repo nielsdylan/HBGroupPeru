@@ -61,7 +61,8 @@
 <!-- Azzara DEMO methods, don't include it in your project! -->
 <script src="{{asset('assets/js/setting-demo.js')}}"></script>
 {{-- <script src="{{asset('assets/js/demo.js')}}"></script> --}}
-
+<script src="{{ asset('assets/js/plugin/protip/protip.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugin/loadingoverlay/loadingoverlay.min.js') }}"></script>
 <script >
     $(document).ready(function() {
         $.protip();

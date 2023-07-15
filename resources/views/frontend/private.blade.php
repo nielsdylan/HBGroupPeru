@@ -36,6 +36,7 @@
 </div>
 
 </body>
+@routes
 <script>
     $('#datetime').datetimepicker({
         format: 'MM/DD/YYYY H:mm',

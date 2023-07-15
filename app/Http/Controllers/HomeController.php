@@ -256,18 +256,19 @@ class HomeController extends Controller
         // return $instructor->name;exit;
         // $participant = Participant::where('dni', $number)->where('active',1)->first();
         $certificado = Certificado::where('certificado_id',$number)->where('active',1)->first();
-        // return $certificado;exit;
-
-        // $instructor = Instructor::where('active',1)->where('instructor_id',$certificado->instructor_id)
+        $instructor = Instructor::where('active',1)->where('instructor_id',$certificado->instructor_id)
+        ->first();
+        
+        // $instructor = Instructor::where('instructors.active',1)
+        // ->where('instructors.instructor_id',$certificado->instructor_id)
+        // ->where('users.active',1)
+        // // ->where('participants.active',1)
+        // ->join("users", "users.id", "=", "instructors.user_id")
+        // ->select("instructors.*","users.*")
         // ->first();
-
-        // $instructor = Instructor::where('instructors.active',1)->where('instructors.instructor_id',$certificado->instructor_id)->where('users.active',1)
-        //     // ->where('participants.active',1)
-        //     ->join("users", "users.id", "=", "instructors.user_id")
-        //     ->select("instructors.*","users.*")
-        //     ->first();
-
-
+        $user_instructor =  User::where('id',$instructor->user_id)->first();
+        // return [$user_instructor];exit;
+        
         $participant = Participant::where('participant_id', $certificado->participant_id)->where('active',1)->first();
         $user = User::where('active',1)->where('id',$certificado->user_id)->first();
         setlocale(LC_TIME, "spanish");
@@ -276,7 +277,7 @@ class HomeController extends Controller
         $newDate = date("d-m-Y", strtotime($fecha));
         $mesDesc = strftime("%d de %B del %Y", strtotime($newDate));
         $year = strftime("%Y", strtotime($newDate));
-        $cip = '';
+        $cip = '---';
         // if ($instructor->cip>0) {
         //     $cip = 'REG. CIP '.$instructor->cip;
         // }
@@ -288,8 +289,8 @@ class HomeController extends Controller
             'description'=>$certificado->description_cours,
             'date_1'=>'Realizado el '.$mesDesc.',',
             'date_2'=>'con una duración '.$certificado->hour.' horas efectivas.',
-            'name_firm'=>strtoupper($instructor->name.' '.$instructor->last_name),
-            'cargo_firm'=>$instructor->description,
+            'name_firm'=>'fulano gomes',
+            'cargo_firm'=>$user_instructor->description,
             'business_firm'=>'HB GROUP PERU S.R.L.',
             'cell'=>'932 777 533',
             'telephone'=>'053 474 805',
@@ -299,7 +300,7 @@ class HomeController extends Controller
             // 'number'=>''.$year.' - 00'.$certificado->certificado_id,
             'number'=>$certificado->codigo,
             'cip'=>$cip,
-            'img_firm'=>$instructor->img_firm,
+            'img_firm'=>$user_instructor->img_firm,
             'business_curso'=>strtoupper('Tramarsa'),
         );
 

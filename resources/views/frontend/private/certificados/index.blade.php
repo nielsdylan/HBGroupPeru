@@ -38,7 +38,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 class="card-title">Lista de certificados</h4>
+                            <h4 class="card-title">Gestion de certificados</h4>
                         </div>
                         <div class="col-md-6 text-right">
 
@@ -47,7 +47,7 @@
                             <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fas fa-cloud-upload-alt fon-z"></i></a>
                             <button class="btn btn-primary btn-round nuevo-certificado">
                                 <i class="fa fa-plus"></i>
-                                Certificar
+                                Nuevo Certificado
                             </button>
                         </div>
                     </div>
@@ -243,15 +243,17 @@
 <script>
     var status =0;
 </script>
-
+@include('frontend.private.certificados.create')
+@include('frontend.private.certificados.edit')
 @endsection
 @section('scripts')
     {{-- <script src="{{ asset('assets/js/plugin/datatables/jquery.dataTables.min.js') }}"></script> --}}
-    <script src="{{ asset('assets/js/plugin/loadingoverlay/loadingoverlay.min.js') }}"></script>
+    
     <script src="{{ asset('assets/js/plugin/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+
 
     <script>
         $(document).ready(function () {
