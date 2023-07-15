@@ -32,7 +32,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 class="card-title">Lista de certificados</h4>
+                            <h4 class="card-title">Gestion de certificados</h4>
                         </div>
                         <div class="col-md-6 text-right">
 
@@ -41,7 +41,7 @@
                             <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fa-file-upload fon-z"></i></a>
                             <button class="btn btn-primary btn-round" data-toggle="modal" data-target="#addRowModal">
                                 <i class="fa fa-plus"></i>
-                                Certificar
+                                Nuevo Certificado
                             </button>
                         </div>
                     </div>
@@ -131,8 +131,8 @@
 <script>
     var status =0;
 </script>
-{{-- @include('frontend.private.certificados.create')
-@include('frontend.private.certificados.edit') --}}
+@include('frontend.private.certificados.create')
+@include('frontend.private.certificados.edit')
 <script>
     $(document).on('change','[select-cours="get-cours"]',function (e) {
         e.preventDefault();
