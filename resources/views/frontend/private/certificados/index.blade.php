@@ -42,9 +42,9 @@
                         </div>
                         <div class="col-md-6 text-right">
 
-                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('certificado.export.model.excel')}}"><i class="fas fas fa-cloud-download-alt fon-z"></i></a>
+                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('certificado.export.model.excel')}}"><i class="fas fas fa-cloud-download-alt fon-z"></i> Modelo del ExcelL</a>
 
-                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fas fa-cloud-upload-alt fon-z"></i></a>
+                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fas fa-cloud-upload-alt fon-z"></i> Importar Excel de certificados</a>
                             <button class="btn btn-primary btn-round nuevo-certificado">
                                 <i class="fa fa-plus"></i>
                                 Nuevo Certificado
@@ -54,45 +54,24 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="display table table-striped table-hover" id="tabla-data">
+                        <table class="display table table-striped table-hover" id="tabla-data" width="100%">
                             <thead>
                                 <tr>
-                                    <td>Código</td>
-                                    <td>DNI</td>
+                                    <td>#</td>
+                                    <td>Código de Certificado</td>
+                                    <td>Número de Documento</td>
                                     <td>Apellidos y Nombres</td>
                                     <td>Curso</td>
+                                    <td>Tipo de Curso</td>
                                     <td>Empresa</td>
-                                    <td>Fecha</td>
+                                    <td>Email</td>
+                                    <td>Fecha oficial</td>
+                                    <td>Fecha de vencimiento</td>
+                                    <td>Horas</td>
                                     <th style="width: 10%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @if ($results)
-                                    @foreach ($results as $key=>$item)
-                                        <tr>
-                                            <td>{{$item->code}}</td>
-                                            <td>{{$item->description_cours}}</td>
-                                            <td>{{$item->date}}</td>
-                                            <td>
-                                                @if ($item->status==1)
-                                                    {{'VIGENTE'}}
-                                                @else
-                                                    {{'CADUCIDAD'}}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <div class="form-button-action">
-                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Editar {{$item->name}}" data-edit="modal" data-id="{{$item->certificado_id }}">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Eliminar {{$item->name}}" data-delete="modal" data-id="{{$item->certificado_id }}">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach --}}
-                                {{-- @endif --}}
                             </tbody>
                         </table>
                     </div>
@@ -138,7 +117,7 @@
 </div>
 
 <div class="modal fade" id="certificado" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header no-bd">
                 <h2 class="modal-title">
@@ -156,80 +135,169 @@
                 <div class="modal-body">
                     <input type="hidden" name="id" value="0">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="codigo">Código:</label>
-                                <input id="codigo" class="form-control" type="text" name="codigo" required>
+                                <label for="cod_certificado">Codigo Certificado :</label>
+                                <input id="cod_certificado" class="form-control form-control-sm" type="text" name="cod_certificado" required>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="nota">Nota:</label>
-                                <input id="nota" class="form-control" type="number" name="nota" required>
+                                <label for="fecha_curso">Fecha de curso :</label>
+                                <input id="fecha_curso" class="form-control form-control-sm" type="date" name="fecha_curso" required>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
-                                <label for="duracion" data-toggle="tooltip" data-original-title="Tiempo en meses">Duración:</label>
-                                <input id="duracion" class="form-control" type="number" name="duracion" required>
+                                <label for="duracion">Duracion :</label>
+                                <input id="curso" class="form-control form-control-sm" type="number" name="duracion" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="nota" >Nota :</label>
+                                <input id="nota" class="form-control form-control-sm" type="number" name="nota" value="" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="tipo_curso" >Tipo de Curso :</label>
+                                <input id="tipo_curso" class="form-control form-control-sm" type="text" name="tipo_curso" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="curso">Curso :</label>
+                                <input id="curso" class="form-control form-control-sm" type="text" name="curso" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="fecha_oficial" >Fecha Oficial :</label>
+                                <input id="fecha_oficial" class="form-control form-control-sm" type="date" name="fecha_oficial" value="" required>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="dni">DNI:</label>
-                                <input id="dni" class="form-control" type="number" name="dni" required>
+                                <label for="tipo_documento">Tipo de Documento :</label>
+                                <input id="tipo_documento" class="form-control form-control-sm" type="text" name="tipo_documento" required>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="curso">Curso:</label>
-                                <input id="curso" class="form-control" type="text" name="curso" required>
+                                <label for="numero_documento">Número de Documento :</label>
+                                <input id="numero_documento" class="form-control form-control-sm" type="text" name="numero_documento" required>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
+                        
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="apellido_paterno">Apellido Paterno:</label>
-                                <input id="apellido_paterno" class="form-control" type="text" name="apellido_paterno" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="apellido_materno">Apellido materno:</label>
-                                <input id="apellido_materno" class="form-control" type="text" name="apellido_materno" required>
+                                <label for="empresa" >Empresa :</label>
+                                <input id="empresa" class="form-control form-control-sm" type="text" name="empresa" value="" required>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="nombre">Nombres:</label>
-                                <input id="nombre" class="form-control" type="text" name="nombre" required>
+                                <label for="apellido_paterno" >Apellido Paterno :</label>
+                                <input id="apellido_paterno" class="form-control form-control-sm" type="text" name="apellido_paterno" value="" required>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="empresa">Empresa:</label>
-                                <input id="empresa" class="form-control" type="text" name="empresa" required>
+                                <label for="apellido_materno">Apellido Materno :</label>
+                                <input id="apellido_materno" class="form-control form-control-sm" type="text" name="apellido_materno" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="nombres"> Nombres :</label>
+                                <input id="nombres" class="form-control form-control-sm" type="text" name="nombres" required>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="cargo">Cargo :</label>
+                                <input id="cargo" class="form-control form-control-sm" type="text" name="cargo" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="email">Email :</label>
+                                <input id="email" class="form-control form-control-sm" type="email" name="email" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="supervisor_responsable" >Supervisor Responsable :</label>
+                                <input id="supervisor_responsable" class="form-control form-control-sm" type="text" name="supervisor_responsable" value="" required>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="date">Fecha:</label>
-                                <input id="date" class="form-control" type="date" name="date" required>
+                                <label for="acronimos">Acronimos :</label>
+                                <input id="acronimos" class="form-control form-control-sm" type="text" name="acronimos" required>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="hour">Hora:</label>
-                                <input id="hour" class="form-control" type="number" name="hour" required>
+                                <label for="fecha_vencimiento">Fecha de Vencimiento :</label>
+                                <input id="fecha_vencimiento" class="form-control form-control-sm" type="date" name="fecha_vencimiento" required>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="nombre_curso_oficial">Nombre del curso oficial :</label>
+                                <input id="nombre_curso_oficial" class="form-control form-control-sm" type="text" name="nombre_curso_oficial" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="observaciones">Observaciones :</label>
+                                <textarea name="observaciones" class="form-control form-control-sm" id="observaciones" rows="3" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="descripcion_corta" >Descripcion corta :</label>
+                                <input id="descripcion_corta" class="form-control form-control-sm" type="text" name="descripcion_corta" value="" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="descripcion_larga">Descripcion larga :</label>
+                                <textarea name="descripcion_larga" class="form-control form-control-sm" id="" cols="3" rows="3" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        
+                        
+                        
+                    </div>
+
+                    <div class="row">
+                        
                     </div>
                 </div>
                 <div class="modal-footer no-bd">
@@ -335,6 +403,7 @@
         $(document).on('click','[data-action="participant-import"]',function (e) {
             e.preventDefault();
             $('#import-excel-participant').modal('show');
+            $('[data-form="save-excel"]')[0].reset();
 
         });
         $(document).on('submit','[data-form="save-excel"]',function (e) {
@@ -417,6 +486,7 @@
                         $('[data-notify="dismiss"]').click();
                     }, 3000);
                 }
+                $('[data-form="save-excel"]')[0].reset();
             }).fail(function () {
                 // alert("Error");
                 var placementFrom = 'top';
@@ -451,6 +521,7 @@
                 }, 3000);
                 $('[data-form="save-excel"] .modal-footer button[type="submit"]').removeClass('is-loading');
                 $('[data-form="save-excel"] .modal-footer button[type="submit"]').removeAttr('disabled');
+                $('[data-form="save-excel"]')[0].reset();
             });
 
         });
@@ -503,6 +574,7 @@
                 dom: 'Bfrtip',
                 pageLength: 20,
                 language: idioma,
+                responsive: true,
                 serverSide: true,
                 initComplete: function (settings, json) {
                     const $filter = $('#tabla-data_filter');
@@ -531,11 +603,22 @@
                 },
                 columns: [
                     {data: 'certificado_id'},
-                    {data: 'dni'},
-                    {data: 'nombre'},
-                    {data: 'description_cours'},
+                    {data: 'cod_certificado'},
+                    {data: 'numero_documento'},
+                    // {
+                    //     render: function (data, type, row, index) {
+                    //         return row['apellido_paterno']+' '+row['apellido_materno'];
+                    //     }, 
+                    //     // className: 'text-center'
+                    // },
+                    {data: 'apellidos_nombres'},
+                    {data: 'curso'},
+                    {data: 'tipo_curso'},
                     {data: 'empresa'},
-                    {data: 'date'},
+                    {data: 'email'},
+                    {data: 'fecha_oficial'},
+                    {data: 'fecha_vencimiento'},
+                    {data: 'duracion'},
                     {data: 'accion', orderable: false, searchable: false, className: 'text-center'}
                 ],
                 buttons: [
@@ -570,6 +653,7 @@
             e.preventDefault();
             $('#certificado').modal('show');
             $('[data-form="certificado"]')[0].reset();
+            $('[data-form="certificado"]').find('input[name="id"]').val(0);
         });
         $('[data-form="certificado"]').submit(function (e) {
             e.preventDefault();
@@ -617,18 +701,30 @@
                 },
             }).done(function (response) {
                 if (response.success===true) {
+                    console.log(response);
                     $('[data-form="certificado"]').find('input[name="id"]').val(id);
-                    $('[data-form="certificado"]').find('input[name="codigo"]').val(response.data.codigo);
-                    $('[data-form="certificado"]').find('input[name="nota"]').val(response.data.nota);
+                    $('[data-form="certificado"]').find('input[name="cod_certificado"]').val(response.data.cod_certificado);
+                    $('[data-form="certificado"]').find('input[name="fecha_curso"]').val(response.data.fecha_curso);
                     $('[data-form="certificado"]').find('input[name="duracion"]').val(response.data.duracion);
-                    $('[data-form="certificado"]').find('input[name="dni"]').val(response.data.dni);
-                    $('[data-form="certificado"]').find('input[name="curso"]').val(response.data.description_cours);
+                    $('[data-form="certificado"]').find('input[name="nota"]').val(response.data.nota);
+                    $('[data-form="certificado"]').find('input[name="tipo_curso"]').val(response.data.tipo_curso);
+                    $('[data-form="certificado"]').find('input[name="curso"]').val(response.data.curso);
+                    $('[data-form="certificado"]').find('input[name="fecha_oficial"]').val(response.data.fecha_oficial);
+                    $('[data-form="certificado"]').find('input[name="tipo_documento"]').val(response.data.tipo_documento);
+                    $('[data-form="certificado"]').find('input[name="numero_documento"]').val(response.data.numero_documento);
+                    $('[data-form="certificado"]').find('input[name="empresa"]').val(response.data.empresa);
                     $('[data-form="certificado"]').find('input[name="apellido_paterno"]').val(response.data.apellido_paterno);
                     $('[data-form="certificado"]').find('input[name="apellido_materno"]').val(response.data.apellido_materno);
-                    $('[data-form="certificado"]').find('input[name="nombre"]').val(response.data.nombre);
-                    $('[data-form="certificado"]').find('input[name="empresa"]').val(response.data.empresa);
-                    $('[data-form="certificado"]').find('input[name="date"]').val(response.data.date);
-                    $('[data-form="certificado"]').find('input[name="hour"]').val(response.data.hour);
+                    $('[data-form="certificado"]').find('input[name="nombres"]').val(response.data.nombres);
+                    $('[data-form="certificado"]').find('input[name="cargo"]').val(response.data.cargo);
+                    $('[data-form="certificado"]').find('input[name="email"]').val(response.data.email);
+                    $('[data-form="certificado"]').find('input[name="supervisor_responsable"]').val(response.data.supervisor_responsable);
+                    $('[data-form="certificado"]').find('input[name="acronimos"]').val(response.data.acronimos);
+                    $('[data-form="certificado"]').find('input[name="fecha_vencimiento"]').val(response.data.fecha_vencimiento);
+                    $('[data-form="certificado"]').find('input[name="nombre_curso_oficial"]').val(response.data.nombre_curso_oficial);
+                    $('[data-form="certificado"]').find('textarea[name="observaciones"]').val(response.data.observaciones);
+                    $('[data-form="certificado"]').find('input[name="descripcion_corta"]').val(response.data.descripcion_corta);
+                    $('[data-form="certificado"]').find('textarea[name="descripcion_larga"]').val(response.data.descripcion_larga);
                     $('#certificado').modal('show');
                 }
 

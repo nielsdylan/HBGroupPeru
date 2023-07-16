@@ -20,52 +20,65 @@ class CertificadoController extends Controller
     //
     public function index()
     {
-        $results = Certificado::where('certificados.active',1)
-            ->where('users.active',1)
-            // ->where('participants.active',1)
-            ->join("users", "users.id", "=", "certificados.user_id")
-            ->select("certificados.certificado_id","certificados.code","certificados.description_cours", "certificados.date", "certificados.status")
-            ->get();
+        
 
-        return view('frontend.private.certificados.index', compact('results'));
+        return view('frontend.private.certificados.index');
     }
     public function store(Request $request)
     {
         $file = $request->file('file');
         $array = Excel::toArray(new CertificadoImport, $file);
         $array_invalidos = array();
-        // return $array;exit;
+        
         foreach ($array[0] as $key => $value) {
             if ($key!=0) {
-                if ($value[0]&&$value[1]&&$value[2]&&$value[3]&&$value[4]&&$value[5]&&$value[6]&&$value[7]&&$value[8]&&$value[9]&&$value[10]) {
-                    $certificado = new Certificado();
-                    $certificado->codigo                = $value[0];
-                    $certificado->dni                   = $value[1];
-                    $certificado->description_cours     = $value[5];
-                    $certificado->apellido_paterno      = $value[2];
-                    $certificado->apellido_materno      = $value[3];
-                    $certificado->nombre                = $value[4];
-                    $certificado->empresa               = $value[6];
-                    $certificado->date                  = gmdate("Y-m-d", (($value[7] - 25569) * 86400));
-                    $certificado->hour                  = $value[8];
-                    $certificado->nota                  = $value[9];
-                    $certificado->duracion              = $value[10];
-                    $certificado->save();
-                }else{
-                    array_push($array_invalidos,array(
-                        "codigo"                => $value[0],
-                        "dni"                   => $value[1],
-                        "description_cours"     => $value[5],
-                        "apellido_paterno"      => $value[2],
-                        "apellido_materno"      => $value[3],
-                        "nombre"                => $value[4],
-                        "empresa"               => $value[6],
-                        "date"                  => $value[7],
-                        "hour"                  => $value[8],
-                        "nota"                  => $value[9],
-                        "duracion"              => $value[10],
-                    ));
-                }
+                // return gmdate("Y-m-d", (($value[0] - 25569) * 86400));exit;
+                // if ($value[14]) {
+                //     return gmdate("Y-m-d", (( $value[14] - 25569) * 86400));exit;
+                // }else{
+                //     return $value[14];exit;
+                // }
+                
+                $certificado = Certificado::firstOrNew(['cod_certificado' => $value[19]]);
+                    if ($value[0]!=='' && $value[0]!==null) {
+                        // return gmdate("Y-m-d", (( $value[14] - 25569) * 86400));exit;
+                        $certificado->fecha_curso    = gmdate("Y-m-d", (((int)$value[0] - 25569) * 86400));
+                    }
+                    // ($value[0]? $certificado->fecha_curso    = gmdate("Y-m-d", (($value[0] - 25569) * 86400)):null);
+                    $certificado->curso                 = ($value[1]?$value[1]:null);
+                    $certificado->tipo_curso            = ($value[2]?$value[2]:null);
+                    $certificado->tipo_documento        = ($value[3]?$value[3]:null);
+                    $certificado->numero_documento      = ($value[4]?$value[4]:null);
+                    $certificado->apellido_paterno      = ($value[5]?$value[5]:null);
+                    $certificado->apellido_materno      = ($value[6]?$value[6]:null);
+                    $certificado->empresa               = ($value[7]?$value[7]:null);
+                    $certificado->cargo                 = ($value[8]?$value[8]:null);
+                    $certificado->email                 = ($value[9]?$value[9]:null);
+                    $certificado->supervisor_responsable    = ($value[10]?$value[10]:null);
+                    $certificado->observaciones             = ($value[11]?$value[11]:null);
+                    $certificado->acronimos                 = ($value[12]?$value[12]:null);
+                    $certificado->nombre_curso_oficial      = ($value[13]?$value[13]:null);
+                    if ($value[14]!=='' && $value[14]!==null) {
+                        // return $value[14];exit;
+                        $certificado->fecha_oficial   =  gmdate("Y-m-d", (( (int)$value[14] - 25569) * 86400));
+                    }
+                    // (!empty($value[14])? $certificado->fecha_oficial   =  gmdate("Y-m-d", (( $value[14] - 25569) * 86400)): null );
+                    $certificado->nota                      = ($value[18]?$value[18]:null);
+                    $certificado->cod_certificado           = ($value[19]?$value[19]:null);
+                    $certificado->descripcion_larga         = ($value[23]?$value[23]:null);
+                    $certificado->descripcion_corta         = ($value[24]?$value[24]:null);
+                    if ($value[25]!=='' && $value[25]!==null) {
+                        $certificado->fecha_vencimiento = gmdate("Y-m-d", (((int)$value[25] - 25569) * 86400));
+                    }
+                    // ($value[25]? $certificado->fecha_vencimiento = gmdate("Y-m-d", (($value[25] - 25569) * 86400)):null);
+                    $certificado->duracion              = ($value[26]?$value[26]:null);
+                    $certificado->active                = 1;
+                    $certificado->deleted_at            = null;
+                    $certificado->create_by             =    session('hbgroup')['user_id'];
+                    $certificado->update_by             = session('hbgroup')['user_id'];
+                    $certificado->delete_by             = null;
+                $certificado->save();
+                // $certificado->restore();
 
 
             }
@@ -96,6 +109,13 @@ class CertificadoController extends Controller
         $data = Certificado::all();
         $data = $data->where('active',1);
         return DataTables::of($data)
+        ->addColumn('apellidos_nombres', function ($data) { 
+            $apellido_paterno = ($data->apellido_paterno?$data->apellido_paterno:'');
+            $apellido_materno = ($data->apellido_materno?$data->apellido_materno:'');
+            $apellido_nombres = ($data->nombres?$data->nombres:'');
+
+            return ($apellido_paterno.' '.$apellido_materno.' '.$apellido_nombres);
+        })
         ->addColumn('accion', function ($data) { return
             '<div class="btn-group" role="group">
                 <button type="button" class="tn btn-link btn-primary btn-lg editar protip" data-id="'.$data->certificado_id.'" data-pt-scheme="dark" data-pt-size="small" data-pt-position="top" data-pt-title="Editar">
@@ -109,22 +129,35 @@ class CertificadoController extends Controller
     }
     public function guardar(Request $request)
     {
-        $certificado = Certificado::find($request->id);
-        if (!$certificado) {
-            $certificado = new Certificado();
-        }
-
-        $certificado->codigo = $request->codigo;
-        $certificado->dni = $request->dni;
-        $certificado->description_cours = $request->curso;
-        $certificado->apellido_paterno = $request->apellido_paterno;
-        $certificado->apellido_materno = $request->apellido_materno;
-        $certificado->nombre = $request->nombre;
-        $certificado->empresa = $request->empresa;
-        $certificado->date = $request->date;
-        $certificado->hour = $request->hour;
-        $certificado->nota = $request->nota;
-        $certificado->duracion = $request->duracion;
+        // return $request;exit;
+        $certificado = Certificado::firstOrNew(['certificado_id' => $request->id]);
+            $certificado->fecha_curso           = $request->fecha_curso;
+            $certificado->curso                 = $request->curso;
+            $certificado->tipo_curso            = $request->tipo_curso;
+            $certificado->tipo_documento        = $request->tipo_documento;
+            $certificado->numero_documento      = $request->numero_documento;
+            $certificado->apellido_paterno      = $request->apellido_paterno;
+            $certificado->apellido_materno      = $request->apellido_materno;
+            $certificado->nombres               = $request->nombres;
+            $certificado->empresa               = $request->empresa;
+            $certificado->cargo                 = $request->cargo;
+            $certificado->email                 = $request->email;
+            $certificado->supervisor_responsable    = $request->supervisor_responsable;
+            $certificado->observaciones             = $request->observaciones ;
+            $certificado->acronimos                 = $request->acronimos;
+            $certificado->nombre_curso_oficial      = $request->nombre_curso_oficial;
+            $certificado->fecha_oficial             = $request->fecha_oficial;
+            $certificado->nota                      = $request->nota;
+            $certificado->cod_certificado           = $request->cod_certificado;
+            $certificado->descripcion_larga         = $request->descripcion_larga;
+            $certificado->descripcion_corta         = $request->descripcion_corta;
+            $certificado->fecha_vencimiento         = $request->fecha_vencimiento;
+            $certificado->duracion                  = $request->duracion;
+            // $certificado->active                = 1;
+            $certificado->deleted_at                = null;
+            $certificado->create_by                 =    session('hbgroup')['user_id'];
+            $certificado->update_by                 = session('hbgroup')['user_id'];
+            // $certificado->delete_by             = null;
         $certificado->save();
         return response()->json($succes=true,200);
     }

@@ -92,6 +92,7 @@
         border-left: 2.5px solid;
         border-color: #8090b0;
         height: 1010px;
+        /* position: relative; */
     }
     .border-footer{
         border-top: 18.5px solid;
@@ -189,7 +190,7 @@
 <body>
     <div class="container">
         <div id="img-pdf" class="border-pdf">
-            <div class="text-right margin-top-10"><span class="border-number margin-right-20">N&deg;: {{$json['number']}}</span></div>
+            <div class="text-right margin-top-10"><span class="border-number margin-right-20" style="font-size: 12px !import; color: #00000059 !import;">N&deg;: {{$json['number']}}</span></div>
             {{-- <div class="text-right margin-top-10 "><label class="border-number margin-right-20 margin-bottom-10">N&deg;: 2019 - 00155234234234234</label></div> --}}
             <div class="text-center"><img src="{{asset('assets/img/logo_snc.png')}}" width="150"></div>
             <div class="text-center"><h3 class="margin-0">HB GROUP PERU</h3></div>
@@ -235,10 +236,10 @@
             </div> --}}
             <div class="text-center" style="position: absolute;top: 823px;left: 280px;"><img src="{{asset('assets/img/user/'.$json['img_firm'])}}" width="150"></div>
             <div class="text-center" style="position: absolute;top: 875px;left: 255px;"><hr size="1" width="150" class="border-solid"></div>
-            <div class="text-center" style="position: absolute;top: 885px;left: 260px;">Mg. Helard Bejarano Otazu</div>
-            <div class="text-center" style="position: absolute;top: 905px;left: 305px;">Gerente General</div>
-            <div class="text-center" style="position: absolute;top: 925px;left: 275px;">HB GROUP PERU S.R.L.</div>
-            <div class="text-center" style="position: absolute;top: 945px;left: 265px;"><a href="http://hbgroup.pe/certificados-list" target="_blank" style="text-decoration: none;color: #000;">Verifique sus certificados</a></div>
+            <div class="text-center" style="position: absolute;top: 885px;left: 275px;font-weight: 700;"> {{ $json['name_firm'] }} </div>
+            <div class="text-center" style="position: absolute;top: 905px;left: 305px;font-weight: 700;"> {{ $json['cargo_firm'] }} </div>
+            <div class="text-center" style="position: absolute;top: 925px;left: 275px;font-weight: 700;"> {{ $json['business_firm'] }} </div>
+            {{-- <div class="text-center" style="position: absolute;top: 945px;left: 265px;"><a href="http://hbgroup.pe/certificados-list" target="_blank" style="text-decoration: none;color: #000;">Verifique sus certificados</a></div> --}}
 
             <img src="{{asset('assets/img/sello-fondo-hb.png')}}" width="150" class="sello-white" style="position: absolute;top: 825px;">
             <img src="{{asset('assets/img/sello-hb.png')}}" width="150" class="sello" style="position: absolute;top: 773px; left:430px">

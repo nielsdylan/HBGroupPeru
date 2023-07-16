@@ -19,7 +19,7 @@
                         $fecha_actual = date("Y-m-d",strtotime(date("Y-m-d")));
                         $estado='CADUCADO';
                         $color = 'danger';
-                        if ($fecha_vencimiento > $fecha_actual ) {
+                        if ($certi->fecha_vencimiento > $certi->fecha_oficial ) {
                             $estado='VIGENTE';
                             $color = 'primary';
                         }
@@ -27,11 +27,11 @@
                     {{-- <input type="hidden" name="" id="" class="form-control" value="{{$fecha_vencimient}}" > --}}
                     {{-- <label for="">{{$fecha_vencimient}}</label> --}}
                         <tr>
-                            <td>{{ $certi->apellido_paterno.' '.$certi->apellido_materno.' '.$certi->nombre }}</td>
-                            <td>{{ $certi->description_cours }}</td>
-                            <td>{{ date('d/m/Y', strtotime($certi->date)) }}</td>
+                            <td>{{ $certi->apellido_paterno.' '.$certi->apellido_materno.' '.$certi->nombres }}</td>
+                            <td>{{ $certi->curso }}</td>
+                            <td>{{ date('d/m/Y', strtotime($certi->fecha_oficial)) }}</td>
                             <td>
-                                <span class="badge badge-pill badge-{{$color}}">{{$fecha_vencimiento}}</span>
+                                <span class="badge badge-pill badge-{{$color}}">{{ ($certi->fecha_vencimiento?date("d/m/Y",strtotime($certi->fecha_vencimiento)):'--/--/----') }}</span>
                             </td>
                             <td><a href="{{route('certificado.pdf',$certi->certificado_id )}}" class="text-{{$color}}"><i class="fas fa-cloud-download-alt"></i> PDF</a></td>
                         </tr>
@@ -52,6 +52,7 @@
         <div class="col-md-12">
             <div class="alert alert-warning" role="alert">
                 <p>
+                    <input type="hidden" value="{{ $certificado->total() }}">
                     Si no encuentra su certificado comuniquese con el area de soporte academico, marcando al numero telefonico
                     <a href="tel:992 933 603" class="email-contact" >{{$configurations->telephone}}</a>
                     o enviando un correo electronico a
