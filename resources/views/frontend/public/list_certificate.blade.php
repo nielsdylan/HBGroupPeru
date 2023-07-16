@@ -13,19 +13,20 @@
                   </thead>
                 <tbody>
                     @foreach ($certificado as $certi)
-                    @php
-                        $fecha= date("Y-m-d",strtotime($certi->date));
-                        $fecha_vencimiento = date("Y-m-d",strtotime($fecha."+ ".$certi->duracion." month"));
-                        $fecha_actual = date("Y-m-d",strtotime(date("Y-m-d")));
-                        $estado='CADUCADO';
-                        $color = 'danger';
-                        if ($certi->fecha_vencimiento > $certi->fecha_oficial ) {
-                            $estado='VIGENTE';
-                            $color = 'primary';
-                        }
-                    @endphp
-                    {{-- <input type="hidden" name="" id="" class="form-control" value="{{$fecha_vencimient}}" > --}}
-                    {{-- <label for="">{{$fecha_vencimient}}</label> --}}
+                    @if ($certi->aprobado==1)
+                        @php
+                            $fecha= date("Y-m-d",strtotime($certi->date));
+                            $fecha_vencimiento = date("Y-m-d",strtotime($fecha."+ ".$certi->duracion." month"));
+                            $fecha_actual = date("Y-m-d",strtotime(date("Y-m-d")));
+                            $estado='CADUCADO';
+                            $color = 'danger';
+                            if ($certi->fecha_vencimiento > $certi->fecha_oficial ) {
+                                $estado='VIGENTE';
+                                $color = 'primary';
+                            }
+                        @endphp
+                        {{-- <input type="hidden" name="" id="" class="form-control" value="{{$fecha_vencimient}}" > --}}
+                        {{-- <label for="">{{$fecha_vencimient}}</label> --}}
                         <tr>
                             <td>{{ $certi->apellido_paterno.' '.$certi->apellido_materno.' '.$certi->nombres }}</td>
                             <td>{{ $certi->curso }}</td>
@@ -35,6 +36,8 @@
                             </td>
                             <td><a href="{{route('certificado.pdf',$certi->certificado_id )}}" class="text-{{$color}}"><i class="fas fa-cloud-download-alt"></i> PDF</a></td>
                         </tr>
+                    @endif
+
 
                     @endforeach
                 </tbody>

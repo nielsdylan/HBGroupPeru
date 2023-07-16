@@ -72,6 +72,7 @@ class CertificadoController extends Controller
                     }
                     // ($value[25]? $certificado->fecha_vencimiento = gmdate("Y-m-d", (($value[25] - 25569) * 86400)):null);
                     $certificado->duracion              = ($value[26]?$value[26]:null);
+                    $certificado->aprobado                = 1;
                     $certificado->active                = 1;
                     $certificado->deleted_at            = null;
                     $certificado->create_by             =    session('hbgroup')['user_id'];
@@ -153,6 +154,7 @@ class CertificadoController extends Controller
             $certificado->descripcion_corta         = $request->descripcion_corta;
             $certificado->fecha_vencimiento         = $request->fecha_vencimiento;
             $certificado->duracion                  = $request->duracion;
+            $certificado->aprobado                  = (!empty($request->aprobado)?$request->aprobado:0);
             // $certificado->active                = 1;
             $certificado->deleted_at                = null;
             $certificado->create_by                 =    session('hbgroup')['user_id'];

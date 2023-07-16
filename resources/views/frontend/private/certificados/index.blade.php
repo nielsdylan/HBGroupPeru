@@ -274,8 +274,15 @@
                         </div>
                     </div>
                     <div class="row">
-                        
-                        <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="form-check mt-4">
+                                <label class="form-check-label">
+                                    <input id="aprobado" name="aprobado" class="form-check-input" type="checkbox" value="1">
+                                    <span class="form-check-sign">Aprobado</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
                             <div class="form-group">
                                 <label for="descripcion_corta" >Descripcion corta :</label>
                                 <input id="descripcion_corta" class="form-control form-control-sm" type="text" name="descripcion_corta" value="" required>
@@ -290,17 +297,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        
-                        
-                        
-                    </div>
-
-                    <div class="row">
-                        
-                    </div>
                 </div>
                 <div class="modal-footer no-bd">
+                    
                     <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
                 </div>
@@ -404,7 +403,7 @@
             e.preventDefault();
             $('#import-excel-participant').modal('show');
             $('[data-form="save-excel"]')[0].reset();
-
+            
         });
         $(document).on('submit','[data-form="save-excel"]',function (e) {
             e.preventDefault();
@@ -654,6 +653,7 @@
             $('#certificado').modal('show');
             $('[data-form="certificado"]')[0].reset();
             $('[data-form="certificado"]').find('input[name="id"]').val(0);
+            $('[data-form="certificado"]').find('input[name="aprobado"]').removeAttr('checked');
         });
         $('[data-form="certificado"]').submit(function (e) {
             e.preventDefault();
@@ -725,6 +725,13 @@
                     $('[data-form="certificado"]').find('textarea[name="observaciones"]').val(response.data.observaciones);
                     $('[data-form="certificado"]').find('input[name="descripcion_corta"]').val(response.data.descripcion_corta);
                     $('[data-form="certificado"]').find('textarea[name="descripcion_larga"]').val(response.data.descripcion_larga);
+
+                    if (response.data.aprobado==1) {
+                        $('[data-form="certificado"]').find('input[name="aprobado"]').attr('checked','true');
+                    }else{
+                        $('[data-form="certificado"]').find('input[name="aprobado"]').removeAttr('checked');
+                    }
+                    
                     $('#certificado').modal('show');
                 }
 
