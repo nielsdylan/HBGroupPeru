@@ -42,10 +42,10 @@
                         </div>
                         <div class="col-md-6 text-right">
 
-                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('certificado.export.model.excel')}}"><i class="fas fas fa-cloud-download-alt fon-z"></i> Modelo del ExcelL</a>
+                            <a class="btn btn-light btn-sm" data-toggle="tooltip" data-original-title="Modelo del excel" href="{{route('certificado.export.model.excel')}}"><i class="fas fas fa-cloud-download-alt fon-z"></i> Modelo del ExcelL</a>
 
-                            <a class="btn btn-light" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fas fa-cloud-upload-alt fon-z"></i> Importar Excel de certificados</a>
-                            <button class="btn btn-primary btn-round nuevo-certificado">
+                            <a class="btn btn-light btn-sm" data-toggle="tooltip" data-original-title="Importar excel de participantes" href="#" data-action="participant-import"><i class="fas fas fa-cloud-upload-alt fon-z"></i> Importar Excel de certificados</a>
+                            <button class="btn btn-primary btn-round nuevo-certificado btn-sm">
                                 <i class="fa fa-plus"></i>
                                 Nuevo Certificado
                             </button>
@@ -62,10 +62,10 @@
                                     <td>Número de Documento</td>
                                     <td>Apellidos y Nombres</td>
                                     <td>Curso</td>
-                                    <td>Tipo de Curso</td>
+                                    {{-- <td>Tipo de Curso</td> --}}
                                     <td>Empresa</td>
                                     <td>Email</td>
-                                    <td>Fecha oficial</td>
+                                    <td>Nota</td>
                                     <td>Fecha de vencimiento</td>
                                     <td>Horas</td>
                                     <th style="width: 10%">Action</th>
@@ -135,13 +135,13 @@
                 <div class="modal-body">
                     <input type="hidden" name="id" value="0">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label for="cod_certificado">Codigo Certificado :</label>
                                 <input id="cod_certificado" class="form-control form-control-sm" type="text" name="cod_certificado" data-action="unico" required>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="fecha_curso">Fecha de curso :</label>
                                 <input id="fecha_curso" class="form-control form-control-sm" type="date" name="fecha_curso" required>
@@ -177,10 +177,16 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
+                                <label for="fecha_vencimiento">Fecha de Vencimiento :</label>
+                                <input id="fecha_vencimiento" class="form-control form-control-sm" type="date" name="fecha_vencimiento" required>
+                            </div>
+                        </div>
+                        {{-- <div class="col-md-4">
+                            <div class="form-group">
                                 <label for="fecha_oficial" >Fecha Oficial :</label>
                                 <input id="fecha_oficial" class="form-control form-control-sm" type="date" name="fecha_oficial" value="" required>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="row">
                         <div class="col-md-4">
@@ -246,24 +252,19 @@
                     </div>
                     <div class="row">
                         
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
                             <div class="form-group">
                                 <label for="acronimos">Acronimos :</label>
                                 <input id="acronimos" class="form-control form-control-sm" type="text" name="acronimos" required>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="fecha_vencimiento">Fecha de Vencimiento :</label>
-                                <input id="fecha_vencimiento" class="form-control form-control-sm" type="date" name="fecha_vencimiento" required>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
+                        </div> --}}
+                        
+                        {{-- <div class="col-md-4">
                             <div class="form-group">
                                 <label for="nombre_curso_oficial">Nombre del curso oficial :</label>
                                 <input id="nombre_curso_oficial" class="form-control form-control-sm" type="text" name="nombre_curso_oficial" required>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -282,20 +283,20 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-10">
+                        {{-- <div class="col-md-10">
                             <div class="form-group">
                                 <label for="descripcion_corta" >Descripcion corta :</label>
                                 <input id="descripcion_corta" class="form-control form-control-sm" type="text" name="descripcion_corta" value="" required>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        {{-- <div class="col-md-12">
                             <div class="form-group">
                                 <label for="descripcion_larga">Descripcion larga :</label>
                                 <textarea name="descripcion_larga" class="form-control form-control-sm" id="" cols="3" rows="3" required></textarea>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="modal-footer no-bd">
@@ -612,10 +613,10 @@
                     // },
                     {data: 'apellidos_nombres'},
                     {data: 'curso'},
-                    {data: 'tipo_curso'},
+                    // {data: 'tipo_curso'},
                     {data: 'empresa'},
                     {data: 'email'},
-                    {data: 'fecha_oficial'},
+                    {data: 'nota'},
                     {data: 'fecha_vencimiento'},
                     {data: 'duracion'},
                     {data: 'accion', orderable: false, searchable: false, className: 'text-center'}
@@ -701,7 +702,6 @@
                 },
             }).done(function (response) {
                 if (response.success===true) {
-                    console.log(response);
                     $('[data-form="certificado"]').find('input[name="id"]').val(id);
                     $('[data-form="certificado"]').find('input[name="cod_certificado"]').val(response.data.cod_certificado);
                     $('[data-form="certificado"]').find('input[name="fecha_curso"]').val(response.data.fecha_curso);
@@ -709,7 +709,7 @@
                     $('[data-form="certificado"]').find('input[name="nota"]').val(response.data.nota);
                     $('[data-form="certificado"]').find('input[name="tipo_curso"]').val(response.data.tipo_curso);
                     $('[data-form="certificado"]').find('input[name="curso"]').val(response.data.curso);
-                    $('[data-form="certificado"]').find('input[name="fecha_oficial"]').val(response.data.fecha_oficial);
+                    // $('[data-form="certificado"]').find('input[name="fecha_oficial"]').val(response.data.fecha_oficial);
                     $('[data-form="certificado"]').find('input[name="tipo_documento"]').val(response.data.tipo_documento);
                     $('[data-form="certificado"]').find('input[name="numero_documento"]').val(response.data.numero_documento);
                     $('[data-form="certificado"]').find('input[name="empresa"]').val(response.data.empresa);
@@ -719,12 +719,12 @@
                     $('[data-form="certificado"]').find('input[name="cargo"]').val(response.data.cargo);
                     $('[data-form="certificado"]').find('input[name="email"]').val(response.data.email);
                     $('[data-form="certificado"]').find('input[name="supervisor_responsable"]').val(response.data.supervisor_responsable);
-                    $('[data-form="certificado"]').find('input[name="acronimos"]').val(response.data.acronimos);
+                    // $('[data-form="certificado"]').find('input[name="acronimos"]').val(response.data.acronimos);
                     $('[data-form="certificado"]').find('input[name="fecha_vencimiento"]').val(response.data.fecha_vencimiento);
-                    $('[data-form="certificado"]').find('input[name="nombre_curso_oficial"]').val(response.data.nombre_curso_oficial);
+                    // $('[data-form="certificado"]').find('input[name="nombre_curso_oficial"]').val(response.data.nombre_curso_oficial);
                     $('[data-form="certificado"]').find('textarea[name="observaciones"]').val(response.data.observaciones);
-                    $('[data-form="certificado"]').find('input[name="descripcion_corta"]').val(response.data.descripcion_corta);
-                    $('[data-form="certificado"]').find('textarea[name="descripcion_larga"]').val(response.data.descripcion_larga);
+                    // $('[data-form="certificado"]').find('input[name="descripcion_corta"]').val(response.data.descripcion_corta);
+                    // $('[data-form="certificado"]').find('textarea[name="descripcion_larga"]').val(response.data.descripcion_larga);
 
                     if (response.data.aprobado==1) {
                         $('[data-form="certificado"]').find('input[name="aprobado"]').attr('checked','true');

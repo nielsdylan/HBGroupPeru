@@ -279,7 +279,7 @@ class HomeController extends Controller
         //     $cip = 'REG. CIP '.$instructor->cip;
         // }
         // return $cip;
-        $descripcion = ($certificado->descripcion_larga?$certificado->descripcion_larga:'-').' '.($certificado->descripcion_corta?$certificado->descripcion_corta:' ');
+        $descripcion = ($certificado->curso?$certificado->curso:'-');
         $json = array(
             'name'=>strtoupper($certificado->nombres),
             'last_name'=>strtoupper($certificado->apellido_paterno).' '.strtoupper($certificado->apellido_materno),

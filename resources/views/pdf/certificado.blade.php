@@ -190,7 +190,7 @@
 <body>
     <div class="container">
         <div id="img-pdf" class="border-pdf">
-            <div class="text-right margin-top-10"><span class="border-number margin-right-20" style="font-size: 12px !import; color: #00000059 !import;">N&deg;: {{$json['number']}}</span></div>
+            <div class="text-right margin-top-10"><span class="border-number margin-right-20" style="font-size: 12px !import; color: #00000059 !import;font-family: 'Syne', sans-serif;">N&deg;: {{$json['number']}}</span></div>
             {{-- <div class="text-right margin-top-10 "><label class="border-number margin-right-20 margin-bottom-10">N&deg;: 2019 - 00155234234234234</label></div> --}}
             <div class="text-center"><img src="{{asset('assets/img/logo_snc.png')}}" width="150"></div>
             <div class="text-center"><h3 class="margin-0">HB GROUP PERU</h3></div>

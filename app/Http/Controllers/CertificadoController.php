@@ -36,42 +36,44 @@ class CertificadoController extends Controller
                 // if ($value[14]) {
                 //     return gmdate("Y-m-d", (( $value[14] - 25569) * 86400));exit;
                 // }else{
-                //     return $value[14];exit;
+                    // return $value[20];exit;
                 // }
                 
-                $certificado = Certificado::firstOrNew(['cod_certificado' => $value[19]]);
+                $certificado = Certificado::firstOrNew(['cod_certificado' => $value[20]]);
                     if ($value[0]!=='' && $value[0]!==null) {
                         // return gmdate("Y-m-d", (( $value[14] - 25569) * 86400));exit;
                         $certificado->fecha_curso    = gmdate("Y-m-d", (((int)$value[0] - 25569) * 86400));
                     }
                     // ($value[0]? $certificado->fecha_curso    = gmdate("Y-m-d", (($value[0] - 25569) * 86400)):null);
+                    $certificado->codigo_curso          = ($value[13]?$value[13]:null);
                     $certificado->curso                 = ($value[1]?$value[1]:null);
                     $certificado->tipo_curso            = ($value[2]?$value[2]:null);
                     $certificado->tipo_documento        = ($value[3]?$value[3]:null);
                     $certificado->numero_documento      = ($value[4]?$value[4]:null);
                     $certificado->apellido_paterno      = ($value[5]?$value[5]:null);
                     $certificado->apellido_materno      = ($value[6]?$value[6]:null);
-                    $certificado->empresa               = ($value[7]?$value[7]:null);
-                    $certificado->cargo                 = ($value[8]?$value[8]:null);
-                    $certificado->email                 = ($value[9]?$value[9]:null);
-                    $certificado->supervisor_responsable    = ($value[10]?$value[10]:null);
-                    $certificado->observaciones             = ($value[11]?$value[11]:null);
-                    $certificado->acronimos                 = ($value[12]?$value[12]:null);
-                    $certificado->nombre_curso_oficial      = ($value[13]?$value[13]:null);
-                    if ($value[14]!=='' && $value[14]!==null) {
+                    $certificado->nombres               = ($value[7]?$value[7]:null);
+                    $certificado->empresa               = ($value[8]?$value[8]:null);
+                    $certificado->cargo                 = ($value[9]?$value[9]:null);
+                    $certificado->email                 = ($value[10]?$value[10]:null);
+                    $certificado->supervisor_responsable    = ($value[11]?$value[11]:null);
+                    $certificado->observaciones             = ($value[12]?$value[12]:null);
+                    // $certificado->acronimos                 = ($value[12]?$value[12]:null);
+                    // $certificado->nombre_curso_oficial      = ($value[13]?$value[13]:null);
+                    // if ($value[14]!=='' && $value[14]!==null) {
                         // return $value[14];exit;
-                        $certificado->fecha_oficial   =  gmdate("Y-m-d", (( (int)$value[14] - 25569) * 86400));
-                    }
+                        // $certificado->fecha_oficial   =  gmdate("Y-m-d", (( (int)$value[14] - 25569) * 86400));
+                    // }
                     // (!empty($value[14])? $certificado->fecha_oficial   =  gmdate("Y-m-d", (( $value[14] - 25569) * 86400)): null );
-                    $certificado->nota                      = ($value[18]?$value[18]:null);
-                    $certificado->cod_certificado           = ($value[19]?$value[19]:null);
-                    $certificado->descripcion_larga         = ($value[23]?$value[23]:null);
-                    $certificado->descripcion_corta         = ($value[24]?$value[24]:null);
-                    if ($value[25]!=='' && $value[25]!==null) {
-                        $certificado->fecha_vencimiento = gmdate("Y-m-d", (((int)$value[25] - 25569) * 86400));
+                    $certificado->nota                      = ($value[19]?$value[19]:null);
+                    $certificado->cod_certificado           = ($value[20]?$value[20]:null);
+                    // $certificado->descripcion_larga         = ($value[23]?$value[23]:null);
+                    // $certificado->descripcion_corta         = ($value[24]?$value[24]:null);
+                    if ($value[22]!=='' && $value[22]!==null) {
+                        $certificado->fecha_vencimiento = gmdate("Y-m-d", (((int)$value[22] - 25569) * 86400));
                     }
-                    // ($value[25]? $certificado->fecha_vencimiento = gmdate("Y-m-d", (($value[25] - 25569) * 86400)):null);
-                    $certificado->duracion              = ($value[26]?$value[26]:null);
+                    // ($value[22]? $certificado->fecha_vencimiento = gmdate("Y-m-d", (($value[22] - 25569) * 86400)):null);
+                    $certificado->duracion              = ($value[21]?$value[21]:null);
                     $certificado->aprobado                = 1;
                     $certificado->active                = 1;
                     $certificado->deleted_at            = null;
@@ -145,13 +147,13 @@ class CertificadoController extends Controller
             $certificado->email                 = $request->email;
             $certificado->supervisor_responsable    = $request->supervisor_responsable;
             $certificado->observaciones             = $request->observaciones ;
-            $certificado->acronimos                 = $request->acronimos;
-            $certificado->nombre_curso_oficial      = $request->nombre_curso_oficial;
-            $certificado->fecha_oficial             = $request->fecha_oficial;
+            // $certificado->acronimos                 = $request->acronimos;
+            // $certificado->nombre_curso_oficial      = $request->nombre_curso_oficial;
+            // $certificado->fecha_oficial             = $request->fecha_oficial;
             $certificado->nota                      = $request->nota;
             $certificado->cod_certificado           = $request->cod_certificado;
-            $certificado->descripcion_larga         = $request->descripcion_larga;
-            $certificado->descripcion_corta         = $request->descripcion_corta;
+            // $certificado->descripcion_larga         = $request->descripcion_larga;
+            // $certificado->descripcion_corta         = $request->descripcion_corta;
             $certificado->fecha_vencimiento         = $request->fecha_vencimiento;
             $certificado->duracion                  = $request->duracion;
             $certificado->aprobado                  = (!empty($request->aprobado)?$request->aprobado:0);
