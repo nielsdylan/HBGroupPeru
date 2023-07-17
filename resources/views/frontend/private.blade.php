@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>HB Group Peru</title>
+	<title>HB Group Perú</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	{{-- <link rel="icon" href="../assets/img/icon.ico" type="image/x-icon"/> --}}
-
+    <link rel="icon" href="{{asset('uploads/public/logo_snc.png')}}" type="image/x-icon">
     @include('frontend.layouts.private.css')
     @include('frontend.layouts.private.js')
     @yield("links")

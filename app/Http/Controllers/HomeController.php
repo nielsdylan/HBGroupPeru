@@ -302,7 +302,7 @@ class HomeController extends Controller
             'business_curso'=>$certificado->empresa,
         );
 
-        $pdf = PDF::loadView('pdf.certificado', compact('json'));
+        $pdf = \PDF::loadView('pdf.certificado', compact('json'));
         // $pdf = PDF::loadView('pdf.certifi', compact('json'));
         return $pdf->download('certificado.pdf');
         // return $pdf->download('certifi.pdf');;

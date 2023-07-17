@@ -84,40 +84,40 @@ Route::post('session',      [LoginController::class, 'session'] );
 Route::get('logout',  [LoginController::class, 'logout'] )->name('logout.logout');
 //dashboard
 
-Route::group(['middleware'=>'isLogged'],function(){
-    Route::get('dashboard',[DashboardController::class, 'dashboard'] )->name('dashboard');
-    // administrador
-    Route::get('lista-usuario',[UsersController::class, 'index'] )->name('list_user');
-    Route::get('nuevo-usuario',[UsersController::class, 'userNew'] )->name('user_add');
-    Route::post('user/create',[UsersController::class, 'userAdd'] )->name('user.add');
-    Route::get('user/edit/{user_id}',[UsersController::class, 'edit'] )->name('user.edit');
-    Route::put('user/edit/{user}',[UsersController::class, 'upload'] )->name('user.upload');
-    Route::post('user/eliminar',[UsersController::class, 'delete'] )->name('user.delete');
-    Route::post('user/buscar',[UsersController::class, 'search'] )->name('user.search');
-    Route::post('user/dni-group',[UsersController::class, 'searchDNIGroup'] )->name('user.dni.group');
+// Route::group(['middleware'=>'isLogged'],function(){
+//     Route::get('dashboard',[DashboardController::class, 'dashboard'] )->name('dashboard');
+//     // administrador
+//     Route::get('lista-usuario',[UsersController::class, 'index'] )->name('list_user');
+//     Route::get('nuevo-usuario',[UsersController::class, 'userNew'] )->name('user_add');
+//     Route::post('user/create',[UsersController::class, 'userAdd'] )->name('user.add');
+//     Route::get('user/edit/{user_id}',[UsersController::class, 'edit'] )->name('user.edit');
+//     Route::put('user/edit/{user}',[UsersController::class, 'upload'] )->name('user.upload');
+//     Route::post('user/eliminar',[UsersController::class, 'delete'] )->name('user.delete');
+//     Route::post('user/buscar',[UsersController::class, 'search'] )->name('user.search');
+//     Route::post('user/dni-group',[UsersController::class, 'searchDNIGroup'] )->name('user.dni.group');
 
-    Route::get('configuracion',[SettingController::class, 'setting'] )->name('setting');
-    Route::post('configuracion',[SettingController::class, 'save'] )->name('setting.save');
+//     Route::get('configuracion',[SettingController::class, 'setting'] )->name('setting');
+//     Route::post('configuracion',[SettingController::class, 'save'] )->name('setting.save');
 
-    Route::get('grupos',[GroupController::class, 'index'])->name('group.index');
-    Route::get('grupos/nuevo',[GroupController::class, 'new'])->name('group.new');
-    Route::post('grupos/nuevo',[GroupController::class, 'add'])->name('group.add');
-    Route::get('grupos/editar/{group_id}',[GroupController::class, 'edit'])->name('group.edit');
-    Route::put('grupos/editar/{group}',[GroupController::class, 'update'])->name('group.update');
-    Route::post('grupos/eliminar',[GroupController::class, 'delete'])->name('group.delete');
+//     Route::get('grupos',[GroupController::class, 'index'])->name('group.index');
+//     Route::get('grupos/nuevo',[GroupController::class, 'new'])->name('group.new');
+//     Route::post('grupos/nuevo',[GroupController::class, 'add'])->name('group.add');
+//     Route::get('grupos/editar/{group_id}',[GroupController::class, 'edit'])->name('group.edit');
+//     Route::put('grupos/editar/{group}',[GroupController::class, 'update'])->name('group.update');
+//     Route::post('grupos/eliminar',[GroupController::class, 'delete'])->name('group.delete');
 
-    //landing
-    Route::get('slider/lista',[SliderController::class, 'index'] )->name('slider.index');
-    Route::get('slider/editar/{slider_id?}', [SliderController::class, 'edit'] )->name('slider.edit');
-    Route::put('slider/editar/{slider}', [SliderController::class, 'update'] )->name('slider.update');
+//     //landing
+//     Route::get('slider/lista',[SliderController::class, 'index'] )->name('slider.index');
+//     Route::get('slider/editar/{slider_id?}', [SliderController::class, 'edit'] )->name('slider.edit');
+//     Route::put('slider/editar/{slider}', [SliderController::class, 'update'] )->name('slider.update');
 
-    Route::get('empresas',[BusinessController::class, 'index'] )->name('business.index');
-    Route::get('empresas/nueva',[BusinessController::class, 'new'] )->name('business.new');
-    Route::post('empresas/nueva',[BusinessController::class, 'add'] )->name('business.add');
-    Route::get('empresas/edit/{business_id}',[BusinessController::class, 'edit'] )->name('business.edit');
-    Route::put('empresas/edit/{business}', [BusinessController::class, 'update'] )->name('business.update');
-    Route::post('empresas/eliminar', [BusinessController::class, 'delete'] )->name('business.delete');
-});
+//     Route::get('empresas',[BusinessController::class, 'index'] )->name('business.index');
+//     Route::get('empresas/nueva',[BusinessController::class, 'new'] )->name('business.new');
+//     Route::post('empresas/nueva',[BusinessController::class, 'add'] )->name('business.add');
+//     Route::get('empresas/edit/{business_id}',[BusinessController::class, 'edit'] )->name('business.edit');
+//     Route::put('empresas/edit/{business}', [BusinessController::class, 'update'] )->name('business.update');
+//     Route::post('empresas/eliminar', [BusinessController::class, 'delete'] )->name('business.delete');
+// });
 
 Route::group(['middleware'=>'AlreadyLoggedIn'],function(){
     Route::get('hbgroupp_web',  [LoginController::class, 'loginHbgroup'] );
@@ -208,9 +208,11 @@ Route::middleware(['hbgroup'])->group(function(){
             // Route::get('lista', [CertificadoController::class, 'lista'])->name('lista');
             Route::post('listar', [CertificadoController::class, 'listar'])->name('listar');
             Route::post('guardar', [CertificadoController::class, 'guardar'])->name('guardar');
+            
             Route::get('editar/{id}', [CertificadoController::class, 'editar'])->name('editar');
             Route::put('eliminar/{id}', [CertificadoController::class, 'eliminar'])->name('eliminar');
 
+            Route::post('codigo-unico', [CertificadoController::class, 'codigoUnico'])->name('codigo-unico');
         });
     });
 

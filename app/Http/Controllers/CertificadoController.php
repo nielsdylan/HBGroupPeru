@@ -167,4 +167,15 @@ class CertificadoController extends Controller
         $certificado = Certificado::find($id);
         return response()->json(array("data"=>$certificado,"success"=>true),200);
     }
+    public function codigoUnico(Request $request) {
+        if ((int)$request->id == 0) {
+            $certificado = Certificado::where('cod_certificado','=',$request->value)->first();
+            if ($certificado) {
+                return response()->json(array("success"=>true),200);
+            } 
+            return response()->json(array("success"=>false),200);
+        }
+        return response()->json(array("success"=>false),200);
+
+    }
 }

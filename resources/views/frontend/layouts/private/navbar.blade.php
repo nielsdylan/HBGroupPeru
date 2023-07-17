@@ -22,7 +22,7 @@
 
     <div class="container-fluid">
         <div class="collapse" id="search-nav">
-            <form class="navbar-left navbar-form nav-search mr-md-3">
+            {{-- <form class="navbar-left navbar-form nav-search mr-md-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <button type="submit" class="btn btn-search pr-1">
@@ -31,7 +31,7 @@
                     </div>
                     <input type="text" placeholder="Search ..." class="form-control">
                 </div>
-            </form>
+            </form> --}}
         </div>
         <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
             <li class="nav-item toggle-nav-search hidden-caret">
@@ -40,10 +40,10 @@
                 </a>
             </li>
             <li class="nav-item dropdown hidden-caret">
-                <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{-- <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-bell"></i>
                     <span class="notification">4</span>
-                </a>
+                </a> --}}
                 {{-- <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
                     <li>
                         <div class="dropdown-title">You have 4 new notification</div>

@@ -22,9 +22,9 @@
                                         <input id="image" type="file" onchange="changeLogoStore(event);" name="image" class="d-none" accept="image/*"/>
                                         <a href="#" onclick="updateLogoStore(event);"  id="cargarImagen" align="center" >
                                             @if ($user->image)
-                                                <div id="previewImage" class="img-default rounded-circle" style="background-image: url('{{asset('assets/img/user/'.$user->image)}}');background-position: center;background-repeat: no-repeat; background-size: cover;"></div>
+                                                <div id="previewImage" class="img-default" style="background-image: url('{{asset('assets/img/user/'.$user->image)}}');background-position: center;background-repeat: no-repeat; background-size: cover;"></div>
                                             @else
-                                                <div id="previewImage" class="img-default rounded-circle" style="background-image: url('{{asset('assets/img/gallery.png')}}');background-position: center;background-repeat: no-repeat;"></div>
+                                                <div id="previewImage" class="img-default " style="background-image: url('{{asset('assets/img/gallery.png')}}');background-position: center;background-repeat: no-repeat;"></div>
                                             @endif
 
 

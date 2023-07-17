@@ -138,7 +138,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="cod_certificado">Codigo Certificado :</label>
-                                <input id="cod_certificado" class="form-control form-control-sm" type="text" name="cod_certificado" required>
+                                <input id="cod_certificado" class="form-control form-control-sm" type="text" name="cod_certificado" data-action="unico" required>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -738,6 +738,36 @@
             }).fail(function () {
                 // alert("Error");
 
+            });
+        });
+        $(document).on('change','[data-action="unico"]',function () {
+            let value = $(this).val();
+            let id = $('[data-form="certificado"]').find('input[name="id"]').val();
+            let this_input = $(this);
+            $.ajax({
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                url: route('academico.certificados.codigo-unico'),
+                dataType: 'json',
+                // processData: false,
+                // contentType: false,
+                data: {
+                    value:value,
+                    id:id
+                },
+                beforeSend: function()
+                {
+                },
+            }).done(function (response) {
+                if (response.success===true) {
+                    swal(
+                        'Información',
+                        'El código ingresado se encuentra en uso',
+                        'info'
+                    )
+                    this_input.val('');
+                }
+            }).fail(function () {
             });
         });
     </script>
