@@ -4,6 +4,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                      <th >N° Documento</th>
                       <th >Nombre</th>
                       <th>Curso</th>
                       <th >Fecha</th>
@@ -20,7 +21,7 @@
                             $fecha_actual = date("Y-m-d",strtotime(date("Y-m-d")));
                             $estado='CADUCADO';
                             $color = 'danger';
-                            if ($certi->fecha_vencimiento > $certi->fecha_oficial ) {
+                            if ($certi->fecha_vencimiento > date("Y-m-d") ) {
                                 $estado='VIGENTE';
                                 $color = 'primary';
                             }
@@ -28,11 +29,12 @@
                         {{-- <input type="hidden" name="" id="" class="form-control" value="{{$fecha_vencimient}}" > --}}
                         {{-- <label for="">{{$fecha_vencimient}}</label> --}}
                         <tr>
+                            <td>{{ $certi->numero_documento }}</td>
                             <td>{{ $certi->apellido_paterno.' '.$certi->apellido_materno.' '.$certi->nombres }}</td>
                             <td>{{ $certi->curso }}</td>
-                            <td>{{ date('d/m/Y', strtotime($certi->fecha_oficial)) }}</td>
+                            <td>{{ date('d/m/Y', strtotime($certi->fecha_curso)) }}</td>
                             <td>
-                                <span class="badge badge-pill badge-{{$color}}">{{ ($certi->fecha_vencimiento?date("d/m/Y",strtotime($certi->fecha_vencimiento)):'--/--/----') }}</span>
+                                <span class="badge badge-pill badge-{{$color}}">{{ ($certi->fecha_vencimiento? date("d/m/Y",strtotime($certi->fecha_vencimiento)) :'--/--/----') }}</span>
                             </td>
                             <td><a href="{{route('certificado.pdf',$certi->certificado_id )}}" class="text-{{$color}}"><i class="fas fa-cloud-download-alt"></i> PDF</a></td>
                         </tr>

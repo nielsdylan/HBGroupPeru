@@ -15,9 +15,22 @@
     body{
         font-family: 'Syne', sans-serif;
     }
-    @font-face{
-        font-family: 'Roboto', sans-serif;
+    @font-face {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu72xKOzY.woff2) format('woff2');
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
     }
+    @font-face {
+        font-family: 'Calibre-Regular';
+        src: url('@html_link_asset('assets/fonts/calibre/Calibre-Regular.ttf')');
+    }
+    /* @font-face {
+    font-family: 'Roboto';
+        src: url('../fonts/Roboto/Roboto-Regular.ttf');
+    } */
     .container{
         /* width: 100%;
         padding-right: 15px;
@@ -190,7 +203,7 @@
 <body>
     <div class="container">
         <div id="img-pdf" class="border-pdf">
-            <div class="text-right margin-top-10"><span class="border-number margin-right-20" style="font-size: 12px !import; color: #00000059 !import;font-family: 'Syne', sans-serif;">N&deg;: {{$json['number']}}</span></div>
+            <div class="text-right margin-top-10"><span class="border-number margin-right-20" style="font-size: 12px !import; color: #00000059 !import;font-family: 'Roboto', normal;">N&deg;: {{$json['number']}}</span></div>
             {{-- <div class="text-right margin-top-10 "><label class="border-number margin-right-20 margin-bottom-10">N&deg;: 2019 - 00155234234234234</label></div> --}}
             <div class="text-center"><img src="{{asset('assets/img/logo_snc.png')}}" width="150"></div>
             <div class="text-center"><h3 class="margin-0">HB GROUP PERU</h3></div>
@@ -200,16 +213,16 @@
             <div class="text-center"><h3 class="margin-top-0">OTORGADO A:</h3></div>
             <div class="text-center margin-bottom-15"><h1 class="margin-0 text-blue">{{$json['last_name'].' '.$json['name']}}</h1></div>
             <div class="text-center"><h2 class="margin-0 text-blue">Identificado con DNI N&deg; {{$json['document']}}</h2></div>
-            <div class="text-center"><h2 class="margin-0 text-blue">de la empresa {{$json['business_curso']}} </h2></div>
+            <div class="text-center"><h2 class="margin-0 text-blue"> {{($json['business_curso']?'de la empresa '.$json['business_curso']:'')}} </h2></div>
             <div class="text-center margin-bottom-20 margin-top-20">Por haber aprobado satisfactoriamente el curso de:</div>
             {{-- descripcion de la base de datos --}}
             <div class="text-center margin-bottom-30"><h2 class="margin-top-0 text-blue"> “{{$json['description']}}”</h2></div>
             {{-- temporal --}}
             {{-- <div class="text-center margin-bottom-30"><h2 class="margin-top-0 text-blue">  “Control de Energías Peligrosas (Bloqueo y Etiquetado / Consignación de Equipos)”</h2></div> --}}
 
-            <div class="text-center">{{$json['date_1']}}</div>
-            <div class="text-center">{{$json['date_2']}}</div>
-            <div class="text-center">Bajo los Estándares de Angloamerican Quellaveco S.A.</div>
+            <div class="text-center" style="font-family: 'Roboto', normal;">{{$json['date_1']}}</div>
+            <div class="text-center" style="font-family: 'Roboto', normal;">{{$json['date_2']}}</div>
+            <div class="text-center" style="font-family: 'Roboto', normal;">{{($json['comentario']?$json['comentario']:'')}}</div>
             <div></div>
             {{-- <div>
                 <table style="position: absolute;top: 600px; left: 260px;">

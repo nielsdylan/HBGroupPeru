@@ -137,25 +137,25 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
-                                <label for="cod_certificado">Codigo Certificado :</label>
+                                <label for="cod_certificado">Codigo Certificado<span class="text-danger">*</span> : </label>
                                 <input id="cod_certificado" class="form-control form-control-sm" type="text" name="cod_certificado" data-action="unico" required>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="fecha_curso">Fecha de curso :</label>
+                                <label for="fecha_curso">Fecha de curso<span class="text-danger">*</span> :</label>
                                 <input id="fecha_curso" class="form-control form-control-sm" type="date" name="fecha_curso" required>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for="duracion">Duracion :</label>
+                                <label for="duracion">Duracion<span class="text-danger">*</span> :</label>
                                 <input id="curso" class="form-control form-control-sm" type="number" name="duracion" step="0.01" required>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for="nota" >Nota :</label>
+                                <label for="nota" >Nota<span class="text-danger">*</span> :</label>
                                 <input id="nota" class="form-control form-control-sm" type="number" name="nota" value="" step="0.01" required>
                             </div>
                         </div>
@@ -166,18 +166,18 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="tipo_curso" >Tipo de Curso :</label>
-                                <input id="tipo_curso" class="form-control form-control-sm" type="text" name="tipo_curso" value="" required>
+                                <input id="tipo_curso" class="form-control form-control-sm" type="text" name="tipo_curso" value="" >
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="curso">Curso :</label>
+                                <label for="curso">Curso<span class="text-danger">*</span> :</label>
                                 <input id="curso" class="form-control form-control-sm" type="text" name="curso" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="fecha_vencimiento">Fecha de Vencimiento :</label>
+                                <label for="fecha_vencimiento">Fecha de Vencimiento<span class="text-danger">*</span> :</label>
                                 <input id="fecha_vencimiento" class="form-control form-control-sm" type="date" name="fecha_vencimiento" required>
                             </div>
                         </div>
@@ -192,12 +192,12 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="tipo_documento">Tipo de Documento :</label>
-                                <input id="tipo_documento" class="form-control form-control-sm" type="text" name="tipo_documento" required>
+                                <input id="tipo_documento" class="form-control form-control-sm" type="text" name="tipo_documento" >
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="numero_documento">Número de Documento :</label>
+                                <label for="numero_documento">Número de Documento<span class="text-danger">*</span> :</label>
                                 <input id="numero_documento" class="form-control form-control-sm" type="text" name="numero_documento" required>
                             </div>
                         </div>
@@ -205,26 +205,26 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="empresa" >Empresa :</label>
-                                <input id="empresa" class="form-control form-control-sm" type="text" name="empresa" value="" required>
+                                <input id="empresa" class="form-control form-control-sm" type="text" name="empresa" value="" >
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="apellido_paterno" >Apellido Paterno :</label>
+                                <label for="apellido_paterno" >Apellido Paterno<span class="text-danger">*</span> :</label>
                                 <input id="apellido_paterno" class="form-control form-control-sm" type="text" name="apellido_paterno" value="" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="apellido_materno">Apellido Materno :</label>
+                                <label for="apellido_materno">Apellido Materno<span class="text-danger">*</span> :</label>
                                 <input id="apellido_materno" class="form-control form-control-sm" type="text" name="apellido_materno" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="nombres"> Nombres :</label>
+                                <label for="nombres"> Nombres<span class="text-danger">*</span> :</label>
                                 <input id="nombres" class="form-control form-control-sm" type="text" name="nombres" required>
                             </div>
                         </div>
@@ -234,43 +234,36 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="cargo">Cargo :</label>
-                                <input id="cargo" class="form-control form-control-sm" type="text" name="cargo" required>
+                                <input id="cargo" class="form-control form-control-sm" type="text" name="cargo" >
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="email">Email :</label>
-                                <input id="email" class="form-control form-control-sm" type="email" name="email" required>
+                                <input id="email" class="form-control form-control-sm" type="email" name="email" >
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="supervisor_responsable" >Supervisor Responsable :</label>
-                                <input id="supervisor_responsable" class="form-control form-control-sm" type="text" name="supervisor_responsable" value="" required>
+                                <input id="supervisor_responsable" class="form-control form-control-sm" type="text" name="supervisor_responsable" value="" >
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        
-                        {{-- <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="acronimos">Acronimos :</label>
-                                <input id="acronimos" class="form-control form-control-sm" type="text" name="acronimos" required>
-                            </div>
-                        </div> --}}
-                        
-                        {{-- <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="nombre_curso_oficial">Nombre del curso oficial :</label>
-                                <input id="nombre_curso_oficial" class="form-control form-control-sm" type="text" name="nombre_curso_oficial" required>
-                            </div>
-                        </div> --}}
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="observaciones">Observaciones :</label>
-                                <textarea name="observaciones" class="form-control form-control-sm" id="observaciones" rows="3" required></textarea>
+                                <textarea name="observaciones" class="form-control form-control-sm" id="observaciones" rows="2" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="comentario">Comentario :</label>
+                                <textarea name="comentario" class="form-control form-control-sm" id="" cols="3" rows="2" ></textarea>
                             </div>
                         </div>
                     </div>
@@ -283,20 +276,6 @@
                                 </label>
                             </div>
                         </div>
-                        {{-- <div class="col-md-10">
-                            <div class="form-group">
-                                <label for="descripcion_corta" >Descripcion corta :</label>
-                                <input id="descripcion_corta" class="form-control form-control-sm" type="text" name="descripcion_corta" value="" required>
-                            </div>
-                        </div> --}}
-                    </div>
-                    <div class="row">
-                        {{-- <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="descripcion_larga">Descripcion larga :</label>
-                                <textarea name="descripcion_larga" class="form-control form-control-sm" id="" cols="3" rows="3" required></textarea>
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
                 <div class="modal-footer no-bd">
@@ -724,7 +703,7 @@
                     // $('[data-form="certificado"]').find('input[name="nombre_curso_oficial"]').val(response.data.nombre_curso_oficial);
                     $('[data-form="certificado"]').find('textarea[name="observaciones"]').val(response.data.observaciones);
                     // $('[data-form="certificado"]').find('input[name="descripcion_corta"]').val(response.data.descripcion_corta);
-                    // $('[data-form="certificado"]').find('textarea[name="descripcion_larga"]').val(response.data.descripcion_larga);
+                    $('[data-form="certificado"]').find('textarea[name="comentario"]').val(response.data.comentario);
 
                     if (response.data.aprobado==1) {
                         $('[data-form="certificado"]').find('input[name="aprobado"]').attr('checked','true');

@@ -230,7 +230,7 @@ class HomeController extends Controller
 
             $certificado = Certificado::where('numero_documento','like','%'.$request->dni.'%')->paginate(5);
             
-            // return $certificado;exit;
+            // return $request;exit;
             if ($certificado['data']=='' || $certificado['data']==null) {
                 $value = 2;
             }
@@ -268,7 +268,7 @@ class HomeController extends Controller
         $participant = Participant::where('participant_id', $certificado->participant_id)->where('active',1)->first();
         $user = User::where('active',1)->where('id',$certificado->user_id)->first();
         setlocale(LC_TIME, "spanish");
-        $fecha_oficial = $certificado->fecha_oficial;
+        $fecha_oficial = $certificado->fecha_curso;
         $fecha = str_replace("/", "-", $fecha_oficial);
         $newDate = date("d-m-Y", strtotime($fecha));
         $mesDesc = strftime("%d de %B del %Y", strtotime($newDate));
@@ -300,11 +300,12 @@ class HomeController extends Controller
             'cip'=>$cip,
             'img_firm'=>'1638635074.png',
             'business_curso'=>$certificado->empresa,
+            'comentario'=>$certificado->comentario,
         );
 
         $pdf = \PDF::loadView('pdf.certificado', compact('json'));
         // $pdf = PDF::loadView('pdf.certifi', compact('json'));
-        return $pdf->download('certificado.pdf');
+        return $pdf->download(''.$certificado->cod_certificado.'.pdf');
         // return $pdf->download('certifi.pdf');;
     }
     public function viewPDF()

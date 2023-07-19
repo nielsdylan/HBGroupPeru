@@ -145,7 +145,7 @@
         }
         $(document).on('submit','[data-form="certi-send"]',function (e) {
             e.preventDefault();
-            data.dni= $('[name="dni"]').val();
+            data.dni= $(this).find('[name="dni"]').val();
             getPagination();
 
 
