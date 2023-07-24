@@ -14,17 +14,17 @@ class ProfileController extends Controller
     public function index()
     {
         # code...
-        $instructor = Instructor::where('active',1)->where('user_id',session('hbgroup')['user_id'])->first();
-        $document_types = Document_type::where('active', 1)->get();
-        $profile = User::where('active',1)->where('id',session('hbgroup')['user_id'])->first();
-        $user = UsersGroup::where('users_groups.active',1)->where('users_groups.user_id',session('hbgroup')['user_id'])
-        ->join("users", "users.id", "=", "users_groups.user_id")
-        ->join("groups", "groups.group_id", "=", "users_groups.group_id")
-        ->select("groups.name as group", "groups.group_id", "users.*")
-        ->first();
-        $credits = credits();
+        // $instructor = Instructor::where('active',1)->where('user_id',session('hbgroup')['user_id'])->first();
+        // $document_types = Document_type::where('active', 1)->get();
+        // $profile = User::where('active',1)->where('id',session('hbgroup')['user_id'])->first();
+        // $user = UsersGroup::where('users_groups.active',1)->where('users_groups.user_id',session('hbgroup')['user_id'])
+        // ->join("users", "users.id", "=", "users_groups.user_id")
+        // ->join("groups", "groups.group_id", "=", "users_groups.group_id")
+        // ->select("groups.name as group", "groups.group_id", "users.*")
+        // ->first();
+        // $credits = credits();
         // return $user;
-        return view('frontend.private.profile.index', compact('user', 'document_types','credits','profile','instructor'));
+        return view('frontend.private.profile.index');
     }
     public function update(Request $request, User $perfil)
     {

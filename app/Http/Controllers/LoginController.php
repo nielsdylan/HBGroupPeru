@@ -73,12 +73,12 @@ class LoginController extends Controller
         $user_group = UsersGroup::where('user_id',$user->id)->where('group_id',$request->group_id)->where('active',1)->first();
         $group = Group::where('group_id',$request->group_id)->where('active',1)->first();
 
-        if ($user_group) {
+        if ($user) {
             $json_user = array(
                 'user_id'=>$user->id,
                 'email'=>$user->email,
-                'group_id'=>$group->group_id,
-                'group'=>$group->name,
+                // 'group_id'=>$group->group_id,
+                // 'group'=>$group->name,
                 'name'=>$user->name,
                 'last_name'=>$user->last_name,
                 'image'=>$user->image,
