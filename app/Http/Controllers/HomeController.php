@@ -301,11 +301,12 @@ class HomeController extends Controller
             'img_firm'=>'1638635074.png',
             'business_curso'=>$certificado->empresa,
             'comentario'=>$certificado->comentario,
+            'fecha_vencimiento'=>date("d/m/Y", strtotime($certificado->fecha_vencimiento)) ,
         );
 
         $pdf = \PDF::loadView('pdf.certificado', compact('json'));
         // $pdf = PDF::loadView('pdf.certifi', compact('json'));
-        return $pdf->download(''.$certificado->cod_certificado.'.pdf');
+        return $pdf->download(date("Y-m-d").'-'.strtoupper($certificado->apellido_paterno).'-'.strtoupper($certificado->apellido_materno).'-'.strtoupper($certificado->nombres).'-'.$certificado->cod_certificado.'.pdf');
         // return $pdf->download('certifi.pdf');;
     }
     public function viewPDF()

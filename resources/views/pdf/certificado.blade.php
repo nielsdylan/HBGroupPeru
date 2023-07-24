@@ -222,6 +222,7 @@
 
             <div class="text-center" style="font-family: 'Roboto', normal;">{{$json['date_1']}}</div>
             <div class="text-center" style="font-family: 'Roboto', normal;">{{$json['date_2']}}</div>
+            <div class="text-center" style="font-family: 'Roboto', normal;">{{($json['fecha_vencimiento']?'Valido hasta '.$json['fecha_vencimiento']:'')}} </div>
             <div class="text-center" style="font-family: 'Roboto', normal;">{{($json['comentario']?$json['comentario']:'')}}</div>
             <div></div>
             {{-- <div>

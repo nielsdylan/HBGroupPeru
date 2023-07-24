@@ -14,20 +14,18 @@
                   </thead>
                 <tbody>
                     @foreach ($certificado as $certi)
-                    @if ($certi->aprobado==1)
+                    @if ($certi->aprobado==1 && date("Y-m-d") <= $certi->fecha_vencimiento)
                         @php
-                            $fecha= date("Y-m-d",strtotime($certi->date));
-                            $fecha_vencimiento = date("Y-m-d",strtotime($fecha."+ ".$certi->duracion." month"));
+
                             $fecha_actual = date("Y-m-d",strtotime(date("Y-m-d")));
                             $estado='CADUCADO';
-                            $color = 'danger';
-                            if ($certi->fecha_vencimiento > date("Y-m-d") ) {
+                            $color = 'primary';
+                            
+                            if (date("Y-m-d") >= date("Y-m-d",strtotime($certi->fecha_vencimiento."- 1 month"))) {
                                 $estado='VIGENTE';
-                                $color = 'primary';
+                                $color = 'warning';
                             }
                         @endphp
-                        {{-- <input type="hidden" name="" id="" class="form-control" value="{{$fecha_vencimient}}" > --}}
-                        {{-- <label for="">{{$fecha_vencimient}}</label> --}}
                         <tr>
                             <td>{{ $certi->numero_documento }}</td>
                             <td>{{ $certi->apellido_paterno.' '.$certi->apellido_materno.' '.$certi->nombres }}</td>

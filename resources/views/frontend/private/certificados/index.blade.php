@@ -122,7 +122,7 @@
             <div class="modal-header no-bd">
                 <h2 class="modal-title">
                     <span class="fw-mediumbold">
-                        Ingresar nuevo participante certificado
+                        Nuevo Certificado
                     </span>
 
                 </h2>
@@ -267,16 +267,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-md-2">
                             <div class="form-check mt-4">
                                 <label class="form-check-label">
-                                    <input id="aprobado" name="aprobado" class="form-check-input" type="checkbox" value="1">
+                                    <input id="aprobado" name="aprobado" class="form-check-input" type="checkbox" value="1" checked>
                                     <span class="form-check-sign">Aprobado</span>
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="modal-footer no-bd">
                     
@@ -631,6 +631,7 @@
         $('.nuevo-certificado').click(function (e) {
             e.preventDefault();
             $('#certificado').modal('show');
+            $('#certificado').find('h2.modal-title').find('span').text('Nuevo Certificado');
             $('[data-form="certificado"]')[0].reset();
             $('[data-form="certificado"]').find('input[name="id"]').val(0);
             $('[data-form="certificado"]').find('input[name="aprobado"]').removeAttr('checked');
@@ -706,11 +707,11 @@
                     $('[data-form="certificado"]').find('textarea[name="comentario"]').val(response.data.comentario);
 
                     if (response.data.aprobado==1) {
-                        $('[data-form="certificado"]').find('input[name="aprobado"]').attr('checked','true');
+                        // $('[data-form="certificado"]').find('input[name="aprobado"]').attr('checked','true');
                     }else{
-                        $('[data-form="certificado"]').find('input[name="aprobado"]').removeAttr('checked');
+                        // $('[data-form="certificado"]').find('input[name="aprobado"]').removeAttr('checked');
                     }
-                    
+                    $('#certificado').find('h2.modal-title').find('span').text('Editar Certificado');
                     $('#certificado').modal('show');
                 }
 

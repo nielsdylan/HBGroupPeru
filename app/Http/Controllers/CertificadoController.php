@@ -157,7 +157,7 @@ class CertificadoController extends Controller
             // $certificado->descripcion_corta         = $request->descripcion_corta;
             $certificado->fecha_vencimiento         = $request->fecha_vencimiento;
             $certificado->duracion                  = $request->duracion;
-            $certificado->aprobado                  = (!empty($request->aprobado)?$request->aprobado:0);
+            $certificado->aprobado                  = 1;
             $certificado->comentario                = $request->comentario;
             $certificado->deleted_at                = null;
             $certificado->create_by                 =    session('hbgroup')['user_id'];
