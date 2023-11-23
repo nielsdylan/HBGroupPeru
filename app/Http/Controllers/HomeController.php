@@ -306,7 +306,7 @@ class HomeController extends Controller
 
         $pdf = \PDF::loadView('pdf.certificado', compact('json'));
         // $pdf = PDF::loadView('pdf.certifi', compact('json'));
-        return $pdf->download(date("Y-m-d").'-'.strtoupper($certificado->apellido_paterno).'-'.strtoupper($certificado->apellido_materno).'-'.strtoupper($certificado->nombres).'-'.$certificado->cod_certificado.'.pdf');
+        return $pdf->download(date("Y-m-d").'-'.strtoupper($certificado->apellido_paterno).'-'.strtoupper($certificado->apellido_materno).'-'. str_replace(' ', '-', strtoupper($certificado->nombres)).'-'.$certificado->cod_certificado.'.pdf');
         // return $pdf->download('certifi.pdf');;
     }
     public function viewPDF()
